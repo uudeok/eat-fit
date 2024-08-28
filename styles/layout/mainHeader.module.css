@@ -1,0 +1,20 @@
+.layout {
+    height: 100px;
+    border: 1px solid black;
+}
+
+.top {
+    height: 45px;
+
+    padding: 5px;
+}
+
+.theme {
+    display: flex;
+    gap: 15px;
+}
+
+.bottom {
+    height: 55px;
+    padding: 5px;
+}

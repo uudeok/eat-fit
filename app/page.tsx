@@ -1,7 +1,16 @@
-export default function Home() {
+import styles from '../styles/pages/home.module.css';
+import MainHeader from '@/components/layout/MainHeader';
+import TodayMeal from '@/components/TodayMeal';
+
+const Home = () => {
     return (
         <div>
-            <div>Hello World</div>
+            <MainHeader />
+            <TodayMeal />
+            <TodayMeal />
+            <TodayMeal />
         </div>
     );
-}
+};
+
+export default Home;
