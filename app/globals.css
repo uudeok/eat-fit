@@ -125,9 +125,9 @@ li {
 }
 
 :root {
-    --mainColor: #ffd55c;
-    --mainColorDk: #fbc62e;
-    --mainColorLg: #ffdd7b;
+    --mainColor: #c9e2ff;
+    --mainColorDk: #90c2ff;
+    --mainColorLg: #ecf2fc;
     --black: #000000;
     --white: #ffffff;
     --whitesmoke: #f5f5f5;

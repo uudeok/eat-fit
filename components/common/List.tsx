@@ -19,7 +19,7 @@ const List = ({ children }: { children: ReactNode }) => {
 
 export const ListRow = ({ left, right, middle }: ListRowProps) => {
     return (
-        <li className={styles.item}>
+        <li className={styles.row}>
             {left}
             {middle}
             {right}
@@ -29,7 +29,7 @@ export const ListRow = ({ left, right, middle }: ListRowProps) => {
 
 export const ListCol = ({ top, middle, bottom }: ListColProps) => {
     return (
-        <li>
+        <li className={styles.column}>
             {top}
             {middle}
             {bottom}

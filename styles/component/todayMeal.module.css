@@ -1,6 +1,20 @@
 .layout {
-    border: 1px solid black;
     padding: 20px;
     height: 250px;
-    background-color: aliceblue;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: var(--mainColor);
+    border-radius: 10px;
+}
+
+.progress {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.progress span {
+    text-align: center;
+    padding: 10px;
 }

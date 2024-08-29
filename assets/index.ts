@@ -4,6 +4,8 @@ import FillBar from './fillBar.svg';
 import Bar from './bar.svg';
 import FillSmile from './fillSmile.svg';
 import Smile from './smile.svg';
+import FillSun from './fillSun.svg';
+import FillMoon from './fillMoon.svg';
 
 const Icons = {
     FillHome,
@@ -12,6 +14,8 @@ const Icons = {
     Bar,
     FillSmile,
     Smile,
+    FillMoon,
+    FillSun,
 };
 
 export default Icons;

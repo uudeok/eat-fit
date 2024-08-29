@@ -7,8 +7,6 @@ const Home = () => {
         <div>
             <MainHeader />
             <TodayMeal />
-            <TodayMeal />
-            <TodayMeal />
         </div>
     );
 };

@@ -1,3 +1,5 @@
+'use client';
+
 import styles from '../../styles/layout/mainHeader.module.css';
 import List, { ListRow } from '../common/List';
 
@@ -5,17 +7,10 @@ const MainHeader = () => {
     return (
         <div className={styles.layout}>
             <div className={styles.top}>
-                <List>
-                    <ListRow
-                        left="기록"
-                        right={
-                            <div className={styles.theme}>
-                                <span>테마</span>
-                                <span>알림</span>
-                            </div>
-                        }
-                    />
-                </List>
+                <div className={styles.theme}>
+                    <span>테마</span>
+                    <span>알림</span>
+                </div>
             </div>
 
             <div className={styles.bottom}>

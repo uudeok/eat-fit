@@ -1,0 +1,21 @@
+/* Input InputBase */
+
+.container {
+    width: 100%;
+}
+
+.label {
+    display: inline-block;
+    padding: 5px 0;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.6;
+    color: var(--grey700);
+}
+
+.text {
+    margin-top: 4px;
+    display: inline-block;
+    font-weight: 400;
+    font-size: 15px;
+}

@@ -1,20 +1,19 @@
 .layout {
     height: 100px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
 }
 
 .top {
     height: 45px;
-
-    padding: 5px;
+    /* border: 1px solid lightgrey; */
 }
 
 .theme {
     display: flex;
     gap: 15px;
+    justify-content: right;
 }
 
 .bottom {
     height: 55px;
-    padding: 5px;
 }

@@ -1,0 +1,37 @@
+.textBase {
+    font-weight: normal;
+    color: inherit;
+    text-align: inherit;
+}
+
+.xsm {
+    font-size: 12px;
+}
+
+.sm {
+    font-size: 14px;
+}
+
+.md {
+    font-size: 16px;
+}
+
+.lg {
+    font-size: 18px;
+}
+
+.xlg {
+    font-size: 22px;
+}
+
+.xxlg {
+    font-size: 26px;
+}
+
+.xxxlg {
+    font-size: 32px;
+}
+
+.bold {
+    font-weight: bold;
+}
