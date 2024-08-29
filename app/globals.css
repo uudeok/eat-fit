@@ -127,7 +127,8 @@ li {
 :root {
     --mainColor: #c9e2ff;
     --mainColorDk: #90c2ff;
-    --mainColorLg: #ecf2fc;
+    --mainColorLg: #d6eaff;
+    --mainHover: #78a8e8;
     --black: #000000;
     --white: #ffffff;
     --whitesmoke: #f5f5f5;
@@ -194,15 +195,16 @@ li {
     --orange900: #e65100;
 }
 
-.layout {
+.rootLayout {
     max-width: 480px;
     margin: 0 auto;
     height: 100%;
 
     overflow-y: scroll;
-
     -ms-overflow-style: none;
     scrollbar-width: none;
+
+    position: relative;
 }
 
 .main {

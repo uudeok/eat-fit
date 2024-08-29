@@ -1,0 +1,32 @@
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; /* 이모지 항목 간의 간격 */
+    justify-content: center;
+    padding: 20px;
+}
+
+.emotionItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.emotionItem:hover {
+    transform: scale(1.1); /* 마우스 오버 시 약간 커지는 효과 */
+}
+
+.emotionImage {
+    width: 50px;
+    height: 50px;
+    display: block;
+    transition: opacity 0.2s;
+}
+
+.label {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #333;
+}

@@ -2,10 +2,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
+    border-radius: 50px;
     text-align: center;
     font-size: 18px; /* 기본 텍스트 크기 */
     font-weight: bold; /* 기본 텍스트 굵기 */
+    padding: 5px;
 }
 
 .text {

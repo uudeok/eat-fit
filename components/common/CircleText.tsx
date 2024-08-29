@@ -1,8 +1,7 @@
 import styles from '../../styles/common/circleText.module.css';
-import { ReactNode } from 'react';
 
 type Props = {
-    color: string;
+    color?: string;
     background?: string;
     text: string | number;
     size?: number;
