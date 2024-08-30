@@ -5,9 +5,13 @@ import styles from '../styles/component/dailySummary.module.css';
 import CircleText from './common/CircleText';
 import ProgressBar from './common/ProgressBar';
 import Text from './common/Text';
-import Emotion from './common/Emotions';
+import TodayMode from './modal/TodayMode';
+import { useBoolean } from '@/hooks';
+import Popup from './common/Popup';
 
 const DailySummary = () => {
+    const { setTrue, setFalse, value, toggle } = useBoolean();
+
     return (
         <div className={styles.layout}>
             <div className={styles.progress}>
@@ -41,7 +45,7 @@ const DailySummary = () => {
 
             <div className={styles.mode}>
                 <div className={styles.infoContainer}>
-                    <div className={styles.infoItem}>
+                    <div className={styles.infoItem} onClick={toggle}>
                         <Text color="var(--mainColorDk)" bold size="lg">
                             오늘의 기분
                         </Text>
@@ -67,6 +71,12 @@ const DailySummary = () => {
                     </div>
                 </div>
             </div>
+
+            {value && (
+                <Popup closeModal={setFalse}>
+                    <TodayMode />
+                </Popup>
+            )}
         </div>
     );
 };

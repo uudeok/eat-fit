@@ -29,15 +29,6 @@
     gap: 7px;
 }
 
-/* .mode {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    border-top: 1px solid var(--mainColorDk);
-    padding-top: 20px;
-} */
-
 .mode {
     display: flex;
     flex-direction: column;
@@ -68,21 +59,4 @@
 
 .infoItem:hover {
     background-color: var(--mainColorMd);
-}
-
-.infoItem > .text,
-.infoItem > img {
-    flex-shrink: 0;
-}
-
-.text {
-    font-size: 1rem;
-    color: var(--blue500);
-    font-weight: bold;
-}
-
-.text-white {
-    font-size: 1rem;
-    color: white;
-    font-weight: bold;
 }
