@@ -110,9 +110,9 @@ body {
     color: black;
     height: 100vh;
 
-    overflow-y: hidden;
+    /* overflow-y: hidden;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    -moz-osx-font-smoothing: grayscale; */
 }
 
 a {
@@ -193,18 +193,31 @@ li {
     --orange700: #f57c00;
     --orange800: #ef6c00;
     --orange900: #e65100;
+    --green50: #e8f5e9;
+    --green100: #c8e6c9;
+    --green200: #a5d6a7;
+    --green300: #81c784;
+    --green400: #66bb6a;
+    --green500: #4caf50;
+    --green600: #43a047;
+    --green700: #388e3c;
+    --green800: #2e7d32;
+    --green900: #1b5e20;
 }
 
 .rootLayout {
     max-width: 480px;
     margin: 0 auto;
-    height: 100%;
 
     overflow-y: scroll;
     -ms-overflow-style: none;
     scrollbar-width: none;
 
     position: relative;
+
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .main {
@@ -213,4 +226,10 @@ li {
 
 .layout::-webkit-scrollbar {
     display: none;
+}
+
+.footer {
+    position: sticky;
+    bottom: 0;
+    width: 100%;
 }

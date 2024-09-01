@@ -1,0 +1,120 @@
+.layout {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: var(--red100);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+} */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.addBtn {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: white;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.3s, transform 0.3s;
+    font-size: 24px;
+    font-weight: bold;
+    transform-origin: center;
+    background-color: var(--red200);
+}
+
+.addBtn.active {
+    background-color: var(--red300);
+    transform: rotate(45deg);
+}
+
+.addBtn::before {
+    content: '+';
+    font-size: 24px;
+    transition: opacity 0.3s, transform 0.3s;
+    position: absolute;
+}
+
+.addBtn.active::before {
+    content: '+';
+    font-size: 24px;
+}
+
+.mealCard {
+    display: flex;
+    align-items: center;
+    background-color: var(--grey50);
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    cursor: pointer;
+}
+
+.mealCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.mealImage {
+    width: 150px;
+    height: 150px;
+
+    border-radius: 8px;
+    margin-right: 15px;
+    object-fit: cover;
+}
+
+.mealInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.badgeContainer {
+    display: flex;
+    overflow-x: scroll;
+    white-space: nowrap;
+    width: 250px;
+
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.badgeContainer::-webkit-scrollbar {
+    display: none;
+}
+
+.badge {
+    display: flex;
+    gap: 8px;
+    margin: 8px 0;
+    /* flex-wrap: nowrap; */
+}
+
+.mealContent {
+    color: var(--grey700);
+    margin: 5px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    width: 250px;
+}

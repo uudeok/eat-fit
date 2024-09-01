@@ -1,4 +1,6 @@
 import './globals.css';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import type { Metadata } from 'next';
 import Footer from '@/components/layout/Footer';
 
@@ -13,17 +15,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <body>
                 <div className="rootLayout">
                     <main className="main">{children}</main>
-                    <Footer />
+                    <div className="footer">
+                        <Footer />
+                    </div>
                 </div>
             </body>
         </html>
     );
 }
-
-// export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-//     return (
-//         <html lang="ko">
-//             <body>{children}</body>
-//         </html>
-//     );
-// }

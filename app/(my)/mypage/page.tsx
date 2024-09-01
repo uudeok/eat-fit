@@ -4,7 +4,6 @@ const Mypage = () => {
     return (
         <div>
             <MainHeader />
-            <div>mypage</div>
         </div>
     );
 };
