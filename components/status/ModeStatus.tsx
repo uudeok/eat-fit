@@ -1,6 +1,6 @@
 'use client';
 
-import useModal from '@/hooks/useModal';
+import { useModal } from '@/hooks';
 import styles from '../../styles/component/status.module.css';
 import Text from '../common/Text';
 import Image from 'next/image';

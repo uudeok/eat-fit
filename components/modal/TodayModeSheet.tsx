@@ -1,7 +1,7 @@
 'use client';
 
-import useModal from '@/hooks/useModal';
-import styles from '../../styles/modal/todaymode.module.css';
+import { useModal } from '@/hooks';
+import styles from '../../styles/modal/todaymodeSheet.module.css';
 import Button from '../common/Button';
 import Emotions from '../common/Emotions';
 import Text from '../common/Text';

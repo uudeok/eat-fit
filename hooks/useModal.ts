@@ -1,6 +1,6 @@
 import useModalStore from '@/shared/store/useModalStore';
 
-const useModal = (type: string) => {
+export const useModal = (type: string) => {
     const { modalType, isOpen, openModal, closeModal } = useModalStore();
 
     return {
@@ -9,5 +9,3 @@ const useModal = (type: string) => {
         onClose: closeModal,
     };
 };
-
-export default useModal;

@@ -1,4 +1,4 @@
-import useModal from '@/hooks/useModal';
+import { useModal } from '@/hooks';
 import styles from '../../styles/component/status.module.css';
 import Text from '../common/Text';
 
@@ -11,7 +11,7 @@ const WeightStatus = () => {
                 몸무게
             </Text>
             <Text color="white" bold size="lg">
-                0.00 kg
+                60.05 kg
             </Text>
         </div>
     );

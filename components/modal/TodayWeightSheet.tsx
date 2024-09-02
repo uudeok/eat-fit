@@ -1,17 +1,35 @@
-import useModal from '@/hooks/useModal';
+'use client';
+
+import styles from '../../styles/modal/todayweightSheet.module.css';
 import Text from '../common/Text';
 import BottomSheet from '../common/BottomSheet';
-import Modal from '../common/Modal';
+import Button from '../common/Button';
+import InputBase from '../common/Input';
+import Label from '../common/Label';
+import { useInput, useModal } from '@/hooks';
 
 const TodayWeightSheet = () => {
     const { isOpen, onClose } = useModal('몸무게');
+    const [value, onChangeInput] = useInput({
+        type: 'weight',
+        integerMaxLength: 3,
+    });
 
     return (
-        <Modal isOpen={isOpen} onClose={onClose}>
-            <div>
-                <Text bold>몸무게</Text>
+        <BottomSheet isOpen={isOpen} onClose={onClose}>
+            <div className={styles.layout}>
+                <Text bold size="xxlg">
+                    오늘 체중 입력
+                </Text>
+                <Label className={styles.label}>
+                    <InputBase placeholder="00.00 kg" value={value} onChange={onChangeInput} />
+                </Label>
+
+                <Button role="confirm" disabled={!value}>
+                    확인
+                </Button>
             </div>
-        </Modal>
+        </BottomSheet>
     );
 };
 

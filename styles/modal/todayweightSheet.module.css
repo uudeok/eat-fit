@@ -1,0 +1,15 @@
+.layout {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.label input {
+    text-align: center;
+    font-size: 25px;
+
+    box-sizing: border-box;
+    padding: 25px 10px;
+}
