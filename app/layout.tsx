@@ -3,6 +3,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import type { Metadata } from 'next';
 import Footer from '@/components/layout/Footer';
+import { Modals } from '@/components/common/Modals';
 
 export const metadata: Metadata = {
     title: 'Create Next App',
@@ -15,10 +16,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <body>
                 <div className="rootLayout">
                     <main className="main">{children}</main>
-                    <div id="modal-root"></div>
                     <div className="footer">
                         <Footer />
                     </div>
+
+                    <Modals />
                 </div>
             </body>
         </html>

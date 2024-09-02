@@ -203,6 +203,6 @@
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
-    font-size: 14px;
+    font-size: 15px;
     flex-shrink: 1;
 }

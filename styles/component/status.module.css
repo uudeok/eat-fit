@@ -1,0 +1,13 @@
+.stateItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--mainColorLg);
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+}
+
+.stateItem:hover {
+    background-color: var(--mainColorMd);
+}

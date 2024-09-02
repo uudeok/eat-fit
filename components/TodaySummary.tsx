@@ -1,17 +1,12 @@
 'use client';
 
-import Image from 'next/image';
 import styles from '../styles/component/todaySummary.module.css';
 import CircleText from './common/CircleText';
 import ProgressBar from './common/ProgressBar';
 import Text from './common/Text';
-import TodayMode from './modal/TodayMode';
-import { useBoolean } from '@/hooks';
-import Popup from './common/Popup';
+import TodayStatus from './TodayStatus';
 
 const TodaySummary = () => {
-    const { setTrue, setFalse, value, toggle } = useBoolean();
-
     return (
         <div className={styles.layout}>
             <div className={styles.progress}>
@@ -44,39 +39,8 @@ const TodaySummary = () => {
             </div>
 
             <div className={styles.mode}>
-                <div className={styles.infoContainer}>
-                    <div className={styles.infoItem} onClick={toggle}>
-                        <Text color="var(--mainColorDk)" bold size="lg">
-                            오늘의 기분
-                        </Text>
-                        <Image src="/emotion_fill_good.png" width="30" height="30" alt="emotion_good" />
-                    </div>
-
-                    <div className={styles.infoItem}>
-                        <Text color="var(--mainColorDk)" bold size="lg">
-                            몸무게
-                        </Text>
-                        <Text color="white" bold size="lg">
-                            0.00 kg
-                        </Text>
-                    </div>
-
-                    <div className={styles.infoItem}>
-                        <Text color="var(--mainColorDk)" bold size="lg">
-                            소모한 칼로리
-                        </Text>
-                        <Text color="white" bold size="lg">
-                            0 Kcal
-                        </Text>
-                    </div>
-                </div>
+                <TodayStatus />
             </div>
-
-            {value && (
-                <Popup closeModal={setFalse}>
-                    <TodayMode />
-                </Popup>
-            )}
         </div>
     );
 };
