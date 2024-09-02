@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import styles from '../styles/component/dailySummary.module.css';
+import styles from '../styles/component/todaySummary.module.css';
 import CircleText from './common/CircleText';
 import ProgressBar from './common/ProgressBar';
 import Text from './common/Text';
@@ -9,7 +9,7 @@ import TodayMode from './modal/TodayMode';
 import { useBoolean } from '@/hooks';
 import Popup from './common/Popup';
 
-const DailySummary = () => {
+const TodaySummary = () => {
     const { setTrue, setFalse, value, toggle } = useBoolean();
 
     return (
@@ -81,4 +81,4 @@ const DailySummary = () => {
     );
 };
 
-export default DailySummary;
+export default TodaySummary;

@@ -1,18 +1,41 @@
 .layout {
+    display: flex;
+    flex-direction: column;
     height: 100px;
+    cursor: pointer;
 }
 
 .top {
-    height: 45px;
-    /* border: 1px solid lightgrey; */
-}
-
-.theme {
     display: flex;
-    gap: 15px;
     justify-content: right;
+    height: 45px;
 }
 
 .bottom {
     height: 55px;
+}
+
+.theme {
+    display: flex;
+    gap: 20px;
+
+    align-items: center;
+    padding: 5px;
+}
+
+.calendar {
+    display: flex;
+    text-align: center;
+    padding: 10px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.dateLabel {
+    flex: 1;
+}
+
+.dateLabel span {
+    margin-left: 7px;
+    margin-right: 8px;
 }

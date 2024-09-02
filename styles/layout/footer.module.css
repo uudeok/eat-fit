@@ -2,16 +2,11 @@
     background-color: #ffffff;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
     padding: 10px 0;
-
-    /* position: absolute;
-    width: 100%;
-    bottom: 0; */
 }
 
 .footer {
     display: flex;
     justify-content: space-around;
-
     padding: 0;
     margin: 0;
 }
@@ -27,7 +22,7 @@
 }
 
 .menu:hover {
-    color: var(--mainColor);
+    color: var(--grey400);
 }
 
 .menu svg {

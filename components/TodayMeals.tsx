@@ -3,8 +3,9 @@
 import styles from '../styles/component/todayMeal.module.css';
 import { useState } from 'react';
 import Badge from './common/Badge';
-import Button from './common/Button';
 import Text from './common/Text';
+import Icons from '@/assets';
+import Image from 'next/image';
 
 const MEAL_LIST = [
     {
@@ -43,7 +44,7 @@ const MEAL_LIST = [
 ];
 
 const TodayMeals = () => {
-    const [isActive, setIsActive] = useState(false);
+    const [isActive, setIsActive] = useState(true);
 
     const handleClick = () => {
         setIsActive((prevState) => !prevState);
@@ -53,14 +54,17 @@ const TodayMeals = () => {
         <div className={styles.layout}>
             <div className={styles.header}>
                 <Text bold size="xxlg" color="white">
-                    식단
+                    식단 3개
                 </Text>
-                <button className={`${styles.addBtn} ${isActive ? styles.active : ''}`} onClick={handleClick}></button>
+                <button className={`${styles.addBtn} ${isActive ? styles.active : ''}`} onClick={handleClick}>
+                    {isActive ? <Icons.Plus width={15} /> : <Icons.Xmark width={15} />}
+                </button>
             </div>
 
             {MEAL_LIST.map((meal) => (
                 <div key={meal.id} className={styles.mealCard}>
-                    <img src={meal.img} alt="meal" className={styles.mealImage} />
+                    <Image src={meal.img} alt="meal" className={styles.mealImage} width={120} height={120} />
+
                     <div className={styles.mealInfo}>
                         <Text bold>{meal.type}</Text>
                         <Text size="sm" color="grey">

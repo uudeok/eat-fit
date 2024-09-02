@@ -1,12 +1,12 @@
 import MainHeader from '@/components/layout/MainHeader';
-import DailySummary from '@/components/DailySummary';
+import TodaySummary from '@/components/TodaySummary';
 import TodayMeals from '@/components/TodayMeals';
 
 const Home = () => {
     return (
         <div>
             <MainHeader />
-            <DailySummary />
+            <TodaySummary />
             <TodayMeals />
         </div>
     );

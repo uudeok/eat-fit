@@ -15,6 +15,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <body>
                 <div className="rootLayout">
                     <main className="main">{children}</main>
+                    <div id="modal-root"></div>
                     <div className="footer">
                         <Footer />
                     </div>
