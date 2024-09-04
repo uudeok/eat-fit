@@ -6,9 +6,10 @@ import Button from '../common/Button';
 import Emotions from '../common/Emotions';
 import Text from '../common/Text';
 import BottomSheet from '../common/BottomSheet';
+import { ModalType } from '../common/Modals';
 
-const TodayModeSheet = () => {
-    const { isOpen, onClose } = useModal('오늘의기분');
+const TodayMoodSheet = () => {
+    const { isOpen, onClose } = useModal(ModalType.todayMood);
 
     const handleTodayMode = (selectedEmoji: string) => {
         console.log(selectedEmoji);
@@ -36,4 +37,4 @@ const TodayModeSheet = () => {
     );
 };
 
-export default TodayModeSheet;
+export default TodayMoodSheet;

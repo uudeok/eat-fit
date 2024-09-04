@@ -2,13 +2,22 @@
 
 import useModalStore from '@/shared/store/useModalStore';
 import Modal from './Modal';
-import TodayModeSheet from '../modal/TodayModeSheet';
+import TodayMoodSheet from '../modal/TodayMoodSheet';
 import { ReactNode } from 'react';
 import TodayWeightSheet from '../modal/TodayWeightSheet';
+import CalendarModal from '../modal/CalendarModal';
 
 type Props = {
-    modals: { [key: string]: ReactNode };
+    modals: Record<ModalKeysType, ReactNode>;
 };
+
+export const ModalType = {
+    todayMood: 'todayMood',
+    todayWeight: 'todayWeight',
+    mainCalendar: 'mainCalendar',
+} as const;
+
+export type ModalKeysType = keyof typeof ModalType;
 
 const Switch = ({ modals }: Props) => {
     const { modalType, isOpen, closeModal } = useModalStore();
@@ -27,8 +36,9 @@ const Switch = ({ modals }: Props) => {
 export const Modals = () => (
     <Switch
         modals={{
-            오늘의기분: <TodayModeSheet />,
-            몸무게: <TodayWeightSheet />,
+            todayMood: <TodayMoodSheet />,
+            todayWeight: <TodayWeightSheet />,
+            mainCalendar: <CalendarModal />,
         }}
     />
 );

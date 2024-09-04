@@ -7,7 +7,7 @@ const BurnedCalorieStatus = () => {
             <Text color="var(--mainColorDk)" bold size="lg">
                 소모한 칼로리
             </Text>
-            <Text color="white" bold size="lg">
+            <Text color="white" bold size="xlg">
                 0 Kcal
             </Text>
         </div>

@@ -14,7 +14,7 @@ const TodaySummary = () => {
                     850 / 1600 Kcal
                 </Text>
 
-                <ProgressBar current={880} total={1600} />
+                <ProgressBar current={850} total={1600} />
             </div>
 
             <div className={styles.record}>

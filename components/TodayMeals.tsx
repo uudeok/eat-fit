@@ -1,6 +1,6 @@
 'use client';
 
-import styles from '../styles/component/todayMeal.module.css';
+import styles from '../styles/component/todayMeals.module.css';
 import { useState } from 'react';
 import Badge from './common/Badge';
 import Text from './common/Text';
@@ -63,7 +63,7 @@ const TodayMeals = () => {
 
             {MEAL_LIST.map((meal) => (
                 <div key={meal.id} className={styles.mealCard}>
-                    <Image src={meal.img} alt="meal" className={styles.mealImage} width={120} height={120} />
+                    <Image src={meal.img} alt="meal" className={styles.mealImage} width={120} height={130} />
 
                     <div className={styles.mealInfo}>
                         <Text bold>{meal.type}</Text>

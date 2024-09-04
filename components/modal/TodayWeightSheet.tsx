@@ -7,9 +7,10 @@ import Button from '../common/Button';
 import InputBase from '../common/Input';
 import Label from '../common/Label';
 import { useInput, useModal } from '@/hooks';
+import { ModalType } from '../common/Modals';
 
 const TodayWeightSheet = () => {
-    const { isOpen, onClose } = useModal('몸무게');
+    const { isOpen, onClose } = useModal(ModalType.todayWeight);
     const [value, onChangeInput] = useInput({
         type: 'weight',
         integerMaxLength: 3,

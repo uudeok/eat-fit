@@ -1,16 +1,17 @@
+import { ModalKeysType } from '@/components/common/Modals';
 import { create } from 'zustand';
 
 type ModalStore = {
-    modalType: string | null;
+    modalType: ModalKeysType | null;
     isOpen: boolean;
-    openModal: (type: string) => void;
+    openModal: (type: ModalKeysType) => void;
     closeModal: () => void;
 };
 
 const useModalStore = create<ModalStore>((set) => ({
     modalType: null,
     isOpen: false,
-    openModal: (type) => set({ modalType: type, isOpen: true }),
+    openModal: (type: ModalKeysType) => set({ modalType: type, isOpen: true }),
     closeModal: () => set({ modalType: null, isOpen: false }),
 }));
 

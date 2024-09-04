@@ -1,6 +1,7 @@
+import { ModalKeysType } from '@/components/common/Modals';
 import useModalStore from '@/shared/store/useModalStore';
 
-export const useModal = (type: string) => {
+export const useModal = (type: ModalKeysType) => {
     const { modalType, isOpen, openModal, closeModal } = useModalStore();
 
     return {

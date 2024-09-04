@@ -4,9 +4,10 @@ import { useModal } from '@/hooks';
 import styles from '../../styles/component/status.module.css';
 import Text from '../common/Text';
 import Image from 'next/image';
+import { ModalType } from '../common/Modals';
 
-const ModeStatus = () => {
-    const { onOpen } = useModal('오늘의기분');
+const MoodStatus = () => {
+    const { onOpen } = useModal(ModalType.todayMood);
 
     return (
         <div className={styles.stateItem} onClick={onOpen}>
@@ -18,4 +19,4 @@ const ModeStatus = () => {
     );
 };
 
-export default ModeStatus;
+export default MoodStatus;
