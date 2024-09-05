@@ -1,0 +1,68 @@
+.layout {
+    padding: 15px;
+    cursor: pointer;
+}
+
+.controller {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+}
+
+.weeks {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+}
+
+.table {
+    margin-top: 15px;
+}
+
+.table th {
+    padding: 10px;
+}
+
+.date {
+    height: 50px;
+    width: 40px;
+    text-align: center;
+    padding: 4px;
+}
+
+.dateCell {
+    background-color: whitesmoke;
+    color: black;
+    width: 40px;
+    height: 40px;
+    border-radius: 50px;
+    cursor: pointer;
+
+    position: relative;
+}
+
+.dateCell:hover {
+    scale: 1.1;
+}
+
+.notCurrent {
+    display: none;
+}
+
+.dateButton {
+    padding: 10px;
+}
+
+.bubble {
+    position: absolute;
+    top: -7px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--mainHover);
+    padding: 2px 5px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: bold;
+    color: white;
+    white-space: nowrap;
+}

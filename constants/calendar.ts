@@ -4,6 +4,5 @@ export const MONTH_LABEL = {
     MONTH_NEXT: 'next',
 } as const;
 
-export type MONTH_LABEL_TYPE = typeof MONTH_LABEL;
-export type MONTH_LABEL_KEYS = keyof MONTH_LABEL_TYPE;
-export type MONTH_LABEL_VALUES = MONTH_LABEL_TYPE[MONTH_LABEL_KEYS];
+export type MONTH_LABEL_KEYS = keyof typeof MONTH_LABEL;
+export type MONTH_LABEL_VALUES = (typeof MONTH_LABEL)[MONTH_LABEL_KEYS];

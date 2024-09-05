@@ -8,8 +8,8 @@ import { removeNonNumeric, removeNonNumericWithoutDot } from '@/shared/utils';
 type Options = {
     type?: 'number' | 'string' | 'weight';
     initialValue?: string;
-    maxLength?: number; // 숫자 및 문자열 최대 자리수
-    minLength?: number; // 숫자 및 문자열 최소 자리수
+    maxLength?: number;
+    minLength?: number;
     integerMaxLength?: number; // 정수 최대 자리수
     decimalMaxLength?: number; // 소수점 이하 최대 자리수
 };

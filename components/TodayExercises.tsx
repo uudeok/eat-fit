@@ -73,7 +73,7 @@ const TodayExercises = () => {
                 </div>
 
                 <ul className={styles.exerciseList}>
-                    {EXERCISE_LIST?.map((e) => (
+                    {EXERCISE_LIST.map((e) => (
                         <li key={e.id} className={styles.exerciseItem}>
                             <div className={styles.exerciseMain}>
                                 <Text bold>{e.exercise_name}</Text>

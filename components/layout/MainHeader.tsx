@@ -6,11 +6,21 @@ import Image from 'next/image';
 import Text from '../common/Text';
 import ModeToggle from '../utils/ModeToggle';
 import Alarm from '../utils/Alarm';
-import { useModal } from '@/hooks';
+import { useCalendar, useModal } from '@/hooks';
 import { ModalType } from '../common/Modals';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ko';
+import { useCalendarStore } from '@/shared/store/useCalendarStore';
+dayjs.locale('ko');
 
 const MainHeader = () => {
     const { onOpen } = useModal(ModalType.mainCalendar);
+    const { nextDateController, prevDateController } = useCalendar();
+    const { selectedDate } = useCalendarStore();
+
+    const dateLabel = dayjs(selectedDate).format('M.D');
+    const dayOfWeek = dayjs(selectedDate).format('ddd');
+    const isToday = dayjs(selectedDate).isSame(dayjs(), 'day');
 
     return (
         <div className={styles.layout}>
@@ -23,16 +33,16 @@ const MainHeader = () => {
 
             <div className={styles.bottom}>
                 <div className={styles.calendar}>
-                    <div>
-                        <Icons.ArrowLeft width={13} />
+                    <div onClick={prevDateController}>
+                        <Icons.ArrowLeft width={15} />
                     </div>
                     <div className={styles.dateLabel} onClick={onOpen}>
                         <Image src="/calendar.png" alt="calendar icon" width={20} height={15} />
-                        <Text bold>9.2 (월)</Text>
+                        <Text bold>{isToday ? '오늘' : `${dateLabel} (${dayOfWeek})`}</Text>
                         <Icons.Down width={10} />
                     </div>
-                    <div>
-                        <Icons.ArrowRight width={13} />
+                    <div onClick={nextDateController}>
+                        <Icons.ArrowRight width={15} />
                     </div>
                 </div>
             </div>
