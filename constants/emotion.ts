@@ -15,3 +15,5 @@ export const EMOJI_LABEL = [
     { label: '피곤함', key: 'tired' },
     { label: '화남', key: 'angry' },
 ] as const;
+
+export type EmojiKey = (typeof EMOJI_LABEL)[number]['key'];

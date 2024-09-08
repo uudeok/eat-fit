@@ -1,86 +1,62 @@
 'use client';
 
-import styles from '../styles/component/todayMeals.module.css';
+import styles from '@styles/component/todayMeals.module.css';
 import { useState } from 'react';
 import Badge from './common/Badge';
 import Text from './common/Text';
 import Icons from '@/assets';
 import Image from 'next/image';
+import { Meals, Meals2, Meals3 } from '@/constants/meals';
+import { useRouter } from 'next/navigation';
 
-const MEAL_LIST = [
-    {
-        img: '/rice.png',
-        id: 1,
-        type: '식사',
-        serving_time: '오후 12:52',
-        content: '맛있는 한끼',
-        carbohydrate: 9.4,
-        protein: 25.72,
-        fat: 9.5,
-        kcal: 230,
-    },
-    {
-        img: '/rice.png',
-        id: 2,
-        type: '간식',
-        serving_time: '오후 01:30',
-        content: '밥 먹고 아메리카노',
-        carbohydrate: 0.5,
-        protein: 0,
-        fat: 0,
-        kcal: 5,
-    },
-    {
-        img: '/rice.png',
-        id: 3,
-        type: '식사',
-        serving_time: '오후 06:52',
-        content: '가족들과 복많네해물칼국수에 가서 해물칼국수와 해물파전을 맛있게 먹었다',
-        carbohydrate: 50,
-        protein: 9,
-        fat: 4.5,
-        kcal: 280,
-    },
-];
+const MEALS = [Meals, Meals2, Meals3];
 
 const TodayMeals = () => {
+    const router = useRouter();
     const [isActive, setIsActive] = useState(true);
 
     const handleClick = () => {
         setIsActive((prevState) => !prevState);
     };
 
+    const handleClicks = () => {
+        console.log('asd');
+    };
+
     return (
         <div className={styles.layout}>
             <div className={styles.header}>
                 <Text bold size="xxlg" color="white">
-                    식단 3개
+                    식단 {MEALS.length}개
                 </Text>
                 <button className={`${styles.addBtn} ${isActive ? styles.active : ''}`} onClick={handleClick}>
-                    {isActive ? <Icons.Plus width={15} /> : <Icons.Xmark width={15} />}
+                    {isActive ? <Icons.Plus width={15} onClick={handleClicks} /> : <Icons.Xmark width={15} />}
                 </button>
             </div>
 
-            {MEAL_LIST.map((meal) => (
-                <div key={meal.id} className={styles.mealCard}>
-                    <Image src={meal.img} alt="meal" className={styles.mealImage} width={120} height={130} />
+            {MEALS.map((item) => (
+                <div key={item.id} className={styles.mealCard} onClick={() => router.push(`/meals/${item.id}`)}>
+                    <Image src={item.photo_url} alt="meal" className={styles.mealImage} width={120} height={130} />
 
-                    <div className={styles.mealInfo}>
-                        <Text bold>{meal.type}</Text>
-                        <Text size="sm" color="grey">
-                            {meal.serving_time}
+                    <div className={styles.mealInfo} key={item.meal[0].id}>
+                        <Text bold>
+                            {item.meal[0].food_name} {item.meal.length > 1 && `외 ${item.meal.length - 1}개`}
                         </Text>
+
+                        {/* <Text size="sm" color="grey">
+                            ({item.meal[0].serving_size}g)
+                        </Text> */}
 
                         <div className={styles.badgeContainer}>
                             <div className={styles.badge}>
-                                <Badge>{meal.kcal} kcal</Badge>
-                                <Badge>탄 {meal.carbohydrate}g</Badge>
-                                <Badge>단 {meal.protein}g</Badge>
-                                <Badge>지 {meal.fat}g</Badge>
+                                <Badge>{item.meal[0].calories} kcal</Badge>
+                                <Badge>탄 {item.meal[0].carbohydrate}g</Badge>
+                                <Badge>단 {item.meal[0].protein}g</Badge>
+                                <Badge>지 {item.meal[0].fat}g</Badge>
                             </div>
                         </div>
 
-                        <div className={styles.mealContent}>{meal.content}</div>
+                        <div className={styles.mealContent}>{item.meal[0].content}</div>
                     </div>
                 </div>
             ))}

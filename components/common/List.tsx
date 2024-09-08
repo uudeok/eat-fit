@@ -1,10 +1,16 @@
 import styles from '../../styles/common/list.module.css';
 import { ReactNode } from 'react';
 
+type ListProps = {
+    children: ReactNode;
+    className?: string;
+};
+
 type ListRowProps = {
     left: ReactNode;
     right: ReactNode;
     middle?: ReactNode;
+    className?: string;
 };
 
 type ListColProps = {
@@ -13,13 +19,13 @@ type ListColProps = {
     middle?: ReactNode;
 };
 
-const List = ({ children }: { children: ReactNode }) => {
-    return <ul className={styles.list}>{children}</ul>;
+const List = ({ children, className }: ListProps) => {
+    return <ul className={`${className}`}>{children}</ul>;
 };
 
-export const ListRow = ({ left, right, middle }: ListRowProps) => {
+export const ListRow = ({ left, right, middle, className }: ListRowProps) => {
     return (
-        <li className={styles.row}>
+        <li className={`${styles.row} ${className}`}>
             {left}
             {middle}
             {right}

@@ -26,14 +26,15 @@ const MainHeader = () => {
         <div className={styles.layout}>
             <div className={styles.top}>
                 <div className={styles.theme}>
-                    <ModeToggle />
+                    {/* <ModeToggle />
+                     */}
                     <Alarm />
                 </div>
             </div>
 
             <div className={styles.bottom}>
                 <div className={styles.calendar}>
-                    <div onClick={prevDateController}>
+                    <div onClick={prevDateController} className={styles.controller}>
                         <Icons.ArrowLeft width={15} />
                     </div>
                     <div className={styles.dateLabel} onClick={onOpen}>
@@ -41,7 +42,7 @@ const MainHeader = () => {
                         <Text bold>{isToday ? '오늘' : `${dateLabel} (${dayOfWeek})`}</Text>
                         <Icons.Down width={10} />
                     </div>
-                    <div onClick={nextDateController}>
+                    <div onClick={nextDateController} className={styles.controller}>
                         <Icons.ArrowRight width={15} />
                     </div>
                 </div>
