@@ -29,6 +29,7 @@ const MealItemSheet = () => {
                 <Text bold size="xxlg">
                     {selectedMealItem.food_name}
                 </Text>
+                <Text size="sm">({selectedMealItem.serving_size}g)</Text>
             </div>
 
             {NUTRIENTS.map((nutrient) => (
@@ -49,7 +50,12 @@ const MealItemSheet = () => {
             ))}
 
             <div className={styles.reviseBtn}>
-                <Button role="confirm">수정</Button>
+                <Button role="warning" size="lg">
+                    삭제
+                </Button>
+                <Button role="confirm" size="lg">
+                    수정
+                </Button>
             </div>
         </BottomSheet>
     );

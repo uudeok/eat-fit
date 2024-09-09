@@ -1,0 +1,53 @@
+.layout {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    cursor: pointer;
+}
+
+.foodNameInput {
+    background-color: whitesmoke;
+    padding: 15px;
+    border-radius: 5px;
+    outline: none;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.nutrientGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.inputWithUnit {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    background-color: whitesmoke;
+    border-radius: 5px;
+    padding: 8px;
+}
+
+.inputWithUnit input {
+    flex: 1;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    padding-right: 5px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.addBtn {
+    margin-top: 20px;
+    padding: 3px;
+}

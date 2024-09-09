@@ -1,0 +1,12 @@
+.search {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    border-radius: 25px;
+    background-color: whitesmoke;
+}
+
+.search input {
+    border-radius: 30px;
+    background-color: whitesmoke;
+}

@@ -1,0 +1,71 @@
+.layout {
+    display: flex;
+    margin-top: 20px;
+    padding: 5px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.layout:hover {
+    opacity: 0.8;
+}
+
+/* 왼쪽에 말풍선 배치 */
+.left {
+    justify-content: flex-start;
+}
+
+.left .bubble {
+    margin-left: 10px;
+}
+
+/* 오른쪽에 말풍선 배치 */
+.right {
+    justify-content: flex-end;
+}
+
+.right .bubble {
+    margin-right: 10px;
+}
+
+.circle {
+    width: 40px;
+    height: 40px;
+    background-color: var(--mainColorLg);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bubble {
+    background-color: var(--mainColorLg);
+    border-radius: 20px;
+    padding: 10px 15px;
+    font-size: 16px;
+    color: var(--grey700);
+    font-weight: bold;
+    position: relative;
+}
+
+.left .bubble::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -17.5px;
+    transform: translateY(-50%);
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent var(--mainColorLg) transparent transparent;
+}
+
+.right .bubble::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -17.5px;
+    transform: translateY(-50%);
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent transparent transparent var(--mainColorLg);
+}

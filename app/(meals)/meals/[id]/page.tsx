@@ -1,6 +1,6 @@
 'use client';
 
-import styles from '@styles/pages/mealsPage.module.css';
+import styles from '@styles/pages/mealsDetailPage.module.css';
 import { MealType, Meals, Meals2, Meals3 } from '@/constants/meals';
 import Text from '@/components/common/Text';
 import Image from 'next/image';
@@ -15,7 +15,7 @@ import useMealItemStore from '@/shared/store/useMealItemStore';
 
 /** maybeSingle 로 해서 배열말고 오브젝트로 받아오면 편할듯! */
 
-const MealsPage = ({ params: { id } }: { params: { id: string } }) => {
+const MealsDetailPage = ({ params: { id } }: { params: { id: string } }) => {
     const router = useRouter();
     const MEALS = [Meals, Meals2, Meals3];
     const { onOpen } = useModal('mealItem');
@@ -111,4 +111,4 @@ const MealsPage = ({ params: { id } }: { params: { id: string } }) => {
     );
 };
 
-export default MealsPage;
+export default MealsDetailPage;

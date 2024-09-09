@@ -49,13 +49,20 @@
 
 .rolenone {
     color: var(--mainColorDk);
-    font-weight: bold;
     background-color: transparent;
 }
 
 .rolenone:hover {
     background-color: transparent;
     color: var(--mainHover);
+}
+
+.rolewarning {
+    background-color: var(--orange400);
+}
+
+.rolewarning:hover {
+    background-color: var(--orange500);
 }
 
 /* Size Styles */

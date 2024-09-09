@@ -13,6 +13,8 @@ import Bell from './bell.svg';
 import ArrowRight from './arrowRight.svg';
 import ArrowLeft from './arrowLeft.svg';
 import Down from './down.svg';
+import Pencil from './pencil.svg';
+import FillXmark from './fillXmark.svg';
 
 const Icons = {
     FillHome,
@@ -30,6 +32,8 @@ const Icons = {
     ArrowLeft,
     ArrowRight,
     Down,
+    Pencil,
+    FillXmark,
 };
 
 export default Icons;
