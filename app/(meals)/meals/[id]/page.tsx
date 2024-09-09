@@ -1,7 +1,7 @@
 'use client';
 
 import styles from '@styles/pages/mealsPage.module.css';
-import { Meals, Meals2, Meals3, MealsType } from '@/constants/meals';
+import { MealType, Meals, Meals2, Meals3 } from '@/constants/meals';
 import Text from '@/components/common/Text';
 import Image from 'next/image';
 import Icons from '@/assets';
@@ -9,21 +9,31 @@ import List, { ListCol, ListRow } from '@/components/common/List';
 import { calculateNutrientTotals } from '@/shared/utils';
 import { useMemo } from 'react';
 import { useRouter } from 'next/navigation';
+import Badge from '@/components/common/Badge';
+import { useModal } from '@/hooks';
+import useMealItemStore from '@/shared/store/useMealItemStore';
 
 /** maybeSingle 로 해서 배열말고 오브젝트로 받아오면 편할듯! */
 
 const MealsPage = ({ params: { id } }: { params: { id: string } }) => {
     const router = useRouter();
     const MEALS = [Meals, Meals2, Meals3];
+    const { onOpen } = useModal('mealItem');
+    const { setSelectedMealItem } = useMealItemStore();
 
     const selectedMeals = MEALS.filter((meal) => meal.id === Number(id));
     const totals = useMemo(() => calculateNutrientTotals(selectedMeals), [selectedMeals]);
 
     const NUTRIENTS = [
-        { key: '탄수화물', value: totals.carbohydrate },
-        { key: '단백질', value: totals.protein },
-        { key: '지방', value: totals.fat },
+        { key: '탄수화물', value: totals?.carbohydrate },
+        { key: '단백질', value: totals?.protein },
+        { key: '지방', value: totals?.fat },
     ];
+
+    const handleMealItemClick = (item: MealType) => {
+        setSelectedMealItem(item);
+        onOpen();
+    };
 
     return (
         <div className={styles.layout}>
@@ -38,7 +48,7 @@ const MealsPage = ({ params: { id } }: { params: { id: string } }) => {
 
                 <div className={styles.nutrientInfo}>
                     <Text size="xxlg" bold>
-                        {totals.calories}kcal
+                        {totals?.calories}kcal
                     </Text>
 
                     <List className={styles.infoItem}>
@@ -62,14 +72,21 @@ const MealsPage = ({ params: { id } }: { params: { id: string } }) => {
             </div>
 
             <div className={styles.bottom}>
-                <Text size="xlg" bold>
-                    식사 {selectedMeals[0].meal.length}
-                </Text>
+                <List>
+                    <ListRow
+                        left={
+                            <Text size="xlg" bold>
+                                식사 {selectedMeals[0]?.meal.length}
+                            </Text>
+                        }
+                        right={<Badge>{selectedMeals[0]?.serving_time}</Badge>}
+                    />
+                </List>
 
                 {selectedMeals.map((item) => (
                     <div key={item.id}>
                         {item.meal.map((m) => (
-                            <List key={m.id} className={styles.mealItem}>
+                            <List key={m.id} className={styles.mealItem} onClick={() => handleMealItemClick(m)}>
                                 <ListRow
                                     left={
                                         <div className={styles.mealInfo}>
@@ -80,9 +97,8 @@ const MealsPage = ({ params: { id } }: { params: { id: string } }) => {
                                         </div>
                                     }
                                     right={
-                                        <div className={styles.mealAction}>
+                                        <div className={styles.mealKcal}>
                                             <Text bold>{m.calories} kcal</Text>
-                                            <Icons.Xmark width={10} height={10} />
                                         </div>
                                     }
                                 />

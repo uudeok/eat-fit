@@ -1,7 +1,7 @@
 import { MealsType } from '@/constants/meals';
 
 export const calculateNutrientTotals = (mealData: MealsType[]) => {
-    return mealData[0].meal.reduce(
+    return mealData[0]?.meal.reduce(
         (totals, item) => {
             totals.calories += item.calories;
             totals.carbohydrate += item.carbohydrate;

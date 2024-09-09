@@ -4,6 +4,7 @@ import { ReactNode } from 'react';
 type ListProps = {
     children: ReactNode;
     className?: string;
+    onClick?: () => void;
 };
 
 type ListRowProps = {
@@ -19,8 +20,12 @@ type ListColProps = {
     middle?: ReactNode;
 };
 
-const List = ({ children, className }: ListProps) => {
-    return <ul className={`${className}`}>{children}</ul>;
+const List = ({ children, className, onClick }: ListProps) => {
+    return (
+        <ul className={`${className}`} onClick={onClick}>
+            {children}
+        </ul>
+    );
 };
 
 export const ListRow = ({ left, right, middle, className }: ListRowProps) => {

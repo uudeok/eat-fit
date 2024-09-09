@@ -4,25 +4,25 @@ import styles from '../../styles/layout/footer.module.css';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import Icons from '@/assets';
-import { FOOTER_PATHS } from '@/constants';
+import { FooterPaths } from '@/constants';
 
 const FOOTER_MENU = [
     {
         label: 'Home',
         icon: <Icons.Home width={20} />,
-        path: FOOTER_PATHS.HOME,
+        path: FooterPaths.HOME,
         selected: <Icons.FillHome width={20} />,
     },
     {
         label: '카테고리',
         icon: <Icons.Bar width={20} />,
-        path: FOOTER_PATHS.CATEGORY,
+        path: FooterPaths.CATEGORY,
         selected: <Icons.FillBar width={20} />,
     },
     {
         label: '마이페이지',
         icon: <Icons.Smile width={20} />,
-        path: FOOTER_PATHS.MYPAGE,
+        path: FooterPaths.MYPAGE,
         selected: <Icons.FillSmile width={20} />,
     },
 ];

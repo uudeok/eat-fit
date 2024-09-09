@@ -1,5 +1,5 @@
-export const FOOTER_PATHS = {
-    HOME: '/',
-    CATEGORY: '/category',
-    MYPAGE: '/mypage',
-} as const;
+export enum FooterPaths {
+    HOME = '/',
+    CATEGORY = '/category',
+    MYPAGE = '/mypage',
+}

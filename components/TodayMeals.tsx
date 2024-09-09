@@ -8,6 +8,7 @@ import Icons from '@/assets';
 import Image from 'next/image';
 import { Meals, Meals2, Meals3 } from '@/constants/meals';
 import { useRouter } from 'next/navigation';
+import { getMealAddFormPath, getMealPath } from '@/shared/utils';
 
 const MEALS = [Meals, Meals2, Meals3];
 
@@ -17,10 +18,7 @@ const TodayMeals = () => {
 
     const handleClick = () => {
         setIsActive((prevState) => !prevState);
-    };
-
-    const handleClicks = () => {
-        console.log('asd');
+        router.push(getMealAddFormPath());
     };
 
     return (
@@ -30,22 +28,18 @@ const TodayMeals = () => {
                     식단 {MEALS.length}개
                 </Text>
                 <button className={`${styles.addBtn} ${isActive ? styles.active : ''}`} onClick={handleClick}>
-                    {isActive ? <Icons.Plus width={15} onClick={handleClicks} /> : <Icons.Xmark width={15} />}
+                    {isActive ? <Icons.Plus width={15} /> : <Icons.Xmark width={15} />}
                 </button>
             </div>
 
             {MEALS.map((item) => (
-                <div key={item.id} className={styles.mealCard} onClick={() => router.push(`/meals/${item.id}`)}>
+                <div key={item.id} className={styles.mealCard} onClick={() => router.push(getMealPath(item.id))}>
                     <Image src={item.photo_url} alt="meal" className={styles.mealImage} width={120} height={130} />
 
                     <div className={styles.mealInfo} key={item.meal[0].id}>
                         <Text bold>
                             {item.meal[0].food_name} {item.meal.length > 1 && `외 ${item.meal.length - 1}개`}
                         </Text>
-
-                        {/* <Text size="sm" color="grey">
-                            ({item.meal[0].serving_size}g)
-                        </Text> */}
 
                         <div className={styles.badgeContainer}>
                             <div className={styles.badge}>

@@ -59,7 +59,6 @@
 
 .mealItem {
     margin-top: 25px;
-
     padding: 15px;
     background-color: whitesmoke;
     border-radius: 10px;
@@ -77,15 +76,9 @@
     padding: 10px;
 }
 
-.mealAction {
+.mealKcal {
     display: flex;
     gap: 5px;
     align-items: center;
     padding: 5px;
-}
-
-.mealAction svg {
-    background-color: var(--blue600);
-    border-radius: 50%;
-    padding: 3px;
 }

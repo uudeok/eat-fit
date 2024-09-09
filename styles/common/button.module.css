@@ -11,7 +11,7 @@
     white-space: nowrap;
     user-select: none;
     -webkit-font-smoothing: antialiased;
-    font-weight: 600;
+    font-weight: bold;
     transition: color 0.1s ease-in-out, background-color 0.1s ease-in-out;
     padding: 7px;
 

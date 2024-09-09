@@ -4,7 +4,7 @@ export type MealsType = {
     user_id: string;
     entry_date: string;
     meal_type: 'meal' | 'snack' | 'night_meal';
-    time: string;
+    serving_time: string;
     meal: MealType[];
     photo_url: string;
 };
@@ -26,7 +26,7 @@ export const Meals: MealsType = {
     user_id: 'abc',
     entry_date: '2024-09-05',
     meal_type: 'meal',
-    time: '13:30',
+    serving_time: '13:30',
     photo_url: '/rice.png',
     meal: [
         {
@@ -58,7 +58,7 @@ export const Meals2: MealsType = {
     user_id: 'abc',
     entry_date: '2024-09-05',
     meal_type: 'snack',
-    time: '14:20',
+    serving_time: '14:20',
     photo_url: '/rice.png',
     meal: [
         {
@@ -80,7 +80,7 @@ export const Meals3: MealsType = {
     user_id: 'abc',
     entry_date: '2024-09-05',
     meal_type: 'night_meal',
-    time: '21:49',
+    serving_time: '21:49',
     photo_url: '/rice.png',
     meal: [
         {

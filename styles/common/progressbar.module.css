@@ -3,6 +3,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    justify-content: center;
 }
 
 .progressBar {
@@ -14,9 +16,20 @@
 }
 
 .progressFill {
-    height: 30px;
+    /* height: 30px; */
     border-radius: 25px 0 0 25px;
     transition: width 0.4s ease-in-out;
-
     border-radius: 25px;
+}
+
+.sm {
+    height: 20px;
+}
+
+.md {
+    height: 30px;
+}
+
+.lg {
+    height: 35px;
 }
