@@ -18,10 +18,12 @@ import useMealItemStore from '@/shared/store/useMealItemStore';
 const MealsDetailPage = ({ params: { id } }: { params: { id: string } }) => {
     const router = useRouter();
     const MEALS = [Meals, Meals2, Meals3];
-    const { onOpen } = useModal('mealItem');
+    const { onOpen } = useModal('mealDetail');
     const { setSelectedMealItem } = useMealItemStore();
 
+    /* id 에 해당되는 식단 데이터 가져온다 */
     const selectedMeals = MEALS.filter((meal) => meal.id === Number(id));
+
     const totals = useMemo(() => calculateNutrientTotals(selectedMeals), [selectedMeals]);
 
     const NUTRIENTS = [

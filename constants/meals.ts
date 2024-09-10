@@ -91,7 +91,7 @@ export const Meals3: MealsType = {
             carbohydrate: 34,
             protein: 20,
             fat: 15,
-            content: '배고파서 유혹을 못 이기고 칼국수 하나 먹음',
+            content: '배고파서 유혹을 못 이기고 칼국수 하나 먹음 맛있었음',
         },
     ],
 };

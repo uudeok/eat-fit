@@ -6,8 +6,9 @@ import TodayMoodSheet from '../modal/TodayMoodSheet';
 import { ReactNode } from 'react';
 import TodayWeightSheet from '../modal/TodayWeightSheet';
 import CalendarModal from '../modal/CalendarModal';
-import MealItemSheet from '../modal/MealItemSheet';
+import MealDetailSheet from '../modal/MealDetailSheet';
 import MealAddFormSheet from '../modal/MealAddFormSheet';
+import ExerciseAddFormSheet from '../modal/ExerciseAddFormSheet';
 
 type Props = {
     modals: Record<ModalKeysType, ReactNode>;
@@ -17,8 +18,9 @@ export const ModalType = {
     todayMood: 'todayMood',
     todayWeight: 'todayWeight',
     mainCalendar: 'mainCalendar',
-    mealItem: 'mealItem',
+    mealDetail: 'mealDetail',
     mealAddForm: 'mealAddForm',
+    exerciseAddForm: 'exerciseAddForm',
 } as const;
 
 export type ModalKeysType = keyof typeof ModalType;
@@ -43,8 +45,9 @@ export const Modals = () => (
             todayMood: <TodayMoodSheet />,
             todayWeight: <TodayWeightSheet />,
             mainCalendar: <CalendarModal />,
-            mealItem: <MealItemSheet />,
+            mealDetail: <MealDetailSheet />,
             mealAddForm: <MealAddFormSheet />,
+            exerciseAddForm: <ExerciseAddFormSheet />,
         }}
     />
 );

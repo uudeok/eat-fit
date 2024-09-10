@@ -1,42 +1,43 @@
 import styles from '@styles/modal/mealAddFormSheet.module.css';
 import { useModal } from '@/hooks';
 import BottomSheet from '../common/BottomSheet';
-import InputBase from '../common/Input';
 import Text from '../common/Text';
-import { useState } from 'react';
 import Button from '../common/Button';
 import Icons from '@/assets';
+import { useForm } from 'react-hook-form';
+
+type FormValues = {
+    foodName: string;
+    calories: string;
+    carbohydrate: string;
+    protein: string;
+    fat: string;
+};
 
 const MealAddFormSheet = () => {
     const { isOpen, onClose } = useModal('mealAddForm');
-    const [inputValue, setInputValue] = useState({
-        food_name: '',
-        calories: '',
-        carbohydrate: '',
-        protein: '',
-        fat: '',
+    const { register, handleSubmit } = useForm<FormValues>({
+        defaultValues: {
+            foodName: '',
+            calories: '',
+            carbohydrate: '',
+            protein: '',
+            fat: '',
+        },
     });
 
-    const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { value, name } = e.target;
-        setInputValue({ ...inputValue, [name]: value });
-    };
-
-    const NUTRIENTS = [
-        { label: '칼로리', name: 'calories', value: inputValue.calories, unit: 'kcal' },
-        { label: '탄수화물', name: 'carbohydrate', value: inputValue.carbohydrate, unit: 'g' },
-        { label: '단백질', name: 'protein', value: inputValue.protein, unit: 'g' },
-        { label: '지방', name: 'fat', value: inputValue.fat, unit: 'g' },
+    const NUTRIENTS: { label: string; name: keyof FormValues; unit: string }[] = [
+        { label: '칼로리', name: 'calories', unit: 'kcal' },
+        { label: '탄수화물', name: 'carbohydrate', unit: 'g' },
+        { label: '단백질', name: 'protein', unit: 'g' },
+        { label: '지방', name: 'fat', unit: 'g' },
     ];
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        console.log(inputValue);
-    };
+    const onSubmit = handleSubmit((data) => console.log(data));
 
     return (
         <BottomSheet isOpen={isOpen} onClose={onClose}>
-            <form className={styles.layout} onSubmit={handleSubmit}>
+            <form onSubmit={onSubmit} className={styles.layout}>
                 <div className={styles.header}>
                     <Text bold size="xlg">
                         음식 직접 입력하기
@@ -45,26 +46,25 @@ const MealAddFormSheet = () => {
                 </div>
 
                 <Text bold>음식 이름 (필수)</Text>
-                <InputBase
+                <input
+                    {...register('foodName', { required: true })}
                     placeholder="음식 이름"
-                    onChange={onChangeInput}
-                    name="food_name"
-                    value={inputValue.food_name}
-                    required
                     className={styles.foodNameInput}
                 />
 
                 <Text bold>영양 정보</Text>
                 <div className={styles.nutrientGrid}>
-                    {NUTRIENTS.map((nutrient, index) => (
-                        <div key={index}>
-                            <Text>{nutrient.label}</Text>
+                    {NUTRIENTS.map((nutrient, idx) => (
+                        <div key={idx}>
+                            <Text bold>{nutrient.label}</Text>
                             <div className={styles.inputWithUnit}>
-                                <InputBase
-                                    onChange={onChangeInput}
-                                    name={nutrient.name}
-                                    value={nutrient.value}
+                                <input
+                                    {...register(nutrient.name)}
                                     placeholder="0"
+                                    onInput={(e) => {
+                                        const input = e.target as HTMLInputElement;
+                                        input.value = input.value.replace(/[^0-9.]/g, '');
+                                    }}
                                 />
                                 <Text bold>{nutrient.unit}</Text>
                             </div>
@@ -73,7 +73,7 @@ const MealAddFormSheet = () => {
                 </div>
 
                 <div className={styles.addBtn}>
-                    <Button role="confirm" size="lg" disabled={!inputValue.food_name}>
+                    <Button role="confirm" size="lg">
                         추가하기
                     </Button>
                 </div>

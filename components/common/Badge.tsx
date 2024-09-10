@@ -12,7 +12,7 @@ const Badge = (props: Props) => {
     const { children, color, backgroundColor, isSelected, ...rest } = props;
 
     const selectedStyle = isSelected
-        ? { backgroundColor: 'var(--mainColor)', color: 'white' }
+        ? { backgroundColor: 'var(--mainColorDk)', color: 'white' }
         : { backgroundColor, color };
 
     return (

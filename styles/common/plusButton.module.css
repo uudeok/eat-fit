@@ -1,0 +1,35 @@
+.addBtn {
+    border-radius: 50px;
+    background-color: var(--red200);
+    color: white;
+    font-size: 25px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.addBtn.active {
+    transform: rotate(90deg);
+}
+
+.addBtn:hover {
+    opacity: 0.8;
+}
+
+.sm {
+    width: 35px;
+    height: 35px;
+}
+
+.md {
+    width: 45px;
+    height: 45px;
+}
+
+.lg {
+    width: 50px;
+    height: 50px;
+}

@@ -31,3 +31,27 @@
     margin-top: 20px;
     gap: 15px;
 }
+
+.memo {
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    gap: 5px;
+}
+
+.memo textarea {
+    padding: 10px;
+
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    resize: none;
+    background-color: #f9f9f9;
+    color: #333;
+    overflow: auto;
+    line-height: 1.2;
+}
+
+.memo:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}

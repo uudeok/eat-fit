@@ -1,6 +1,6 @@
 'use client';
 
-import styles from '@styles/modal/mealItemSheet.module.css';
+import styles from '@styles/modal/mealDetailSheet.module.css';
 import { useModal } from '@/hooks';
 import BottomSheet from '../common/BottomSheet';
 import { usePathname } from 'next/navigation';
@@ -10,9 +10,9 @@ import Button from '../common/Button';
 import ProgressBar from '../common/ProgressBar';
 import List, { ListRow } from '../common/List';
 
-const MealItemSheet = () => {
+const MealDetailSheet = () => {
     const pathname = usePathname();
-    const { isOpen, onClose } = useModal('mealItem');
+    const { isOpen, onClose } = useModal('mealDetail');
     const { selectedMealItem } = useMealItemStore();
 
     if (!selectedMealItem) return null;
@@ -49,6 +49,13 @@ const MealItemSheet = () => {
                 </List>
             ))}
 
+            <div className={styles.memo}>
+                <Text size="sm" color="var(--grey500)">
+                    메모
+                </Text>
+                <textarea defaultValue={selectedMealItem.content} />
+            </div>
+
             <div className={styles.reviseBtn}>
                 <Button role="warning" size="lg">
                     삭제
@@ -61,4 +68,4 @@ const MealItemSheet = () => {
     );
 };
 
-export default MealItemSheet;
+export default MealDetailSheet;

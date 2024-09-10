@@ -13,7 +13,7 @@
     cursor: pointer;
 }
 
-.foodNameInput {
+.exerciseName {
     background-color: whitesmoke;
     padding: 15px;
     border-radius: 5px;
@@ -22,7 +22,7 @@
     font-weight: bold;
 }
 
-.nutrientGrid {
+.exerciseGrid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
@@ -51,4 +51,12 @@
 .addBtn {
     margin-top: 20px;
     padding: 3px;
+}
+
+.badgeContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+    cursor: pointer;
 }

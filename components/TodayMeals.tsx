@@ -1,25 +1,18 @@
 'use client';
 
 import styles from '@styles/component/todayMeals.module.css';
-import { useState } from 'react';
 import Badge from './common/Badge';
 import Text from './common/Text';
-import Icons from '@/assets';
 import Image from 'next/image';
 import { Meals, Meals2, Meals3 } from '@/constants/meals';
 import { useRouter } from 'next/navigation';
-import { getMealAddFormPath, getMealPath } from '@/shared/utils';
+import { getMealAddPath, getMealPath } from '@/shared/utils';
+import PlusButton from './common/PlusButton';
 
 const MEALS = [Meals, Meals2, Meals3];
 
 const TodayMeals = () => {
     const router = useRouter();
-    const [isActive, setIsActive] = useState(true);
-
-    const handleClick = () => {
-        setIsActive((prevState) => !prevState);
-        router.push(getMealAddFormPath());
-    };
 
     return (
         <div className={styles.layout}>
@@ -27,9 +20,7 @@ const TodayMeals = () => {
                 <Text bold size="xxlg" color="white">
                     식단 {MEALS.length}개
                 </Text>
-                <button className={`${styles.addBtn} ${isActive ? styles.active : ''}`} onClick={handleClick}>
-                    {isActive ? <Icons.Plus width={15} /> : <Icons.Xmark width={15} />}
-                </button>
+                <PlusButton onClick={() => router.push(getMealAddPath())} />
             </div>
 
             {MEALS.map((item) => (
