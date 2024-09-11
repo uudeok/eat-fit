@@ -1,10 +1,12 @@
+'use client';
+
 import styles from '@styles/modal/mealAddFormSheet.module.css';
 import { useModal } from '@/hooks';
-import BottomSheet from '../common/BottomSheet';
-import Text from '../common/Text';
-import Button from '../common/Button';
 import Icons from '@/assets';
 import { useForm } from 'react-hook-form';
+import { Button } from '../common/Button';
+import { Text } from '../common';
+import { BottomSheet } from '../common/Modal';
 
 type FormValues = {
     foodName: string;
@@ -12,17 +14,24 @@ type FormValues = {
     carbohydrate: string;
     protein: string;
     fat: string;
+    content: string;
 };
 
 const MealAddFormSheet = () => {
     const { isOpen, onClose } = useModal('mealAddForm');
-    const { register, handleSubmit } = useForm<FormValues>({
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        formState: { errors },
+    } = useForm<FormValues>({
         defaultValues: {
             foodName: '',
             calories: '',
             carbohydrate: '',
             protein: '',
             fat: '',
+            content: '',
         },
     });
 
@@ -34,6 +43,10 @@ const MealAddFormSheet = () => {
     ];
 
     const onSubmit = handleSubmit((data) => console.log(data));
+
+    const handleMemoValue = (inputValue: string) => {
+        setValue('content', inputValue);
+    };
 
     return (
         <BottomSheet isOpen={isOpen} onClose={onClose}>
@@ -71,6 +84,8 @@ const MealAddFormSheet = () => {
                         </div>
                     ))}
                 </div>
+
+                {/* <Textarea placeholder="간단한 메모를 남겨보세요 (선택)" name="memo" register={register}/> */}
 
                 <div className={styles.addBtn}>
                     <Button role="confirm" size="lg">

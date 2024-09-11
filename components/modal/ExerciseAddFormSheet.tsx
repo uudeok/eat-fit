@@ -2,14 +2,14 @@
 
 import styles from '@styles/modal/exerciseAddFormSheet.module.css';
 import { useModal } from '@/hooks';
-import BottomSheet from '../common/BottomSheet';
-import Text from '../common/Text';
 import Icons from '@/assets';
 import { useForm } from 'react-hook-form';
 import { EXERCISE_INTENSITY_LABELS, IntensityKeysType } from '@/constants';
-import Badge from '../common/Badge';
-import Button from '../common/Button';
 import { useState } from 'react';
+import { Input } from '../common/Form';
+import { Button } from '../common/Button';
+import { Badge, Text } from '../common';
+import { BottomSheet } from '../common/Modal';
 
 type FormValues = {
     exerciseName: string;
@@ -33,7 +33,6 @@ const ExerciseAddFormSheet = () => {
     const onSubmit = handleSubmit((data) => console.log(data));
 
     const handleIntensity = (key: IntensityKeysType) => {
-        console.log(key);
         setValue('exerciseIntensity', key);
         setSelectedIntensity(key);
     };
@@ -49,8 +48,10 @@ const ExerciseAddFormSheet = () => {
                 </div>
 
                 <Text bold>운동 이름 (필수)</Text>
-                <input
-                    {...register('exerciseName', { required: true })}
+                <Input
+                    register={register}
+                    rules={{ required: true }}
+                    name="exerciseName"
                     placeholder="운동 이름"
                     className={styles.exerciseName}
                 />
@@ -59,9 +60,11 @@ const ExerciseAddFormSheet = () => {
                     <div>
                         <Text bold>운동 시간 (필수)</Text>
                         <div className={styles.inputWithUnit}>
-                            <input
-                                {...register('exerciseTime', { required: true })}
+                            <Input
+                                register={register}
+                                rules={{ required: true }}
                                 placeholder="0"
+                                name="exerciseTime"
                                 onInput={(e) => {
                                     const input = e.target as HTMLInputElement;
                                     input.value = input.value.replace(/\D/g, '');
@@ -90,8 +93,9 @@ const ExerciseAddFormSheet = () => {
                     <div>
                         <Text bold>소모 칼로리 (선택)</Text>
                         <div className={styles.inputWithUnit}>
-                            <input
-                                {...register('burnedCalories')}
+                            <Input
+                                register={register}
+                                name="burnedCalories"
                                 placeholder="0"
                                 onInput={(e) => {
                                     const input = e.target as HTMLInputElement;

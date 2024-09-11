@@ -1,4 +1,4 @@
-import styles from '../../styles/common/list.module.css';
+import styles from '@styles/common/list.module.css';
 import { ReactNode } from 'react';
 
 type ListProps = {

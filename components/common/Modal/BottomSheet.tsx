@@ -1,6 +1,6 @@
 'use client';
 
-import styles from '../../styles/common/bottomSheet.module.css';
+import styles from '@styles/modal/bottomSheet.module.css';
 import { ModalProps } from './Modal';
 
 const BottomSheet = ({ children, onClose, isOpen }: ModalProps) => {

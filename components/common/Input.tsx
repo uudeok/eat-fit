@@ -1,4 +1,4 @@
-import styles from '../../styles/common/inputbase.module.css';
+import styles from '@styles/common/inputbase.module.css';
 import React, { forwardRef } from 'react';
 
 type Props = React.InputHTMLAttributes<HTMLInputElement> & {

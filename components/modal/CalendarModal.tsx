@@ -1,15 +1,15 @@
 'use client';
 
-import styles from '../../styles/modal/calendarModal.module.css';
+import styles from '@styles/modal/calendarModal.module.css';
 import { useCalendar, useModal } from '@/hooks';
-import Modal from '../common/Modal';
-import Text from '../common/Text';
 import Icons from '@/assets';
 import dayjs from 'dayjs';
-import Button from '../common/Button';
 import { useState } from 'react';
-import { ModalType } from '../common/Modals';
+import { ModalType } from '../common/Modal/Modals';
 import { useCalendarStore } from '@/shared/store/useCalendarStore';
+import { Modal } from '../common/Modal';
+import { Text } from '../common';
+import { Button } from '../common/Button';
 
 const CalendarModal = () => {
     const { isOpen, onClose } = useModal(ModalType.mainCalendar);

@@ -1,6 +1,6 @@
 'use Client';
 
-import styles from '../../styles/modal/modal.module.css';
+import styles from '@styles/modal/modal.module.css';
 
 export type ModalProps = {
     isOpen: boolean;

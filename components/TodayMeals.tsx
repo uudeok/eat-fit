@@ -1,13 +1,12 @@
 'use client';
 
 import styles from '@styles/component/todayMeals.module.css';
-import Badge from './common/Badge';
-import Text from './common/Text';
 import Image from 'next/image';
 import { Meals, Meals2, Meals3 } from '@/constants/meals';
 import { useRouter } from 'next/navigation';
 import { getMealAddPath, getMealPath } from '@/shared/utils';
-import PlusButton from './common/PlusButton';
+import { Badge, Text } from './common';
+import { PlusButton } from './common/Button';
 
 const MEALS = [Meals, Meals2, Meals3];
 

@@ -1,13 +1,11 @@
 'use client';
 
-import styles from '../../styles/modal/todayweightSheet.module.css';
-import Text from '../common/Text';
-import BottomSheet from '../common/BottomSheet';
-import Button from '../common/Button';
-import InputBase from '../common/Input';
-import Label from '../common/Label';
+import styles from '@styles/modal/todayweightSheet.module.css';
 import { useInput, useModal } from '@/hooks';
-import { ModalType } from '../common/Modals';
+import { Text, InputBase, Label } from '../common';
+import { BottomSheet } from '../common/Modal';
+import { ModalType } from '../common/Modal/Modals';
+import { Button } from '../common/Button';
 
 const TodayWeightSheet = () => {
     const { isOpen, onClose } = useModal(ModalType.todayWeight);

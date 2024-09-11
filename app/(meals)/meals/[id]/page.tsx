@@ -2,14 +2,12 @@
 
 import styles from '@styles/pages/mealsDetailPage.module.css';
 import { MealType, Meals, Meals2, Meals3 } from '@/constants/meals';
-import Text from '@/components/common/Text';
+import { Text, Badge, List, ListCol, ListRow } from '@/components/common';
 import Image from 'next/image';
 import Icons from '@/assets';
-import List, { ListCol, ListRow } from '@/components/common/List';
 import { calculateNutrientTotals } from '@/shared/utils';
 import { useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import Badge from '@/components/common/Badge';
 import { useModal } from '@/hooks';
 import useMealItemStore from '@/shared/store/useMealItemStore';
 

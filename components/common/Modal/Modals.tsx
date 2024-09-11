@@ -2,13 +2,13 @@
 
 import useModalStore from '@/shared/store/useModalStore';
 import Modal from './Modal';
-import TodayMoodSheet from '../modal/TodayMoodSheet';
+import TodayMoodSheet from '../../modal/TodayMoodSheet';
 import { ReactNode } from 'react';
-import TodayWeightSheet from '../modal/TodayWeightSheet';
-import CalendarModal from '../modal/CalendarModal';
-import MealDetailSheet from '../modal/MealDetailSheet';
-import MealAddFormSheet from '../modal/MealAddFormSheet';
-import ExerciseAddFormSheet from '../modal/ExerciseAddFormSheet';
+import TodayWeightSheet from '../../modal/TodayWeightSheet';
+import CalendarModal from '../../modal/CalendarModal';
+import MealDetailSheet from '../../modal/MealDetailSheet';
+import MealAddFormSheet from '../../modal/MealAddFormSheet';
+import ExerciseAddFormSheet from '../../modal/ExerciseAddFormSheet';
 
 type Props = {
     modals: Record<ModalKeysType, ReactNode>;
@@ -39,7 +39,7 @@ const Switch = ({ modals }: Props) => {
     );
 };
 
-export const Modals = () => (
+const Modals = () => (
     <Switch
         modals={{
             todayMood: <TodayMoodSheet />,
@@ -51,3 +51,5 @@ export const Modals = () => (
         }}
     />
 );
+
+export default Modals;

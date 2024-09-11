@@ -1,5 +1,5 @@
-import styles from '../../styles/component/status.module.css';
-import Text from '../common/Text';
+import styles from '@styles/component/status.module.css';
+import { Text } from '../common';
 
 const BurnedCalorieStatus = () => {
     return (

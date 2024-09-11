@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import styles from '../../styles/common/emoji.module.css';
+import styles from '@styles/common/emoji.module.css';
 import { useState } from 'react';
 import { EMOJI } from '@/constants';
 

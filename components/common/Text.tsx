@@ -1,4 +1,4 @@
-import styles from '../../styles/common/text.module.css';
+import styles from '@styles/common/text.module.css';
 import React, { CSSProperties, ReactNode } from 'react';
 
 export type TextProps = {

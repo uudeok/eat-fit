@@ -1,6 +1,6 @@
 'use client';
 
-import styles from '../../styles/layout/footer.module.css';
+import styles from '@styles/layout/footer.module.css';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import Icons from '@/assets';

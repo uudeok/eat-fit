@@ -1,4 +1,4 @@
-import styles from '../../styles/common/button.module.css';
+import styles from '@styles/common/button.module.css';
 import React, { ButtonHTMLAttributes } from 'react';
 
 export type Role = 'confirm' | 'cancel' | 'warning' | 'none';

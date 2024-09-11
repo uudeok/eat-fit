@@ -1,10 +1,10 @@
 'use client';
 
+import styles from '@styles/component/status.module.css';
 import { useModal } from '@/hooks';
-import styles from '../../styles/component/status.module.css';
-import Text from '../common/Text';
 import Image from 'next/image';
-import { ModalType } from '../common/Modals';
+import { ModalType } from '../common/Modal/Modals';
+import { Text } from '../common';
 
 const MoodStatus = () => {
     const { onOpen } = useModal(ModalType.todayMood);

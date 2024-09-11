@@ -1,5 +1,5 @@
 import { Children, HTMLAttributes, ReactElement, ReactNode, cloneElement, useId } from 'react';
-import styles from '../../styles/common/label.module.css';
+import styles from '@styles/common/label.module.css';
 
 interface InputProps extends HTMLAttributes<HTMLDivElement> {
     label?: ReactNode;

@@ -1,13 +1,13 @@
 'use client';
 
-import styles from '../../styles/layout/mainHeader.module.css';
+import styles from '@styles/layout/mainHeader.module.css';
 import Icons from '@/assets';
 import Image from 'next/image';
-import Text from '../common/Text';
 import ModeToggle from '../utils/ModeToggle';
 import Alarm from '../utils/Alarm';
 import { useCalendar, useModal } from '@/hooks';
-import { ModalType } from '../common/Modals';
+import { ModalType } from '../common/Modal/Modals';
+import { Text } from '../common';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 import { useCalendarStore } from '@/shared/store/useCalendarStore';

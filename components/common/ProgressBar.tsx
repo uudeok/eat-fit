@@ -1,4 +1,4 @@
-import styles from '../../styles/common/progressbar.module.css';
+import styles from '@styles/common/progressbar.module.css';
 
 type Props = {
     total: number;

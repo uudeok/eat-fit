@@ -2,12 +2,11 @@
 
 import styles from '@styles/component/todayExercises.module.css';
 import Image from 'next/image';
-import Text from './common/Text';
-import Button from './common/Button';
+import { Text, List } from './common';
+import { Button } from './common/Button';
 import { EXERCISE_INTENSITY_LABELS, Exercises } from '@/constants';
 import { calculateExerciseTotals } from '@/shared/utils/exercise';
 import { useMemo } from 'react';
-import List from './common/List';
 import { useRouter } from 'next/navigation';
 import { getExerciseAddPage } from '@/shared/utils';
 

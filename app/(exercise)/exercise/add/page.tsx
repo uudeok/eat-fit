@@ -2,8 +2,7 @@
 
 import styles from '@styles/pages/exerciseAddPage.module.css';
 import Icons from '@/assets';
-import Search from '@/components/common/Search';
-import Bubble from '@/components/common/Bubble';
+import { Search, Bubble } from '@/components/common';
 import { useRouter } from 'next/navigation';
 import { useModal } from '@/hooks';
 

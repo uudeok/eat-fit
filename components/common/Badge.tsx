@@ -1,5 +1,5 @@
 import { CSSProperties, HTMLAttributes, ReactNode } from 'react';
-import styles from '../../styles/common/badge.module.css';
+import styles from '@styles/common/badge.module.css';
 
 interface Props extends HTMLAttributes<HTMLSpanElement> {
     children: ReactNode;

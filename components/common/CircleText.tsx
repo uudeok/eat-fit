@@ -1,4 +1,4 @@
-import styles from '../../styles/common/circleText.module.css';
+import styles from '@styles/common/circleText.module.css';
 
 type Props = {
     color?: string;

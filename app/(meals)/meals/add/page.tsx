@@ -1,10 +1,9 @@
 'use client';
 
 import styles from '@styles/pages/mealAddPage.module.css';
-import Search from '@/components/common/Search';
+import { Search, Bubble } from '@/components/common';
 import Icons from '@/assets';
 import { useRouter } from 'next/navigation';
-import Bubble from '@/components/common/Bubble';
 import { useModal } from '@/hooks';
 
 /** 즐겨찾기, 최근 입력 기능 추가 예정 */

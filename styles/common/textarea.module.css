@@ -1,0 +1,29 @@
+.memo {
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    gap: 5px;
+}
+
+.memo textarea {
+    padding: 10px;
+
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    resize: none;
+    background-color: var(--blue20);
+    /* background-color: #f9f9f9; */
+    color: #333;
+    overflow: auto;
+    line-height: 1.2;
+    outline: none;
+}
+
+/* overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    .layout::-webkit-scrollbar {
+        display: none;
+    }
+     */

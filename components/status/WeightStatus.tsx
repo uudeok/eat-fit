@@ -1,7 +1,7 @@
+import styles from '@styles/component/status.module.css';
 import { useModal } from '@/hooks';
-import styles from '../../styles/component/status.module.css';
-import Text from '../common/Text';
-import { ModalType } from '../common/Modals';
+import { Text } from '../common';
+import { ModalType } from '../common/Modal/Modals';
 
 const WeightStatus = () => {
     const { onOpen } = useModal(ModalType.todayWeight);
