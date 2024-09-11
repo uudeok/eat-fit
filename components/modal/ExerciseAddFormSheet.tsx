@@ -6,7 +6,7 @@ import Icons from '@/assets';
 import { useForm } from 'react-hook-form';
 import { EXERCISE_INTENSITY_LABELS, IntensityKeysType } from '@/constants';
 import { useState } from 'react';
-import { Input } from '../common/Form';
+import { Input, Textarea } from '../common/Form';
 import { Button } from '../common/Button';
 import { Badge, Text } from '../common';
 import { BottomSheet } from '../common/Modal';
@@ -16,6 +16,7 @@ type FormValues = {
     exerciseTime: string;
     burnedCalories: string;
     exerciseIntensity: IntensityKeysType | null;
+    content: string | null;
 };
 
 const ExerciseAddFormSheet = () => {
@@ -27,6 +28,7 @@ const ExerciseAddFormSheet = () => {
             exerciseTime: '',
             burnedCalories: '',
             exerciseIntensity: null,
+            content: null,
         },
     });
 
@@ -107,8 +109,10 @@ const ExerciseAddFormSheet = () => {
                     </div>
                 </div>
 
+                <Textarea name="content" register={register} placeholder="간단한 메모를 남겨보세요 (선택) " />
+
                 <div className={styles.addBtn}>
-                    <Button role="confirm" size="lg">
+                    <Button role="confirm" size="lg" disabled={!selectedIntensity}>
                         추가하기
                     </Button>
                 </div>

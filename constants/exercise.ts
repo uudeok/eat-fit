@@ -1,8 +1,3 @@
-/** exercise_intensity 타입을 EXERCISE_INTENSITY_LABELS 배열의 인덱스 값으로 자동 추출 하고 싶음
- * 배열 데이터가 추가되거나 삭제되어도 타입을 수정하지 않아도 되도록  */
-
-// export const EXERCISE_INTENSITY_LABELS = ['가볍게', '적당히', '격하게'] as const;
-
 export const EXERCISE_INTENSITY_LABELS = {
     light: '가볍게',
     moderate: '적당히',
@@ -27,7 +22,7 @@ export type ExerciseType = {
     duration_minutes: number;
     calories_burned: number;
     content: string | null;
-    photo_url: string | null;
+    // photo_url: string | null;
 };
 
 export const Exercises: ExercisesType = {
@@ -44,7 +39,6 @@ export const Exercises: ExercisesType = {
             duration_minutes: 50,
             calories_burned: 179,
             content: '자유형으로 50m를 10세트',
-            photo_url: 'url',
         },
         {
             id: 2,
@@ -53,7 +47,6 @@ export const Exercises: ExercisesType = {
             duration_minutes: 15,
             calories_burned: 25,
             content: '배영 50m를 1세트',
-            photo_url: 'url',
         },
         {
             id: 3,
@@ -62,7 +55,6 @@ export const Exercises: ExercisesType = {
             duration_minutes: 30,
             calories_burned: 35,
             content: '평영 50m를 5세트',
-            photo_url: 'url',
         },
     ],
 };

@@ -9,36 +9,26 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    gap: 7px;
 }
 
 .summaryLayout {
     display: flex;
-    gap: 20px;
+    gap: 10px 20px;
     padding: 10px;
     text-align: center;
 }
 
-.summaryContent {
-    display: flex;
-    flex-direction: column;
-
-    gap: 10px;
-    padding: 10px;
-}
-
-.exercises {
+.todayExercise {
     background-color: var(--white);
     border-radius: 10px;
     padding: 15px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05);
-}
 
-.headerGroup {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .exerciseList {
@@ -56,43 +46,15 @@
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.exerciseItem:hover {
-    opacity: 0.7;
-}
-
-.exerciseMain {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 5px;
+    flex-direction: column;
+    gap: 5px;
 }
 
-.exerciseActions {
+.exerciseName {
     display: flex;
-    align-items: center;
-}
-
-.deleteButton {
-    background-color: transparent;
-    border: none;
-    font-size: 16px;
-
-    cursor: pointer;
-    margin-left: 10px;
-    color: var(--grey500);
-}
-
-.exerciseContent {
-    padding: 15px;
-    border-radius: 8px;
-    background-color: whitesmoke;
-    margin-top: 10px;
-
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    flex-direction: column;
+    gap: 3px;
 }
 
 .addButton {

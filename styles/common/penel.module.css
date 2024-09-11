@@ -1,0 +1,22 @@
+.layout {
+    display: flex;
+
+    background-color: whitesmoke;
+    padding: 10px 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    justify-content: space-between;
+    text-align: center;
+    justify-items: center;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.layout:hover {
+    opacity: 0.8;
+}

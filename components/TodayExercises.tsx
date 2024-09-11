@@ -2,15 +2,19 @@
 
 import styles from '@styles/component/todayExercises.module.css';
 import Image from 'next/image';
-import { Text, List } from './common';
+import { Text, List, Penel, ListRow, ListCol } from './common';
 import { Button } from './common/Button';
-import { EXERCISE_INTENSITY_LABELS, Exercises } from '@/constants';
+import { EXERCISE_INTENSITY_LABELS, ExerciseType, Exercises } from '@/constants';
 import { calculateExerciseTotals } from '@/shared/utils/exercise';
 import { useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { getExerciseAddPage } from '@/shared/utils';
+import { useModal } from '@/hooks';
+import useExerciseItemStore from '@/shared/store/useExerciseItemStore';
 
 const TodayExercises = () => {
+    const { onOpen } = useModal('exerciseDetail');
+    const { setSelectedExerciseItem } = useExerciseItemStore();
     const router = useRouter();
     const totals = useMemo(() => calculateExerciseTotals(Exercises), [Exercises]);
 
@@ -19,6 +23,11 @@ const TodayExercises = () => {
         { label: '총 소모량', value: totals.totalCalories, unit: 'kcal' },
     ];
 
+    const handleExerciseItem = (e: ExerciseType) => {
+        setSelectedExerciseItem(e);
+        onOpen();
+    };
+
     return (
         <div className={styles.layout}>
             <div className={styles.summary}>
@@ -26,45 +35,61 @@ const TodayExercises = () => {
 
                 <div className={styles.summaryLayout}>
                     {EXERCISES_SUMMARY.map((summary) => (
-                        <div className={styles.summaryContent} key={summary.label}>
-                            <Text color="white" bold size="lg">
-                                {summary.label}
-                            </Text>
-                            <Text color="white" bold size="xxlg">
-                                {summary.value}
-                                {summary.unit}
-                            </Text>
-                        </div>
+                        <List key={summary.label}>
+                            <ListCol
+                                top={
+                                    <Text color="white" bold size="xlg">
+                                        {summary.label}
+                                    </Text>
+                                }
+                                bottom={
+                                    <Text color="white" bold size="xxlg">
+                                        {summary.value}
+                                        {summary.unit}
+                                    </Text>
+                                }
+                            />
+                        </List>
                     ))}
                 </div>
             </div>
 
-            <div className={styles.exercises}>
-                <div className={styles.headerGroup}>
-                    <Text bold size="xlg">
-                        오늘 한 운동
-                    </Text>
-                    <Text bold size="xxlg" color="var(--green700)">
-                        {Exercises.exercise.length}
-                    </Text>
-                </div>
+            <div className={styles.todayExercise}>
+                <List>
+                    <ListRow
+                        left={
+                            <Text bold size="xlg">
+                                오늘 한 운동
+                            </Text>
+                        }
+                        right={
+                            <Text bold size="xxlg" color="var(--green700)">
+                                {Exercises.exercise.length}
+                            </Text>
+                        }
+                    />
+                </List>
 
                 <List className={styles.exerciseList}>
                     {Exercises.exercise.map((e) => (
-                        <li key={e.id} className={styles.exerciseItem}>
-                            <div className={styles.exerciseMain}>
-                                <Text bold>{e.exercise_name}</Text>
-                                <div className={styles.exerciseActions}>
-                                    <Text bold>{e.calories_burned} Kcal</Text>
-                                    <Button className={styles.deleteButton}>X</Button>
-                                </div>
-                            </div>
-                            <Text size="sm">
-                                {e.duration_minutes}분 {EXERCISE_INTENSITY_LABELS[e.exercise_intensity]}
-                            </Text>
-                            <div className={styles.exerciseContent}>
+                        <li key={e.id} className={styles.exerciseItem} onClick={() => handleExerciseItem(e)}>
+                            <List>
+                                <ListRow
+                                    left={
+                                        <div className={styles.exerciseName}>
+                                            <Text bold>{e.exercise_name}</Text>
+                                            <Text size="sm">
+                                                {e.duration_minutes}분 {EXERCISE_INTENSITY_LABELS[e.exercise_intensity]}
+                                            </Text>
+                                        </div>
+                                    }
+                                    right={<Text bold>{e.calories_burned} Kcal</Text>}
+                                />
+                            </List>
+
+                            <Penel padding="15px">
                                 <Text size="sm">{e.content}</Text>
-                            </div>
+                            </Penel>
                         </li>
                     ))}
                 </List>

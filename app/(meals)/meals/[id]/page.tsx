@@ -2,7 +2,7 @@
 
 import styles from '@styles/pages/mealsDetailPage.module.css';
 import { MealType, Meals, Meals2, Meals3 } from '@/constants/meals';
-import { Text, Badge, List, ListCol, ListRow } from '@/components/common';
+import { Text, Badge, List, ListCol, ListRow, Penel } from '@/components/common';
 import Image from 'next/image';
 import Icons from '@/assets';
 import { calculateNutrientTotals } from '@/shared/utils';
@@ -30,7 +30,7 @@ const MealsDetailPage = ({ params: { id } }: { params: { id: string } }) => {
         { key: '지방', value: totals?.fat },
     ];
 
-    const handleMealItemClick = (item: MealType) => {
+    const handleMealItem = (item: MealType) => {
         setSelectedMealItem(item);
         onOpen();
     };
@@ -39,7 +39,7 @@ const MealsDetailPage = ({ params: { id } }: { params: { id: string } }) => {
         <div className={styles.layout}>
             <div className={styles.top}>
                 <div className={styles.closeIcon}>
-                    <Icons.Xmark width={17} onClick={() => router.back()} />
+                    <Icons.Xmark width={20} onClick={() => router.back()} />
                 </div>
                 <div className={styles.imageContainer}>
                     <Image src="/rice.png" alt="Meal Image" width={150} height={150} className={styles.mealImage} />
@@ -56,7 +56,7 @@ const MealsDetailPage = ({ params: { id } }: { params: { id: string } }) => {
                             <ListCol
                                 key={nutrient.key}
                                 top={
-                                    <Text size="lg" bold>
+                                    <Text size="xlg" bold>
                                         {nutrient.key}
                                     </Text>
                                 }
@@ -72,7 +72,7 @@ const MealsDetailPage = ({ params: { id } }: { params: { id: string } }) => {
             </div>
 
             <div className={styles.bottom}>
-                <List>
+                <List className={styles.sectionHeader}>
                     <ListRow
                         left={
                             <Text size="xlg" bold>
@@ -86,7 +86,7 @@ const MealsDetailPage = ({ params: { id } }: { params: { id: string } }) => {
                 {selectedMeals.map((item) => (
                     <div key={item.id}>
                         {item.meal.map((m) => (
-                            <List key={m.id} className={styles.mealItem} onClick={() => handleMealItemClick(m)}>
+                            <Penel key={m.id} padding="15px" direction="column" onClick={() => handleMealItem(m)}>
                                 <ListRow
                                     left={
                                         <div className={styles.mealInfo}>
@@ -102,7 +102,7 @@ const MealsDetailPage = ({ params: { id } }: { params: { id: string } }) => {
                                         </div>
                                     }
                                 />
-                            </List>
+                            </Penel>
                         ))}
                     </div>
                 ))}

@@ -17,7 +17,7 @@ export type MealType = {
     carbohydrate: number;
     protein: number;
     fat: number;
-    content: string;
+    content: string | null;
 };
 
 export const Meals: MealsType = {

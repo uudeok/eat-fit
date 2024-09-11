@@ -7,7 +7,7 @@ type InputType<T extends FieldValues> = {
     id?: string;
     label?: string;
     placeholder?: string;
-    defaultValue?: string;
+    defaultValue?: string | number;
     rules?: RegisterOptions<T, Path<T>>;
     errors?: FieldErrors<T>;
 } & React.InputHTMLAttributes<HTMLInputElement>;

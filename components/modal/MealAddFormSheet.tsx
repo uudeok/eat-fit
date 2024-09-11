@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { Button } from '../common/Button';
 import { Text } from '../common';
 import { BottomSheet } from '../common/Modal';
+import { Input, Textarea } from '../common/Form';
 
 type FormValues = {
     foodName: string;
@@ -14,24 +15,19 @@ type FormValues = {
     carbohydrate: string;
     protein: string;
     fat: string;
-    content: string;
+    content: string | null;
 };
 
 const MealAddFormSheet = () => {
     const { isOpen, onClose } = useModal('mealAddForm');
-    const {
-        register,
-        handleSubmit,
-        setValue,
-        formState: { errors },
-    } = useForm<FormValues>({
+    const { register, handleSubmit } = useForm<FormValues>({
         defaultValues: {
             foodName: '',
             calories: '',
             carbohydrate: '',
             protein: '',
             fat: '',
-            content: '',
+            content: null,
         },
     });
 
@@ -44,10 +40,6 @@ const MealAddFormSheet = () => {
 
     const onSubmit = handleSubmit((data) => console.log(data));
 
-    const handleMemoValue = (inputValue: string) => {
-        setValue('content', inputValue);
-    };
-
     return (
         <BottomSheet isOpen={isOpen} onClose={onClose}>
             <form onSubmit={onSubmit} className={styles.layout}>
@@ -59,9 +51,11 @@ const MealAddFormSheet = () => {
                 </div>
 
                 <Text bold>음식 이름 (필수)</Text>
-                <input
-                    {...register('foodName', { required: true })}
+                <Input
+                    register={register}
+                    rules={{ required: true }}
                     placeholder="음식 이름"
+                    name="foodName"
                     className={styles.foodNameInput}
                 />
 
@@ -71,8 +65,9 @@ const MealAddFormSheet = () => {
                         <div key={idx}>
                             <Text bold>{nutrient.label}</Text>
                             <div className={styles.inputWithUnit}>
-                                <input
-                                    {...register(nutrient.name)}
+                                <Input
+                                    register={register}
+                                    name={nutrient.name}
                                     placeholder="0"
                                     onInput={(e) => {
                                         const input = e.target as HTMLInputElement;
@@ -85,7 +80,7 @@ const MealAddFormSheet = () => {
                     ))}
                 </div>
 
-                {/* <Textarea placeholder="간단한 메모를 남겨보세요 (선택)" name="memo" register={register}/> */}
+                <Textarea register={register} name="content" placeholder="간단한 메모를 남겨보세요. (선택)" />
 
                 <div className={styles.addBtn}>
                     <Button role="confirm" size="lg">

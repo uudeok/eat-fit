@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import useMealItemStore from '@/shared/store/useMealItemStore';
 import { FieldValues, useForm } from 'react-hook-form';
 import { BottomSheet } from '../common/Modal';
-import { Text, ProgressBar, List, ListRow } from '../common';
+import { Text, ProgressBar, ListRow, Penel } from '../common';
 import { Textarea } from '../common/Form';
 import { Button } from '../common/Button';
 
@@ -40,7 +40,7 @@ const MealDetailSheet = () => {
                 </div>
 
                 {NUTRIENTS.map((nutrient) => (
-                    <List key={nutrient.key} className={styles.nutrient}>
+                    <Penel key={nutrient.key} direction="column">
                         <ListRow
                             left={
                                 <div className={styles.information}>
@@ -53,10 +53,15 @@ const MealDetailSheet = () => {
                             }
                             right={<ProgressBar current={nutrient.value} total={nutrient.standard} size="sm" />}
                         />
-                    </List>
+                    </Penel>
                 ))}
 
-                <Textarea name="memo" id="meal-memo" defaultValue={selectedMealItem.content} register={register} />
+                <Textarea
+                    name="memo"
+                    id="meal-memo"
+                    defaultValue={selectedMealItem.content || ''}
+                    register={register}
+                />
 
                 <div className={styles.reviseBtn}>
                     <Button role="warning" size="lg">

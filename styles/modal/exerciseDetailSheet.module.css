@@ -1,0 +1,33 @@
+.header {
+    margin-bottom: 20px;
+    padding: 5px;
+}
+
+.inputContainer {
+    display: flex;
+    text-align: center;
+    align-items: center;
+}
+
+.inputContainer input {
+    text-align: right;
+    background-color: whitesmoke;
+    font-size: 25px;
+}
+
+.badgeContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 3px;
+    cursor: pointer;
+    width: 100%;
+    justify-content: right;
+}
+
+.buttonContainer {
+    display: flex;
+    padding: 5px;
+    margin-top: 20px;
+    gap: 15px;
+}

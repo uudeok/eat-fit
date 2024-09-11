@@ -1,23 +1,18 @@
 import styles from '@styles/common/textarea.module.css';
-import { FieldValues, UseFormRegister } from 'react-hook-form';
+import { FieldValues, UseFormRegister, Path, RegisterOptions } from 'react-hook-form';
 import Text from '../Text';
 
-export type FormRules = {
-    value: RegExp;
-    message: string;
-};
-
-type Props = {
-    name: string;
+type TextareaProps<T extends FieldValues> = {
+    name: Path<T>;
     id?: string;
     label?: string;
     placeholder?: string;
     defaultValue?: string;
-    rules?: FormRules;
-    register: UseFormRegister<FieldValues>;
-};
+    rules?: RegisterOptions<T, Path<T>>;
+    register: UseFormRegister<T>;
+} & React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 
-const Textarea = (props: Props) => {
+const Textarea = <T extends FieldValues>(props: TextareaProps<T>) => {
     const { id, name, label, placeholder, defaultValue, rules, register } = props;
 
     return (

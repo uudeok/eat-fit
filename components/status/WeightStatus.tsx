@@ -1,20 +1,25 @@
-import styles from '@styles/component/status.module.css';
 import { useModal } from '@/hooks';
-import { Text } from '../common';
+import { ListRow, Penel, Text } from '../common';
 import { ModalType } from '../common/Modal/Modals';
 
 const WeightStatus = () => {
     const { onOpen } = useModal(ModalType.todayWeight);
 
     return (
-        <div className={styles.stateItem} onClick={onOpen}>
-            <Text color="var(--mainColorDk)" bold size="lg">
-                몸무게
-            </Text>
-            <Text color="white" bold size="xlg">
-                60.05 kg
-            </Text>
-        </div>
+        <Penel onClick={onOpen} direction="column" backgroundColor="var(--mainColorLg)">
+            <ListRow
+                left={
+                    <Text color="var(--mainColorDk)" bold size="lg">
+                        몸무게
+                    </Text>
+                }
+                right={
+                    <Text color="white" bold size="xlg">
+                        60.05 kg
+                    </Text>
+                }
+            />
+        </Penel>
     );
 };
 
