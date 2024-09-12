@@ -22,7 +22,6 @@ export type ExerciseType = {
     duration_minutes: number;
     calories_burned: number;
     content: string | null;
-    // photo_url: string | null;
 };
 
 export const Exercises: ExercisesType = {

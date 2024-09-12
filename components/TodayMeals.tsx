@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { Meals, Meals2, Meals3 } from '@/constants/meals';
 import { useRouter } from 'next/navigation';
 import { getMealAddPath, getMealPath } from '@/shared/utils';
-import { Badge, Text } from './common';
+import { Badge, ListRow, Text } from './common';
 import { PlusButton } from './common/Button';
 
 const MEALS = [Meals, Meals2, Meals3];
@@ -15,16 +15,18 @@ const TodayMeals = () => {
 
     return (
         <div className={styles.layout}>
-            <div className={styles.header}>
-                <Text bold size="xxlg" color="white">
-                    식단 {MEALS.length}개
-                </Text>
-                <PlusButton onClick={() => router.push(getMealAddPath())} />
-            </div>
+            <ListRow
+                left={
+                    <Text bold size="xxlg" color="white">
+                        식단 {MEALS.length}개
+                    </Text>
+                }
+                right={<PlusButton onClick={() => router.push(getMealAddPath())} />}
+            />
 
             {MEALS.map((item) => (
                 <div key={item.id} className={styles.mealCard} onClick={() => router.push(getMealPath(item.id))}>
-                    <Image src={item.photo_url} alt="meal" className={styles.mealImage} width={120} height={130} />
+                    <Image src={'/rice.png'} alt="meal" className={styles.mealImage} width={120} height={130} />
 
                     <div className={styles.mealInfo} key={item.meal[0].id}>
                         <Text bold>

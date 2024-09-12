@@ -77,3 +77,6 @@ const Daily3: DailyType = {
 // 1. 로그인 후 정보 입력 하면 Goal 테이블 생성 된다.
 // 2. 현재 생각 : Goal 테이블이 생성될때 goal 데이터를 브라우저 저장소(로컬, 세션스토리지, 쿠키) 에 저장
 // 3. 사용자가 오늘의 기분, 몸무게 등을 설정할때 Daily 테이블 생성 된다.
+
+// 접속하면 유저 id 로 현재 goal_status : progress 인 goal 테이블을 찾는다
+// 해당 goal_id 를 저장한다

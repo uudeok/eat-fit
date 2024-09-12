@@ -3,14 +3,13 @@
 import styles from '@styles/layout/mainHeader.module.css';
 import Icons from '@/assets';
 import Image from 'next/image';
-import ModeToggle from '../utils/ModeToggle';
 import Alarm from '../utils/Alarm';
 import { useCalendar, useModal } from '@/hooks';
 import { ModalType } from '../common/Modal/Modals';
-import { Text } from '../common';
+import { List, ListRow, Text } from '../common';
 import dayjs from 'dayjs';
-import 'dayjs/locale/ko';
 import { useCalendarStore } from '@/shared/store/useCalendarStore';
+import 'dayjs/locale/ko';
 dayjs.locale('ko');
 
 const MainHeader = () => {
@@ -26,26 +25,32 @@ const MainHeader = () => {
         <div className={styles.layout}>
             <div className={styles.top}>
                 <div className={styles.theme}>
-                    {/* <ModeToggle />
-                     */}
                     <Alarm />
                 </div>
             </div>
 
             <div className={styles.bottom}>
-                <div className={styles.calendar}>
-                    <div onClick={prevDateController} className={styles.controller}>
-                        <Icons.ArrowLeft width={15} />
-                    </div>
-                    <div className={styles.dateLabel} onClick={onOpen}>
-                        <Image src="/calendar.png" alt="calendar icon" width={20} height={15} />
-                        <Text bold>{isToday ? '오늘' : `${dateLabel} (${dayOfWeek})`}</Text>
-                        <Icons.Down width={10} />
-                    </div>
-                    <div onClick={nextDateController} className={styles.controller}>
-                        <Icons.ArrowRight width={15} />
-                    </div>
-                </div>
+                <List className={styles.calendar}>
+                    <ListRow
+                        left={
+                            <div onClick={prevDateController}>
+                                <Icons.ArrowLeft width={15} />
+                            </div>
+                        }
+                        middle={
+                            <div className={styles.dateLabel} onClick={onOpen}>
+                                <Image src="/calendar.png" alt="calendar icon" width={20} height={15} />
+                                <Text bold>{isToday ? '오늘' : `${dateLabel} (${dayOfWeek})`}</Text>
+                                <Icons.Down width={10} />
+                            </div>
+                        }
+                        right={
+                            <div onClick={nextDateController}>
+                                <Icons.ArrowRight width={15} />
+                            </div>
+                        }
+                    />
+                </List>
             </div>
         </div>
     );

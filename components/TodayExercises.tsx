@@ -13,9 +13,10 @@ import { useModal } from '@/hooks';
 import useExerciseItemStore from '@/shared/store/useExerciseItemStore';
 
 const TodayExercises = () => {
+    const router = useRouter();
     const { onOpen } = useModal('exerciseDetail');
     const { setSelectedExerciseItem } = useExerciseItemStore();
-    const router = useRouter();
+
     const totals = useMemo(() => calculateExerciseTotals(Exercises), [Exercises]);
 
     const EXERCISES_SUMMARY = [
@@ -72,25 +73,23 @@ const TodayExercises = () => {
 
                 <List className={styles.exerciseList}>
                     {Exercises.exercise.map((e) => (
-                        <li key={e.id} className={styles.exerciseItem} onClick={() => handleExerciseItem(e)}>
-                            <List>
-                                <ListRow
-                                    left={
-                                        <div className={styles.exerciseName}>
-                                            <Text bold>{e.exercise_name}</Text>
-                                            <Text size="sm">
-                                                {e.duration_minutes}분 {EXERCISE_INTENSITY_LABELS[e.exercise_intensity]}
-                                            </Text>
-                                        </div>
-                                    }
-                                    right={<Text bold>{e.calories_burned} Kcal</Text>}
-                                />
-                            </List>
+                        <div key={e.id} className={styles.exerciseItem} onClick={() => handleExerciseItem(e)}>
+                            <ListRow
+                                left={
+                                    <div className={styles.exerciseName}>
+                                        <Text bold>{e.exercise_name}</Text>
+                                        <Text size="sm">
+                                            {e.duration_minutes}분 {EXERCISE_INTENSITY_LABELS[e.exercise_intensity]}
+                                        </Text>
+                                    </div>
+                                }
+                                right={<Text bold>{e.calories_burned} Kcal</Text>}
+                            />
 
                             <Penel padding="15px">
                                 <Text size="sm">{e.content}</Text>
                             </Penel>
-                        </li>
+                        </div>
                     ))}
                 </List>
             </div>

@@ -1,16 +1,18 @@
 'use client';
 
+import { ReactNode } from 'react';
 import useModalStore from '@/shared/store/useModalStore';
 import Modal from './Modal';
-import TodayMoodSheet from '../../modal/TodayMoodSheet';
-import { ReactNode } from 'react';
-import TodayWeightSheet from '../../modal/TodayWeightSheet';
-import CalendarModal from '../../modal/CalendarModal';
-import MealDetailSheet from '../../modal/MealDetailSheet';
-import MealAddFormSheet from '../../modal/MealAddFormSheet';
-import ExerciseAddFormSheet from '../../modal/ExerciseAddFormSheet';
-import ExerciseDetailSheet from '@/components/modal/ExerciseDetailSheet';
-import MealTimeSheet from '@/components/modal/MealTimeSheet';
+import {
+    TodayMoodSheet,
+    TodayWeightSheet,
+    CalendarModal,
+    MealAddFormSheet,
+    MealDetailSheet,
+    MealTimeSheet,
+    ExerciseAddFormSheet,
+    ExerciseDetailSheet,
+} from '@/components/modal';
 
 type Props = {
     modals: Record<ModalKeysType, ReactNode>;

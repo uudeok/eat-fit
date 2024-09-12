@@ -1,0 +1,15 @@
+.calories {
+    text-align: center;
+    padding: 5px;
+}
+
+.nutrients {
+    display: flex;
+    justify-content: space-around;
+}
+
+.nutrientItem {
+    display: flex;
+    gap: 7px;
+    margin-bottom: 20px;
+}

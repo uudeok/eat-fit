@@ -4,8 +4,11 @@ import { useModal } from '@/hooks';
 import Image from 'next/image';
 import { ModalType } from '../common/Modal/Modals';
 import { ListRow, Penel, Text } from '../common';
+import { useCalendarStore } from '@/shared/store/useCalendarStore';
 
 const MoodStatus = () => {
+    /* 선택한 날짜의 해당되는  daily 테이블 가져오기*/
+    const { selectedDate } = useCalendarStore();
     const { onOpen } = useModal(ModalType.todayMood);
 
     return (

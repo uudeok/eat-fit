@@ -3,38 +3,7 @@
     height: 350px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-
+    gap: 15px;
     background-color: var(--mainColor);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.progress {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    align-items: center;
-}
-
-.record {
-    display: flex;
-    justify-content: space-around;
-    gap: 15px;
-}
-
-.recordItem {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-}
-
-.mode {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    /* border-top: 1px solid var(--mainColorDk); */
-    padding-top: 20px;
-
-    cursor: pointer;
 }
