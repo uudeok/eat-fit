@@ -16,10 +16,10 @@ import useMealItemStore from '@/shared/store/useMealItemStore';
 const MealsDetailPage = ({ params: { id } }: { params: { id: string } }) => {
     const router = useRouter();
     const MEALS = [Meals, Meals2, Meals3];
-    const { onOpen } = useModal('mealDetail');
+    const { onOpen: openMealDetail } = useModal('mealDetail');
+    const { onOpen: openTimePicker } = useModal('mealTime');
     const { setSelectedMealItem } = useMealItemStore();
 
-    /* id 에 해당되는 식단 데이터 가져온다 */
     const selectedMeals = MEALS.filter((meal) => meal.id === Number(id));
 
     const totals = useMemo(() => calculateNutrientTotals(selectedMeals), [selectedMeals]);
@@ -30,9 +30,9 @@ const MealsDetailPage = ({ params: { id } }: { params: { id: string } }) => {
         { key: '지방', value: totals?.fat },
     ];
 
-    const handleMealItem = (item: MealType) => {
+    const showMealDetail = (item: MealType) => {
         setSelectedMealItem(item);
-        onOpen();
+        openMealDetail();
     };
 
     return (
@@ -79,14 +79,18 @@ const MealsDetailPage = ({ params: { id } }: { params: { id: string } }) => {
                                 식사 {selectedMeals[0]?.meal.length}
                             </Text>
                         }
-                        right={<Badge>{selectedMeals[0]?.serving_time}</Badge>}
+                        right={
+                            <Badge onClick={() => openTimePicker()}>
+                                {selectedMeals[0]?.serving_time ? selectedMeals[0].serving_time : '시간 입력'}
+                            </Badge>
+                        }
                     />
                 </List>
 
                 {selectedMeals.map((item) => (
                     <div key={item.id}>
                         {item.meal.map((m) => (
-                            <Penel key={m.id} padding="15px" direction="column" onClick={() => handleMealItem(m)}>
+                            <Penel key={m.id} padding="15px" direction="column" onClick={() => showMealDetail(m)}>
                                 <ListRow
                                     left={
                                         <div className={styles.mealInfo}>

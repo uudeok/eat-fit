@@ -2,14 +2,7 @@
     padding: 15px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-}
-
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
+    gap: 25px;
     cursor: pointer;
 }
 

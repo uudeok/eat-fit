@@ -2,15 +2,18 @@
 
 import styles from '@styles/modal/mealAddFormSheet.module.css';
 import { useModal } from '@/hooks';
-import Icons from '@/assets';
 import { useForm } from 'react-hook-form';
 import { Button } from '../common/Button';
-import { Text } from '../common';
+import { Text, Badge, ListCol } from '../common';
 import { BottomSheet } from '../common/Modal';
 import { Input, Textarea } from '../common/Form';
+import { MEALS_TYPE, MealsKeysType } from '@/constants/meals';
+import { useState } from 'react';
+import SheetHeader from '../layout/SheetHeader';
 
 type FormValues = {
     foodName: string;
+    meal_type: MealsKeysType | null;
     calories: string;
     carbohydrate: string;
     protein: string;
@@ -19,10 +22,12 @@ type FormValues = {
 };
 
 const MealAddFormSheet = () => {
+    const [selectedMealType, setSelectedMealType] = useState<MealsKeysType | null>(null);
     const { isOpen, onClose } = useModal('mealAddForm');
-    const { register, handleSubmit } = useForm<FormValues>({
+    const { register, handleSubmit, setValue } = useForm<FormValues>({
         defaultValues: {
             foodName: '',
+            meal_type: null,
             calories: '',
             carbohydrate: '',
             protein: '',
@@ -40,50 +45,74 @@ const MealAddFormSheet = () => {
 
     const onSubmit = handleSubmit((data) => console.log(data));
 
+    const handleMealType = (key: MealsKeysType) => {
+        setValue('meal_type', key);
+        setSelectedMealType(key);
+    };
+
     return (
         <BottomSheet isOpen={isOpen} onClose={onClose}>
             <form onSubmit={onSubmit} className={styles.layout}>
-                <div className={styles.header}>
-                    <Text bold size="xlg">
-                        음식 직접 입력하기
-                    </Text>
-                    <Icons.FillXmark width={24} onClick={onClose} />
-                </div>
+                <SheetHeader content="음식 직접 입력하기" onClose={onClose} />
 
-                <Text bold>음식 이름 (필수)</Text>
-                <Input
-                    register={register}
-                    rules={{ required: true }}
-                    placeholder="음식 이름"
-                    name="foodName"
-                    className={styles.foodNameInput}
+                <ListCol
+                    top={<Text bold>음식 이름 (필수)</Text>}
+                    bottom={
+                        <Input
+                            register={register}
+                            rules={{ required: true }}
+                            placeholder="음식 이름"
+                            name="foodName"
+                            className={styles.foodNameInput}
+                        />
+                    }
                 />
 
-                <Text bold>영양 정보</Text>
+                <ListCol
+                    top={<Text bold>식사 유형 (필수)</Text>}
+                    bottom={
+                        <div className={styles.badgeContainer}>
+                            {Object.entries(MEALS_TYPE).map(([key, label]) => (
+                                <Badge
+                                    key={label}
+                                    onClick={() => handleMealType(key as MealsKeysType)}
+                                    isSelected={selectedMealType === key}
+                                >
+                                    {label}
+                                </Badge>
+                            ))}
+                        </div>
+                    }
+                />
+
                 <div className={styles.nutrientGrid}>
                     {NUTRIENTS.map((nutrient, idx) => (
                         <div key={idx}>
-                            <Text bold>{nutrient.label}</Text>
-                            <div className={styles.inputWithUnit}>
-                                <Input
-                                    register={register}
-                                    name={nutrient.name}
-                                    placeholder="0"
-                                    onInput={(e) => {
-                                        const input = e.target as HTMLInputElement;
-                                        input.value = input.value.replace(/[^0-9.]/g, '');
-                                    }}
-                                />
-                                <Text bold>{nutrient.unit}</Text>
-                            </div>
+                            <ListCol
+                                top={<Text bold>{nutrient.label}</Text>}
+                                bottom={
+                                    <div className={styles.inputWithUnit}>
+                                        <Input
+                                            register={register}
+                                            name={nutrient.name}
+                                            placeholder="0"
+                                            onInput={(e) => {
+                                                const input = e.target as HTMLInputElement;
+                                                input.value = input.value.replace(/[^0-9.]/g, '');
+                                            }}
+                                        />
+                                        <Text bold>{nutrient.unit}</Text>
+                                    </div>
+                                }
+                            />
                         </div>
                     ))}
                 </div>
 
-                <Textarea register={register} name="content" placeholder="간단한 메모를 남겨보세요. (선택)" />
+                <Textarea register={register} name="content" placeholder="예시) 치팅데이 (선택)" />
 
                 <div className={styles.addBtn}>
-                    <Button role="confirm" size="lg">
+                    <Button role="confirm" size="lg" disabled={!selectedMealType}>
                         추가하기
                     </Button>
                 </div>

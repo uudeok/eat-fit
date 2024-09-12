@@ -2,14 +2,7 @@
     padding: 15px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-}
-
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
+    gap: 25px;
     cursor: pointer;
 }
 
@@ -42,7 +35,6 @@
     border: none;
     background-color: transparent;
     outline: none;
-    padding-right: 5px;
     font-size: 18px;
     font-weight: bold;
     width: 100%;
@@ -51,4 +43,12 @@
 .addBtn {
     margin-top: 20px;
     padding: 3px;
+}
+
+.badgeContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+    cursor: pointer;
 }

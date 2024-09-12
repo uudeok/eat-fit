@@ -1,12 +1,23 @@
+import { valueOf } from '@/@types';
+
+export const MEALS_TYPE = {
+    meal: '식사',
+    snack: '간식',
+    night_meal: '야식',
+} as const;
+
+export type MealsKeysType = keyof typeof MEALS_TYPE;
+export type MelasValuesType = valueOf<typeof MEALS_TYPE>;
+
 export type MealsType = {
     id: number;
     daily_id: number;
     user_id: string;
     entry_date: string;
     meal_type: 'meal' | 'snack' | 'night_meal';
-    serving_time: string;
+    serving_time: string | null;
     meal: MealType[];
-    photo_url: string;
+    photo_url: string | null;
 };
 
 export type MealType = {
@@ -26,7 +37,7 @@ export const Meals: MealsType = {
     user_id: 'abc',
     entry_date: '2024-09-05',
     meal_type: 'meal',
-    serving_time: '13:30',
+    serving_time: null,
     photo_url: '/rice.png',
     meal: [
         {

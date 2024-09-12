@@ -1,0 +1,24 @@
+.layout {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 10px;
+    width: 200px;
+    margin: 20px auto;
+}
+
+.timeContainer {
+    display: flex;
+    padding: 5px;
+    width: 110px;
+    margin: 0 auto;
+}
+
+.timeContainer input {
+    text-align: center;
+    font-size: 30px;
+}
+
+.submitBtn {
+    margin-top: 20px;
+}

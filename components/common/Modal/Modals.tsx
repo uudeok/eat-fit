@@ -10,6 +10,7 @@ import MealDetailSheet from '../../modal/MealDetailSheet';
 import MealAddFormSheet from '../../modal/MealAddFormSheet';
 import ExerciseAddFormSheet from '../../modal/ExerciseAddFormSheet';
 import ExerciseDetailSheet from '@/components/modal/ExerciseDetailSheet';
+import MealTimeSheet from '@/components/modal/MealTimeSheet';
 
 type Props = {
     modals: Record<ModalKeysType, ReactNode>;
@@ -23,6 +24,7 @@ export const ModalType = {
     mealAddForm: 'mealAddForm',
     exerciseAddForm: 'exerciseAddForm',
     exerciseDetail: 'exerciseDetail',
+    mealTime: 'mealTime',
 } as const;
 
 export type ModalKeysType = keyof typeof ModalType;
@@ -51,6 +53,7 @@ const Modals = () => (
             mealAddForm: <MealAddFormSheet />,
             exerciseAddForm: <ExerciseAddFormSheet />,
             exerciseDetail: <ExerciseDetailSheet />,
+            mealTime: <MealTimeSheet />,
         }}
     />
 );

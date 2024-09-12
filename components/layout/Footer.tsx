@@ -1,47 +1,42 @@
 'use client';
 
 import styles from '@styles/layout/footer.module.css';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 import Icons from '@/assets';
 import { FooterPaths } from '@/constants';
+import { getFooterPath } from '@/shared/utils';
 
 const FOOTER_MENU = [
     {
         label: 'Home',
-        icon: <Icons.Home width={20} />,
         path: FooterPaths.HOME,
-        selected: <Icons.FillHome width={20} />,
+        notVisited: <Icons.Home width={20} />,
+        visitied: <Icons.FillHome width={20} />,
     },
     {
         label: '카테고리',
-        icon: <Icons.Bar width={20} />,
         path: FooterPaths.CATEGORY,
-        selected: <Icons.FillBar width={20} />,
+        notVisited: <Icons.Bar width={20} />,
+        visitied: <Icons.FillBar width={20} />,
     },
     {
         label: '마이페이지',
-        icon: <Icons.Smile width={20} />,
         path: FooterPaths.MYPAGE,
-        selected: <Icons.FillSmile width={20} />,
+        notVisited: <Icons.Smile width={20} />,
+        visitied: <Icons.FillSmile width={20} />,
     },
 ];
 
 const Footer = () => {
+    const path = usePathname();
     const router = useRouter();
-    const [selectedPath, setSelectedPath] = useState('/');
-
-    const handleRouter = (path: string) => {
-        setSelectedPath(path);
-        router.push(path);
-    };
 
     return (
         <div className={styles.layout}>
             <ul className={styles.footer}>
                 {FOOTER_MENU.map((menu) => (
-                    <li key={menu.label} className={styles.menu} onClick={() => handleRouter(menu.path)}>
-                        {selectedPath === menu.path ? menu.selected : menu.icon}
+                    <li key={menu.label} className={styles.menu} onClick={() => router.push(getFooterPath(menu.path))}>
+                        {path === getFooterPath(menu.path) ? menu.visitied : menu.notVisited}
                         {menu.label}
                     </li>
                 ))}

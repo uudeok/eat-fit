@@ -1,0 +1,46 @@
+.container {
+    display: flex;
+    align-items: center;
+    background-color: var(--grey200);
+
+    border-radius: 20px;
+    padding: 3px;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    font-weight: bold;
+}
+
+.toggleBtn {
+    width: 50%;
+    text-align: center;
+    padding: 6px;
+    border-radius: 20px;
+    position: relative;
+    transition: color 0.3s ease;
+
+    z-index: 1;
+}
+
+.swtich {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+
+    background-color: var(--grey100);
+    border-radius: 20px;
+    transition: transform 0.3s ease;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.leftActive {
+    transform: translateX(0);
+    box-shadow: inset 0px 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.rightActive {
+    transform: translateX(100%);
+    box-shadow: inset 0px 2px 6px rgba(0, 0, 0, 0.2);
+}

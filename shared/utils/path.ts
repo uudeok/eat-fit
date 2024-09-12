@@ -1,3 +1,7 @@
+import { FooterPathValues } from '@/constants';
+
+export const getFooterPath = (path: FooterPathValues) => `/${path}`;
+
 export const getMealPath = (id: number) => `/meals/${id}`;
 export const getMealAddPath = () => '/meals/add';
 
