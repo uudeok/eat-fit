@@ -1,5 +1,7 @@
 'use client';
 
+/* 인분, g 을 수정하는 TextToggle 로직 만들어야함! */
+
 import styles from '@styles/modal/mealDetailSheet.module.css';
 import { useModal } from '@/hooks';
 import { usePathname } from 'next/navigation';
@@ -14,7 +16,11 @@ const MealDetailSheet = () => {
     const pathname = usePathname();
     const { isOpen, onClose } = useModal('mealDetail');
     const { selectedMealItem } = useMealItemStore();
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit } = useForm({
+        defaultValues: {
+            content: selectedMealItem?.content || null,
+        },
+    });
 
     if (!selectedMealItem) return null;
 
@@ -43,7 +49,7 @@ const MealDetailSheet = () => {
                     <Penel key={nutrient.key} direction="column">
                         <ListRow
                             left={
-                                <div className={styles.information}>
+                                <div className={styles.nutrientFigure}>
                                     <Text bold>{nutrient.key}</Text>
                                     <Text bold>
                                         {nutrient.value}
@@ -57,13 +63,13 @@ const MealDetailSheet = () => {
                 ))}
 
                 <Textarea
-                    name="memo"
-                    id="meal-memo"
+                    name="content"
+                    id="meal-content"
                     defaultValue={selectedMealItem.content || ''}
                     register={register}
                 />
 
-                <div className={styles.reviseBtn}>
+                <div className={styles.submitBtn}>
                     <Button role="warning" size="lg">
                         삭제
                     </Button>

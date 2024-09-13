@@ -13,7 +13,7 @@
     cursor: pointer;
 }
 
-.information {
+.nutrientFigure {
     display: flex;
     padding: 10px;
 
@@ -21,11 +21,11 @@
     justify-content: space-between;
 }
 
-.information:hover {
+.nutrientFigure:hover {
     opacity: 0.7;
 }
 
-.reviseBtn {
+.submitBtn {
     display: flex;
     padding: 5px;
     margin-top: 20px;

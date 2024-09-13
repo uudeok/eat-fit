@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation';
 import { useModal } from '@/hooks';
 import useMealItemStore from '@/shared/store/useMealItemStore';
 
-/** maybeSingle 로 해서 배열말고 오브젝트로 받아오면 편할듯! */
+/* maybeSingle 로 해서 배열말고 오브젝트로 받아오면 편할듯! */
 
 const MealsDetailPage = ({ params: { id } }: { params: { id: string } }) => {
     const router = useRouter();
@@ -96,7 +96,7 @@ const MealsDetailPage = ({ params: { id } }: { params: { id: string } }) => {
                                         <div className={styles.mealInfo}>
                                             <Text bold>{m.food_name}</Text>
                                             <Text size="sm" color="var(--grey600)">
-                                                ({m.serving_size}g)
+                                                {m.serving_size ? `${m.serving_size}g` : '자유입력'}
                                             </Text>
                                         </div>
                                     }

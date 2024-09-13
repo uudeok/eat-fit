@@ -20,10 +20,11 @@ export type MealsType = {
     photo_url: string[] | null;
 };
 
+/* serving_size null 값은 사용자가 직접 입력한 경우  */
 export type MealType = {
     id: number;
     food_name: string;
-    serving_size: number;
+    serving_size: number | null;
     calories: number;
     carbohydrate: number;
     protein: number;

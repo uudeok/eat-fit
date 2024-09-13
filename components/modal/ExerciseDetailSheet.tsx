@@ -18,6 +18,7 @@ type FormValues = {
 };
 
 const ExerciseDetailSheet = () => {
+    const { isOpen, onClose } = useModal('exerciseDetail');
     const { selectedExerciseItem } = useExerciseItemStore();
 
     if (!selectedExerciseItem) return null;
@@ -25,13 +26,8 @@ const ExerciseDetailSheet = () => {
     const [selectedIntensity, setSelectedIntensity] = useState<IntensityKeysType>(
         selectedExerciseItem?.exercise_intensity
     );
-    const { isOpen, onClose } = useModal('exerciseDetail');
-    const {
-        register,
-        handleSubmit,
-        setValue,
-        formState: { errors },
-    } = useForm<FormValues>({
+
+    const { register, handleSubmit, setValue } = useForm<FormValues>({
         defaultValues: {
             exerciseName: selectedExerciseItem?.exercise_name,
             exerciseTime: selectedExerciseItem?.duration_minutes.toString(),
@@ -100,6 +96,32 @@ const ExerciseDetailSheet = () => {
                                         <Badge isSelected={key === selectedIntensity}>{label}</Badge>
                                     </div>
                                 ))}
+                            </div>
+                        }
+                    />
+                </Penel>
+
+                <Penel direction="column">
+                    <ListRow
+                        left={
+                            <Text bold size="lg">
+                                소모한 칼로리
+                            </Text>
+                        }
+                        right={
+                            <div className={styles.inputContainer}>
+                                <Input
+                                    register={register}
+                                    name="burnedCalories"
+                                    placeholder="0"
+                                    onInput={(e) => {
+                                        const input = e.target as HTMLInputElement;
+                                        input.value = input.value.replace(/\D/g, '');
+                                    }}
+                                />
+                                <Text bold size="lg">
+                                    kcal
+                                </Text>
                             </div>
                         }
                     />

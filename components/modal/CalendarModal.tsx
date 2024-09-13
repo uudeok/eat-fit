@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { ModalType } from '../common/Modal/Modals';
 import { useCalendarStore } from '@/shared/store/useCalendarStore';
 import { Modal } from '../common/Modal';
-import { Text } from '../common';
+import { ListRow, Text } from '../common';
 import { Button } from '../common/Button';
 
 const CalendarModal = () => {
@@ -31,13 +31,15 @@ const CalendarModal = () => {
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
             <div className={styles.layout}>
-                <div className={styles.controller}>
-                    <Icons.ArrowLeft width={13} onClick={prevMonthController} />
-                    <Text size="xlg" bold>
-                        {curYear}. {curMonth + 1}
-                    </Text>
-                    <Icons.ArrowRight width={13} onClick={nextMonthController} />
-                </div>
+                <ListRow
+                    left={<Icons.ArrowLeft width={13} onClick={prevMonthController} />}
+                    middle={
+                        <Text size="xlg" bold>
+                            {curYear}. {curMonth + 1}
+                        </Text>
+                    }
+                    right={<Icons.ArrowRight width={13} onClick={nextMonthController} />}
+                />
 
                 <table className={styles.table}>
                     <thead>
