@@ -2,43 +2,14 @@
     padding: 15px;
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 20px;
     cursor: pointer;
-}
-
-.exerciseName {
-    background-color: whitesmoke;
-    padding: 15px;
-    border-radius: 5px;
-    outline: none;
-    font-size: 18px;
-    font-weight: bold;
 }
 
 .exerciseGrid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
-
-.inputWithUnit {
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-    background-color: whitesmoke;
-    border-radius: 5px;
-    padding: 8px;
-}
-
-.inputWithUnit input {
-    flex: 1;
-    border: none;
-    background-color: transparent;
-    outline: none;
-    padding-right: 5px;
-    font-size: 18px;
-    font-weight: bold;
-    width: 100%;
+    gap: 15px;
 }
 
 .addBtn {

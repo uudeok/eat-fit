@@ -11,17 +11,18 @@ import { useRouter } from 'next/navigation';
 import { getExerciseAddPage } from '@/shared/utils';
 import { useModal } from '@/hooks';
 import useExerciseItemStore from '@/shared/store/useExerciseItemStore';
+import { ModalType } from './common/Modal/Modals';
 
 const TodayExercises = () => {
     const router = useRouter();
-    const { onOpen } = useModal('exerciseDetail');
+    const { onOpen } = useModal(ModalType.exerciseDetail);
     const { setSelectedExerciseItem } = useExerciseItemStore();
 
     const totals = useMemo(() => calculateExerciseTotals(Exercises), [Exercises]);
 
     const EXERCISES_SUMMARY = [
-        { label: '총 운동 시간', value: totals.totalDuration, unit: '분' },
-        { label: '총 소모량', value: totals.totalCalories, unit: 'kcal' },
+        { label: '총 운동 시간', value: totals.duration_minutes, unit: '분' },
+        { label: '총 소모량', value: totals.calories_burned, unit: 'kcal' },
     ];
 
     const handleExerciseItem = (e: ExerciseType) => {

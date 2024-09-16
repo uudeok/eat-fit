@@ -5,12 +5,13 @@ import { Search, Bubble } from '@/components/common';
 import Icons from '@/assets';
 import { useRouter } from 'next/navigation';
 import { useModal } from '@/hooks';
+import { ModalType } from '@/components/common/Modal/Modals';
 
 /** 즐겨찾기, 최근 입력 기능 추가 예정 */
 
 const MealAddPage = () => {
     const router = useRouter();
-    const { onOpen } = useModal('mealAddForm');
+    const { onOpen } = useModal(ModalType.mealAddForm);
 
     const handleSearch = (inputValue: string) => {
         // 검색 결과를 가지고 API 조회

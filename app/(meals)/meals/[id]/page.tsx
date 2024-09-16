@@ -10,24 +10,24 @@ import { useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { useModal } from '@/hooks';
 import useMealItemStore from '@/shared/store/useMealItemStore';
-
-/* maybeSingle 로 해서 배열말고 오브젝트로 받아오면 편할듯! */
+import { ModalType } from '@/components/common/Modal/Modals';
 
 const MealsDetailPage = ({ params: { id } }: { params: { id: string } }) => {
     const router = useRouter();
     const MEALS = [Meals, Meals2, Meals3];
-    const { onOpen: openMealDetail } = useModal('mealDetail');
-    const { onOpen: openTimePicker } = useModal('mealTime');
+    const { onOpen: openMealDetail } = useModal(ModalType.mealDetail);
+    const { onOpen: openTimePicker } = useModal(ModalType.mealTime);
     const { setSelectedMealItem } = useMealItemStore();
 
     const selectedMeals = MEALS.filter((meal) => meal.id === Number(id));
+    const meals = selectedMeals.map((item) => item.meal).flat();
 
-    const totals = useMemo(() => calculateNutrientTotals(selectedMeals), [selectedMeals]);
+    const nutrientTotals = useMemo(() => calculateNutrientTotals(meals), [meals]);
 
     const NUTRIENTS = [
-        { key: '탄수화물', value: totals?.carbohydrate },
-        { key: '단백질', value: totals?.protein },
-        { key: '지방', value: totals?.fat },
+        { key: '탄수화물', value: nutrientTotals?.carbohydrate },
+        { key: '단백질', value: nutrientTotals?.protein },
+        { key: '지방', value: nutrientTotals?.fat },
     ];
 
     const showMealDetail = (item: MealType) => {
@@ -48,7 +48,7 @@ const MealsDetailPage = ({ params: { id } }: { params: { id: string } }) => {
 
                 <div className={styles.nutrientInfo}>
                     <Text size="xxlg" bold>
-                        {totals?.calories}kcal
+                        {nutrientTotals?.calories}kcal
                     </Text>
 
                     <List className={styles.infoItem}>

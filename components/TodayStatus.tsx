@@ -1,4 +1,4 @@
-import styles from '@styles/component/todayStatus.module.css';
+import styles from '../styles/component/todayStatus.module.css';
 import BurnedCalorieStatus from './status/BurnedCalorieStatus';
 import MoodStatus from './status/MoodStatus';
 import WeightStatus from './status/WeightStatus';

@@ -5,10 +5,11 @@ import Icons from '@/assets';
 import { Search, Bubble } from '@/components/common';
 import { useRouter } from 'next/navigation';
 import { useModal } from '@/hooks';
+import { ModalType } from '@/components/common/Modal/Modals';
 
 const ExerciseAddPage = () => {
     const router = useRouter();
-    const { onOpen } = useModal('exerciseAddForm');
+    const { onOpen } = useModal(ModalType.exerciseAddForm);
 
     const handleSearch = (inputValue: string) => {
         // 검색 결과를 가지고 API 조회

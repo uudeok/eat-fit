@@ -1,3 +1,3 @@
 export * from './string';
-export * from './nutrient';
+export * from './meals';
 export * from './path';

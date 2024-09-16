@@ -8,6 +8,7 @@ import { FieldValues, useForm } from 'react-hook-form';
 import { Button } from '../common/Button';
 import { EXERCISE_INTENSITY_LABELS, IntensityKeysType } from '@/constants';
 import { useState } from 'react';
+import { ModalType } from '../common/Modal/Modals';
 
 type FormValues = {
     exerciseName: string;
@@ -18,7 +19,7 @@ type FormValues = {
 };
 
 const ExerciseDetailSheet = () => {
-    const { isOpen, onClose } = useModal('exerciseDetail');
+    const { isOpen, onClose } = useModal(ModalType.exerciseDetail);
     const { selectedExerciseItem } = useExerciseItemStore();
 
     if (!selectedExerciseItem) return null;

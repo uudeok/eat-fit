@@ -1,7 +1,12 @@
 import { ExercisesType } from '@/constants';
 
 export const calculateExerciseTotals = (exercises: ExercisesType) => {
-    const totalDuration = exercises.exercise.reduce((acc, curr) => acc + curr.duration_minutes, 0);
-    const totalCalories = exercises.exercise.reduce((acc, curr) => acc + curr.calories_burned, 0);
-    return { totalDuration, totalCalories };
+    return exercises.exercise.reduce(
+        (totals, item) => {
+            totals.calories_burned += item.calories_burned;
+            totals.duration_minutes += item.duration_minutes;
+            return totals;
+        },
+        { duration_minutes: 0, calories_burned: 0 }
+    );
 };

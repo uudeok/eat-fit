@@ -8,6 +8,7 @@ import { Input } from '../common/Form';
 import { FieldValues, useForm } from 'react-hook-form';
 import { ListRow, Text } from '../common';
 import { usePathname } from 'next/navigation';
+import { ModalType } from '../common/Modal/Modals';
 
 type FormValues = {
     period: string;
@@ -17,7 +18,7 @@ type FormValues = {
 
 const MealTimeSheet = () => {
     const path = usePathname();
-    const { isOpen, onClose } = useModal('mealTime');
+    const { isOpen, onClose } = useModal(ModalType.mealTime);
     const { register, handleSubmit, setValue } = useForm<FormValues>({
         defaultValues: {
             hour: '',

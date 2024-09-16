@@ -19,7 +19,7 @@ const MoodStatus = () => {
                         오늘의 기분
                     </Text>
                 }
-                right={<Image src="/emotion_fill_good.png" width="30" height="30" alt="emotion_good" />}
+                right={<Image src="/emotion_fill_good.png" width="30" height="30" alt="emoji" />}
             />
         </Penel>
     );

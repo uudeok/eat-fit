@@ -2,6 +2,7 @@ import MainHeader from '@/components/layout/MainHeader';
 import TodaySummary from '@/components/TodaySummary';
 import TodayMeals from '@/components/TodayMeals';
 import TodayExercises from '@/components/TodayExercises';
+import { Meals2 } from '@/constants/meals';
 
 const Home = () => {
     /* 진입 시 */

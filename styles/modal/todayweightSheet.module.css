@@ -1,15 +1,20 @@
-.layout {
-    padding: 20px;
+.inputWithUnit {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 20px;
+    margin-top: 5px;
+    background-color: whitesmoke;
+    border-radius: 5px;
+    padding: 7px;
+
+    border: 1px solid black;
 }
 
-.label input {
-    text-align: center;
-    font-size: 25px;
-
-    box-sizing: border-box;
-    padding: 25px 10px;
+.inputWithUnit input {
+    flex: 1;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    font-size: 20px;
+    font-weight: bold;
+    width: 100%;
 }

@@ -1,7 +1,14 @@
-import { MealsType } from '@/constants/meals';
+import { MealType } from '@/constants/meals';
 
-export const calculateNutrientTotals = (mealData: MealsType[]) => {
-    return mealData[0]?.meal.reduce(
+type NutrientsType = {
+    calories: number;
+    carbohydrate: number;
+    protein: number;
+    fat: number;
+};
+
+export const calculateNutrientTotals = (mealData: MealType[]): NutrientsType => {
+    return mealData.reduce(
         (totals, item) => {
             totals.calories += item.calories;
             totals.carbohydrate += item.carbohydrate;

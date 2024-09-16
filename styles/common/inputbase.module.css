@@ -1,3 +1,21 @@
+.layout {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+    background-color: whitesmoke;
+    border-radius: 5px;
+    padding: 7px;
+}
+
+.layout input {
+    /* flex: 1; */
+    border: none;
+    background-color: transparent;
+    outline: none;
+    font-weight: bold;
+    width: 100%;
+}
+
 .inputBase {
     width: 100%;
     color: var(--grey800);

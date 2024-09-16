@@ -11,11 +11,11 @@
     flex-direction: column;
     align-items: center;
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
+    /* transition: transform 0.2s, box-shadow 0.2s; */
 }
 
 .emotionItem:hover {
-    transform: scale(1.1); /* 마우스 오버 시 약간 커지는 효과 */
+    transform: scale(1.1);
 }
 
 .emotionImage {

@@ -11,10 +11,11 @@ import { BottomSheet } from '../common/Modal';
 import { Text, ProgressBar, ListRow, Penel } from '../common';
 import { Textarea } from '../common/Form';
 import { Button } from '../common/Button';
+import { ModalType } from '../common/Modal/Modals';
 
 const MealDetailSheet = () => {
     const pathname = usePathname();
-    const { isOpen, onClose } = useModal('mealDetail');
+    const { isOpen, onClose } = useModal(ModalType.mealDetail);
     const { selectedMealItem } = useMealItemStore();
     const { register, handleSubmit } = useForm({
         defaultValues: {

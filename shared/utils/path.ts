@@ -7,3 +7,16 @@ export const getMealAddPath = () => '/meals/add';
 
 export const getExercisePath = (id: number) => `/exercise/${id}`;
 export const getExerciseAddPage = () => '/exercise/add';
+
+// const Foodroute = {
+
+// }
+
+// const userRoutes = {
+
+// }
+
+// const routes = [
+//     ...Foodroute,
+//     ...userRoutes
+// ]

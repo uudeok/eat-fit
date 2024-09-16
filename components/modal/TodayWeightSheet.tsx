@@ -1,33 +1,44 @@
 'use client';
 
 import styles from '@styles/modal/todayweightSheet.module.css';
-import { useInput, useModal } from '@/hooks';
-import { Text, InputBase, Label } from '../common';
+import { useModal } from '@/hooks';
+import { Text } from '../common';
 import { BottomSheet } from '../common/Modal';
 import { ModalType } from '../common/Modal/Modals';
 import { Button } from '../common/Button';
+import SheetHeader from '../layout/SheetHeader';
+import { Input } from '../common/Form';
+import { useForm } from 'react-hook-form';
+
+type FormValues = {
+    today_weight: null | number;
+};
 
 const TodayWeightSheet = () => {
     const { isOpen, onClose } = useModal(ModalType.todayWeight);
-    const [value, onChangeInput] = useInput({
-        type: 'weight',
-        integerMaxLength: 3,
+    const { register, handleSubmit } = useForm<FormValues>({
+        defaultValues: {
+            today_weight: null,
+        },
     });
+
+    const onSubmit = handleSubmit((data) => console.log(data));
 
     return (
         <BottomSheet isOpen={isOpen} onClose={onClose}>
-            <div className={styles.layout}>
-                <Text bold size="xxlg">
-                    오늘 체중 입력
-                </Text>
-                <Label className={styles.label}>
-                    <InputBase placeholder="00.00 kg" value={value} onChange={onChangeInput} />
-                </Label>
+            <SheetHeader content="오늘 체중 입력" onClose={onClose} />
 
-                <Button role="confirm" disabled={!value}>
-                    확인
+            <form onSubmit={onSubmit} className={styles.layout}>
+                <div className={styles.inputWithUnit}>
+                    <Input register={register} name="today_weight" placeholder="00.0" type="number" />
+                    <Text size="lg" bold>
+                        kg
+                    </Text>
+                </div>
+                <Button role="confirm" size="lg">
+                    저장
                 </Button>
-            </div>
+            </form>
         </BottomSheet>
     );
 };
