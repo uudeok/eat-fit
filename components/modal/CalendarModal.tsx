@@ -13,7 +13,7 @@ import { Button } from '../common/Button';
 
 const CalendarModal = () => {
     const { isOpen, onClose } = useModal(ModalType.mainCalendar);
-    const { weeks, body, prevMonthController, nextMonthController, curYear, curMonth } = useCalendar();
+    const { weeks, dateCells, prevMonthController, nextMonthController, curYear, curMonth } = useCalendar();
     const { selectedDate, setSelectedDate } = useCalendarStore();
     const [clickedDate, setClickedDate] = useState<Date>(selectedDate);
 
@@ -51,33 +51,33 @@ const CalendarModal = () => {
                     </thead>
 
                     <tbody>
-                        {body.map((rows, index) => (
+                        {dateCells.map((cells, index) => (
                             <tr key={index}>
-                                {rows.map((row) => {
-                                    const isToday = dayjs(row.date).isSame(dayjs(), 'day');
-                                    const isClicked = dayjs(row.date).isSame(clickedDate, 'day');
+                                {cells.map((cell) => {
+                                    const isToday = dayjs(cell.date).isSame(dayjs(), 'day');
+                                    const isClicked = dayjs(cell.date).isSame(clickedDate, 'day');
 
                                     return (
                                         <td
-                                            key={row.value}
-                                            onClick={() => handleDate(row.date)}
+                                            key={cell.value}
+                                            onClick={() => handleDate(cell.date)}
                                             className={styles.date}
                                         >
                                             <button
                                                 className={`${styles.dateCell} ${
-                                                    row.monthLabel !== 'current' && styles.notCurrent
+                                                    cell.monthLabel !== 'current' && styles.notCurrent
                                                 } 
                                                
                                                `}
                                             >
                                                 <Text bold size="sm">
-                                                    {row.date.getDate()}
+                                                    {cell.date.getDate()}
                                                 </Text>
 
                                                 {isClicked && <div className={styles.bubble}>선택</div>}
                                             </button>
 
-                                            {isToday && row.monthLabel === 'current' && (
+                                            {isToday && cell.monthLabel === 'current' && (
                                                 <Text size="xsm" color="var(--grey500)">
                                                     오늘
                                                 </Text>

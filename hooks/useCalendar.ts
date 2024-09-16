@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import dayjs from 'dayjs';
-import { MONTH_LABEL, MONTH_LABEL_VALUES } from '@/constants';
+import { DATE_FORMAT, MONTH_LABEL, MONTH_LABEL_VALUES, WEEKS, WeekLabels } from '@/constants';
 import { useCalendarStore } from '@/shared/store/useCalendarStore';
 
 export type DateCell = {
@@ -11,28 +11,20 @@ export type DateCell = {
     monthLabel: MONTH_LABEL_VALUES;
 };
 
-export type WeekLabels = {
-    ko: string[];
-    en: string[];
-};
-
 const TOTAL_DAYS = 42;
 
 export const useCalendar = () => {
     const { selectedDate, setSelectedDate } = useCalendarStore();
-    const [body, setBody] = useState<DateCell[][]>([]);
+    const [dateCells, setDateCells] = useState<DateCell[][]>([]);
     const [curYear, setCurYear] = useState(new Date().getFullYear());
     const [curMonth, setCurMonth] = useState(new Date().getMonth());
-    const [weeks, setWeeks] = useState<WeekLabels>({
-        ko: ['일', '월', '화', '수', '목', '금', '토'],
-        en: ['Sun', 'Mon', 'Tue', 'Wed', 'Thr', 'Fri', 'Sat'],
-    });
+    const [weeks, setWeeks] = useState<WeekLabels>(WEEKS);
 
-    const prevDateController = useCallback(() => {
+    const prevDateController = useCallback((): void => {
         setSelectedDate(new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate() - 1));
     }, [selectedDate]);
 
-    const nextDateController = useCallback(() => {
+    const nextDateController = useCallback((): void => {
         setSelectedDate(new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate() + 1));
     }, [selectedDate]);
 
@@ -83,7 +75,7 @@ export const useCalendar = () => {
                 dateCell = 1;
             }
 
-            const formattedDate = dayjs(new Date(curYear, month, dateCell)).format('YYYY-MM-DD');
+            const formattedDate = dayjs(new Date(curYear, month, dateCell)).format(DATE_FORMAT['YYYY-MM-DD']);
 
             cells.push({ date: new Date(curYear, month, dateCell), value: formattedDate, monthLabel: monthLabel });
 
@@ -97,7 +89,7 @@ export const useCalendar = () => {
             rows.push(row);
         }
 
-        setBody(rows);
+        setDateCells(rows);
     }, [curMonth, curYear]);
 
     useEffect(() => {
@@ -108,7 +100,7 @@ export const useCalendar = () => {
         prevDateController,
         nextDateController,
         weeks,
-        body,
+        dateCells,
         prevMonthController,
         nextMonthController,
         curYear,

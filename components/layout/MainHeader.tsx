@@ -10,6 +10,7 @@ import { List, ListRow, Text } from '../common';
 import dayjs from 'dayjs';
 import { useCalendarStore } from '@/shared/store/useCalendarStore';
 import 'dayjs/locale/ko';
+import { DATE_FORMAT } from '@/constants';
 dayjs.locale('ko');
 
 const MainHeader = () => {
@@ -17,8 +18,8 @@ const MainHeader = () => {
     const { nextDateController, prevDateController } = useCalendar();
     const { selectedDate } = useCalendarStore();
 
-    const dateLabel = dayjs(selectedDate).format('M.D');
-    const dayOfWeek = dayjs(selectedDate).format('ddd');
+    const dateLabel = dayjs(selectedDate).format(DATE_FORMAT['M.D']);
+    const dayOfWeek = dayjs(selectedDate).format(DATE_FORMAT.ddd);
     const isToday = dayjs(selectedDate).isSame(dayjs(), 'day');
 
     return (
