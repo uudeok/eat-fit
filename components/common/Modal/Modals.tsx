@@ -1,7 +1,7 @@
 'use client';
 
 import { ReactNode } from 'react';
-import useModalStore from '@/shared/store/useModalStore';
+import { useModalStore } from '@/shared/store/useModalStore';
 import Modal from './Modal';
 import {
     TodayMoodSheet,

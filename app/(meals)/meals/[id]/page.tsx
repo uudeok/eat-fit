@@ -9,7 +9,7 @@ import { calculateNutrientTotals } from '@/shared/utils';
 import { useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { useModal } from '@/hooks';
-import useMealItemStore from '@/shared/store/useMealItemStore';
+import { useMealItemStore } from '@/shared/store/useMealItemStore';
 import { ModalType } from '@/components/common/Modal/Modals';
 
 const MealsDetailPage = ({ params: { id } }: { params: { id: string } }) => {

@@ -8,11 +8,9 @@ type ModalStore = {
     closeModal: () => void;
 };
 
-const useModalStore = create<ModalStore>((set) => ({
+export const useModalStore = create<ModalStore>((set) => ({
     modalType: null,
     isOpen: false,
     openModal: (type: ModalKeysType) => set({ modalType: type, isOpen: true }),
     closeModal: () => set({ modalType: null, isOpen: false }),
 }));
-
-export default useModalStore;

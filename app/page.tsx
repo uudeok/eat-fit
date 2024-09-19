@@ -1,22 +1,58 @@
-import MainHeader from '@/components/layout/MainHeader';
-import TodaySummary from '@/components/TodaySummary';
-import TodayMeals from '@/components/TodayMeals';
-import TodayExercises from '@/components/TodayExercises';
-import { Meals2 } from '@/constants/meals';
+import styles from '@styles/component/welcome.module.css';
+import { createClient } from '@/shared/utils/supabase/server';
+import { Session } from '@supabase/supabase-js';
+import Image from 'next/image';
+import { redirect } from 'next/navigation';
 
-const Home = () => {
-    /* 진입 시 */
-    /* goal 테이블에서 user_id 로 진행중인 목표가 있는 조회 (goal_status : progress) */
-    /* goal_id 를 저장 */
+const fetchInitialSession = async (): Promise<Session | null> => {
+    const supabase = createClient();
+    const {
+        data: { session },
+    } = await supabase.auth.getSession();
+
+    return session;
+};
+
+const WelcomePage = async () => {
+    const session = await fetchInitialSession();
+
+    if (session) {
+        /// goals data
+    } else {
+        redirect('/login');
+    }
 
     return (
-        <>
-            <MainHeader />
-            <TodaySummary />
-            <TodayMeals />
-            <TodayExercises />
-        </>
+        <div className={styles.layout}>
+            <div className={styles.imageWrapper}>
+                <Image src="/eatfit1.png" alt="main img" width={150} height={150} priority />
+            </div>
+            <div className={styles.textWrapper}>
+                <p className={styles.title}>EAT-FIT</p>
+            </div>
+        </div>
     );
 };
 
-export default Home;
+export default WelcomePage;
+
+// import Welcome from '@/components/Welcome';
+// import { createClient } from '@/shared/utils/supabase/server';
+// import { Session } from '@supabase/supabase-js';
+
+// const fetchInitialSession = async (): Promise<Session | null> => {
+//     const supabase = createClient();
+//     const {
+//         data: { session },
+//     } = await supabase.auth.getSession();
+
+//     return session;
+// };
+
+// const WelcomePage = async () => {
+//     const session = await fetchInitialSession();
+
+//     return <Welcome session={session} />;
+// };
+
+// export default WelcomePage;

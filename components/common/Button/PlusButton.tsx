@@ -5,7 +5,7 @@ import { CSSProperties, useState } from 'react';
 import Icons from '@/assets';
 
 type Props = {
-    onClick: () => void;
+    onClick?: () => void;
     size?: 'sm' | 'md' | 'lg';
     backgroundColor?: CSSProperties['backgroundColor'];
     color?: string;
@@ -16,7 +16,7 @@ const PlusButton = ({ onClick, size = 'md', color, backgroundColor }: Props) => 
 
     const handleClick = () => {
         setIsActive((prev) => !prev);
-        onClick();
+        onClick && onClick();
     };
 
     return (

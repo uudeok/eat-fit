@@ -7,10 +7,8 @@ type ExerciseItemState = {
     clearSelectedExerciseItem: () => void;
 };
 
-const useExerciseItemStore = create<ExerciseItemState>((set) => ({
+export const useExerciseItemStore = create<ExerciseItemState>((set) => ({
     selectedExerciseItem: null,
     setSelectedExerciseItem: (item) => set({ selectedExerciseItem: item }),
     clearSelectedExerciseItem: () => set({ selectedExerciseItem: null }),
 }));
-
-export default useExerciseItemStore;

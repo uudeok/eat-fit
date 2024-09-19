@@ -2,7 +2,7 @@ import styles from '@styles/modal/exerciseDetailSheet.module.css';
 import { useModal } from '@/hooks';
 import { BottomSheet } from '../common/Modal';
 import { Badge, ListRow, Penel, Text } from '../common';
-import useExerciseItemStore from '@/shared/store/useExerciseItemStore';
+import { useExerciseItemStore } from '@/shared/store/useExerciseItemStore';
 import { Input, Textarea } from '../common/Form';
 import { FieldValues, useForm } from 'react-hook-form';
 import { Button } from '../common/Button';

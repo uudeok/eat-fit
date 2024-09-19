@@ -5,7 +5,7 @@
 import styles from '@styles/modal/mealDetailSheet.module.css';
 import { useModal } from '@/hooks';
 import { usePathname } from 'next/navigation';
-import useMealItemStore from '@/shared/store/useMealItemStore';
+import { useMealItemStore } from '@/shared/store/useMealItemStore';
 import { FieldValues, useForm } from 'react-hook-form';
 import { BottomSheet } from '../common/Modal';
 import { Text, ProgressBar, ListRow, Penel } from '../common';

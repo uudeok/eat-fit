@@ -1,5 +1,5 @@
 import { ModalKeysType } from '@/components/common/Modal/Modals';
-import useModalStore from '@/shared/store/useModalStore';
+import { useModalStore } from '@/shared/store/useModalStore';
 
 export const useModal = (type: ModalKeysType) => {
     const { modalType, isOpen, openModal, closeModal } = useModalStore();

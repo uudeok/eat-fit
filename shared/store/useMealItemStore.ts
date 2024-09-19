@@ -7,10 +7,8 @@ type MealItemState = {
     clearSelectedMealItem: () => void;
 };
 
-const useMealItemStore = create<MealItemState>((set) => ({
+export const useMealItemStore = create<MealItemState>((set) => ({
     selectedMealItem: null,
     setSelectedMealItem: (item) => set({ selectedMealItem: item }),
     clearSelectedMealItem: () => set({ selectedMealItem: null }),
 }));
-
-export default useMealItemStore;

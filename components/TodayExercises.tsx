@@ -10,7 +10,7 @@ import { useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { getExerciseAddPage } from '@/shared/utils';
 import { useModal } from '@/hooks';
-import useExerciseItemStore from '@/shared/store/useExerciseItemStore';
+import { useExerciseItemStore } from '@/shared/store/useExerciseItemStore';
 import { ModalType } from './common/Modal/Modals';
 
 const TodayExercises = () => {

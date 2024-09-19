@@ -12,7 +12,7 @@ const Login = () => {
         const { error } = await supabase.auth.signInWithOAuth({
             provider: provider,
             options: {
-                redirectTo: getBaseUrl(),
+                redirectTo: 'http://localhost:3000/goals',
             },
         });
 
