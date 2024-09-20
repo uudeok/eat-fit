@@ -4,7 +4,7 @@ import styles from '@styles/modal/todayweightSheet.module.css';
 import { useModal } from '@/hooks';
 import { Text } from '../common';
 import { BottomSheet } from '../common/Modal';
-import { ModalType } from '../common/Modal/Modals';
+import { ModalType } from '../common/Modal/OverlayContainer';
 import { Button } from '../common/Button';
 import SheetHeader from '../layout/SheetHeader';
 import { Input } from '../common/Form';

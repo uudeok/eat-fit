@@ -5,7 +5,7 @@ import { Search, Bubble } from '@/components/common';
 import Icons from '@/assets';
 import { useRouter } from 'next/navigation';
 import { useModal } from '@/hooks';
-import { ModalType } from '@/components/common/Modal/Modals';
+import { ModalType } from '@/components/common/Modal/OverlayContainer';
 
 /** 즐겨찾기, 최근 입력 기능 추가 예정 */
 

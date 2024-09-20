@@ -1,4 +1,4 @@
-import { GoalStatusType, GoalsType } from '@/service/@types/req.type';
+import { GoalStatusType } from '@/service/@types/req.type';
 import { SupabaseClient } from '@supabase/supabase-js';
 
 export function fetchGoalsByStatus(client: SupabaseClient, user_id: string, status: GoalStatusType) {

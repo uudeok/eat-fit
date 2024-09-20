@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation';
 import { getExerciseAddPage } from '@/shared/utils';
 import { useModal } from '@/hooks';
 import { useExerciseItemStore } from '@/shared/store/useExerciseItemStore';
-import { ModalType } from './common/Modal/Modals';
+import { ModalType } from './common/Modal/OverlayContainer';
 
 const TodayExercises = () => {
     const router = useRouter();

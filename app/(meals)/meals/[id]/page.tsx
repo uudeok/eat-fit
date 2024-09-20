@@ -10,7 +10,7 @@ import { useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { useModal } from '@/hooks';
 import { useMealItemStore } from '@/shared/store/useMealItemStore';
-import { ModalType } from '@/components/common/Modal/Modals';
+import { ModalType } from '@/components/common/Modal/OverlayContainer';
 
 const MealsDetailPage = ({ params: { id } }: { params: { id: string } }) => {
     const router = useRouter();

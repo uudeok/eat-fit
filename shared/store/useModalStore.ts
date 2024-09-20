@@ -1,4 +1,4 @@
-import { ModalKeysType } from '@/components/common/Modal/Modals';
+import { ModalKeysType } from '@/components/common/Modal/OverlayContainer';
 import { create } from 'zustand';
 
 type ModalStore = {

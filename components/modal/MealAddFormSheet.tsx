@@ -10,7 +10,7 @@ import { Input, Textarea } from '../common/Form';
 import { MEALS_TYPE, MealsKeysType } from '@/constants/meals';
 import { useState } from 'react';
 import SheetHeader from '../layout/SheetHeader';
-import { ModalType } from '../common/Modal/Modals';
+import { ModalType } from '../common/Modal/OverlayContainer';
 
 type FormValues = {
     foodName: string;

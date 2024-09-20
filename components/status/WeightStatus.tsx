@@ -1,6 +1,6 @@
 import { useModal } from '@/hooks';
 import { ListRow, Penel, Text } from '../common';
-import { ModalType } from '../common/Modal/Modals';
+import { ModalType } from '../common/Modal/OverlayContainer';
 import { useCalendarStore } from '@/shared/store/useCalendarStore';
 
 const WeightStatus = () => {

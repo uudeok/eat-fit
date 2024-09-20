@@ -4,7 +4,7 @@ import styles from '@styles/layout/mainHeader.module.css';
 import Icons from '@/assets';
 import Image from 'next/image';
 import { useCalendar, useModal } from '@/hooks';
-import { ModalType } from '../common/Modal/Modals';
+import { ModalType } from '../common/Modal/OverlayContainer';
 import { Alarm, List, ListRow, Text } from '../common';
 import dayjs from 'dayjs';
 import { useCalendarStore } from '@/shared/store/useCalendarStore';

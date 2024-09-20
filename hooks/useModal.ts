@@ -1,4 +1,4 @@
-import { ModalKeysType } from '@/components/common/Modal/Modals';
+import { ModalKeysType } from '@/components/common/Modal/OverlayContainer';
 import { useModalStore } from '@/shared/store/useModalStore';
 
 export const useModal = (type: ModalKeysType) => {

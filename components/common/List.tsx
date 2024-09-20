@@ -38,9 +38,9 @@ export const ListRow = ({ left, right, middle, className }: ListRowProps) => {
     );
 };
 
-export const ListCol = ({ top, middle, bottom }: ListColProps) => {
+export const ListCol = ({ top, middle, bottom, ...props }: ListColProps) => {
     return (
-        <li className={styles.column}>
+        <li className={styles.column} {...props}>
             {top}
             {middle}
             {bottom}

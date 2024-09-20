@@ -2,7 +2,7 @@
 
 import styles from '@styles/modal/todaymodeSheet.module.css';
 import { useModal } from '@/hooks';
-import { ModalType } from '../common/Modal/Modals';
+import { ModalType } from '../common/Modal/OverlayContainer';
 import { Button } from '../common/Button';
 import { Emotions, Text } from '../common';
 import { BottomSheet } from '../common/Modal';

@@ -11,7 +11,7 @@ import { BottomSheet } from '../common/Modal';
 import { Text, ProgressBar, ListRow, Penel } from '../common';
 import { Textarea } from '../common/Form';
 import { Button } from '../common/Button';
-import { ModalType } from '../common/Modal/Modals';
+import { ModalType } from '../common/Modal/OverlayContainer';
 
 const MealDetailSheet = () => {
     const pathname = usePathname();

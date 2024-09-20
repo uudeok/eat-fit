@@ -2,7 +2,7 @@
 
 import { useModal } from '@/hooks';
 import Image from 'next/image';
-import { ModalType } from '../common/Modal/Modals';
+import { ModalType } from '../common/Modal/OverlayContainer';
 import { ListRow, Penel, Text } from '../common';
 import { useCalendarStore } from '@/shared/store/useCalendarStore';
 

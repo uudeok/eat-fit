@@ -8,7 +8,7 @@ import { FieldValues, useForm } from 'react-hook-form';
 import { Button } from '../common/Button';
 import { EXERCISE_INTENSITY_LABELS, IntensityKeysType } from '@/constants';
 import { useState } from 'react';
-import { ModalType } from '../common/Modal/Modals';
+import { ModalType } from '../common/Modal/OverlayContainer';
 
 type FormValues = {
     exerciseName: string;

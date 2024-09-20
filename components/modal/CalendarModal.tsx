@@ -5,7 +5,7 @@ import { useCalendar, useModal } from '@/hooks';
 import Icons from '@/assets';
 import dayjs from 'dayjs';
 import { useState } from 'react';
-import { ModalType } from '../common/Modal/Modals';
+import { ModalType } from '../common/Modal/OverlayContainer';
 import { useCalendarStore } from '@/shared/store/useCalendarStore';
 import { Modal } from '../common/Modal';
 import { ListRow, Text } from '../common';

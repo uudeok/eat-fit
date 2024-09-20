@@ -12,6 +12,7 @@ import {
     MealTimeSheet,
     ExerciseAddFormSheet,
     ExerciseDetailSheet,
+    WelcomeModal,
 } from '@/components/modal';
 
 type Props = {
@@ -27,6 +28,7 @@ export const ModalType = {
     exerciseAddForm: 'exerciseAddForm',
     exerciseDetail: 'exerciseDetail',
     mealTime: 'mealTime',
+    welcome: 'welcome',
 } as const;
 
 export type ModalKeysType = keyof typeof ModalType;
@@ -45,7 +47,7 @@ const Switch = ({ modals }: Props) => {
     );
 };
 
-const Modals = () => (
+const OverlayContainer = () => (
     <Switch
         modals={{
             todayMood: <TodayMoodSheet />,
@@ -56,8 +58,9 @@ const Modals = () => (
             exerciseAddForm: <ExerciseAddFormSheet />,
             exerciseDetail: <ExerciseDetailSheet />,
             mealTime: <MealTimeSheet />,
+            welcome: <WelcomeModal />,
         }}
     />
 );
 
-export default Modals;
+export default OverlayContainer;

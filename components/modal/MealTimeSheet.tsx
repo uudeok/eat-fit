@@ -8,7 +8,7 @@ import { Input } from '../common/Form';
 import { FieldValues, useForm } from 'react-hook-form';
 import { ListRow, Text } from '../common';
 import { usePathname } from 'next/navigation';
-import { ModalType } from '../common/Modal/Modals';
+import { ModalType } from '../common/Modal/OverlayContainer';
 
 type FormValues = {
     period: string;

@@ -5,7 +5,7 @@ import Icons from '@/assets';
 import { Search, Bubble } from '@/components/common';
 import { useRouter } from 'next/navigation';
 import { useModal } from '@/hooks';
-import { ModalType } from '@/components/common/Modal/Modals';
+import { ModalType } from '@/components/common/Modal/OverlayContainer';
 
 const ExerciseAddPage = () => {
     const router = useRouter();
