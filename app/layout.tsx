@@ -1,7 +1,7 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { Modals } from '@/components/common/Modal';
-import ConditionalLayout from '@/components/layout/\bConditionalLayout';
+import DynamicLayout from '@/components/layout/DynamicLayout';
 import AuthProvider from '@/shared/context/AuthProvider';
 import QueryProvider from '@/shared/context/QueryProvider';
 
@@ -16,7 +16,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <body>
                 <QueryProvider>
                     <AuthProvider>
-                        <ConditionalLayout>{children}</ConditionalLayout>
+                        <DynamicLayout>{children}</DynamicLayout>
                     </AuthProvider>
                 </QueryProvider>
                 <Modals />

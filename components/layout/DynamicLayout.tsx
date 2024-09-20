@@ -11,7 +11,7 @@ const layouts = {
 } as const;
 
 const layoutConfig = {
-    primaryLayout: ['/login', '/goals'],
+    primaryLayout: ['/login', '/goals'], // "/" 도 포함임
     footerLayout: ['/home', '/meals', '/exercise', '/my', '/category'],
 } as const;
 
@@ -29,7 +29,7 @@ const getLayoutKey = (pathname: string) => {
     return 'primaryLayout';
 };
 
-const ConditionalLayout = ({ children }: { children: ReactNode }) => {
+const DynamicLayout = ({ children }: { children: ReactNode }) => {
     const pathname = usePathname();
 
     const layoutKey = getLayoutKey(pathname) as LayoutKeysType;
@@ -38,4 +38,4 @@ const ConditionalLayout = ({ children }: { children: ReactNode }) => {
     return <LayoutComponent>{children}</LayoutComponent>;
 };
 
-export default ConditionalLayout;
+export default DynamicLayout;

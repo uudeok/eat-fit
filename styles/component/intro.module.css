@@ -5,17 +5,24 @@
     align-items: center;
     text-align: center;
     height: 100%;
-    background: linear-gradient(135deg, #a2c2e6, #6e8cc0); /* 그라디언트 배경 */
+    background: linear-gradient(135deg, #a2c2e6, #6e8cc0);
     overflow-y: hidden;
+
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.layout.fade-out {
+    opacity: 0;
 }
 
 .imageWrapper {
     margin-bottom: 20px;
-    animation: scaleIn 4s ease-in-out infinite; /* 애니메이션을 무한히 반복, 지속 시간 증가 */
+    animation: scaleIn 4s ease-in-out infinite;
 }
 
 .textWrapper {
-    animation: fadeInUp 4s ease-out infinite; /* 애니메이션을 무한히 반복, 지속 시간 증가 */
+    animation: fadeInUp 4s ease-out infinite;
 }
 
 .title {
@@ -32,7 +39,7 @@
     }
     50% {
         opacity: 1;
-        transform: scale(1.1); /* 중간에 조금 더 크게 */
+        transform: scale(1.1);
     }
     100% {
         opacity: 1;
@@ -47,7 +54,7 @@
     }
     50% {
         opacity: 1;
-        transform: translateY(-10px); /* 중간에 조금 더 위로 */
+        transform: translateY(-10px);
     }
     100% {
         opacity: 1;

@@ -1,9 +1,7 @@
+import GoalRegister from '@/components/GoalRegister';
+
 const GoalRegisterPage = () => {
-    return (
-        <div>
-            <div>goal register page</div>
-        </div>
-    );
+    return <GoalRegister />;
 };
 
 export default GoalRegisterPage;
