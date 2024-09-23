@@ -4,6 +4,6 @@ type Users = {
     id: string;
     avatar_url: string | null;
     expose: 'privacy' | 'public' | 'follower'; // default public
-    role: 'admin' | 'user';
+    role: 'admin' | 'general' | 'manager';
     theme: 'light' | 'dark'; // default light
 };

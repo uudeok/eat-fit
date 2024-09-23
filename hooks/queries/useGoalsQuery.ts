@@ -9,7 +9,7 @@ export function useGoalsByStatus(userId: string, status: GoalStatusType) {
     const queryKey = ['goalsByStatus', userId, status];
 
     const queryFn = async () => {
-        return fetchGoalsByStatus(client, userId, status).then((result) => result.data);
+        return fetchGoalsByStatus(userId, status).then((result) => result.data);
     };
 
     return useQuery({ queryKey, queryFn });

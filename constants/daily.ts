@@ -1,6 +1,14 @@
 import { EmojiKey } from './emotion';
 import { GoalsType } from '@/service/@types/req.type';
 
+export const ACTIVITY_LEVEL = {
+    very_low: 1.2,
+    low: 1.375,
+    moderate: 1.55,
+    high: 1.725,
+    very_high: 1.9,
+};
+
 type DailyType = {
     id: number;
     goal_id: number;
@@ -18,9 +26,8 @@ const Goal: GoalsType = {
     age: 29,
     height: 170,
     weight: 60,
-    activity_level: 1,
+    activity_level: 'moderate',
     terget_weight: 55,
-    goal: 'loss',
     daily_calories: 2500,
     goal_period: 30,
     goal_start_date: '2024-09-04',
@@ -55,10 +62,3 @@ const Daily3: DailyType = {
     today_weight: null,
     mood: null,
 };
-
-// 1. 로그인 후 정보 입력 하면 Goal 테이블 생성 된다.
-// 2. 현재 생각 : Goal 테이블이 생성될때 goal 데이터를 브라우저 저장소(로컬, 세션스토리지, 쿠키) 에 저장
-// 3. 사용자가 오늘의 기분, 몸무게 등을 설정할때 Daily 테이블 생성 된다.
-
-// 접속하면 유저 id 로 현재 goal_status : progress 인 goal 테이블을 찾는다
-// 해당 goal_id 를 저장한다

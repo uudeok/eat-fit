@@ -18,4 +18,7 @@ export const DATE_FORMAT = {
     'YYYY-MM-DD': 'YYYY-MM-DD',
     'M.D': 'M.D',
     ddd: 'ddd',
+    'KYYYY-MM-DD': 'YYYY년 M월 D일',
+    'YY.MM.DD': 'YY.M.D',
+    'KYY.MM.DD': 'YY년 MM월 DD일',
 } as const;

@@ -6,4 +6,4 @@ export { default as MealDetailSheet } from './MealDetailSheet';
 export { default as MealTimeSheet } from './MealTimeSheet';
 export { default as TodayMoodSheet } from './TodayMoodSheet';
 export { default as TodayWeightSheet } from './TodayWeightSheet';
-export { default as WelcomeModal } from './WelcomeModal';
+export { default as CalorieEditSheet } from './CalorieEditSheet';

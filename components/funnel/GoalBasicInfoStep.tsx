@@ -6,18 +6,12 @@ import { ListCol, Text } from '../common';
 import Image from 'next/image';
 import { Input } from '../common/Form';
 import { useForm } from 'react-hook-form';
-import { ActivityLevelType, GenderType } from '@/service/@types/req.type';
+import { ActivityLevelType, BasicInfoType, GenderType, GoalRegisterType } from '@/service/@types/req.type';
 import { useState } from 'react';
-
-type FormValues = {
-    gender: GenderType | null;
-    age: number | null;
-    height: number | null;
-    activity_level: ActivityLevelType | null;
-};
+import { ageValidation, heightValidation } from '@/shared/utils';
 
 type Props = {
-    onNext: () => void;
+    onNext: (data: BasicInfoType) => void;
 };
 
 const GENDER = [
@@ -33,15 +27,26 @@ const ACTIVITY_LEVEL = [
     { key: 'very_high', value: '매우 많음', emj: '/very_high.png', content: '육체노동 혹은 매일 땀흘리면서 운동해' },
 ];
 
-const UserBasicInfo = ({ onNext }: Props) => {
-    const [selectedGender, setSelectedGender] = useState<GenderType | null>(null);
-    const [selectedActivityLevel, setSelectedActivityLevel] = useState<ActivityLevelType | null>(null);
-    const { register, handleSubmit, setValue } = useForm<FormValues>({
+const GoalBasicInfoStep = ({ onNext }: Props) => {
+    const storedData = localStorage.getItem('goalData');
+    const initialData: GoalRegisterType | null = storedData ? JSON.parse(storedData) : null;
+
+    const [selectedGender, setSelectedGender] = useState<GenderType | null>(initialData?.gender || null);
+    const [selectedActivityLevel, setSelectedActivityLevel] = useState<ActivityLevelType | null>(
+        initialData?.activity_level || null
+    );
+
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        formState: { errors },
+    } = useForm<BasicInfoType>({
         defaultValues: {
-            gender: null,
-            age: null,
-            height: null,
-            activity_level: null,
+            gender: initialData ? initialData.gender : 'F',
+            age: initialData ? initialData.age : 0,
+            height: initialData ? initialData.height : 0,
+            activity_level: initialData ? initialData.activity_level : 'moderate',
         },
     });
 
@@ -49,10 +54,13 @@ const UserBasicInfo = ({ onNext }: Props) => {
         if (!selectedGender || !selectedActivityLevel) {
             return;
         }
+        const goalData = {
+            ...initialData,
+            ...data,
+        };
+        localStorage.setItem('goalData', JSON.stringify(goalData));
 
-        console.log(data);
-
-        onNext();
+        onNext(data);
     });
 
     const handleGenderSelect = (gender: GenderType) => {
@@ -74,7 +82,7 @@ const UserBasicInfo = ({ onNext }: Props) => {
             </div>
 
             <ListCol
-                top={<Text>성별</Text>}
+                top={<Text bold>성별</Text>}
                 bottom={
                     <div className={styles.genderSelect}>
                         {GENDER.map((g) => (
@@ -88,6 +96,7 @@ const UserBasicInfo = ({ onNext }: Props) => {
                                     alt={g.key}
                                     width={100}
                                     height={100}
+                                    priority
                                 />
                                 <Text bold color="var(--grey600)">
                                     {g.value}
@@ -99,41 +108,59 @@ const UserBasicInfo = ({ onNext }: Props) => {
             />
 
             <ListCol
-                top={<Text>나이</Text>}
+                top={<Text bold>나이</Text>}
                 bottom={
                     <Input
+                        type="number"
                         register={register}
                         name="age"
                         placeholder="0"
                         unit="세"
-                        rules={{ required: true }}
-                        onInput={(e) => {
-                            const input = e.target as HTMLInputElement;
-                            input.value = input.value.replace(/\D/g, '');
+                        rules={{
+                            required: '나이를 입력해주세요',
+                            min: {
+                                value: 10,
+                                message: '최소 두자리 이상부터 입력 가능합니다',
+                            },
+                            max: {
+                                value: 100,
+                                message: '100살 이하로 입력 가능합니다',
+                            },
                         }}
+                        errors={errors}
+                        onInput={ageValidation}
                     />
                 }
             />
 
             <ListCol
-                top={<Text>키</Text>}
+                top={<Text bold>키</Text>}
                 bottom={
                     <Input
+                        type="number"
                         register={register}
                         name="height"
                         placeholder="0"
                         unit="cm"
-                        rules={{ required: true }}
-                        onInput={(e) => {
-                            const input = e.target as HTMLInputElement;
-                            input.value = input.value.replace(/[^0-9.]/g, '');
+                        rules={{
+                            required: '키를 입력해주세요',
+                            min: {
+                                value: 100,
+                                message: '최소 100cm 이상 입력 가능합니다',
+                            },
+                            max: {
+                                value: 230,
+                                message: '230cm 이하로 입력 가능합니다',
+                            },
                         }}
+                        errors={errors}
+                        onInput={heightValidation}
                     />
                 }
             />
 
             <ListCol
-                top={<Text>활동량</Text>}
+                top={<Text bold>활동량</Text>}
                 bottom={
                     <div className={styles.activity}>
                         {ACTIVITY_LEVEL.map((act) => (
@@ -166,4 +193,4 @@ const UserBasicInfo = ({ onNext }: Props) => {
     );
 };
 
-export default UserBasicInfo;
+export default GoalBasicInfoStep;

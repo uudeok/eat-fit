@@ -19,3 +19,24 @@ export type GoalsType = {
     updated_at: string;
     created_at: string;
 };
+
+export type BasicInfoType = {
+    gender: GenderType;
+    age: number;
+    height: number;
+    activity_level: ActivityLevelType;
+};
+
+export type WeightInfoType = {
+    weight: number;
+    target_weight: number;
+};
+
+export type SuggestionGoalType = {
+    daily_calories: number;
+    goal_start_date: Date;
+    goal_end_date: Date;
+    goal_period: number;
+};
+
+export type GoalRegisterType = BasicInfoType & WeightInfoType & SuggestionGoalType;

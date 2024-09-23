@@ -14,14 +14,13 @@ export type MealsType = {
     daily_id: number;
     user_id: string;
     entry_date: string;
-    meal_type: 'meal' | 'snack' | 'night_meal';
+    meal_type: MealsKeysType;
     serving_time: string | null;
-    meal: MealType[];
+    meal: MealItemType[];
     photo_url: string[] | null;
 };
 
-/* serving_size null 값은 사용자가 직접 입력한 경우  */
-export type MealType = {
+export type MealItemType = {
     id: number;
     food_name: string;
     serving_size: number | null;

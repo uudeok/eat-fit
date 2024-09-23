@@ -1,15 +1,15 @@
 'use client';
 
+import { Spinner } from '@/components/common';
 import { useGoalsByStatus } from '@/hooks/queries/useGoalsQuery';
 import { AuthContext } from '@/shared/context/AuthProvider';
 import { useRouter } from 'next/navigation';
 import { useContext, useEffect } from 'react';
 
 const Goals = () => {
-    const { session } = useContext(AuthContext);
     const router = useRouter();
-
-    const { data } = useGoalsByStatus(session?.user.id!, 'progress');
+    const { session } = useContext(AuthContext);
+    const { data, isLoading } = useGoalsByStatus(session?.user.id!, 'progress');
 
     useEffect(() => {
         if (data?.length) {
@@ -19,7 +19,7 @@ const Goals = () => {
         }
     }, [data, router]);
 
-    return <p>Loading...</p>;
+    return <>{isLoading && <Spinner />}</>;
 };
 
 export default Goals;
