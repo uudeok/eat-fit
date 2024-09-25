@@ -30,10 +30,13 @@ const Goal: GoalsType = {
     terget_weight: 55,
     daily_calories: 2500,
     goal_period: 30,
-    goal_start_date: '2024-09-04',
-    goal_end_date: '2024-10-03',
-    updated_at: 'updated_at',
-    created_at: 'created_at',
+    goal_start_date: new Date(),
+    goal_end_date: new Date(),
+    meal_plan: 'normal',
+    daily_carb: 1200,
+    daily_fat: 230,
+    daily_protein: 150,
+    created_at: new Date(),
 };
 
 const Daily: DailyType = {

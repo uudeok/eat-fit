@@ -1,13 +1,13 @@
 'use client';
 
-import styles from '@styles/component/userGoalInfo.module.css';
+import styles from '@styles/component/goalWeightInfo.module.css';
 import Icons from '@/assets';
 import { Button } from '../common/Button';
 import { ListCol, Text } from '../common';
 import { useForm } from 'react-hook-form';
 import { Input } from '../common/Form';
 import { useRouter } from 'next/navigation';
-import { weightValidation } from '@/shared/utils';
+import { calculateWeightRange, getLocalStorageItem, setLocalStorageItem, weightValidation } from '@/shared/utils';
 import { GoalRegisterType, WeightInfoType } from '@/service/@types/req.type';
 
 type Props = {
@@ -16,8 +16,13 @@ type Props = {
 
 const GoalWeightInfoStep = ({ onNext }: Props) => {
     const router = useRouter();
-    const storedData = localStorage.getItem('goalData');
-    const initialData: GoalRegisterType | null = storedData ? JSON.parse(storedData) : null;
+    const initialData: GoalRegisterType | null = getLocalStorageItem('goalData');
+
+    if (!initialData) {
+        throw new Error('로컬스토리지에 goalData 데이터가 없습니다');
+    }
+
+    const { minWeight, maxWeight } = calculateWeightRange(initialData?.height);
 
     const {
         register,
@@ -35,7 +40,9 @@ const GoalWeightInfoStep = ({ onNext }: Props) => {
             ...initialData,
             ...data,
         };
-        localStorage.setItem('goalData', JSON.stringify(goalData));
+
+        setLocalStorageItem('goalData', goalData);
+
         onNext(data);
     });
 
@@ -85,12 +92,12 @@ const GoalWeightInfoStep = ({ onNext }: Props) => {
                         rules={{
                             required: '목표 몸무게를 입력해주세요',
                             min: {
-                                value: 30,
-                                message: '최소 30kg 이상 입력 가능합니다.',
+                                value: minWeight,
+                                message: `정상 체중 범위 내의 ${minWeight}kg 이상 입력 가능합니다`,
                             },
                             max: {
-                                value: 250,
-                                message: '최대 250kg까지 입력 가능합니다.',
+                                value: maxWeight,
+                                message: `정상 체중 범위 내의 ${maxWeight}kg 이하로 입력 가능합니다`,
                             },
                         }}
                         onInput={weightValidation}

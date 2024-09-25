@@ -26,17 +26,12 @@ export const formatDecimal = (value: string, decimalPlaces: number): string => {
     return `${integer}.${trimmedDecimal}`;
 };
 
-/*  소수점 이하가 5 이상이면 반올림, 그렇지 않으면 내림 */
-export function roundNumber(value: number): number {
-    return value % 1 >= 0.5 ? Math.ceil(value) : Math.floor(value);
-}
-
 export const ageValidation = (e: React.FormEvent<HTMLInputElement>) => {
     const input = e.target as HTMLInputElement;
 
     input.value = removeLeadingZero(input.value);
 
-    return input.value;
+    return Number(input.value);
 };
 
 export const heightValidation = (e: React.FormEvent<HTMLInputElement>) => {
@@ -44,23 +39,23 @@ export const heightValidation = (e: React.FormEvent<HTMLInputElement>) => {
 
     input.value = removeLeadingZero(input.value);
 
-    return input.value;
+    return Number(input.value);
 };
 
 export const weightValidation = (e: React.FormEvent<HTMLInputElement>) => {
     const input = e.target as HTMLInputElement;
 
     input.value = removeLeadingZero(input.value);
-
     input.value = removeNonNumericWithoutDot(input.value);
-
     input.value = formatDecimal(input.value, 1);
 
-    return input.value;
+    return Number(input.value);
 };
 
 export const calorieValidation = (e: React.FormEvent<HTMLInputElement>) => {
     const input = e.target as HTMLInputElement;
 
     input.value = removeLeadingZero(input.value);
+
+    return Number(input.value);
 };

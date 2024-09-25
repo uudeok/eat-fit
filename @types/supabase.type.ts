@@ -40,14 +40,17 @@ export type Database = {
           age: number
           created_at: string
           daily_calories: number
+          "\bdaily_carb": number
+          daily_fat: number
+          daily_protein: number
           gender: string
-          goal: string
           goal_end_date: string
           goal_period: number
           goal_start_date: string
           goal_status: string
           height: number
           id: number
+          meal_plan: string
           target_weight: number
           user_id: string
           weight: number
@@ -57,16 +60,19 @@ export type Database = {
           age: number
           created_at?: string
           daily_calories: number
+          "\bdaily_carb": number
+          daily_fat: number
+          daily_protein: number
           gender: string
-          goal: string
           goal_end_date: string
           goal_period: number
           goal_start_date: string
-          goal_status: string
+          goal_status?: string
           height: number
           id?: number
+          meal_plan?: string
           target_weight: number
-          user_id: string
+          user_id?: string
           weight: number
         }
         Update: {
@@ -74,14 +80,17 @@ export type Database = {
           age?: number
           created_at?: string
           daily_calories?: number
+          "\bdaily_carb"?: number
+          daily_fat?: number
+          daily_protein?: number
           gender?: string
-          goal?: string
           goal_end_date?: string
           goal_period?: number
           goal_start_date?: string
           goal_status?: string
           height?: number
           id?: number
+          meal_plan?: string
           target_weight?: number
           user_id?: string
           weight?: number

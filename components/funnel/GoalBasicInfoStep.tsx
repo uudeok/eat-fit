@@ -1,14 +1,14 @@
 'use client';
 
-import styles from '@styles/component/userBasicInfo.module.css';
+import styles from '@styles/component/goalBasicInfo.module.css';
+import Image from 'next/image';
 import { Button } from '../common/Button';
 import { ListCol, Text } from '../common';
-import Image from 'next/image';
 import { Input } from '../common/Form';
 import { useForm } from 'react-hook-form';
 import { ActivityLevelType, BasicInfoType, GenderType, GoalRegisterType } from '@/service/@types/req.type';
 import { useState } from 'react';
-import { ageValidation, heightValidation } from '@/shared/utils';
+import { ageValidation, getLocalStorageItem, heightValidation, setLocalStorageItem } from '@/shared/utils';
 
 type Props = {
     onNext: (data: BasicInfoType) => void;
@@ -28,8 +28,7 @@ const ACTIVITY_LEVEL = [
 ];
 
 const GoalBasicInfoStep = ({ onNext }: Props) => {
-    const storedData = localStorage.getItem('goalData');
-    const initialData: GoalRegisterType | null = storedData ? JSON.parse(storedData) : null;
+    const initialData: GoalRegisterType | null = getLocalStorageItem('goalData');
 
     const [selectedGender, setSelectedGender] = useState<GenderType | null>(initialData?.gender || null);
     const [selectedActivityLevel, setSelectedActivityLevel] = useState<ActivityLevelType | null>(
@@ -58,7 +57,8 @@ const GoalBasicInfoStep = ({ onNext }: Props) => {
             ...initialData,
             ...data,
         };
-        localStorage.setItem('goalData', JSON.stringify(goalData));
+
+        setLocalStorageItem('goalData', goalData);
 
         onNext(data);
     });

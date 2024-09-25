@@ -13,6 +13,7 @@ import {
     ExerciseAddFormSheet,
     ExerciseDetailSheet,
     CalorieEditSheet,
+    MaintainWeightSheet,
 } from '@/components/modal';
 
 type Props = {
@@ -29,6 +30,7 @@ export const ModalType = {
     exerciseDetail: 'exerciseDetail',
     mealTime: 'mealTime',
     calorieEdit: 'calorieEdit',
+    maintainWeight: 'maintainWeight',
 } as const;
 
 export type ModalKeysType = keyof typeof ModalType;
@@ -59,6 +61,7 @@ const OverlayContainer = () => (
             exerciseDetail: <ExerciseDetailSheet />,
             mealTime: <MealTimeSheet />,
             calorieEdit: <CalorieEditSheet />,
+            maintainWeight: <MaintainWeightSheet />,
         }}
     />
 );

@@ -8,17 +8,20 @@ import { ModalType } from '../common/Modal/OverlayContainer';
 import { useForm } from 'react-hook-form';
 import { Input } from '../common/Form';
 import { Button } from '../common/Button';
-import { calorieValidation, recalculateCaloriesToGoal } from '@/shared/utils';
-import { SuggestionGoalType } from '@/service/@types';
+import { calorieValidation, getLocalStorageItem, recalculateCaloriesToGoal, setLocalStorageItem } from '@/shared/utils';
+import { GoalCaloriesInfoType } from '@/service/@types';
 
 type FormValue = {
     daily_calories: number;
 };
 
 const CalorieEditSheet = () => {
-    const storedData = localStorage.getItem('dailyCalories');
-    const initialData: SuggestionGoalType = storedData ? JSON.parse(storedData) : null;
+    const initialData: GoalCaloriesInfoType | null = getLocalStorageItem('goalCalorie');
     const { isOpen, onClose } = useModal(ModalType.calorieEdit);
+
+    if (!initialData) {
+        throw new Error('로컬 스토리지에 goalCalorie 데이터가 없습니다.');
+    }
 
     const {
         register,
@@ -39,7 +42,7 @@ const CalorieEditSheet = () => {
         );
         initialData.daily_calories = data.daily_calories;
 
-        localStorage.setItem('dailyCalories', JSON.stringify(initialData));
+        setLocalStorageItem('goalCalorie', initialData);
 
         onClose();
     });

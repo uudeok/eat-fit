@@ -1,0 +1,30 @@
+.layout {
+    padding: 5px;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+
+    margin: 20px 15px;
+    text-align: center;
+}
+
+.description {
+    color: var(--grey600);
+    line-height: 1.5;
+    margin-top: 20px;
+}
+
+.description strong {
+    font-weight: bold;
+    color: var(--grey800);
+    font-size: 17px;
+}
+
+.buttonContainer {
+    margin-top: 24px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}

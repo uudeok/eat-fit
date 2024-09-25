@@ -27,7 +27,7 @@
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
-.button {
+.modalBtn {
     background-color: var(--mainColorLg);
     color: var(--mainHover);
     border: none;
@@ -37,7 +37,7 @@
     font-weight: bold;
 }
 
-.button:hover {
+.modalBtn:hover {
     opacity: 0.8;
 }
 
