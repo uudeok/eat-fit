@@ -1,14 +1,16 @@
+'use client';
+
 import styles from '@styles/component/nutrientSummary.module.css';
 import { List, Text, ProgressBar, ListRow, CircleText, ListCol } from './common';
 import { Meals, Meals2, Meals3 } from '@/constants/meals';
 import { calculateNutrientTotals } from '@/shared/utils';
-import { useMemo } from 'react';
+import { GoalType } from '@/service/@types/res.type';
 
 const MEALS = [Meals, Meals2, Meals3];
 
-const NutrientSummary = () => {
+const NutrientSummary = ({ initialData }: { initialData: GoalType[] }) => {
     const meals = MEALS.map((item) => item.meal).flat();
-    const nutrientTotals = useMemo(() => calculateNutrientTotals(meals), [meals]);
+    const nutrientTotals = calculateNutrientTotals(meals);
 
     const NUTRIENTS = [
         { label: '탄', value: nutrientTotals.carbohydrate, bgColor: 'var(--mainColorDk)' },
@@ -22,7 +24,7 @@ const NutrientSummary = () => {
                 <ListCol
                     top={
                         <Text size="xxlg" bold color="white">
-                            {nutrientTotals.calories} / 1600 Kcal
+                            {nutrientTotals.calories} / {1600} kcal
                         </Text>
                     }
                     bottom={<ProgressBar current={850} total={1600} />}

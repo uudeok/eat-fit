@@ -1,8 +1,5 @@
 import { createClient } from './client';
 
-export const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
-export const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY as string;
-
 export const getBaseUrl = () => {
     let url =
         process.env.NEXT_PUBLIC_SITE_URL ?? // 프로덕션 환경에서 사이트 URL로 설정

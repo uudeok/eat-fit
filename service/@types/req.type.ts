@@ -3,7 +3,7 @@ export type GoalStatusType = 'progress' | 'success' | 'failure';
 export type ActivityLevelType = 'very_low' | 'low' | 'moderate' | 'high' | 'very_high';
 export type MealPlanType = 'normal' | 'lowCarbHighFat' | 'proteinFocused';
 
-export type GoalsType = {
+export type GoalRegisterType = {
     id: number;
     user_id: string;
     goal_status: GoalStatusType;
@@ -12,7 +12,7 @@ export type GoalsType = {
     height: number;
     weight: number;
     activity_level: ActivityLevelType;
-    terget_weight: number;
+    target_weight: number;
     daily_calories: number;
     goal_period: number;
     goal_start_date: Date;
@@ -49,5 +49,3 @@ export type MealPlanInfoType = {
     daily_protein: number;
     daily_fat: number;
 };
-
-export type GoalRegisterType = BasicInfoType & WeightInfoType & GoalCaloriesInfoType & MealPlanInfoType;

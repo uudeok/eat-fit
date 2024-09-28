@@ -1,7 +1,7 @@
-import Intro from '@/components/Intro';
+import LandingScreen from '@/components/LandingScreen';
 
-const WelcomePage = () => {
-    return <Intro />;
+const LandingPage = () => {
+    return <LandingScreen />;
 };
 
-export default WelcomePage;
+export default LandingPage;

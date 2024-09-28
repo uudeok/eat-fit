@@ -3,15 +3,17 @@ import TodaySummary from '@/components/TodaySummary';
 import TodayMeals from '@/components/TodayMeals';
 import TodayExercises from '@/components/TodayExercises';
 
-const Home = () => {
+const HomePage = async () => {
     return (
         <>
             <MainHeader />
+
             <TodaySummary />
+
             <TodayMeals />
             <TodayExercises />
         </>
     );
 };
 
-export default Home;
+export default HomePage;

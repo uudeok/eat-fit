@@ -1,3 +1,5 @@
+'use client';
+
 import { useModal } from '@/hooks';
 import { ListRow, Penel, Text } from '../common';
 import { ModalType } from '../common/Modal/OverlayContainer';

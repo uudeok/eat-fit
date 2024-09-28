@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, createContext, useEffect, useMemo, useState } from 'react';
+import { ReactNode, createContext, useEffect, useState } from 'react';
 import { Session } from '@supabase/supabase-js';
 import { createClient } from '../utils/supabase/client';
 
@@ -36,6 +36,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
             sub.subscription.unsubscribe();
         };
     }, [supabase.auth]);
+
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 

@@ -17,6 +17,7 @@ import {
     resetHoursDate,
     setLocalStorageItem,
 } from '@/shared/utils';
+import dayjs from 'dayjs';
 
 /**
  * GoalSuggestion 컴포넌트의 동작 설명:
@@ -47,7 +48,7 @@ const GoalCaloriesStep = ({ onNext, registerData }: Props) => {
 
     const [goalData, setGoalData] = useState<GoalCaloriesInfoType>({
         daily_calories: dailyCalories,
-        goal_start_date: resetHoursDate(),
+        goal_start_date: new Date(),
         goal_end_date: addDaysAndResetTime(daysToGoal),
         goal_period: daysToGoal,
     });
@@ -61,7 +62,7 @@ const GoalCaloriesStep = ({ onNext, registerData }: Props) => {
         if (storedData) {
             setGoalData({
                 daily_calories: storedData.daily_calories,
-                goal_start_date: resetHoursDate(),
+                goal_start_date: new Date(),
                 goal_end_date: addDaysAndResetTime(storedData.goal_period),
                 goal_period: storedData.goal_period,
             });

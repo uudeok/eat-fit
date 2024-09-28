@@ -1,9 +1,7 @@
-'use client';
-
 import { Spinner } from '@/components/common';
 
-const LoadingPage = () => {
+const Loading = () => {
     return <Spinner />;
 };
 
-export default LoadingPage;
+export default Loading;

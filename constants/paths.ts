@@ -1,7 +1,7 @@
 import { valueOf } from '@/@types';
 
 export const FooterPaths = {
-    HOME: '',
+    HOME: 'home',
     CATEGORY: 'category',
     MYPAGE: 'mypage',
 } as const;

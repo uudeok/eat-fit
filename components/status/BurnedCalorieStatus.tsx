@@ -1,3 +1,5 @@
+'use client';
+
 import { useCalendarStore } from '@/shared/store/useCalendarStore';
 import { ListRow, Penel, Text } from '../common';
 

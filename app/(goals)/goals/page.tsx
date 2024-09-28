@@ -1,25 +1,21 @@
-'use client';
+import { createClient } from '@/shared/utils/supabase/server';
+import { redirect } from 'next/navigation';
 
-import { Spinner } from '@/components/common';
-import { useGoalsByStatus } from '@/hooks/queries/useGoalsQuery';
-import { AuthContext } from '@/shared/context/AuthProvider';
-import { useRouter } from 'next/navigation';
-import { useContext, useEffect } from 'react';
+export const getGoalsData = async () => {
+    const server = createClient();
+    const { data: goalData } = await server.from('goals').select('*').eq('goal_status', 'progress');
 
-const Goals = () => {
-    const router = useRouter();
-    const { session } = useContext(AuthContext);
-    const { data, isLoading } = useGoalsByStatus(session?.user.id!, 'progress');
-
-    useEffect(() => {
-        if (data?.length) {
-            router.push('/home');
-        } else {
-            router.push('/goals/register');
-        }
-    }, [data, router]);
-
-    return <>{isLoading && <Spinner />}</>;
+    return goalData;
 };
 
-export default Goals;
+const GoalsPage = async () => {
+    const goalData = await getGoalsData();
+
+    if (goalData?.length) {
+        redirect('/home');
+    } else {
+        redirect('/goals/register');
+    }
+};
+
+export default GoalsPage;

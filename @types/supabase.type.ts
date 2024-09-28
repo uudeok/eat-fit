@@ -34,63 +34,108 @@ export type Database = {
   }
   public: {
     Tables: {
+      dailySpec: {
+        Row: {
+          created_at: string
+          entry_date: string
+          goal_id: number
+          id: number
+          mood: string | null
+          today_weight: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          entry_date: string
+          goal_id: number
+          id?: number
+          mood?: string | null
+          today_weight: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          entry_date?: string
+          goal_id?: number
+          id?: number
+          mood?: string | null
+          today_weight?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "dailySpec_goal_id_fkey"
+            columns: ["goal_id"]
+            isOneToOne: false
+            referencedRelation: "goals"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "dailySpec_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "goals"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
       goals: {
         Row: {
-          activity_level: string
+          activity_level: Database["public"]["Enums"]["ActivityLevelType"]
           age: number
           created_at: string
           daily_calories: number
-          "\bdaily_carb": number
+          daily_carb: number
           daily_fat: number
           daily_protein: number
-          gender: string
+          gender: Database["public"]["Enums"]["GenderType"]
           goal_end_date: string
           goal_period: number
           goal_start_date: string
-          goal_status: string
+          goal_status: Database["public"]["Enums"]["GoalStatusType"]
           height: number
           id: number
-          meal_plan: string
+          meal_plan: Database["public"]["Enums"]["MealPlanType"]
           target_weight: number
           user_id: string
           weight: number
         }
         Insert: {
-          activity_level: string
+          activity_level: Database["public"]["Enums"]["ActivityLevelType"]
           age: number
           created_at?: string
           daily_calories: number
-          "\bdaily_carb": number
+          daily_carb: number
           daily_fat: number
           daily_protein: number
-          gender: string
+          gender: Database["public"]["Enums"]["GenderType"]
           goal_end_date: string
           goal_period: number
           goal_start_date: string
-          goal_status?: string
+          goal_status?: Database["public"]["Enums"]["GoalStatusType"]
           height: number
           id?: number
-          meal_plan?: string
+          meal_plan: Database["public"]["Enums"]["MealPlanType"]
           target_weight: number
           user_id?: string
           weight: number
         }
         Update: {
-          activity_level?: string
+          activity_level?: Database["public"]["Enums"]["ActivityLevelType"]
           age?: number
           created_at?: string
           daily_calories?: number
-          "\bdaily_carb"?: number
+          daily_carb?: number
           daily_fat?: number
           daily_protein?: number
-          gender?: string
+          gender?: Database["public"]["Enums"]["GenderType"]
           goal_end_date?: string
           goal_period?: number
           goal_start_date?: string
-          goal_status?: string
+          goal_status?: Database["public"]["Enums"]["GoalStatusType"]
           height?: number
           id?: number
-          meal_plan?: string
+          meal_plan?: Database["public"]["Enums"]["MealPlanType"]
           target_weight?: number
           user_id?: string
           weight?: number
@@ -143,7 +188,10 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      ActivityLevelType: "very_low" | "low" | "moderate" | "high" | "very_high"
+      GenderType: "F" | "M"
+      GoalStatusType: "progress" | "success" | "failure"
+      MealPlanType: "normal" | "lowCarbHighFat" | "proteinFocused"
     }
     CompositeTypes: {
       [_ in never]: never
