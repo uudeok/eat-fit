@@ -8,7 +8,7 @@ const Login = () => {
     const supabase = createClient();
 
     const handleLogin = async (provider: Provider) => {
-        const { data, error } = await supabase.auth.signInWithOAuth({
+        const { error } = await supabase.auth.signInWithOAuth({
             provider: provider,
             options: {
                 redirectTo: 'http://localhost:3000/auth/callback',

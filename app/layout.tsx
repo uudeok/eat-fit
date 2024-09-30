@@ -1,4 +1,5 @@
 import './globals.css';
+
 import type { Metadata } from 'next';
 import { OverlayContainer } from '@/components/common/Modal';
 import DynamicLayout from '@/components/layout/DynamicLayout';
@@ -18,8 +19,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                     <AuthProvider>
                         <DynamicLayout>{children}</DynamicLayout>
                     </AuthProvider>
+                    <OverlayContainer />
                 </QueryProvider>
-                <OverlayContainer />
             </body>
         </html>
     );

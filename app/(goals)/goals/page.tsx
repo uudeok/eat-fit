@@ -1,9 +1,10 @@
+import { fetchGoalsInprogress } from '@/service/supabase/goalsService';
 import { createClient } from '@/shared/utils/supabase/server';
 import { redirect } from 'next/navigation';
 
 export const getGoalsData = async () => {
     const server = createClient();
-    const { data: goalData } = await server.from('goals').select('*').eq('goal_status', 'progress');
+    const { data: goalData } = await fetchGoalsInprogress(server);
 
     return goalData;
 };
@@ -11,7 +12,7 @@ export const getGoalsData = async () => {
 const GoalsPage = async () => {
     const goalData = await getGoalsData();
 
-    if (goalData?.length) {
+    if (goalData) {
         redirect('/home');
     } else {
         redirect('/goals/register');

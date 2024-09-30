@@ -8,7 +8,7 @@ import { Button } from '../common/Button';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { GoalRegisterType, MealPlanInfoType, MealPlanType } from '@/service/@types';
-import { calculateNutrientRatio } from '@/shared/utils';
+import { calculateNutrientRatio, removeLocalStorageItem } from '@/shared/utils';
 
 type Props = {
     onNext: (data: MealPlanInfoType) => void;
@@ -52,6 +52,7 @@ const GoalMealPlanStep = ({ onNext }: Props) => {
 
     const handleMealPlan = () => {
         if (selectedPlan) {
+            /* 식단 정보 기반 권장 탄, 단, 지 비율 계산식 */
             const nutrientRatio = calculateNutrientRatio(storedData.daily_calories, selectedPlan);
 
             onNext({
@@ -60,6 +61,8 @@ const GoalMealPlanStep = ({ onNext }: Props) => {
                 daily_protein: nutrientRatio.daily_protein,
                 daily_fat: nutrientRatio.daily_fat,
             });
+
+            removeLocalStorageItem('goalCalories');
         }
     };
 

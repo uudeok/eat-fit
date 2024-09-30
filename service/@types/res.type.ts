@@ -1,3 +1,4 @@
+import { EmojiKey } from '@/constants';
 import { ActivityLevelType, GenderType, GoalStatusType, MealPlanType } from './req.type';
 
 export type GoalType = {
@@ -19,4 +20,14 @@ export type GoalType = {
     daily_carb: number;
     daily_protein: number;
     daily_fat: number;
+};
+
+export type DailySpecType = {
+    id: number;
+    goal_id: number;
+    user_id: string;
+    entry_date: string;
+    today_weight: number | null;
+    mood: EmojiKey | null;
+    created_at: string;
 };

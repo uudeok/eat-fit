@@ -12,17 +12,11 @@ export async function fetchGoalsByStatus(status: GoalStatusType) {
     return data;
 }
 
-// export async function fetchGoalsInprogress(fetch?: SupabaseClient) {
-//     const supabase = fetch || client;
+export async function fetchGoalsInprogress(fetch?: SupabaseClient) {
+    const supabase = fetch || client;
 
-//     const { data, error } = await supabase.from('goals').select('*').eq('goal_status', 'progress');
-
-//     if (error) {
-//         throw new Error(error.message);
-//     }
-
-//     return data;
-// }
+    return await supabase.from('goals').select('*').eq('goal_status', 'progress').maybeSingle();
+}
 
 export async function createNewGoals(goalData: GoalRegisterType) {
     const { data } = await client
@@ -49,10 +43,4 @@ export async function createNewGoals(goalData: GoalRegisterType) {
         .throwOnError();
 
     return data;
-}
-
-export async function fetchGoalsInprogress(fetch?: SupabaseClient) {
-    const supabase = fetch || client;
-
-    return await supabase.from('goals').select('*').eq('goal_status', 'progress');
 }

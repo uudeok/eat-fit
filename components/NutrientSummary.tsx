@@ -3,14 +3,20 @@
 import styles from '@styles/component/nutrientSummary.module.css';
 import { List, Text, ProgressBar, ListRow, CircleText, ListCol } from './common';
 import { Meals, Meals2, Meals3 } from '@/constants/meals';
-import { calculateNutrientTotals } from '@/shared/utils';
+import { calculateNutrientTotals, setLocalStorageItem } from '@/shared/utils';
 import { GoalType } from '@/service/@types/res.type';
+import { useEffect } from 'react';
 
 const MEALS = [Meals, Meals2, Meals3];
 
-const NutrientSummary = ({ initialData }: { initialData: GoalType[] }) => {
+const NutrientSummary = ({ goalData }: { goalData: GoalType }) => {
     const meals = MEALS.map((item) => item.meal).flat();
     const nutrientTotals = calculateNutrientTotals(meals);
+
+    /* goalData 를 로컬스토리지에 저장/갱신  */
+    useEffect(() => {
+        setLocalStorageItem('goalData', goalData);
+    }, [goalData]);
 
     const NUTRIENTS = [
         { label: '탄', value: nutrientTotals.carbohydrate, bgColor: 'var(--mainColorDk)' },
@@ -24,10 +30,10 @@ const NutrientSummary = ({ initialData }: { initialData: GoalType[] }) => {
                 <ListCol
                     top={
                         <Text size="xxlg" bold color="white">
-                            {nutrientTotals.calories} / {1600} kcal
+                            {nutrientTotals.calories} / {goalData.daily_calories} kcal
                         </Text>
                     }
-                    bottom={<ProgressBar current={850} total={1600} />}
+                    bottom={<ProgressBar current={850} total={goalData.daily_calories} />}
                 />
             </List>
 

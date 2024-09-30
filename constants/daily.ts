@@ -1,5 +1,5 @@
+import { GoalType } from '@/service/@types/res.type';
 import { EmojiKey } from './emotion';
-import { GoalsType } from '@/service/@types/req.type';
 
 export const ACTIVITY_LEVEL = {
     very_low: 1.2,
@@ -18,7 +18,7 @@ type DailyType = {
     mood: EmojiKey | null;
 };
 
-const Goal: GoalsType = {
+const Goal: GoalType = {
     id: 100,
     user_id: 'abc',
     goal_status: 'progress',
@@ -27,16 +27,16 @@ const Goal: GoalsType = {
     height: 170,
     weight: 60,
     activity_level: 'moderate',
-    terget_weight: 55,
+    target_weight: 55,
     daily_calories: 2500,
     goal_period: 30,
-    goal_start_date: new Date(),
-    goal_end_date: new Date(),
+    goal_start_date: new Date().toISOString(),
+    goal_end_date: new Date().toISOString(),
     meal_plan: 'normal',
     daily_carb: 1200,
     daily_fat: 230,
     daily_protein: 150,
-    created_at: new Date(),
+    created_at: new Date().toISOString(),
 };
 
 const Daily: DailyType = {

@@ -22,6 +22,7 @@ const GoalWeightInfoStep = ({ onNext }: Props) => {
         throw new Error('로컬스토리지에 goalData 데이터가 없습니다');
     }
 
+    /* 정상 체중 범위를 구하기 위한 계산식 */
     const { minWeight, maxWeight } = calculateWeightRange(initialData?.height);
 
     const {

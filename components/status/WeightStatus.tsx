@@ -4,11 +4,13 @@ import { useModal } from '@/hooks';
 import { ListRow, Penel, Text } from '../common';
 import { ModalType } from '../common/Modal/OverlayContainer';
 import { useCalendarStore } from '@/shared/store/useCalendarStore';
+import { useFetchDailySpec } from '@/service/queries/useFetchDailySpec';
 
 const WeightStatus = () => {
-    /* 선택한 날짜의 해당되는  daily 테이블 가져오기*/
     const { selectedDate } = useCalendarStore();
     const { onOpen } = useModal(ModalType.todayWeight);
+
+    const { data: dailySpec } = useFetchDailySpec(selectedDate);
 
     return (
         <Penel onClick={onOpen} direction="column" backgroundColor="var(--mainColorLg)">
@@ -19,9 +21,15 @@ const WeightStatus = () => {
                     </Text>
                 }
                 right={
-                    <Text color="white" bold size="xlg">
-                        60.05 kg
-                    </Text>
+                    dailySpec?.today_weight ? (
+                        <Text color="white" bold size="xlg">
+                            {dailySpec?.today_weight} kg
+                        </Text>
+                    ) : (
+                        <Text color="white" bold size="xlg">
+                            0 kg
+                        </Text>
+                    )
                 }
             />
         </Penel>

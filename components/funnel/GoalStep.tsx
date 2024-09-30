@@ -2,8 +2,8 @@
 
 import { useFunnel } from '@/hooks';
 import { useState } from 'react';
-import { GoalRegisterType, GoalCaloriesInfoType, MealPlanInfoType } from '@/service/@types/req.type';
-import { useCreateGoal } from '@/hooks/useCreateHook';
+import { GoalRegisterType, MealPlanInfoType } from '@/service/@types/req.type';
+import { useCreateGoal } from '@/service/mutations/useCreateGoal';
 import { useRouter } from 'next/navigation';
 import { removeLocalStorageItem } from '@/shared/utils';
 import GoalIntro from './GoalIntro';
@@ -39,11 +39,9 @@ const GoalStep = () => {
 
     const { mutate: createGoal } = useCreateGoal();
 
-    const submitGoalData = (data: MealPlanInfoType) => {
-        setRegisterData((prev) => ({ ...prev, ...data }));
-
+    const submitGoalData = (goalData: MealPlanInfoType) => {
         try {
-            createGoal(registerData);
+            createGoal({ ...registerData, ...goalData });
             router.push('/home');
         } catch (err) {
             throw err;
@@ -56,7 +54,6 @@ const GoalStep = () => {
                 <GoalIntro
                     onNext={() => {
                         removeLocalStorageItem('goalData');
-                        removeLocalStorageItem('dailyCalories');
                         removeLocalStorageItem('goalCalorie');
                         setStep('basicInfo');
                     }}
@@ -91,7 +88,11 @@ const GoalStep = () => {
                 />
             </Funnel.Step>
             <Funnel.Step name="mealPlan">
-                <GoalMealPlanStep onNext={(data) => submitGoalData(data)} />
+                <GoalMealPlanStep
+                    onNext={(data) => {
+                        submitGoalData(data);
+                    }}
+                />
             </Funnel.Step>
         </Funnel>
     );

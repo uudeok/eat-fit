@@ -5,7 +5,7 @@ export const EMOJI = [
     { label: '배고픔', key: 'hungry', path: '/emotion_hungry.png', filledPath: '/emotion_fill_hungry.png' },
     { label: '피곤함', key: 'tired', path: '/emotion_tired.png', filledPath: '/emotion_fill_tired.png' },
     { label: '화남', key: 'angry', path: '/emotion_angry.png', filledPath: '/emotion_fill_angry.png' },
-];
+] as const;
 
 export const EMOJI_LABEL = [
     { label: '기분짱', key: 'good' },

@@ -5,11 +5,13 @@ import Image from 'next/image';
 import { ModalType } from '../common/Modal/OverlayContainer';
 import { ListRow, Penel, Text } from '../common';
 import { useCalendarStore } from '@/shared/store/useCalendarStore';
+import { useFetchDailySpec } from '@/service/queries/useFetchDailySpec';
 
 const MoodStatus = () => {
-    /* 선택한 날짜의 해당되는  daily 테이블 가져오기*/
-    const { selectedDate } = useCalendarStore();
     const { onOpen } = useModal(ModalType.todayMood);
+    const { selectedDate } = useCalendarStore();
+
+    const { data: dailySpec } = useFetchDailySpec(selectedDate);
 
     return (
         <Penel onClick={onOpen} backgroundColor="var(--mainColorLg)" direction="column">
@@ -19,7 +21,13 @@ const MoodStatus = () => {
                         오늘의 기분
                     </Text>
                 }
-                right={<Image src="/emotion_fill_good.png" width="30" height="30" alt="emoji" />}
+                right={
+                    dailySpec?.mood ? (
+                        <Image src={`/emotion_fill_${dailySpec.mood}.png`} width={30} height={30} alt="mood" />
+                    ) : (
+                        <Image src="/question.png" alt="mood" width={30} height={30} />
+                    )
+                }
             />
         </Penel>
     );

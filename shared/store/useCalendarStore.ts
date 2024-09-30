@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { resetHoursDate } from '../utils';
 
 interface CalendarState {
     selectedDate: Date;
@@ -6,6 +7,6 @@ interface CalendarState {
 }
 
 export const useCalendarStore = create<CalendarState>((set) => ({
-    selectedDate: new Date(),
+    selectedDate: resetHoursDate(),
     setSelectedDate: (date) => set({ selectedDate: date }),
 }));

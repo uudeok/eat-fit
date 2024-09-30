@@ -3,18 +3,18 @@
 import Image from 'next/image';
 import styles from '@styles/common/emoji.module.css';
 import { useState } from 'react';
-import { EMOJI } from '@/constants';
+import { EMOJI, EmojiKey } from '@/constants';
 
 type Props = {
     width: number;
     height: number;
-    onClick: (key: string) => void;
+    onClick: (key: EmojiKey) => void;
 };
 
 const Emotions = ({ width, height, onClick }: Props) => {
-    const [selectedEmotion, setSelectedEmotion] = useState<string | null>(null);
+    const [selectedEmotion, setSelectedEmotion] = useState<EmojiKey | null>(null);
 
-    const handleClick = (key: string) => {
+    const handleClick = (key: EmojiKey) => {
         setSelectedEmotion(key);
         onClick(key);
     };

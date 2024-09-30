@@ -40,8 +40,8 @@ export type Database = {
           entry_date: string
           goal_id: number
           id: number
-          mood: string | null
-          today_weight: number
+          mood: Database["public"]["Enums"]["EmotionType"] | null
+          today_weight: number | null
           user_id: string
         }
         Insert: {
@@ -49,17 +49,17 @@ export type Database = {
           entry_date: string
           goal_id: number
           id?: number
-          mood?: string | null
-          today_weight: number
-          user_id: string
+          mood?: Database["public"]["Enums"]["EmotionType"] | null
+          today_weight?: number | null
+          user_id?: string
         }
         Update: {
           created_at?: string
           entry_date?: string
           goal_id?: number
           id?: number
-          mood?: string | null
-          today_weight?: number
+          mood?: Database["public"]["Enums"]["EmotionType"] | null
+          today_weight?: number | null
           user_id?: string
         }
         Relationships: [
@@ -76,6 +76,20 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "goals"
             referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "dailySpec_user_id_fkey1"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "goals"
+            referencedColumns: ["user_id"]
+          },
+          {
+            foreignKeyName: "dailySpec_user_id_fkey2"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -189,6 +203,7 @@ export type Database = {
     }
     Enums: {
       ActivityLevelType: "very_low" | "low" | "moderate" | "high" | "very_high"
+      EmotionType: "good" | "sad" | "gloomy" | "hungry" | "tired" | "angry"
       GenderType: "F" | "M"
       GoalStatusType: "progress" | "success" | "failure"
       MealPlanType: "normal" | "lowCarbHighFat" | "proteinFocused"

@@ -1,12 +1,11 @@
+import { EmojiKey } from '@/constants';
+
 export type GenderType = 'F' | 'M';
 export type GoalStatusType = 'progress' | 'success' | 'failure';
 export type ActivityLevelType = 'very_low' | 'low' | 'moderate' | 'high' | 'very_high';
 export type MealPlanType = 'normal' | 'lowCarbHighFat' | 'proteinFocused';
 
 export type GoalRegisterType = {
-    id: number;
-    user_id: string;
-    goal_status: GoalStatusType;
     gender: GenderType;
     age: number;
     height: number;
@@ -17,7 +16,6 @@ export type GoalRegisterType = {
     goal_period: number;
     goal_start_date: Date;
     goal_end_date: Date;
-    created_at: Date;
     meal_plan: MealPlanType;
     daily_carb: number;
     daily_protein: number;
@@ -48,4 +46,17 @@ export type MealPlanInfoType = {
     daily_carb: number;
     daily_protein: number;
     daily_fat: number;
+};
+
+export type CreateDailySpecArgs = {
+    goal_id: number;
+    entry_date: Date;
+    today_weight: number | null;
+    mood: EmojiKey | null;
+};
+
+export type UpdateDailySpecArgs = {
+    id: number;
+    today_weight: number | null;
+    mood: EmojiKey | null;
 };

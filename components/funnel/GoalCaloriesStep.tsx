@@ -14,10 +14,8 @@ import {
     calculateCaloriesToGoal,
     convertDateFormat,
     removeLocalStorageItem,
-    resetHoursDate,
     setLocalStorageItem,
 } from '@/shared/utils';
-import dayjs from 'dayjs';
 
 /**
  * GoalSuggestion 컴포넌트의 동작 설명:
@@ -42,6 +40,7 @@ const GoalCaloriesStep = ({ onNext, registerData }: Props) => {
     const storage = localStorage.getItem('goalCalorie');
     const storedData: GoalRegisterType = storage ? JSON.parse(storage) : null;
 
+    /* 입력받은 데이터 기반 권장 칼로리 및 목표 기간 계산식 */
     const { dailyCalories, daysToGoal } = calculateCaloriesToGoal(registerData);
 
     const isWeightDifference = registerData.target_weight - registerData.weight !== 0;

@@ -1,4 +1,3 @@
-import styles from '@styles/component/todaySummary.module.css';
 import NutrientSummary from './NutrientSummary';
 import TodayStatus from './TodayStatus';
 import { getGoalsData } from '@/app/(goals)/goals/page';
@@ -11,8 +10,8 @@ const TodaySummary = async () => {
     }
 
     return (
-        <div className={styles.layout}>
-            <NutrientSummary initialData={goalData} />
+        <div className='p-5 h-[350px] flex flex-col gap-4 bg-mainColor shadow-md"'>
+            <NutrientSummary goalData={goalData} />
 
             <TodayStatus />
         </div>

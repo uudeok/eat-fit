@@ -1,5 +1,8 @@
 /* global.css */
 
+@tailwind components;
+@tailwind utilities;
+
 *,
 /* Remove margin and padding from all elements */
 html,
