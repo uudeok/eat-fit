@@ -65,6 +65,14 @@
     background-color: var(--orange500);
 }
 
+.roleround {
+    border-radius: 30px;
+}
+
+.roleround:hover {
+    background-color: #78a8e8;
+}
+
 /* Size Styles */
 
 .sizesm {

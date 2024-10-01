@@ -1,4 +1,5 @@
 import { valueOf } from '@/@types';
+import { MealType } from '@/service/@types/res.type';
 
 export const MEALS_TYPE = {
     meal: '식사',
@@ -9,29 +10,7 @@ export const MEALS_TYPE = {
 export type MealsKeysType = keyof typeof MEALS_TYPE;
 export type MelasValuesType = valueOf<typeof MEALS_TYPE>;
 
-export type MealsType = {
-    id: number;
-    daily_id: number;
-    user_id: string;
-    entry_date: string;
-    meal_type: MealsKeysType;
-    serving_time: string | null;
-    meal: MealItemType[];
-    photo_url: string[] | null;
-};
-
-export type MealItemType = {
-    id: number;
-    food_name: string;
-    serving_size: number | null;
-    calories: number;
-    carbohydrate: number;
-    protein: number;
-    fat: number;
-    content: string | null;
-};
-
-export const Meals: MealsType = {
+export const Meals: MealType = {
     id: 1,
     daily_id: 1,
     user_id: 'abc',
@@ -39,9 +18,9 @@ export const Meals: MealsType = {
     meal_type: 'meal',
     serving_time: null,
     photo_url: ['/rice.png'],
+    created_at: '2024-09-04',
     meal: [
         {
-            id: 1,
             food_name: '맥모닝',
             serving_size: 100,
             calories: 180,
@@ -51,7 +30,6 @@ export const Meals: MealsType = {
             content: '맛있는 한끼',
         },
         {
-            id: 2,
             food_name: '아메리카노',
             serving_size: 300,
             calories: 5,
@@ -63,7 +41,7 @@ export const Meals: MealsType = {
     ],
 };
 
-export const Meals2: MealsType = {
+export const Meals2: MealType = {
     id: 2,
     daily_id: 1,
     user_id: 'abc',
@@ -71,9 +49,9 @@ export const Meals2: MealsType = {
     meal_type: 'snack',
     serving_time: '14:20',
     photo_url: ['/rice.png'],
+    created_at: '2024-09-04',
     meal: [
         {
-            id: 1,
             food_name: '쿠키',
             serving_size: 250,
             calories: 220,
@@ -85,7 +63,7 @@ export const Meals2: MealsType = {
     ],
 };
 
-export const Meals3: MealsType = {
+export const Meals3: MealType = {
     id: 3,
     daily_id: 1,
     user_id: 'abc',
@@ -93,9 +71,9 @@ export const Meals3: MealsType = {
     meal_type: 'night_meal',
     serving_time: '21:49',
     photo_url: ['/rice.png'],
+    created_at: '2024-09-04',
     meal: [
         {
-            id: 1,
             food_name: '칼국수',
             serving_size: 300,
             calories: 200,

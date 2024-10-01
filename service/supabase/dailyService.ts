@@ -24,7 +24,7 @@ export async function createDailySpec({
     entry_date,
     today_weight,
     mood,
-}: CreateDailySpecArgs): Promise<DailySpecType[] | null> {
+}: CreateDailySpecArgs): Promise<DailySpecType | null> {
     const { data } = await client
         .from('dailySpec')
         .insert([
@@ -36,7 +36,8 @@ export async function createDailySpec({
             },
         ])
         .select()
-        .throwOnError();
+        .throwOnError()
+        .maybeSingle();
 
     return data;
 }

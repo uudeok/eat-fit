@@ -1,4 +1,5 @@
 import { EmojiKey } from '@/constants';
+import { MealsKeysType } from '@/constants/meals';
 
 export type GenderType = 'F' | 'M';
 export type GoalStatusType = 'progress' | 'success' | 'failure';
@@ -60,3 +61,31 @@ export type UpdateDailySpecArgs = {
     today_weight: number | null;
     mood: EmojiKey | null;
 };
+
+export type MealItemType = {
+    id: number;
+    food_name: string;
+    serving_size?: number | null;
+    calories: number | null;
+    carbohydrate: number | null;
+    protein: number | null;
+    fat: number | null;
+    content: string | null;
+};
+
+export type CreateMealsArgs = {
+    daily_id: number;
+    entry_date: Date;
+    meal_type: MealsKeysType;
+    serving_time?: string | null;
+    meal: MealItemType[];
+};
+
+// const createData = {
+//     daily_id: dailySpec.id,
+//     entry_date: selectedDate,
+//     meal_type: selectedMealType,
+//     serving_time: null,
+//     meal: [data],
+// };
+// createMeal(createData);

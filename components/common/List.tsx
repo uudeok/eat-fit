@@ -28,9 +28,9 @@ const List = ({ children, className, onClick }: ListProps) => {
     );
 };
 
-export const ListRow = ({ left, right, middle, className }: ListRowProps) => {
+export const ListRow = ({ left, right, middle, className, ...props }: ListRowProps) => {
     return (
-        <li className={`${styles.row} ${className}`}>
+        <li className={`${styles.row} ${className}`} {...props}>
             {left}
             {middle}
             {right}

@@ -8,4 +8,5 @@
     font-weight: bold;
     color: var(--grey700);
     background-color: var(--greyOpacity200);
+    cursor: pointer;
 }

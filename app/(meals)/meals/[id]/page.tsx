@@ -1,7 +1,7 @@
 'use client';
 
 import styles from '@styles/pages/mealsDetailPage.module.css';
-import { MealType, Meals, Meals2, Meals3 } from '@/constants/meals';
+import { Meals, Meals2, Meals3 } from '@/constants/meals';
 import { Text, Badge, List, ListCol, ListRow, Penel } from '@/components/common';
 import Image from 'next/image';
 import Icons from '@/assets';
@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation';
 import { useModal } from '@/hooks';
 import { useMealItemStore } from '@/shared/store/useMealItemStore';
 import { ModalType } from '@/components/common/Modal/OverlayContainer';
+import { MealItemType } from '@/service/@types';
 
 const MealsDetailPage = ({ params: { id } }: { params: { id: string } }) => {
     const router = useRouter();
@@ -30,7 +31,7 @@ const MealsDetailPage = ({ params: { id } }: { params: { id: string } }) => {
         { key: '지방', value: nutrientTotals?.fat },
     ];
 
-    const showMealDetail = (item: MealType) => {
+    const showMealDetail = (item: MealItemType) => {
         setSelectedMealItem(item);
         openMealDetail();
     };
@@ -90,7 +91,12 @@ const MealsDetailPage = ({ params: { id } }: { params: { id: string } }) => {
                 {selectedMeals.map((item) => (
                     <div key={item.id}>
                         {item.meal.map((m) => (
-                            <Penel key={m.id} padding="15px" direction="column" onClick={() => showMealDetail(m)}>
+                            <Penel
+                                key={m.food_name}
+                                padding="15px"
+                                direction="column"
+                                onClick={() => showMealDetail(m)}
+                            >
                                 <ListRow
                                     left={
                                         <div className={styles.mealInfo}>

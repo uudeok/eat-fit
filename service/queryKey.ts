@@ -12,3 +12,9 @@ export const dailySpecKeys = {
     all: () => [{ ...dailySpecKeys.base[0] }] as const,
     date: (selectedDate: Date) => [{ ...dailySpecKeys.base[0], selectedDate }] as const,
 };
+
+export const mealsKeys = {
+    base: [{ scope: 'meals' }] as const,
+    all: () => [{ ...mealsKeys.base[0] }] as const,
+    date: (selectedDate: Date) => [{ ...mealsKeys.base[0], selectedDate }] as const,
+};

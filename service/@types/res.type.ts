@@ -1,5 +1,6 @@
 import { EmojiKey } from '@/constants';
-import { ActivityLevelType, GenderType, GoalStatusType, MealPlanType } from './req.type';
+import { ActivityLevelType, GenderType, GoalStatusType, MealItemType, MealPlanType } from './req.type';
+import { MealsKeysType } from '@/constants/meals';
 
 export type GoalType = {
     id: number;
@@ -30,4 +31,16 @@ export type DailySpecType = {
     today_weight: number | null;
     mood: EmojiKey | null;
     created_at: string;
+};
+
+export type MealType = {
+    id: number;
+    daily_id: number;
+    created_at: string;
+    user_id: string;
+    entry_date: string;
+    meal_type: MealsKeysType;
+    serving_time: string | null;
+    meal: MealItemType[];
+    photo_url: string[] | null;
 };

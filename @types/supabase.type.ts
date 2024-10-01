@@ -164,6 +164,64 @@ export type Database = {
           },
         ]
       }
+      meals: {
+        Row: {
+          created_at: string
+          daily_id: number
+          entry_date: string
+          id: number
+          meal: Json[]
+          meal_type: Database["public"]["Enums"]["MealType"]
+          photo_url: string[] | null
+          serving_time: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          daily_id: number
+          entry_date: string
+          id?: number
+          meal: Json[]
+          meal_type: Database["public"]["Enums"]["MealType"]
+          photo_url?: string[] | null
+          serving_time?: string | null
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          daily_id?: number
+          entry_date?: string
+          id?: number
+          meal?: Json[]
+          meal_type?: Database["public"]["Enums"]["MealType"]
+          photo_url?: string[] | null
+          serving_time?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "meals_daily_id_fkey"
+            columns: ["daily_id"]
+            isOneToOne: false
+            referencedRelation: "dailySpec"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "meals_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "meals_user_id_fkey1"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "goals"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
       users: {
         Row: {
           avatar_url: string | null
@@ -207,6 +265,7 @@ export type Database = {
       GenderType: "F" | "M"
       GoalStatusType: "progress" | "success" | "failure"
       MealPlanType: "normal" | "lowCarbHighFat" | "proteinFocused"
+      MealType: "meal" | "snack" | "night_meal"
     }
     CompositeTypes: {
       [_ in never]: never

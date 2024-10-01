@@ -1,9 +1,9 @@
+import { MealItemType } from '@/service/@types';
 import { create } from 'zustand';
-import { MealType } from '@/constants/meals';
 
 type MealItemState = {
-    selectedMealItem: MealType | null;
-    setSelectedMealItem: (item: MealType) => void;
+    selectedMealItem: MealItemType | null;
+    setSelectedMealItem: (item: MealItemType) => void;
     clearSelectedMealItem: () => void;
 };
 
