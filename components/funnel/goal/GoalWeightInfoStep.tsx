@@ -2,10 +2,10 @@
 
 import styles from '@styles/component/goalWeightInfo.module.css';
 import Icons from '@/assets';
-import { Button } from '../common/Button';
-import { ListCol, Text } from '../common';
+import { Button } from '../../common/Button';
+import { ListCol, Text } from '../../common';
 import { useForm } from 'react-hook-form';
-import { Input } from '../common/Form';
+import { Input } from '../../common/Form';
 import { useRouter } from 'next/navigation';
 import { calculateWeightRange, getLocalStorageItem, setLocalStorageItem, weightValidation } from '@/shared/utils';
 import { GoalRegisterType, WeightInfoType } from '@/service/@types/req.type';

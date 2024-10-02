@@ -7,23 +7,19 @@ import { Button } from '../common/Button';
 import SheetHeader from '../layout/SheetHeader';
 import { Input } from '../common/Form';
 import { useForm } from 'react-hook-form';
-import { getLocalStorageItem, weightValidation } from '@/shared/utils';
+import { weightValidation } from '@/shared/utils';
 import { useCalendarStore } from '@/shared/store/useCalendarStore';
 import { useFetchDailySpec } from '@/service/queries/useFetchDailySpec';
-import { GoalType } from '@/service/@types/res.type';
 import { useCreateDailySpec } from '@/service/mutations/useCreateDailySpec';
 import { useUpdateDailySpec } from '@/service/mutations/useUpdateDailySpec';
+import { useFetchGoalInProgress } from '@/service/queries';
 
 type FormValues = {
     today_weight: null | number;
 };
 
 const TodayWeightSheet = () => {
-    const storedGoalData: GoalType | null = getLocalStorageItem('goalData');
-
-    if (!storedGoalData) {
-        throw new Error('goalData가 없습니다');
-    }
+    const { data: goalData } = useFetchGoalInProgress();
 
     const { isOpen, onClose } = useModal(ModalType.todayWeight);
     const { selectedDate } = useCalendarStore();
@@ -51,7 +47,7 @@ const TodayWeightSheet = () => {
             updateDailySpec(updateData);
         } else {
             const initialData = {
-                goal_id: storedGoalData.id,
+                goal_id: goalData?.id!,
                 today_weight: data.today_weight,
                 mood: null,
                 entry_date: selectedDate,

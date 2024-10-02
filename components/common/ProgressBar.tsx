@@ -3,7 +3,7 @@ import styles from '@styles/common/progressbar.module.css';
 type Props = {
     total: number;
     current: number;
-    size?: 'sm' | 'md' | 'lg';
+    size?: 'xsm' | 'sm' | 'md' | 'lg';
 };
 
 const ProgressBar = ({ total, current, size = 'md' }: Props) => {

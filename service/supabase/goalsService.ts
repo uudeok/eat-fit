@@ -1,10 +1,9 @@
 import { GoalRegisterType, GoalStatusType } from '@/service/@types/req.type';
 import { createClient } from '@/shared/utils/supabase/client';
 import { SupabaseClient } from '@supabase/supabase-js';
+import { GoalType } from '../@types/res.type';
 
 const client = createClient();
-
-/** select : fetch, insert : create,  delete : delete,  put : update   */
 
 export async function fetchGoalsByStatus(status: GoalStatusType) {
     const { data } = await client.from('goals').select('*').eq('goal_status', status).throwOnError();
@@ -12,7 +11,7 @@ export async function fetchGoalsByStatus(status: GoalStatusType) {
     return data;
 }
 
-export async function fetchGoalsInprogress(fetch?: SupabaseClient) {
+export async function fetchGoalsInprogress(fetch?: SupabaseClient): Promise<GoalType | null> {
     const supabase = fetch || client;
 
     const { data } = await supabase
@@ -25,13 +24,7 @@ export async function fetchGoalsInprogress(fetch?: SupabaseClient) {
     return data;
 }
 
-// export async function fetchGoalsInprogress(fetch?: SupabaseClient) {
-//     const supabase = fetch || client;
-
-//     return await supabase.from('goals').select('*').eq('goal_status', 'progress').maybeSingle();
-// }
-
-export async function createNewGoals(goalData: GoalRegisterType) {
+export async function createNewGoals(goalData: GoalRegisterType): Promise<GoalType | null> {
     const { data } = await client
         .from('goals')
         .insert([
@@ -53,7 +46,8 @@ export async function createNewGoals(goalData: GoalRegisterType) {
             },
         ])
         .select()
-        .throwOnError();
+        .throwOnError()
+        .maybeSingle();
 
     return data;
 }

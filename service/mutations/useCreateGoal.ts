@@ -9,7 +9,7 @@ export function useCreateGoal() {
             // console.log('Goal created successfully:', data);
         },
         onError: (error) => {
-            // console.error('Error creating goal:', error);
+            console.error('Error creating goal:', error);
         },
     });
 }

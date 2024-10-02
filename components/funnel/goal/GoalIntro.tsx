@@ -1,8 +1,8 @@
 'use client';
 
 import styles from '@styles/component/goalIntro.module.css';
-import { Text } from '../common';
-import { Button } from '../common/Button';
+import { Text } from '../../common';
+import { Button } from '../../common/Button';
 
 type Props = {
     onNext: () => void;

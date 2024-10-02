@@ -1,4 +1,4 @@
-import { ACTIVITY_LEVEL } from '@/constants/daily';
+import { ACTIVITY_LEVEL } from '@/constants';
 import { GenderType, BasicInfoType, GoalRegisterType, MealPlanType } from '@/service/@types';
 
 /* 기초대사량 (BMR) 계산식 */
@@ -96,7 +96,7 @@ export function calculateNutrientRatio(dailyCalories: number, mealPlan: MealPlan
             ratios = { carbs: 0.08, protein: 0.22, fat: 0.7 };
             break;
         default:
-            throw new Error('Invalid diet type. Please select 1, 2, or 3.');
+            throw new Error('유효하지 않은 식단 입니다.');
     }
 
     // 각 영양소의 칼로리 계산

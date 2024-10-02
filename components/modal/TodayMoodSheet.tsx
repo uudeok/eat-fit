@@ -11,16 +11,11 @@ import { EmojiKey } from '@/constants';
 import { useCalendarStore } from '@/shared/store/useCalendarStore';
 import { useFetchDailySpec } from '@/service/queries/useFetchDailySpec';
 import { useCreateDailySpec } from '@/service/mutations/useCreateDailySpec';
-import { getLocalStorageItem } from '@/shared/utils';
-import { GoalType } from '@/service/@types/res.type';
 import { useUpdateDailySpec } from '@/service/mutations/useUpdateDailySpec';
+import { useFetchGoalInProgress } from '@/service/queries';
 
 const TodayMoodSheet = () => {
-    const storedGoalData: GoalType | null = getLocalStorageItem('goalData');
-
-    if (!storedGoalData) {
-        throw new Error('goalData가 없습니다');
-    }
+    const { data: goalData } = useFetchGoalInProgress();
 
     const { isOpen, onClose } = useModal(ModalType.todayMood);
     const { selectedDate } = useCalendarStore();
@@ -48,7 +43,7 @@ const TodayMoodSheet = () => {
             updateDailySpec(updateData);
         } else {
             const initialData = {
-                goal_id: storedGoalData.id,
+                goal_id: goalData?.id!,
                 entry_date: selectedDate,
                 today_weight: 0,
                 mood: selectedMood,

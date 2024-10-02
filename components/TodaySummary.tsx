@@ -10,7 +10,7 @@ const TodaySummary = async () => {
     }
 
     return (
-        <div className='p-5 h-[350px] flex flex-col gap-4 bg-mainColor shadow-md"'>
+        <div className='p-5 flex flex-col gap-4 bg-mainColor shadow-md"'>
             <NutrientSummary goalData={goalData} />
 
             <TodayStatus />
@@ -19,3 +19,5 @@ const TodaySummary = async () => {
 };
 
 export default TodaySummary;
+
+// h-[375px]

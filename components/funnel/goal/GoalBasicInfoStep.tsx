@@ -2,9 +2,9 @@
 
 import styles from '@styles/component/goalBasicInfo.module.css';
 import Image from 'next/image';
-import { Button } from '../common/Button';
-import { ListCol, Text } from '../common';
-import { Input } from '../common/Form';
+import { Button } from '../../common/Button';
+import { ListCol, Text } from '../../common';
+import { Input } from '../../common/Form';
 import { useForm } from 'react-hook-form';
 import { ActivityLevelType, BasicInfoType, GenderType, GoalRegisterType } from '@/service/@types/req.type';
 import { useState } from 'react';
@@ -42,10 +42,10 @@ const GoalBasicInfoStep = ({ onNext }: Props) => {
         formState: { errors },
     } = useForm<BasicInfoType>({
         defaultValues: {
-            gender: initialData ? initialData.gender : 'F',
+            gender: initialData ? initialData.gender : undefined,
             age: initialData ? initialData.age : 0,
             height: initialData ? initialData.height : 0,
-            activity_level: initialData ? initialData.activity_level : 'moderate',
+            activity_level: initialData ? initialData.activity_level : undefined,
         },
     });
 
@@ -53,12 +53,8 @@ const GoalBasicInfoStep = ({ onNext }: Props) => {
         if (!selectedGender || !selectedActivityLevel) {
             return;
         }
-        const goalData = {
-            ...initialData,
-            ...data,
-        };
 
-        setLocalStorageItem('goalData', goalData);
+        setLocalStorageItem('goalData', data);
 
         onNext(data);
     });

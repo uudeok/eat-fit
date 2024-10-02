@@ -3,12 +3,12 @@
 import styles from '@styles/component/goalMealPlan.module.css';
 import Icons from '@/assets';
 import Image from 'next/image';
-import { ListRow, Text } from '../common';
-import { Button } from '../common/Button';
+import { ListRow, Text } from '../../common';
+import { Button } from '../../common/Button';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { GoalRegisterType, MealPlanInfoType, MealPlanType } from '@/service/@types';
-import { calculateNutrientRatio, removeLocalStorageItem } from '@/shared/utils';
+import { calculateNutrientRatio, getLocalStorageItem } from '@/shared/utils';
 
 type Props = {
     onNext: (data: MealPlanInfoType) => void;
@@ -43,17 +43,21 @@ const MEAL_PLAN: MealPlan[] = [
 const GoalMealPlanStep = ({ onNext }: Props) => {
     const router = useRouter();
     const [selectedPlan, setSelectedPlan] = useState<MealPlanType>();
-    const storage = localStorage.getItem('goalData');
-    const storedData: GoalRegisterType = storage ? JSON.parse(storage) : null;
+
+    const initialData: GoalRegisterType | null = getLocalStorageItem('goalData');
+
+    if (!initialData) {
+        throw new Error('로컬스토리지에 goalData 데이터가 없습니다');
+    }
 
     const handleCheckboxChange = (key: MealPlanType) => {
         setSelectedPlan(key);
     };
 
-    const handleMealPlan = () => {
+    const submitMealPlan = () => {
         if (selectedPlan) {
             /* 식단 정보 기반 권장 탄, 단, 지 비율 계산식 */
-            const nutrientRatio = calculateNutrientRatio(storedData.daily_calories, selectedPlan);
+            const nutrientRatio = calculateNutrientRatio(initialData.daily_calories, selectedPlan);
 
             onNext({
                 meal_plan: selectedPlan,
@@ -61,8 +65,6 @@ const GoalMealPlanStep = ({ onNext }: Props) => {
                 daily_protein: nutrientRatio.daily_protein,
                 daily_fat: nutrientRatio.daily_fat,
             });
-
-            removeLocalStorageItem('goalCalories');
         }
     };
 
@@ -72,7 +74,7 @@ const GoalMealPlanStep = ({ onNext }: Props) => {
 
             <div className={styles.header}>
                 <Text bold size="xxlg">
-                    마지막으로 식단 계획을 알려주세요 !
+                    식단 계획을 알려주세요 !
                 </Text>
                 <Text bold size="lg" color="var(--grey700)">
                     탄단지 비율을 조정해드려요
@@ -111,7 +113,7 @@ const GoalMealPlanStep = ({ onNext }: Props) => {
             ))}
 
             <div className={styles.nextBtn}>
-                <Button size="lg" role="confirm" onClick={handleMealPlan}>
+                <Button size="lg" role="confirm" onClick={submitMealPlan}>
                     시작하기
                 </Button>
             </div>

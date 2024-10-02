@@ -1,6 +1,7 @@
 import { EmojiKey } from '@/constants';
 import { ActivityLevelType, GenderType, GoalStatusType, MealItemType, MealPlanType } from './req.type';
 import { MealsKeysType } from '@/constants/meals';
+import { Json } from '@/@types/supabase.type';
 
 export type GoalType = {
     id: number;
@@ -33,7 +34,7 @@ export type DailySpecType = {
     created_at: string;
 };
 
-export type MealType = {
+export type MealsType = {
     id: number;
     daily_id: number;
     created_at: string;
@@ -50,16 +51,16 @@ export type DailyStepType = {
     entry_date: string;
     goal_id: number;
     id: number;
-    meals: MealsType[];
+    meals: MealType[];
     mood: EmojiKey | null;
     today_weight: number | null;
     user_id: string;
 };
 
-export type MealsType = {
+export type MealType = {
     id: number;
     meal_type: MealsKeysType;
     photo_url: string[] | null;
     serving_time: string | null;
-    meal: MealItemType[] | null;
+    meal: MealItemType[] | null | Json[];
 };
