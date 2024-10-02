@@ -1,6 +1,6 @@
 import { MealItemType } from '@/service/@types';
 
-type NutrientsType = {
+export type NutrientsType = {
     calories: number;
     carbohydrate: number;
     protein: number;

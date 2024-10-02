@@ -15,8 +15,21 @@ export async function fetchGoalsByStatus(status: GoalStatusType) {
 export async function fetchGoalsInprogress(fetch?: SupabaseClient) {
     const supabase = fetch || client;
 
-    return await supabase.from('goals').select('*').eq('goal_status', 'progress').maybeSingle();
+    const { data } = await supabase
+        .from('goals')
+        .select('*')
+        .eq('goal_status', 'progress')
+        .throwOnError()
+        .maybeSingle();
+
+    return data;
 }
+
+// export async function fetchGoalsInprogress(fetch?: SupabaseClient) {
+//     const supabase = fetch || client;
+
+//     return await supabase.from('goals').select('*').eq('goal_status', 'progress').maybeSingle();
+// }
 
 export async function createNewGoals(goalData: GoalRegisterType) {
     const { data } = await client

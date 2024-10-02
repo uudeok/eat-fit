@@ -4,7 +4,6 @@ import { useCalendarStore } from '@/shared/store/useCalendarStore';
 import { ListRow, Penel, Text } from '../common';
 
 const BurnedCalorieStatus = () => {
-    /* 선택한 날짜의 해당되는  daily, exercise 테이블 가져오기*/
     const { selectedDate } = useCalendarStore();
 
     return (

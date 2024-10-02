@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation';
 
 export const getGoalsData = async () => {
     const server = createClient();
-    const { data: goalData } = await fetchGoalsInprogress(server);
+    const goalData = await fetchGoalsInprogress(server);
 
     return goalData;
 };

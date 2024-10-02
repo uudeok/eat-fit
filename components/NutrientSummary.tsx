@@ -2,26 +2,38 @@
 
 import styles from '@styles/component/nutrientSummary.module.css';
 import { List, Text, ProgressBar, ListRow, CircleText, ListCol } from './common';
-import { Meals, Meals2, Meals3 } from '@/constants/meals';
-import { calculateNutrientTotals, setLocalStorageItem } from '@/shared/utils';
-import { GoalType } from '@/service/@types/res.type';
-import { useEffect } from 'react';
-
-const MEALS = [Meals, Meals2, Meals3];
+import { NutrientsType, calculateTotalNutrients, setLocalStorageItem } from '@/shared/utils';
+import { GoalType, MealsType } from '@/service/@types/res.type';
+import { useEffect, useMemo, useState } from 'react';
+import { useCalendarStore } from '@/shared/store/useCalendarStore';
+import { useFetchDailyStep } from '@/service/queries/useFetchDailyStep';
+import { MealItemType } from '@/service/@types';
 
 const NutrientSummary = ({ goalData }: { goalData: GoalType }) => {
-    const meals = MEALS.map((item) => item.meal).flat();
-    const nutrientTotals = calculateNutrientTotals(meals);
+    const [nutrients, setNutrients] = useState<NutrientsType | null>();
+    const { selectedDate } = useCalendarStore();
+    const { data: dailyData } = useFetchDailyStep(selectedDate);
 
-    /* goalData 를 로컬스토리지에 저장/갱신  */
+    const meals = useMemo(() => dailyData?.meals.map((data: MealsType) => data.meal).flat(), [dailyData, selectedDate]);
+
+    useEffect(() => {
+        if (meals && meals.length > 0) {
+            const nutrientsTotals = calculateTotalNutrients(meals as MealItemType[]);
+            setNutrients(nutrientsTotals);
+        } else {
+            setNutrients(null);
+        }
+    }, [meals, selectedDate]);
+
+    /* 서버에서 받아온 goalData 를 로컬스토리지에 저장/갱신  */
     useEffect(() => {
         setLocalStorageItem('goalData', goalData);
     }, [goalData]);
 
     const NUTRIENTS = [
-        { label: '탄', value: nutrientTotals.carbohydrate, bgColor: 'var(--mainColorDk)' },
-        { label: '단', value: nutrientTotals.protein, bgColor: 'var(--orange300)' },
-        { label: '지', value: nutrientTotals.fat, bgColor: 'var(--red300)' },
+        { label: '탄', value: nutrients?.carbohydrate || 0, bgColor: 'var(--mainColorDk)' },
+        { label: '단', value: nutrients?.protein || 0, bgColor: 'var(--orange300)' },
+        { label: '지', value: nutrients?.fat || 0, bgColor: 'var(--red300)' },
     ];
 
     return (
@@ -30,10 +42,10 @@ const NutrientSummary = ({ goalData }: { goalData: GoalType }) => {
                 <ListCol
                     top={
                         <Text size="xxlg" bold color="white">
-                            {nutrientTotals.calories} / {goalData.daily_calories} kcal
+                            {nutrients?.calories || 0} / {goalData.daily_calories} kcal
                         </Text>
                     }
-                    bottom={<ProgressBar current={850} total={goalData.daily_calories} />}
+                    bottom={<ProgressBar current={450} total={goalData.daily_calories} />}
                 />
             </List>
 

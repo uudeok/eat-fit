@@ -44,3 +44,22 @@ export type MealType = {
     meal: MealItemType[];
     photo_url: string[] | null;
 };
+
+export type DailyStepType = {
+    created_at: string;
+    entry_date: string;
+    goal_id: number;
+    id: number;
+    meals: MealsType[];
+    mood: EmojiKey | null;
+    today_weight: number | null;
+    user_id: string;
+};
+
+export type MealsType = {
+    id: number;
+    meal_type: MealsKeysType;
+    photo_url: string[] | null;
+    serving_time: string | null;
+    meal: MealItemType[] | null;
+};

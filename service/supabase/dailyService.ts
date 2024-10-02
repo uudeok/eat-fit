@@ -1,6 +1,6 @@
 import { createClient } from '@/shared/utils/supabase/client';
 import { SupabaseClient } from '@supabase/supabase-js';
-import { DailySpecType } from '../@types/res.type';
+import { DailySpecType, DailyStepType } from '../@types/res.type';
 import { CreateDailySpecArgs, UpdateDailySpecArgs } from '../@types';
 
 const client = createClient();
@@ -19,12 +19,7 @@ export async function fetchDailySpec(selectedDate: Date, fetch?: SupabaseClient)
     return data;
 }
 
-export async function createDailySpec({
-    goal_id,
-    entry_date,
-    today_weight,
-    mood,
-}: CreateDailySpecArgs): Promise<DailySpecType | null> {
+export async function createDailySpec({ goal_id, entry_date, today_weight, mood }: CreateDailySpecArgs) {
     const { data } = await client
         .from('dailySpec')
         .insert([
@@ -54,6 +49,31 @@ export async function updateDailySpec(updateData: UpdateDailySpecArgs) {
         .eq('id', id)
         .select()
         .throwOnError();
+
+    return data;
+}
+
+/* dailySpec 밑으로 Meals, Exercises 테이블 가져오기 */
+export async function fetchDailyStep(selectedDate: Date, fetch?: SupabaseClient) {
+    const supabase = fetch || client;
+
+    const { data } = await supabase
+        .from('dailySpec')
+        .select(
+            `
+             *,
+                meals (
+                    id,
+                    meal_type,
+                    serving_time,
+                    meal,
+                    photo_url               
+                )
+            `
+        )
+        .eq('entry_date', selectedDate.toISOString())
+        .throwOnError()
+        .maybeSingle();
 
     return data;
 }
