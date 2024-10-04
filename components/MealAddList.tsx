@@ -55,8 +55,8 @@ const MealAddList = () => {
                 today_weight: 0,
                 mood: null,
             };
-            const result = (await createDailySpec(dailySpecData)) as DailySpecType;
-            createMealsData(result.id);
+            const dailyData = (await createDailySpec(dailySpecData)) as DailySpecType;
+            createMealsData(dailyData.id);
         } else {
             createMealsData();
         }

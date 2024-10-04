@@ -77,15 +77,14 @@ export type CreateMealsArgs = {
     daily_id: number;
     entry_date: Date;
     meal_type: MealsKeysType;
-    serving_time?: string | null;
     meal: MealItemType[];
 };
 
-// const createData = {
-//     daily_id: dailySpec.id,
-//     entry_date: selectedDate,
-//     meal_type: selectedMealType,
-//     serving_time: null,
-//     meal: [data],
-// };
-// createMeal(createData);
+/* meals 데이터 중 일부만 수정할 수 있기에 optional 로 지정 */
+export type UpdateMealsArgs = {
+    meal_type: MealsKeysType;
+    serving_time: Date | null;
+    photo_url?: string[] | null;
+    meal: MealItemType[];
+    id: number;
+};

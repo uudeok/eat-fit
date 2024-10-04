@@ -13,3 +13,4 @@ export { default as Penel } from './Penel';
 export { default as Alarm } from './Alarm';
 export { default as Spinner } from './Spinner';
 export { default as LoadingBar } from './LoadingBar';
+export { default as TextToggle } from './TextToggle';

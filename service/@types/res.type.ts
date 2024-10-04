@@ -34,6 +34,7 @@ export type DailySpecType = {
     created_at: string;
 };
 
+/* meals 테이블 가져올때  */
 export type MealsType = {
     id: number;
     daily_id: number;
@@ -41,11 +42,12 @@ export type MealsType = {
     user_id: string;
     entry_date: string;
     meal_type: MealsKeysType;
-    serving_time: string | null;
+    serving_time: Date | null;
     meal: MealItemType[];
     photo_url: string[] | null;
 };
 
+/* daily & meals 테이블 join  */
 export type DailyStepType = {
     created_at: string;
     entry_date: string;
@@ -57,10 +59,5 @@ export type DailyStepType = {
     user_id: string;
 };
 
-export type MealType = {
-    id: number;
-    meal_type: MealsKeysType;
-    photo_url: string[] | null;
-    serving_time: string | null;
-    meal: MealItemType[] | null | Json[];
-};
+/* daily & meals 테이블 join 할때 meals 테이블에서 가져오는 데이터의 타입 */
+export type MealType = Pick<MealsType, 'id' | 'meal_type' | 'photo_url' | 'serving_time' | 'meal'>;

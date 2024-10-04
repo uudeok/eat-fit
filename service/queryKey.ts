@@ -11,11 +11,12 @@ export const dailySpecKeys = {
     base: [{ scope: 'dailyspec' }] as const,
     all: () => [{ ...dailySpecKeys.base[0] }] as const,
     date: (selectedDate: Date) => [{ ...dailySpecKeys.base[0], selectedDate }] as const,
-    withDetails: (selectedDate: Date) => [{ ...mealsKeys.base[0], selectedDate, include: 'all' }] as const,
+    withDetails: (selectedDate: Date) => [{ ...dailySpecKeys.base[0], selectedDate, include: 'all' }] as const,
 };
 
 export const mealsKeys = {
     base: [{ scope: 'meals' }] as const,
     all: () => [{ ...mealsKeys.base[0] }] as const,
     date: (selectedDate: Date) => [{ ...mealsKeys.base[0], selectedDate }] as const,
+    detail: (mealId: number) => [{ ...mealsKeys.base[0], mealId }] as const,
 };

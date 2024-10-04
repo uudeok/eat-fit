@@ -1,3 +1,5 @@
+'use client';
+
 import styles from '@styles/common/textToggle.module.css';
 import React, { useState } from 'react';
 
@@ -5,10 +7,11 @@ type Props = {
     left: string;
     right: string;
     onClick: (value: string) => void;
+    initialValue?: string;
 };
 
-const TextToggle = ({ left, right, onClick }: Props) => {
-    const [active, setActive] = useState<string>(left);
+const TextToggle = ({ left, right, onClick, initialValue }: Props) => {
+    const [active, setActive] = useState<string>(initialValue ? initialValue : left);
 
     const handleClick = (value: string) => {
         setActive(value);

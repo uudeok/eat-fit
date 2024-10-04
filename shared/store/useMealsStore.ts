@@ -34,5 +34,6 @@ export const useMealsStore = create<MealsState>((set) => ({
     resetMeals: () =>
         set(() => ({
             meals: [],
+            mealItem: null,
         })),
 }));

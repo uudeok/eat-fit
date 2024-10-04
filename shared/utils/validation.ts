@@ -59,3 +59,13 @@ export const calorieValidation = (e: React.FormEvent<HTMLInputElement>) => {
 
     return Number(input.value);
 };
+
+export const padStartToZero = (e: React.ChangeEvent<HTMLInputElement>, digits: number) => {
+    let value = e.target.value;
+
+    let numValue = Number(value);
+
+    if (!isNaN(numValue)) {
+        e.target.value = numValue.toString().padStart(digits, '0'); // 지정된 자리수로 표시
+    }
+};

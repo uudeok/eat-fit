@@ -7,25 +7,12 @@ export type NutrientsType = {
     fat: number;
 };
 
-export const calculateNutrientTotals = (mealData: MealItemType[]): NutrientsType => {
-    return mealData.reduce(
-        (totals, item) => {
-            totals.calories += Number(item.calories);
-            totals.carbohydrate += Number(item.carbohydrate);
-            totals.protein += Number(item.protein);
-            totals.fat += Number(item.fat);
-            return totals;
-        },
-        { calories: 0, carbohydrate: 0, protein: 0, fat: 0 }
-    );
-};
-
 export const calculateTotalNutrients = (meals: MealItemType[]): NutrientsType => {
     if (meals.length === 0) {
         return { calories: 0, carbohydrate: 0, protein: 0, fat: 0 };
     }
 
-    return meals.reduce(
+    const totals = meals.reduce(
         (totals, meal) => {
             return {
                 calories: totals.calories + Number(meal.calories),
@@ -36,4 +23,11 @@ export const calculateTotalNutrients = (meals: MealItemType[]): NutrientsType =>
         },
         { calories: 0, carbohydrate: 0, protein: 0, fat: 0 }
     );
+
+    return {
+        calories: Math.round(totals.calories * 10) / 10,
+        carbohydrate: Math.round(totals.carbohydrate * 10) / 10,
+        protein: Math.round(totals.protein * 10) / 10,
+        fat: Math.round(totals.fat * 10) / 10,
+    };
 };

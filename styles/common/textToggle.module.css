@@ -20,6 +20,8 @@
     transition: color 0.3s ease;
 
     z-index: 1;
+
+    color: var(--grey700);
 }
 
 .swtich {

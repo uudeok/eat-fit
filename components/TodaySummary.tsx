@@ -2,6 +2,8 @@ import NutrientSummary from './NutrientSummary';
 import TodayStatus from './TodayStatus';
 import { getGoalsData } from '@/app/(goals)/goals/page';
 
+export const revalidate = 0;
+
 const TodaySummary = async () => {
     const goalData = await getGoalsData();
 

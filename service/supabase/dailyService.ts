@@ -54,10 +54,10 @@ export async function updateDailySpec(updateData: UpdateDailySpecArgs) {
 }
 
 /* dailySpec 밑으로 Meals, Exercises 테이블 가져오기 */
-export async function fetchDailyStep(selectedDate: Date, fetch?: SupabaseClient) {
+export async function fetchDailyStep(selectedDate: Date, fetch?: SupabaseClient): Promise<DailyStepType> {
     const supabase = fetch || client;
 
-    const { data } = await supabase
+    const { data } = (await supabase
         .from('dailySpec')
         .select(
             `
@@ -73,7 +73,7 @@ export async function fetchDailyStep(selectedDate: Date, fetch?: SupabaseClient)
         )
         .eq('entry_date', selectedDate.toISOString())
         .throwOnError()
-        .maybeSingle();
+        .maybeSingle()) as { data: DailyStepType };
 
     return data;
 }
