@@ -11,5 +11,6 @@ export const useFetchMealDetail = (mealId: number) => {
         queryFn: () => fetchMealsDetail(mealId),
         staleTime: staleTIme,
         gcTime: gcTime,
+        enabled: !!mealId,
     });
 };

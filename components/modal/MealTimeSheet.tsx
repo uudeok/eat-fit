@@ -7,19 +7,25 @@ import SheetHeader from '../layout/SheetHeader';
 import { Button } from '../common/Button';
 import { Input } from '../common/Form';
 import { useForm } from 'react-hook-form';
-import { Spinner, Text, TextToggle } from '../common';
+import { Text, TextToggle } from '../common';
 import { ModalType } from '../common/Modal/OverlayContainer';
 import { useCalendarStore } from '@/shared/store/useCalendarStore';
 import { convertToKST, convertToServingTime, padStartToZero } from '@/shared/utils';
 import { usePathname } from 'next/navigation';
 import { useUpdateMeals } from '@/service/mutations';
 import { useFetchMealDetail } from '@/service/queries/useFetchMealDetail';
+import { MealsType } from '@/service/@types/res.type';
 
 export type ServingTimeType = {
     period: string | null;
     hour: number | null | string;
     minutes: number | null | string;
 };
+
+/* serving_time 은 무조건 Null 값으로라도 meals 테이블에 존재한다
+   meals 데이터를 가져와서 새로운 데이터로 넣어주면 된다
+   나머지는 기존 데이터를 그대로 넣어준다
+ */
 
 const MealTimeSheet = () => {
     const pathname = usePathname();
@@ -28,9 +34,8 @@ const MealTimeSheet = () => {
     const { isOpen, onClose } = useModal(ModalType.mealTime);
     const { selectedDate } = useCalendarStore();
 
-    const { data: mealDetail } = useFetchMealDetail(Number(mealId));
-
-    if (!mealDetail) return <Spinner />;
+    const { data: mealDetail = {} as MealsType } = useFetchMealDetail(Number(mealId));
+    const { mutate: updateMeals } = useUpdateMeals();
 
     const initialServingTime = convertToKST(mealDetail.serving_time!);
 
@@ -41,8 +46,6 @@ const MealTimeSheet = () => {
             minutes: initialServingTime ? initialServingTime.minutes : null,
         },
     });
-
-    const { mutate: updateMeals } = useUpdateMeals();
 
     const handlePeriodToggle = (value: string) => {
         setValue('period', value);

@@ -4,7 +4,7 @@ import styles from '@styles/component/introScreen.module.css';
 import Image from 'next/image';
 import { AuthContext } from '@/shared/context/AuthProvider';
 import { useRouter } from 'next/navigation';
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -14,7 +14,7 @@ const LandingScreen = () => {
 
     const { session, isLoading } = useContext(AuthContext);
 
-    const redirectWithDelay = async () => {
+    const redirectWithDelay = useCallback(async () => {
         await delay(2000);
         setIsFadeOut(true);
         await delay(500);
@@ -24,13 +24,13 @@ const LandingScreen = () => {
         } else {
             router.push('/login');
         }
-    };
+    }, [session, router]);
 
     useEffect(() => {
         if (!isLoading) {
             redirectWithDelay();
         }
-    }, [session, isLoading]);
+    }, [session, isLoading, redirectWithDelay]);
 
     return (
         <div className={`${styles.layout} ${isFadeOut && styles['fadeOut']}`}>

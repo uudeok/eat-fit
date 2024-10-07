@@ -54,9 +54,18 @@ export const useFunnel = <T extends readonly string[]>(steps: T, options: UseFun
         return <div>{children}</div>;
     };
 
-    Funnel.Step = ({ name, children }: { name: T[number]; children: React.ReactNode }) => {
+    // Funnel.Step = ({ name, children }: { name: T[number]; children: React.ReactNode }) => {
+    //     return currentStep === name ? <div>{children}</div> : null;
+    // }
+
+    const FunnelStep = ({ name, children }: { name: T[number]; children: React.ReactNode }) => {
         return currentStep === name ? <div>{children}</div> : null;
     };
+
+    FunnelStep.displayName = 'Funnel.Step';
+    Funnel.Step = FunnelStep;
+
+    Funnel.displayName = 'Funnel';
 
     return [Funnel, setStep] as const;
 };

@@ -21,6 +21,8 @@ export async function fetchGoalsInprogress(fetch?: SupabaseClient): Promise<Goal
         .throwOnError()
         .maybeSingle();
 
+    // const result = await axios.get("/goals");
+
     return data;
 }
 

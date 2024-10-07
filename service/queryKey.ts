@@ -1,5 +1,12 @@
 import { GoalStatusType } from './@types';
 
+// type QueryKeysType = {
+//     base: ({ scope : 'goalds'}) => void,
+//     status: any;
+//     all: any;
+//     detail: any;
+// }
+
 export const goalsKeys = {
     base: [{ scope: 'goals' }] as const,
     all: () => [{ ...goalsKeys.base[0] }] as const,

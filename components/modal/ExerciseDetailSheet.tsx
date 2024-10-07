@@ -22,7 +22,9 @@ const ExerciseDetailSheet = () => {
     const { isOpen, onClose } = useModal(ModalType.exerciseDetail);
     const { selectedExerciseItem } = useExerciseItemStore();
 
-    if (!selectedExerciseItem) return null;
+    if (!selectedExerciseItem) {
+        throw new Error('선택한 운동 데이터가 없습니다');
+    }
 
     const [selectedIntensity, setSelectedIntensity] = useState<IntensityKeysType>(
         selectedExerciseItem?.exercise_intensity

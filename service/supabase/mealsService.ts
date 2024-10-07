@@ -33,7 +33,7 @@ export async function createMeals({ daily_id, entry_date, meal_type, meal }: Cre
 }
 
 /* meal id 로 특정 데이터 가져오기 */
-export async function fetchMealsDetail(mealId: number): Promise<MealsType | null> {
+export async function fetchMealsDetail(mealId: number): Promise<MealsType> {
     const { data } = (await client.from('meals').select('*').eq('id', mealId).throwOnError().maybeSingle()) as {
         data: MealsType;
     };
