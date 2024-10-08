@@ -8,13 +8,18 @@ import { useEffect, useMemo, useState } from 'react';
 import { useCalendarStore } from '@/shared/store/useCalendarStore';
 import { useFetchDailyStep } from '@/service/queries/useFetchDailyStep';
 import { MealItemType } from '@/service/@types';
+import dayjs from 'dayjs';
+import { DATE_FORMAT } from '@/constants';
 
 const NutrientSummary = ({ goalData }: { goalData: GoalType }) => {
     const [nutrients, setNutrients] = useState<NutrientsType>({ calories: 0, carbohydrate: 0, protein: 0, fat: 0 });
     const { selectedDate } = useCalendarStore();
-    const { data: dailyData } = useFetchDailyStep(selectedDate) as { data: DailyStepType | null };
 
-    const meals = useMemo(() => dailyData?.meals.map((data) => data.meal).flat(), [dailyData, selectedDate]);
+    const formattedDate = dayjs(selectedDate).format(DATE_FORMAT['YYYY-MM-DD']);
+
+    const { data: dailyData } = useFetchDailyStep(formattedDate) as { data: DailyStepType | null };
+
+    const meals = useMemo(() => dailyData?.meals.map((data) => data.meal).flat(), [dailyData]);
 
     useEffect(() => {
         if (meals && meals.length > 0) {

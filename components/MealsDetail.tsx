@@ -8,7 +8,6 @@ import Icons from '@/assets';
 import { calculateTotalNutrients, convertToKST } from '@/shared/utils';
 import { useRouter } from 'next/navigation';
 import { useModal } from '@/hooks';
-import { useMealItemStore } from '@/shared/store/useMealItemStore';
 import { ModalType } from '@/components/common/Modal/OverlayContainer';
 import { MealItemType } from '@/service/@types';
 import { useFetchMealDetail } from '@/service/queries/useFetchMealDetail';
@@ -19,9 +18,7 @@ const MealsDetail = ({ mealsId }: { mealsId: string }) => {
     const { onOpen: openMealDetail } = useModal(ModalType.mealAddForm);
     const { onOpen: openTimePicker } = useModal(ModalType.mealTime);
 
-    // const { setSelectedMealItem } = useMealItemStore();
     const { selectMeal } = useMealsStore();
-
     const { data: mealDetail } = useFetchMealDetail(Number(mealsId));
 
     if (!mealDetail) return <Spinner />;
@@ -102,7 +99,7 @@ const MealsDetail = ({ mealsId }: { mealsId: string }) => {
                     />
                 </List>
 
-                {mealDetail.meal.map((m) => (
+                {mealDetail.meal.map((m: any) => (
                     <div key={m.id}>
                         <Penel key={m.food_name} padding="15px" direction="column" onClick={() => showMealDetail(m)}>
                             <ListRow
@@ -130,8 +127,6 @@ const MealsDetail = ({ mealsId }: { mealsId: string }) => {
 
 export default MealsDetail;
 
-/* 기존 MealDetailSheet 로 연결되던 로직 */
-
 // 'use client';
 
 // import styles from '@styles/pages/mealsDetailPage.module.css';
@@ -142,19 +137,19 @@ export default MealsDetail;
 // import { calculateTotalNutrients, convertToKST } from '@/shared/utils';
 // import { useRouter } from 'next/navigation';
 // import { useModal } from '@/hooks';
-// import { useMealItemStore } from '@/shared/store/useMealItemStore';
 // import { ModalType } from '@/components/common/Modal/OverlayContainer';
 // import { MealItemType } from '@/service/@types';
-// import { useFetchMealDetail } from '@/service/queries/useFetchMealDetail';
+// import { useFetchMealDetail, useFetchMealDetail2 } from '@/service/queries/useFetchMealDetail';
+// import { useMealsStore } from '@/shared/store/useMealsStore';
+// import { MealsType } from '@/service/@types/res.type';
 
 // const MealsDetail = ({ mealsId }: { mealsId: string }) => {
 //     const router = useRouter();
-//     const { onOpen: openMealDetail } = useModal(ModalType.mealDetail);
+//     const { onOpen: openMealDetail } = useModal(ModalType.mealAddForm);
 //     const { onOpen: openTimePicker } = useModal(ModalType.mealTime);
 
-//     const { setSelectedMealItem } = useMealItemStore();
-
-//     const { data: mealDetail } = useFetchMealDetail(Number(mealsId));
+//     const { selectMeal } = useMealsStore();
+//     const { data: mealDetail } = useFetchMealDetail2(Number(mealsId)) as { data: MealsType };
 
 //     if (!mealDetail) return <Spinner />;
 
@@ -168,7 +163,8 @@ export default MealsDetail;
 //     ];
 
 //     const showMealDetail = (item: MealItemType) => {
-//         setSelectedMealItem(item);
+//         // setSelectedMealItem(item);
+//         selectMeal(item);
 //         openMealDetail();
 //     };
 
@@ -233,7 +229,7 @@ export default MealsDetail;
 //                     />
 //                 </List>
 
-//                 {mealDetail.meal.map((m) => (
+//                 {mealDetail.meal.map((m: any) => (
 //                     <div key={m.id}>
 //                         <Penel key={m.food_name} padding="15px" direction="column" onClick={() => showMealDetail(m)}>
 //                             <ListRow

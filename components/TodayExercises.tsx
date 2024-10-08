@@ -18,7 +18,7 @@ const TodayExercises = () => {
     const { onOpen } = useModal(ModalType.exerciseDetail);
     const { setSelectedExerciseItem } = useExerciseItemStore();
 
-    const totals = useMemo(() => calculateExerciseTotals(Exercises), [Exercises]);
+    const totals = useMemo(() => calculateExerciseTotals(Exercises), []);
 
     const EXERCISES_SUMMARY = [
         { label: '총 운동 시간', value: totals.duration_minutes, unit: '분' },

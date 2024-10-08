@@ -3,7 +3,7 @@ import { createDailySpec } from '../supabase/dailyService';
 import { CreateDailySpecArgs } from '../@types';
 import { dailySpecKeys } from '../queryKey';
 
-export function useCreateDailySpec(selectedDate: Date) {
+export function useCreateDailySpec(selectedDate: string) {
     const queryClient = useQueryClient();
 
     return useMutation({

@@ -24,7 +24,7 @@ const MealAddPage = () => {
         return () => {
             resetMeals();
         };
-    }, []);
+    }, [resetMeals]);
 
     return (
         <div className={styles.layout}>

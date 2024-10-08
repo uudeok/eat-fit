@@ -6,12 +6,16 @@ import { ModalType } from '../common/Modal/OverlayContainer';
 import { ListRow, Penel, Text } from '../common';
 import { useCalendarStore } from '@/shared/store/useCalendarStore';
 import { useFetchDailySpec } from '@/service/queries/useFetchDailySpec';
+import dayjs from 'dayjs';
+import { DATE_FORMAT } from '@/constants';
 
 const MoodStatus = () => {
     const { onOpen } = useModal(ModalType.todayMood);
     const { selectedDate } = useCalendarStore();
 
-    const { data: dailySpec } = useFetchDailySpec(selectedDate);
+    const formattedDate = dayjs(selectedDate).format(DATE_FORMAT['YYYY-MM-DD']);
+
+    const { data: dailySpec } = useFetchDailySpec(formattedDate);
 
     return (
         <Penel onClick={onOpen} backgroundColor="var(--mainColorLg)" direction="column">

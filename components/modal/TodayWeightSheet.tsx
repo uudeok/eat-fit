@@ -13,6 +13,8 @@ import { useFetchDailySpec } from '@/service/queries/useFetchDailySpec';
 import { useCreateDailySpec } from '@/service/mutations/useCreateDailySpec';
 import { useUpdateDailySpec } from '@/service/mutations/useUpdateDailySpec';
 import { useFetchGoalInProgress } from '@/service/queries';
+import dayjs from 'dayjs';
+import { DATE_FORMAT } from '@/constants';
 
 type FormValues = {
     today_weight: null | number;
@@ -23,7 +25,10 @@ const TodayWeightSheet = () => {
 
     const { isOpen, onClose } = useModal(ModalType.todayWeight);
     const { selectedDate } = useCalendarStore();
-    const { data: dailySpec } = useFetchDailySpec(selectedDate);
+
+    const formattedDate = dayjs(selectedDate).format(DATE_FORMAT['YYYY-MM-DD']);
+
+    const { data: dailySpec } = useFetchDailySpec(formattedDate);
 
     const { register, handleSubmit } = useForm<FormValues>({
         defaultValues: {
@@ -31,8 +36,8 @@ const TodayWeightSheet = () => {
         },
     });
 
-    const { mutate: createDailySpec } = useCreateDailySpec(selectedDate);
-    const { mutate: updateDailySpec } = useUpdateDailySpec(selectedDate);
+    const { mutate: createDailySpec } = useCreateDailySpec(formattedDate);
+    const { mutate: updateDailySpec } = useUpdateDailySpec(formattedDate);
 
     const submitTodayWeight = handleSubmit((data) => {
         if (!data) return;
@@ -50,7 +55,7 @@ const TodayWeightSheet = () => {
                 goal_id: goalData?.id!,
                 today_weight: data.today_weight,
                 mood: null,
-                entry_date: selectedDate,
+                entry_date: formattedDate,
             };
 
             createDailySpec(initialData);

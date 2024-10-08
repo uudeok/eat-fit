@@ -3,7 +3,7 @@ import { CreateMealsArgs } from '../@types';
 import { createMeals } from '../supabase/mealsService';
 import { dailySpecKeys, mealsKeys } from '../queryKey';
 
-export function useCreateMeals(selectedDate: Date) {
+export function useCreateMeals(selectedDate: string) {
     const queryClient = useQueryClient();
 
     return useMutation({

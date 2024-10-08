@@ -5,12 +5,16 @@ import { ListRow, Penel, Text } from '../common';
 import { ModalType } from '../common/Modal/OverlayContainer';
 import { useCalendarStore } from '@/shared/store/useCalendarStore';
 import { useFetchDailySpec } from '@/service/queries/useFetchDailySpec';
+import dayjs from 'dayjs';
+import { DATE_FORMAT } from '@/constants';
 
 const WeightStatus = () => {
     const { selectedDate } = useCalendarStore();
     const { onOpen } = useModal(ModalType.todayWeight);
 
-    const { data: dailySpec } = useFetchDailySpec(selectedDate);
+    const formattedDate = dayjs(selectedDate).format(DATE_FORMAT['YYYY-MM-DD']);
+
+    const { data: dailySpec } = useFetchDailySpec(formattedDate);
 
     return (
         <Penel onClick={onOpen} direction="column" backgroundColor="var(--mainColorLg)">

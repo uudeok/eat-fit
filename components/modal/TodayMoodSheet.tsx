@@ -7,12 +7,13 @@ import { Button } from '../common/Button';
 import { Emotions, Text } from '../common';
 import { BottomSheet } from '../common/Modal';
 import { useState } from 'react';
-import { EmojiKey } from '@/constants';
+import { DATE_FORMAT, EmojiKey } from '@/constants';
 import { useCalendarStore } from '@/shared/store/useCalendarStore';
 import { useFetchDailySpec } from '@/service/queries/useFetchDailySpec';
 import { useCreateDailySpec } from '@/service/mutations/useCreateDailySpec';
 import { useUpdateDailySpec } from '@/service/mutations/useUpdateDailySpec';
 import { useFetchGoalInProgress } from '@/service/queries';
+import dayjs from 'dayjs';
 
 const TodayMoodSheet = () => {
     const { data: goalData } = useFetchGoalInProgress();
@@ -20,9 +21,11 @@ const TodayMoodSheet = () => {
     const { isOpen, onClose } = useModal(ModalType.todayMood);
     const { selectedDate } = useCalendarStore();
 
-    const { data: dailySpec } = useFetchDailySpec(selectedDate);
-    const { mutate: createDailySpec } = useCreateDailySpec(selectedDate);
-    const { mutate: updateDailySpec } = useUpdateDailySpec(selectedDate);
+    const formattedDate = dayjs(selectedDate).format(DATE_FORMAT['YYYY-MM-DD']);
+
+    const { data: dailySpec } = useFetchDailySpec(formattedDate);
+    const { mutate: createDailySpec } = useCreateDailySpec(formattedDate);
+    const { mutate: updateDailySpec } = useUpdateDailySpec(formattedDate);
 
     const [selectedMood, setSelectedMood] = useState<EmojiKey | null>(null);
 
@@ -44,7 +47,7 @@ const TodayMoodSheet = () => {
         } else {
             const initialData = {
                 goal_id: goalData?.id!,
-                entry_date: selectedDate,
+                entry_date: formattedDate,
                 today_weight: 0,
                 mood: selectedMood,
             };

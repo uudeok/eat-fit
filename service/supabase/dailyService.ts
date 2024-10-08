@@ -5,14 +5,13 @@ import { CreateDailySpecArgs, UpdateDailySpecArgs } from '../@types';
 
 const client = createClient();
 
-export async function fetchDailySpec(selectedDate: Date, fetch?: SupabaseClient): Promise<DailySpecType | null> {
+export async function fetchDailySpec(selectedDate: string, fetch?: SupabaseClient): Promise<DailySpecType | null> {
     const supabase = fetch || client;
-    const convertDate = selectedDate.toISOString();
 
     const { data } = await supabase
         .from('dailySpec')
         .select('*')
-        .eq('entry_date', convertDate)
+        .eq('entry_date', selectedDate)
         .throwOnError()
         .maybeSingle();
 
@@ -25,7 +24,7 @@ export async function createDailySpec({ goal_id, entry_date, today_weight, mood 
         .insert([
             {
                 goal_id: goal_id,
-                entry_date: entry_date.toISOString(),
+                entry_date: entry_date,
                 today_weight: today_weight,
                 mood: mood,
             },
@@ -54,7 +53,7 @@ export async function updateDailySpec(updateData: UpdateDailySpecArgs) {
 }
 
 /* dailySpec 밑으로 Meals, Exercises 테이블 가져오기 */
-export async function fetchDailyStep(selectedDate: Date, fetch?: SupabaseClient): Promise<DailyStepType> {
+export async function fetchDailyStep(selectedDate: string, fetch?: SupabaseClient): Promise<DailyStepType> {
     const supabase = fetch || client;
 
     const { data } = (await supabase
@@ -71,7 +70,7 @@ export async function fetchDailyStep(selectedDate: Date, fetch?: SupabaseClient)
                 )
             `
         )
-        .eq('entry_date', selectedDate.toISOString())
+        .eq('entry_date', selectedDate)
         .throwOnError()
         .maybeSingle()) as { data: DailyStepType };
 

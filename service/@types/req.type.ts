@@ -51,7 +51,7 @@ export type MealPlanInfoType = {
 
 export type CreateDailySpecArgs = {
     goal_id: number;
-    entry_date: Date;
+    entry_date: string;
     today_weight: number | null;
     mood: EmojiKey | null;
 };
@@ -75,7 +75,7 @@ export type MealItemType = {
 
 export type CreateMealsArgs = {
     daily_id: number;
-    entry_date: Date;
+    entry_date: string;
     meal_type: MealsKeysType;
     meal: MealItemType[];
 };

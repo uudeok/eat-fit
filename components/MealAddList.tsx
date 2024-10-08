@@ -16,6 +16,8 @@ import { useRouter } from 'next/navigation';
 import { DailySpecType } from '@/service/@types/res.type';
 import { useFetchDailySpec, useFetchGoalInProgress } from '@/service/queries';
 import { useCreateDailySpec, useCreateMeals } from '@/service/mutations';
+import dayjs from 'dayjs';
+import { DATE_FORMAT } from '@/constants';
 
 const MealAddList = () => {
     const router = useRouter();
@@ -25,11 +27,13 @@ const MealAddList = () => {
     const { meals, removeMeal, selectMeal, resetMeals } = useMealsStore();
     const { selectedDate } = useCalendarStore();
 
-    const { data: goalData } = useFetchGoalInProgress();
-    const { data: dailySpec } = useFetchDailySpec(selectedDate);
+    const formattedDate = dayjs(selectedDate).format(DATE_FORMAT['YYYY-MM-DD']);
 
-    const { mutateAsync: createDailySpec } = useCreateDailySpec(selectedDate);
-    const { mutateAsync: createMeals } = useCreateMeals(selectedDate);
+    const { data: goalData } = useFetchGoalInProgress();
+    const { data: dailySpec } = useFetchDailySpec(formattedDate);
+
+    const { mutateAsync: createDailySpec } = useCreateDailySpec(formattedDate);
+    const { mutateAsync: createMeals } = useCreateMeals(formattedDate);
 
     const nutrientTotals = calculateTotalNutrients(meals);
 
@@ -38,7 +42,7 @@ const MealAddList = () => {
     const createMealsData = async (id?: number) => {
         const mealData = {
             daily_id: dailySpec?.id! || id!,
-            entry_date: selectedDate,
+            entry_date: formattedDate,
             meal_type: selectedMealType,
             meal: meals,
         };
@@ -51,7 +55,7 @@ const MealAddList = () => {
         if (!dailySpec) {
             const dailySpecData = {
                 goal_id: goalData?.id!,
-                entry_date: selectedDate,
+                entry_date: formattedDate,
                 today_weight: 0,
                 mood: null,
             };
