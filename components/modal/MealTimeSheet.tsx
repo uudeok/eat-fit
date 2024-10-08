@@ -23,8 +23,7 @@ export type ServingTimeType = {
 };
 
 /* serving_time 은 무조건 Null 값으로라도 meals 테이블에 존재한다
-   meals 데이터를 가져와서 새로운 데이터로 넣어주면 된다
-   나머지는 기존 데이터를 그대로 넣어준다
+   meals 데이터를 가져와서 나머지는 기존 데이터를 그대로 넣어주고 serving_time 만 업데이트 한다
  */
 
 const MealTimeSheet = () => {
@@ -53,6 +52,7 @@ const MealTimeSheet = () => {
 
     const submitServingTime = (data: ServingTimeType) => {
         const { hour, minutes } = convertToServingTime(data);
+
         const updatedDate = new Date(selectedDate.getTime());
         const servingTime = new Date(updatedDate.setHours(hour, minutes));
 

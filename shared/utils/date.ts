@@ -41,7 +41,6 @@ export function convertToServingTime(time: ServingTimeType) {
 /* UTC 형식의 Date 에서 시간을 KST 로 변환 */
 export function convertToKST(time: Date | null) {
     if (!time) return;
-    // console.log('시간', time);
 
     const kstTime = dayjs.utc(time).tz('Asia/Seoul');
 

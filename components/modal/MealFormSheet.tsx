@@ -29,20 +29,16 @@ const NUTRIENTS: { label: string; key: keyof MealItemType; unit: string }[] = [
     { label: '지방', key: 'fat', unit: 'g' },
 ];
 
-const MealAddFormSheet = () => {
+const MealFormSheet = () => {
     const pathname = usePathname();
     const path = pathname.split('/').pop();
     const isEditMode = path !== 'add';
 
-    const { isOpen, onClose } = useModal(ModalType.mealAddForm);
+    const { isOpen, onClose } = useModal(ModalType.mealForm);
     const { mealItem, addMeal, updateMeal } = useMealsStore();
     const { data: mealDetail } = useFetchMealDetail(Number(path));
 
     const { mutate: updateMeals } = useUpdateMeals();
-
-    console.log(mealItem);
-
-    console.log('mealdetail', mealDetail);
 
     const { register, handleSubmit } = useForm<MealItemType>({
         defaultValues: {
@@ -56,7 +52,6 @@ const MealAddFormSheet = () => {
         },
     });
 
-    /* meals 데이터 생성 */
     const createMealsData = (data: MealItemType) => {
         if (mealItem) {
             updateMeal(data);
@@ -69,7 +64,6 @@ const MealAddFormSheet = () => {
 
     /* meals 데이터 수정 */
     const updateMealsData = (data: MealItemType) => {
-        console.log(data);
         if (mealItem && mealDetail) {
             const updatedMeals = mealDetail.meal.map((m) => {
                 if (m.id === mealItem.id) {
@@ -145,7 +139,7 @@ const MealAddFormSheet = () => {
     );
 };
 
-export default MealAddFormSheet;
+export default MealFormSheet;
 
 /* 기존  로직 */
 

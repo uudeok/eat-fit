@@ -16,7 +16,3 @@ export function useUpdateMeals() {
         },
     });
 }
-
-// queryClient.invalidateQueries({ queryKey: mealsKeys.date(selectedDate) });
-// queryClient.invalidateQueries({ queryKey: dailySpecKeys.withDetails(selectedDate) });
-// queryClient.invalidateQueries({ queryKey: mealsKeys.detail(mealId) });

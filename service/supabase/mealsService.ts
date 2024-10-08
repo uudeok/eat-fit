@@ -4,16 +4,7 @@ import { MealsType } from '../@types/res.type';
 
 const client = createClient();
 
-/* meal 타입이 Json[] 으로 나와서 올바른 타입으로 지정 */
-export async function fetchMealsData(selectedDate: string): Promise<MealsType[] | null> {
-    const { data } = (await client.from('meals').select('*').eq('entry_date', selectedDate).throwOnError()) as {
-        data: MealsType[] | null;
-    };
-
-    return data;
-}
-
-export async function fetchMealsData2(selectedDate: string) {
+export async function fetchMealsData(selectedDate: string): Promise<MealsType[]> {
     const data = await fetch(`/api/meals?date=${selectedDate}`);
 
     if (!data.ok) {
@@ -25,23 +16,6 @@ export async function fetchMealsData2(selectedDate: string) {
     return result;
 }
 
-export async function createMeals({ daily_id, entry_date, meal_type, meal }: CreateMealsArgs) {
-    const { data } = await client
-        .from('meals')
-        .insert([
-            {
-                daily_id: daily_id,
-                entry_date: entry_date,
-                meal_type: meal_type,
-                meal: meal,
-            },
-        ])
-        .select()
-        .throwOnError();
-
-    return data;
-}
-
 export async function fetchMealsDetail(mealId: number): Promise<MealsType> {
     const data = await fetch(`/api/meals/${mealId}`);
 
@@ -50,24 +24,42 @@ export async function fetchMealsDetail(mealId: number): Promise<MealsType> {
     }
 
     const result = await data.json();
+
     return result;
 }
 
-/* meal id 로 특정 데이터 수정하기 */
-export async function updateMeals(updateData: UpdateMealsArgs) {
-    const { meal_type, serving_time, meal, photo_url, id } = updateData;
+export async function createMeals(mealData: CreateMealsArgs) {
+    const response = await fetch('/api/meals', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(mealData),
+    });
 
-    const { data } = await client
-        .from('meals')
-        .update({
-            meal_type: meal_type,
-            serving_time: serving_time ? serving_time.toISOString() : null,
-            meal: meal,
-            photo_url: photo_url ? photo_url : null,
-        })
-        .eq('id', id)
-        .throwOnError();
-    // .maybeSingle()) as { data: MealsType };
+    if (!response.ok) {
+        throw new Error('Failed to create Meal');
+    }
 
-    return data;
+    const result = await response.json();
+
+    return result;
+}
+
+export async function updateMeals(updateData: UpdateMealsArgs): Promise<MealsType> {
+    const response = await fetch('/api/meals', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updateData),
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to update meal data');
+    }
+
+    const result = await response.json();
+
+    return result;
 }
