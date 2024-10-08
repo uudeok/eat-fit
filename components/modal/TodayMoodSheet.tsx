@@ -7,21 +7,20 @@ import { Button } from '../common/Button';
 import { Emotions, Text } from '../common';
 import { BottomSheet } from '../common/Modal';
 import { useState } from 'react';
-import { DATE_FORMAT, EmojiKey } from '@/constants';
+import { EmojiKey } from '@/constants';
 import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
 import { useFetchDailySpec } from '@/service/queries/useFetchDailySpec';
 import { useCreateDailySpec } from '@/service/mutations/useCreateDailySpec';
 import { useUpdateDailySpec } from '@/service/mutations/useUpdateDailySpec';
 import { useFetchGoalInProgress } from '@/service/queries';
-import dayjs from 'dayjs';
 
 const TodayMoodSheet = () => {
     const { data: goalData } = useFetchGoalInProgress();
 
     const { isOpen, onClose } = useModal(ModalType.todayMood);
-    const { selectedDate } = useSelectedDateStore();
+    const { getFormattedDate } = useSelectedDateStore();
 
-    const formattedDate = dayjs(selectedDate).format(DATE_FORMAT['YYYY-MM-DD']);
+    const formattedDate = getFormattedDate();
 
     const { data: dailySpec } = useFetchDailySpec(formattedDate);
     const { mutate: createDailySpec } = useCreateDailySpec(formattedDate);

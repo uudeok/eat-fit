@@ -8,14 +8,11 @@ import { useEffect, useMemo, useState } from 'react';
 import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
 import { useFetchDailyStep } from '@/service/queries/useFetchDailyStep';
 import { MealItemType } from '@/service/@types';
-import dayjs from 'dayjs';
-import { DATE_FORMAT } from '@/constants';
 
 const NutrientSummary = ({ goalData }: { goalData: GoalType }) => {
     const [nutrients, setNutrients] = useState<NutrientsType>({ calories: 0, carbohydrate: 0, protein: 0, fat: 0 });
-    const { selectedDate } = useSelectedDateStore();
-
-    const formattedDate = dayjs(selectedDate).format(DATE_FORMAT['YYYY-MM-DD']);
+    const { selectedDate, getFormattedDate } = useSelectedDateStore();
+    const formattedDate = getFormattedDate();
 
     const { data: dailyData } = useFetchDailyStep(formattedDate) as { data: DailyStepType | null };
 

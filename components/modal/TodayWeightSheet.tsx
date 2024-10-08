@@ -13,8 +13,6 @@ import { useFetchDailySpec } from '@/service/queries/useFetchDailySpec';
 import { useCreateDailySpec } from '@/service/mutations/useCreateDailySpec';
 import { useUpdateDailySpec } from '@/service/mutations/useUpdateDailySpec';
 import { useFetchGoalInProgress } from '@/service/queries';
-import dayjs from 'dayjs';
-import { DATE_FORMAT } from '@/constants';
 
 type FormValues = {
     today_weight: null | number;
@@ -24,9 +22,9 @@ const TodayWeightSheet = () => {
     const { data: goalData } = useFetchGoalInProgress();
 
     const { isOpen, onClose } = useModal(ModalType.todayWeight);
-    const { selectedDate } = useSelectedDateStore();
+    const { selectedDate, getFormattedDate } = useSelectedDateStore();
 
-    const formattedDate = dayjs(selectedDate).format(DATE_FORMAT['YYYY-MM-DD']);
+    const formattedDate = getFormattedDate();
 
     const { data: dailySpec } = useFetchDailySpec(formattedDate);
 

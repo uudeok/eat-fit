@@ -16,8 +16,6 @@ import { useRouter } from 'next/navigation';
 import { DailySpecType } from '@/service/@types/res.type';
 import { useFetchDailySpec, useFetchGoalInProgress } from '@/service/queries';
 import { useCreateDailySpec, useCreateMeals } from '@/service/mutations';
-import dayjs from 'dayjs';
-import { DATE_FORMAT } from '@/constants';
 
 const MealAddList = () => {
     const router = useRouter();
@@ -25,9 +23,8 @@ const MealAddList = () => {
     const [selectedMealType, setSelectedMealType] = useState<MealsKeysType>('meal');
 
     const { meals, removeMeal, selectMeal, resetMeals } = useMealsStore();
-    const { selectedDate } = useSelectedDateStore();
-
-    const formattedDate = dayjs(selectedDate).format(DATE_FORMAT['YYYY-MM-DD']);
+    const { getFormattedDate } = useSelectedDateStore();
+    const formattedDate = getFormattedDate();
 
     const { data: goalData } = useFetchGoalInProgress();
     const { data: dailySpec } = useFetchDailySpec(formattedDate);

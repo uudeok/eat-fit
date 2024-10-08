@@ -17,8 +17,6 @@ const CalendarModal = () => {
     const { selectedDate, setSelectedDate } = useSelectedDateStore();
     const [clickedDate, setClickedDate] = useState<Date>(selectedDate);
 
-    console.log(selectedDate);
-
     const handleDate = (date: Date) => {
         setClickedDate(date);
     };

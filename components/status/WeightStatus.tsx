@@ -5,14 +5,12 @@ import { ListRow, Penel, Text } from '../common';
 import { ModalType } from '../common/Modal/OverlayContainer';
 import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
 import { useFetchDailySpec } from '@/service/queries/useFetchDailySpec';
-import dayjs from 'dayjs';
-import { DATE_FORMAT } from '@/constants';
 
 const WeightStatus = () => {
-    const { selectedDate } = useSelectedDateStore();
+    const { getFormattedDate } = useSelectedDateStore();
     const { onOpen } = useModal(ModalType.todayWeight);
 
-    const formattedDate = dayjs(selectedDate).format(DATE_FORMAT['YYYY-MM-DD']);
+    const formattedDate = getFormattedDate();
 
     const { data: dailySpec } = useFetchDailySpec(formattedDate);
 

@@ -6,14 +6,12 @@ import { ModalType } from '../common/Modal/OverlayContainer';
 import { ListRow, Penel, Text } from '../common';
 import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
 import { useFetchDailySpec } from '@/service/queries/useFetchDailySpec';
-import dayjs from 'dayjs';
-import { DATE_FORMAT } from '@/constants';
 
 const MoodStatus = () => {
     const { onOpen } = useModal(ModalType.todayMood);
-    const { selectedDate } = useSelectedDateStore();
+    const { getFormattedDate } = useSelectedDateStore();
 
-    const formattedDate = dayjs(selectedDate).format(DATE_FORMAT['YYYY-MM-DD']);
+    const formattedDate = getFormattedDate();
 
     const { data: dailySpec } = useFetchDailySpec(formattedDate);
 

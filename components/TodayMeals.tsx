@@ -9,17 +9,13 @@ import { PlusButton } from './common/Button';
 import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
 import { useFetchMeals } from '@/service/queries';
 import { MealsType } from '@/service/@types/res.type';
-import dayjs from 'dayjs';
-import { DATE_FORMAT } from '@/constants';
 
 const TodayMeals = () => {
     const router = useRouter();
-    const { selectedDate } = useSelectedDateStore();
-
-    const formattedDate = dayjs(selectedDate).format(DATE_FORMAT['YYYY-MM-DD']);
+    const { getFormattedDate } = useSelectedDateStore();
+    const formattedDate = getFormattedDate();
 
     const { data: meals } = useFetchMeals(formattedDate) as { data: MealsType[] };
-    // const { data: meals } = useFetchMeals2(selectedDate) as { data: MealsType[] };
 
     return (
         <div className={styles.layout}>
