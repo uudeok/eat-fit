@@ -6,7 +6,7 @@ import Icons from '@/assets';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import { ModalType } from '../common/Modal/OverlayContainer';
-import { useCalendarStore } from '@/shared/store/useCalendarStore';
+import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
 import { Modal } from '../common/Modal';
 import { ListRow, Text } from '../common';
 import { Button } from '../common/Button';
@@ -14,8 +14,10 @@ import { Button } from '../common/Button';
 const CalendarModal = () => {
     const { isOpen, onClose } = useModal(ModalType.mainCalendar);
     const { weeks, dateCells, prevMonthController, nextMonthController, curYear, curMonth } = useCalendar();
-    const { selectedDate, setSelectedDate } = useCalendarStore();
+    const { selectedDate, setSelectedDate } = useSelectedDateStore();
     const [clickedDate, setClickedDate] = useState<Date>(selectedDate);
+
+    console.log(selectedDate);
 
     const handleDate = (date: Date) => {
         setClickedDate(date);

@@ -9,7 +9,7 @@ import { Input } from '../common/Form';
 import { useForm } from 'react-hook-form';
 import { Text, TextToggle } from '../common';
 import { ModalType } from '../common/Modal/OverlayContainer';
-import { useCalendarStore } from '@/shared/store/useCalendarStore';
+import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
 import { convertToKST, convertToServingTime, padStartToZero } from '@/shared/utils';
 import { usePathname } from 'next/navigation';
 import { useUpdateMeals } from '@/service/mutations';
@@ -32,7 +32,7 @@ const MealTimeSheet = () => {
     const mealId = pathname.split('/').pop();
 
     const { isOpen, onClose } = useModal(ModalType.mealTime);
-    const { selectedDate } = useCalendarStore();
+    const { selectedDate } = useSelectedDateStore();
 
     const { data: mealDetail = {} as MealsType } = useFetchMealDetail(Number(mealId));
     const { mutate: updateMeals } = useUpdateMeals();

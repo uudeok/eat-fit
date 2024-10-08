@@ -11,7 +11,7 @@ import Icons from '@/assets';
 import { useModal } from '@/hooks';
 import { ModalType } from './common/Modal/OverlayContainer';
 import { MealItemType } from '@/service/@types';
-import { useCalendarStore } from '@/shared/store/useCalendarStore';
+import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
 import { useRouter } from 'next/navigation';
 import { DailySpecType } from '@/service/@types/res.type';
 import { useFetchDailySpec, useFetchGoalInProgress } from '@/service/queries';
@@ -25,7 +25,7 @@ const MealAddList = () => {
     const [selectedMealType, setSelectedMealType] = useState<MealsKeysType>('meal');
 
     const { meals, removeMeal, selectMeal, resetMeals } = useMealsStore();
-    const { selectedDate } = useCalendarStore();
+    const { selectedDate } = useSelectedDateStore();
 
     const formattedDate = dayjs(selectedDate).format(DATE_FORMAT['YYYY-MM-DD']);
 

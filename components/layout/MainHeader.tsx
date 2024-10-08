@@ -7,7 +7,7 @@ import { useCalendar, useModal } from '@/hooks';
 import { ModalType } from '../common/Modal/OverlayContainer';
 import { Alarm, List, ListRow, Text } from '../common';
 import dayjs from 'dayjs';
-import { useCalendarStore } from '@/shared/store/useCalendarStore';
+import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
 import 'dayjs/locale/ko';
 import { DATE_FORMAT } from '@/constants';
 dayjs.locale('ko');
@@ -15,7 +15,7 @@ dayjs.locale('ko');
 const MainHeader = () => {
     const { onOpen } = useModal(ModalType.mainCalendar);
     const { nextDateController, prevDateController } = useCalendar();
-    const { selectedDate } = useCalendarStore();
+    const { selectedDate } = useSelectedDateStore();
 
     const dateLabel = dayjs(selectedDate).format(DATE_FORMAT['M.D']);
     const dayOfWeek = dayjs(selectedDate).format(DATE_FORMAT.ddd);

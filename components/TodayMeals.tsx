@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { getMealAddPath } from '@/shared/utils';
 import { Badge, ListRow, Text } from './common';
 import { PlusButton } from './common/Button';
-import { useCalendarStore } from '@/shared/store/useCalendarStore';
+import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
 import { useFetchMeals } from '@/service/queries';
 import { MealsType } from '@/service/@types/res.type';
 import dayjs from 'dayjs';
@@ -14,16 +14,12 @@ import { DATE_FORMAT } from '@/constants';
 
 const TodayMeals = () => {
     const router = useRouter();
-    const { selectedDate } = useCalendarStore();
+    const { selectedDate } = useSelectedDateStore();
 
     const formattedDate = dayjs(selectedDate).format(DATE_FORMAT['YYYY-MM-DD']);
 
-    console.log(formattedDate);
-
     const { data: meals } = useFetchMeals(formattedDate) as { data: MealsType[] };
     // const { data: meals } = useFetchMeals2(selectedDate) as { data: MealsType[] };
-
-    console.log('meals', meals);
 
     return (
         <div className={styles.layout}>

@@ -8,7 +8,7 @@ import SheetHeader from '../layout/SheetHeader';
 import { Input } from '../common/Form';
 import { useForm } from 'react-hook-form';
 import { weightValidation } from '@/shared/utils';
-import { useCalendarStore } from '@/shared/store/useCalendarStore';
+import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
 import { useFetchDailySpec } from '@/service/queries/useFetchDailySpec';
 import { useCreateDailySpec } from '@/service/mutations/useCreateDailySpec';
 import { useUpdateDailySpec } from '@/service/mutations/useUpdateDailySpec';
@@ -24,7 +24,7 @@ const TodayWeightSheet = () => {
     const { data: goalData } = useFetchGoalInProgress();
 
     const { isOpen, onClose } = useModal(ModalType.todayWeight);
-    const { selectedDate } = useCalendarStore();
+    const { selectedDate } = useSelectedDateStore();
 
     const formattedDate = dayjs(selectedDate).format(DATE_FORMAT['YYYY-MM-DD']);
 

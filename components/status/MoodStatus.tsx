@@ -4,14 +4,14 @@ import { useModal } from '@/hooks';
 import Image from 'next/image';
 import { ModalType } from '../common/Modal/OverlayContainer';
 import { ListRow, Penel, Text } from '../common';
-import { useCalendarStore } from '@/shared/store/useCalendarStore';
+import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
 import { useFetchDailySpec } from '@/service/queries/useFetchDailySpec';
 import dayjs from 'dayjs';
 import { DATE_FORMAT } from '@/constants';
 
 const MoodStatus = () => {
     const { onOpen } = useModal(ModalType.todayMood);
-    const { selectedDate } = useCalendarStore();
+    const { selectedDate } = useSelectedDateStore();
 
     const formattedDate = dayjs(selectedDate).format(DATE_FORMAT['YYYY-MM-DD']);
 

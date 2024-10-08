@@ -3,13 +3,13 @@
 import { useModal } from '@/hooks';
 import { ListRow, Penel, Text } from '../common';
 import { ModalType } from '../common/Modal/OverlayContainer';
-import { useCalendarStore } from '@/shared/store/useCalendarStore';
+import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
 import { useFetchDailySpec } from '@/service/queries/useFetchDailySpec';
 import dayjs from 'dayjs';
 import { DATE_FORMAT } from '@/constants';
 
 const WeightStatus = () => {
-    const { selectedDate } = useCalendarStore();
+    const { selectedDate } = useSelectedDateStore();
     const { onOpen } = useModal(ModalType.todayWeight);
 
     const formattedDate = dayjs(selectedDate).format(DATE_FORMAT['YYYY-MM-DD']);

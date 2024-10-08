@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import dayjs from 'dayjs';
 import { DATE_FORMAT, MONTH_LABEL, MONTH_LABEL_VALUES, WEEKS, WeekLabels } from '@/constants';
-import { useCalendarStore } from '@/shared/store/useCalendarStore';
+import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
 
 export type DateCell = {
     date: Date;
@@ -14,7 +14,7 @@ export type DateCell = {
 const TOTAL_DAYS = 42;
 
 export const useCalendar = () => {
-    const { selectedDate, setSelectedDate } = useCalendarStore();
+    const { selectedDate, setSelectedDate } = useSelectedDateStore();
     const [dateCells, setDateCells] = useState<DateCell[][]>([]);
     const [curYear, setCurYear] = useState(new Date().getFullYear());
     const [curMonth, setCurMonth] = useState(new Date().getMonth());

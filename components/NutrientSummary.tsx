@@ -5,7 +5,7 @@ import { List, Text, ProgressBar, CircleText, ListCol } from './common';
 import { NutrientsType, calculateTotalNutrients } from '@/shared/utils';
 import { DailyStepType, GoalType } from '@/service/@types/res.type';
 import { useEffect, useMemo, useState } from 'react';
-import { useCalendarStore } from '@/shared/store/useCalendarStore';
+import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
 import { useFetchDailyStep } from '@/service/queries/useFetchDailyStep';
 import { MealItemType } from '@/service/@types';
 import dayjs from 'dayjs';
@@ -13,7 +13,7 @@ import { DATE_FORMAT } from '@/constants';
 
 const NutrientSummary = ({ goalData }: { goalData: GoalType }) => {
     const [nutrients, setNutrients] = useState<NutrientsType>({ calories: 0, carbohydrate: 0, protein: 0, fat: 0 });
-    const { selectedDate } = useCalendarStore();
+    const { selectedDate } = useSelectedDateStore();
 
     const formattedDate = dayjs(selectedDate).format(DATE_FORMAT['YYYY-MM-DD']);
 

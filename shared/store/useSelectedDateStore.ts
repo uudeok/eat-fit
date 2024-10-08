@@ -6,7 +6,7 @@ interface CalendarState {
     setSelectedDate: (date: Date) => void;
 }
 
-export const useCalendarStore = create<CalendarState>((set) => ({
+export const useSelectedDateStore = create<CalendarState>((set) => ({
     selectedDate: resetHoursDate(),
     setSelectedDate: (date) => set({ selectedDate: date }),
 }));

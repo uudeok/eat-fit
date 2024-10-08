@@ -1,10 +1,10 @@
 'use client';
 
-import { useCalendarStore } from '@/shared/store/useCalendarStore';
+import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
 import { ListRow, Penel, Text } from '../common';
 
 const BurnedCalorieStatus = () => {
-    const { selectedDate } = useCalendarStore();
+    const { selectedDate } = useSelectedDateStore();
 
     return (
         <Penel direction="column" backgroundColor="var(--mainColorLg)">
