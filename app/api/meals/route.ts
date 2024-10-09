@@ -84,26 +84,3 @@ export async function PUT(request: NextRequest) {
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }
-
-export async function DELETE(request: NextRequest) {
-    const supabase = createClient();
-
-    const { mealId } = await request.json();
-
-    if (!mealId) {
-        return NextResponse.json({ error: 'ID is required for deletion' }, { status: 400 });
-    }
-
-    try {
-        const { data, error } = await supabase.from('meals').delete().eq('id', mealId).select();
-
-        if (error) {
-            throw new Error(error.message);
-        }
-
-        return NextResponse.json({ message: 'Meal deleted successfully', data }, { status: 200 });
-    } catch (error: any) {
-        console.error('Error deleting meal :', error);
-        return NextResponse.json({ error: error.message }, { status: 500 });
-    }
-}

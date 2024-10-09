@@ -1,14 +1,16 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/shared/utils/supabase/server';
 
-// const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!);
-
-export async function GET(req: Request, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
     const supabase = createClient();
 
-    try {
-        const mealId = Number(params.id);
+    const mealId = parseInt(params.id);
 
+    if (!mealId) {
+        return NextResponse.json({ error: 'ID is required for deletion' }, { status: 400 });
+    }
+
+    try {
         const { data, error } = await supabase.from('meals').select('*').eq('id', mealId).maybeSingle();
 
         if (error || !data) {
@@ -19,5 +21,27 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
     } catch (error) {
         console.error('Error fetching meal details:', error);
         return NextResponse.json({ error: 'Failed to fetch meal details' }, { status: 500 });
+    }
+}
+
+export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+    const supabase = createClient();
+    const mealId = parseInt(params.id);
+
+    if (!mealId) {
+        return NextResponse.json({ error: 'ID is required for deletion' }, { status: 400 });
+    }
+
+    try {
+        const { data, error } = await supabase.from('meals').delete().eq('id', mealId).select();
+
+        if (error) {
+            throw new Error(error.message);
+        }
+
+        return NextResponse.json({ message: 'Meal deleted successfully', data }, { status: 200 });
+    } catch (error: any) {
+        console.error('Error deleting meal :', error);
+        return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }

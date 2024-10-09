@@ -1,11 +1,9 @@
-import { createClient } from '@/shared/utils/supabase/client';
 import { CreateMealsArgs, UpdateMealsArgs } from '../@types';
 import { MealsType } from '../@types/res.type';
-
-const client = createClient();
+import { API_ENDPOINTS } from './config';
 
 export async function fetchMealsData(selectedDate: string): Promise<MealsType[]> {
-    const data = await fetch(`/api/meals?date=${selectedDate}`);
+    const data = await fetch(`${API_ENDPOINTS.MEALS}?date=${selectedDate}`);
 
     if (!data.ok) {
         throw new Error('Failed to fetch Meals Data');
@@ -17,7 +15,7 @@ export async function fetchMealsData(selectedDate: string): Promise<MealsType[]>
 }
 
 export async function fetchMealsDetail(mealId: number): Promise<MealsType> {
-    const data = await fetch(`/api/meals/${mealId}`);
+    const data = await fetch(`${API_ENDPOINTS.MEALS_DETAIL(mealId)}`);
 
     if (!data.ok) {
         throw new Error('Failed to fetch Meals Detail Data');
@@ -29,7 +27,7 @@ export async function fetchMealsDetail(mealId: number): Promise<MealsType> {
 }
 
 export async function createMeals(mealData: CreateMealsArgs) {
-    const response = await fetch('/api/meals', {
+    const data = await fetch(`${API_ENDPOINTS.MEALS}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -37,17 +35,17 @@ export async function createMeals(mealData: CreateMealsArgs) {
         body: JSON.stringify(mealData),
     });
 
-    if (!response.ok) {
+    if (!data.ok) {
         throw new Error('Failed to create Meal');
     }
 
-    const result = await response.json();
+    const result = await data.json();
 
     return result;
 }
 
 export async function updateMeals(updateData: UpdateMealsArgs): Promise<MealsType> {
-    const response = await fetch('/api/meals', {
+    const data = await fetch(`${API_ENDPOINTS.MEALS}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -55,29 +53,28 @@ export async function updateMeals(updateData: UpdateMealsArgs): Promise<MealsTyp
         body: JSON.stringify(updateData),
     });
 
-    if (!response.ok) {
+    if (!data.ok) {
         throw new Error('Failed to update meal data');
     }
 
-    const result = await response.json();
+    const result = await data.json();
 
     return result;
 }
 
 export async function deleteMeals(mealId: number): Promise<{ message: string }> {
-    const response = await fetch('/api/meals', {
+    const data = await fetch(`${API_ENDPOINTS.MEALS_DETAIL(mealId)}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ mealId }),
     });
 
-    if (!response.ok) {
-        throw new Error('Failed to delete the meal');
+    if (!data.ok) {
+        throw new Error('Failed to delete the Meals');
     }
 
-    const result = await response.json();
+    const result = await data.json();
 
     return result;
 }

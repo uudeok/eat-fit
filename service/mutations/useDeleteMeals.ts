@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { deleteMeals } from '../supabase/mealsService';
 import { dailySpecKeys, mealsKeys } from '../queryKey';
+import { deleteMeals } from '../supabase/mealsService';
 
 export function useDeleteMeals(selectedDate: string) {
     const queryClient = useQueryClient();

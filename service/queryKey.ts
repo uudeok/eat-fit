@@ -1,17 +1,10 @@
 import { GoalStatusType } from './@types';
 
-// type QueryKeysType = {
-//     base: ({ scope : 'goalds'}) => void,
-//     status: any;
-//     all: any;
-//     detail: any;
-// }
-
 export const goalsKeys = {
     base: [{ scope: 'goals' }] as const,
     all: () => [{ ...goalsKeys.base[0] }] as const,
     status: (status: GoalStatusType) => [{ ...goalsKeys.base[0], entity: 'status', status }] as const,
-    details: (id: number) => [{ ...goalsKeys.base[0], id }] as const,
+    detail: (id: number) => [{ ...goalsKeys.base[0], id }] as const,
 };
 
 export const dailySpecKeys = {

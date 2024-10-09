@@ -30,6 +30,8 @@ const MealsDetail = ({ mealsId }: { mealsId: string }) => {
     const nutrients = calculateTotalNutrients(mealDetail.meal);
     const servingTime = convertToKST(mealDetail.serving_time);
 
+    console.log('@', mealDetail);
+
     const NUTRIENTS = [
         { label: '탄수화물', value: nutrients.carbohydrate },
         { label: '단백질', value: nutrients.protein },
