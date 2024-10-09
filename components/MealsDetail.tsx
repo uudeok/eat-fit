@@ -1,6 +1,6 @@
 'use client';
 
-import styles from '@styles/pages/mealsDetailPage.module.css';
+import styles from '@styles/component/mealsDetailPage.module.css';
 import { MEALS_TYPE } from '@/constants/meals';
 import { Text, Badge, List, ListCol, ListRow, Penel, Spinner } from '@/components/common';
 import Image from 'next/image';
@@ -12,14 +12,18 @@ import { ModalType } from '@/components/common/Modal/OverlayContainer';
 import { MealItemType } from '@/service/@types';
 import { useFetchMealDetail } from '@/service/queries/useFetchMealDetail';
 import { useMealsStore } from '@/shared/store/useMealsStore';
+import { useDeleteMeals, useUpdateMeals } from '@/service/mutations';
 
 const MealsDetail = ({ mealsId }: { mealsId: string }) => {
     const router = useRouter();
+
     const { onOpen: openMealDetail } = useModal(ModalType.mealForm);
     const { onOpen: openTimePicker } = useModal(ModalType.mealTime);
 
     const { selectMeal } = useMealsStore();
     const { data: mealDetail } = useFetchMealDetail(Number(mealsId));
+    const { mutate: updateMeals } = useUpdateMeals(mealDetail?.entry_date!);
+    const { mutate: deleteMeals } = useDeleteMeals(mealDetail?.entry_date!);
 
     if (!mealDetail) return <Spinner />;
 
@@ -35,6 +39,27 @@ const MealsDetail = ({ mealsId }: { mealsId: string }) => {
     const showMealDetail = (item: MealItemType) => {
         selectMeal(item);
         openMealDetail();
+    };
+
+    const removeMealItem = (e: React.MouseEvent, mealId: number) => {
+        e.stopPropagation();
+        const isProceed = window.confirm('삭제하시겠습니까?');
+
+        if (isProceed) {
+            const updatedMeal = mealDetail.meal.filter((meal: MealItemType) => meal.id !== mealId);
+
+            if (updatedMeal.length === 0) {
+                deleteMeals(mealDetail.id);
+                router.push('/home');
+            } else {
+                updateMeals({
+                    id: mealDetail.id,
+                    serving_time: mealDetail.serving_time,
+                    meal: updatedMeal,
+                    meal_type: mealDetail.meal_type,
+                });
+            }
+        }
     };
 
     return (
@@ -98,7 +123,7 @@ const MealsDetail = ({ mealsId }: { mealsId: string }) => {
                     />
                 </List>
 
-                {mealDetail.meal.map((m: any) => (
+                {mealDetail.meal.map((m: MealItemType) => (
                     <div key={m.id}>
                         <Penel key={m.food_name} padding="15px" direction="column" onClick={() => showMealDetail(m)}>
                             <ListRow
@@ -113,6 +138,10 @@ const MealsDetail = ({ mealsId }: { mealsId: string }) => {
                                 right={
                                     <div className={styles.mealKcal}>
                                         <Text bold>{m.calories} kcal</Text>
+                                        <Icons.FillXmark
+                                            width={13}
+                                            onClick={(e: React.MouseEvent) => removeMealItem(e, m.id)}
+                                        />
                                     </div>
                                 }
                             />

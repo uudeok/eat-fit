@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
 
     try {
         const body = await request.json(); // 요청의 body를 JSON으로 파싱
-        const { daily_id, entry_date, meal_type, meal } = body; // 필요한 데이터 추출
+        const { daily_id, entry_date, meal_type, meal } = body;
 
         if (!daily_id || !entry_date || !meal_type || !meal) {
             return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
             throw new Error(error.message);
         }
 
-        return NextResponse.json(data, { status: 201 }); // 성공 시 201 Created 상태로 응답
+        return NextResponse.json(data, { status: 201 });
     } catch (error: any) {
         console.error('Error creating meal:', error);
         return NextResponse.json({ error: error.message }, { status: 500 });
@@ -81,6 +81,29 @@ export async function PUT(request: NextRequest) {
         return NextResponse.json(data, { status: 200 });
     } catch (error: any) {
         console.error('Error updating meal:', error);
+        return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+}
+
+export async function DELETE(request: NextRequest) {
+    const supabase = createClient();
+
+    const { mealId } = await request.json();
+
+    if (!mealId) {
+        return NextResponse.json({ error: 'ID is required for deletion' }, { status: 400 });
+    }
+
+    try {
+        const { data, error } = await supabase.from('meals').delete().eq('id', mealId).select();
+
+        if (error) {
+            throw new Error(error.message);
+        }
+
+        return NextResponse.json({ message: 'Meal deleted successfully', data }, { status: 200 });
+    } catch (error: any) {
+        console.error('Error deleting meal :', error);
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }

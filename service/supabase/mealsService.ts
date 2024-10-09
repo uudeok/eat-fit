@@ -63,3 +63,21 @@ export async function updateMeals(updateData: UpdateMealsArgs): Promise<MealsTyp
 
     return result;
 }
+
+export async function deleteMeals(mealId: number): Promise<{ message: string }> {
+    const response = await fetch('/api/meals', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ mealId }),
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to delete the meal');
+    }
+
+    const result = await response.json();
+
+    return result;
+}

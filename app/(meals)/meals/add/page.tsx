@@ -12,7 +12,7 @@ import { useEffect } from 'react';
 
 const MealAddPage = () => {
     const router = useRouter();
-    const { onOpen } = useModal(ModalType.mealAddForm);
+    const { onOpen } = useModal(ModalType.mealForm);
     const { meals, resetMeals } = useMealsStore();
 
     const handleSearch = (inputValue: string) => {

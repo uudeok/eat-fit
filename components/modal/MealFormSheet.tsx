@@ -38,7 +38,7 @@ const MealFormSheet = () => {
     const { mealItem, addMeal, updateMeal } = useMealsStore();
     const { data: mealDetail } = useFetchMealDetail(Number(path));
 
-    const { mutate: updateMeals } = useUpdateMeals();
+    const { mutate: updateMeals } = useUpdateMeals(mealDetail?.entry_date!);
 
     const { register, handleSubmit } = useForm<MealItemType>({
         defaultValues: {

@@ -1,19 +1,18 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { UpdateMealsArgs } from '../@types';
-import { updateMeals } from '../supabase/mealsService';
+import { deleteMeals } from '../supabase/mealsService';
 import { dailySpecKeys, mealsKeys } from '../queryKey';
 
-export function useUpdateMeals(selectedDate: string) {
+export function useDeleteMeals(selectedDate: string) {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: (data: UpdateMealsArgs) => updateMeals(data),
+        mutationFn: (mealId: number) => deleteMeals(mealId),
         onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: mealsKeys.base });
             queryClient.invalidateQueries({ queryKey: dailySpecKeys.withDetails(selectedDate) });
         },
         onError: (error) => {
-            console.error('Error updating Meals Data:', error);
+            console.error('Error deleting meals:', error);
         },
     });
 }

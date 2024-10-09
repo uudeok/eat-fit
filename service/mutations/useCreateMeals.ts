@@ -13,7 +13,7 @@ export function useCreateMeals(selectedDate: string) {
             queryClient.invalidateQueries({ queryKey: dailySpecKeys.withDetails(selectedDate) });
         },
         onError: (error) => {
-            console.error('Error creating DailySpec:', error);
+            console.error('Error creating meals :', error);
         },
     });
 }

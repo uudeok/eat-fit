@@ -34,7 +34,7 @@ const MealTimeSheet = () => {
     const { selectedDate } = useSelectedDateStore();
 
     const { data: mealDetail = {} as MealsType } = useFetchMealDetail(Number(mealId));
-    const { mutate: updateMeals } = useUpdateMeals();
+    const { mutate: updateMeals } = useUpdateMeals(mealDetail.entry_date);
 
     const initialServingTime = convertToKST(mealDetail.serving_time!);
 

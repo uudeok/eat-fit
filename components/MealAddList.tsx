@@ -19,7 +19,7 @@ import { useCreateDailySpec, useCreateMeals } from '@/service/mutations';
 
 const MealAddList = () => {
     const router = useRouter();
-    const { onOpen } = useModal(ModalType.mealAddForm);
+    const { onOpen } = useModal(ModalType.mealForm);
     const [selectedMealType, setSelectedMealType] = useState<MealsKeysType>('meal');
 
     const { meals, removeMeal, selectMeal, resetMeals } = useMealsStore();
