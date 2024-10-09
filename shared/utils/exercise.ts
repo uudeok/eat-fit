@@ -1,12 +1,29 @@
-import { ExercisesType } from '@/constants';
+import { ExerciseType } from '@/service/@types/res.type';
 
-export const calculateExerciseTotals = (exercises: ExercisesType) => {
-    return exercises.exercise.reduce(
-        (totals, item) => {
-            totals.calories_burned += item.calories_burned;
-            totals.duration_minutes += item.duration_minutes;
-            return totals;
+export type BurnedCaloriesType = {
+    duration_min: number;
+    calories_burned: number;
+};
+
+export const calculateExercisesTotals = (exercises: ExerciseType[]): BurnedCaloriesType => {
+    if (exercises.length === 0) {
+        return { duration_min: 0, calories_burned: 0 };
+    }
+
+    console.log(exercises);
+
+    const totals = exercises.reduce(
+        (totals, exercise) => {
+            return {
+                calories_burned: totals.calories_burned + Number(exercise.calories_burned),
+                duration_min: totals.duration_min + Number(exercise.duration_min),
+            };
         },
-        { duration_minutes: 0, calories_burned: 0 }
+        { calories_burned: 0, duration_min: 0 }
     );
+
+    return {
+        calories_burned: totals.calories_burned,
+        duration_min: totals.duration_min,
+    };
 };

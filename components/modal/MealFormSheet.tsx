@@ -1,6 +1,6 @@
 'use client';
 
-import styles from '@styles/modal/mealAddFormSheet.module.css';
+import styles from '@styles/modal/mealFormSheet.module.css';
 import { useModal } from '@/hooks';
 import { useForm } from 'react-hook-form';
 import { Button } from '../common/Button';

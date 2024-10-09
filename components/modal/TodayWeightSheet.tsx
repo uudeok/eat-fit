@@ -22,7 +22,7 @@ const TodayWeightSheet = () => {
     const { data: goalData } = useFetchGoalInProgress();
 
     const { isOpen, onClose } = useModal(ModalType.todayWeight);
-    const { selectedDate, getFormattedDate } = useSelectedDateStore();
+    const { getFormattedDate } = useSelectedDateStore();
 
     const formattedDate = getFormattedDate();
 

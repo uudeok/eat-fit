@@ -93,6 +93,58 @@ export type Database = {
           },
         ]
       }
+      exercises: {
+        Row: {
+          created_at: string
+          daily_id: number
+          entry_date: string
+          exercise: Json[]
+          id: number
+          photo_url: string[] | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          daily_id: number
+          entry_date: string
+          exercise: Json[]
+          id?: number
+          photo_url?: string[] | null
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          daily_id?: number
+          entry_date?: string
+          exercise?: Json[]
+          id?: number
+          photo_url?: string[] | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "exercises_daily_id_fkey"
+            columns: ["daily_id"]
+            isOneToOne: false
+            referencedRelation: "dailySpec"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "exercises_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "exercises_user_id_fkey2"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "goals"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
       goals: {
         Row: {
           activity_level: Database["public"]["Enums"]["ActivityLevelType"]

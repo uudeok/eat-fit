@@ -2,33 +2,50 @@
 
 import styles from '@styles/component/todayExercises.module.css';
 import Image from 'next/image';
-import { Text, List, Penel, ListRow, ListCol } from './common';
+import { Text, List, ListRow, ListCol } from './common';
 import { Button } from './common/Button';
-import { EXERCISE_INTENSITY_LABELS, ExerciseType, Exercises } from '@/constants';
-import { calculateExerciseTotals } from '@/shared/utils/exercise';
-import { useMemo } from 'react';
+import { EXERCISE_INTENSITY_LABELS } from '@/constants';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { getExerciseAddPage } from '@/shared/utils';
+import { BurnedCaloriesType, calculateExercisesTotals, getExerciseAddPage } from '@/shared/utils';
 import { useModal } from '@/hooks';
-import { useExerciseItemStore } from '@/shared/store/useExerciseItemStore';
 import { ModalType } from './common/Modal/OverlayContainer';
+import { useFetchExercises } from '@/service/queries';
+import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
+import { ExerciseType } from '@/service/@types/res.type';
+import { useExercisesStore } from '@/shared/store/useExercisesStore';
 
 const TodayExercises = () => {
     const router = useRouter();
-    const { onOpen } = useModal(ModalType.exerciseDetail);
-    const { setSelectedExerciseItem } = useExerciseItemStore();
+    const { onOpen } = useModal(ModalType.exerciseForm);
+    const { getFormattedDate } = useSelectedDateStore();
+    const formattedDate = getFormattedDate();
+    const { selectExercise } = useExercisesStore();
 
-    const totals = useMemo(() => calculateExerciseTotals(Exercises), []);
+    const [exerciseTotals, setExerciseTotals] = useState<BurnedCaloriesType>({ duration_min: 0, calories_burned: 0 });
+
+    const { data: exercisesData } = useFetchExercises(formattedDate);
+
+    useEffect(() => {
+        if (exercisesData && exercisesData.exercise) {
+            const exerciseTotals = calculateExercisesTotals(exercisesData.exercise);
+            setExerciseTotals(exerciseTotals);
+        } else {
+            setExerciseTotals({ duration_min: 0, calories_burned: 0 });
+        }
+    }, [exercisesData]);
 
     const EXERCISES_SUMMARY = [
-        { label: '총 운동 시간', value: totals.duration_minutes, unit: '분' },
-        { label: '총 소모량', value: totals.calories_burned, unit: 'kcal' },
+        { label: '총 운동 시간', value: exerciseTotals.duration_min, unit: '분' },
+        { label: '총 소모량', value: exerciseTotals.calories_burned, unit: 'kcal' },
     ];
 
-    const handleExerciseItem = (e: ExerciseType) => {
-        setSelectedExerciseItem(e);
+    const handleExerciseItem = (exercise: ExerciseType) => {
+        selectExercise(exercise);
         onOpen();
     };
+
+    console.log(exercisesData);
 
     return (
         <div className={styles.layout}>
@@ -57,43 +74,34 @@ const TodayExercises = () => {
             </div>
 
             <div className={styles.todayExercise}>
-                <List>
-                    <ListRow
-                        left={
-                            <Text bold size="xlg">
-                                오늘 한 운동
-                            </Text>
-                        }
-                        right={
-                            <Text bold size="xxlg" color="var(--green700)">
-                                {Exercises.exercise.length}
-                            </Text>
-                        }
-                    />
-                </List>
-
                 <List className={styles.exerciseList}>
-                    {Exercises.exercise.map((e) => (
-                        <div key={e.id} className={styles.exerciseItem} onClick={() => handleExerciseItem(e)}>
+                    {exercisesData?.exercise.map((exercise) => (
+                        <div
+                            key={exercise.id}
+                            className={styles.exerciseItem}
+                            onClick={() => handleExerciseItem(exercise)}
+                        >
                             <ListRow
                                 left={
                                     <div className={styles.exerciseName}>
-                                        <Text bold>{e.exercise_name}</Text>
+                                        <Text bold>{exercise.exercise_name}</Text>
                                         <Text size="sm">
-                                            {e.duration_minutes}분 {EXERCISE_INTENSITY_LABELS[e.exercise_intensity]}
+                                            {exercise.duration_min}분{' '}
+                                            {EXERCISE_INTENSITY_LABELS[exercise.exercise_intensity!]}
                                         </Text>
                                     </div>
                                 }
-                                right={<Text bold>{e.calories_burned} Kcal</Text>}
+                                right={<Text bold>{exercise.calories_burned} Kcal</Text>}
                             />
 
-                            <Penel padding="15px">
-                                <Text size="sm">{e.content}</Text>
-                            </Penel>
+                            <div className={styles.content}>
+                                <Text size="sm">{exercise.content}</Text>
+                            </div>
                         </div>
                     ))}
                 </List>
             </div>
+
             <Button className={styles.addButton} onClick={() => router.push(getExerciseAddPage())}>
                 추가
             </Button>

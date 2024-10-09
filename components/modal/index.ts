@@ -1,6 +1,5 @@
 export { default as CalendarModal } from './CalendarModal';
-export { default as ExerciseAddFormSheet } from './ExerciseAddFormSheet';
-export { default as ExerciseDetailSheet } from './ExerciseDetailSheet';
+export { default as ExerciseFormSheet } from './ExerciseFormSheet';
 export { default as MealFormSheet } from './MealFormSheet';
 export { default as MealTimeSheet } from './MealTimeSheet';
 export { default as TodayMoodSheet } from './TodayMoodSheet';

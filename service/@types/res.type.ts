@@ -1,7 +1,6 @@
-import { EmojiKey } from '@/constants';
+import { EmojiKey, ExerciseIntensityKeysType } from '@/constants';
 import { ActivityLevelType, GenderType, GoalStatusType, MealItemType, MealPlanType } from './req.type';
 import { MealsKeysType } from '@/constants/meals';
-import { Json } from '@/@types/supabase.type';
 
 export type GoalType = {
     id: number;
@@ -61,3 +60,23 @@ export type DailyStepType = {
 
 /* daily & meals 테이블 join 할때 meals 테이블에서 가져오는 데이터의 타입 */
 export type MealType = Pick<MealsType, 'id' | 'meal_type' | 'photo_url' | 'serving_time' | 'meal'>;
+
+/* exercises 테이블 가져올때 */
+export type ExercisesType = {
+    id: number;
+    daily_id: number;
+    created_at: string;
+    user_id: string;
+    entry_date: string;
+    exercise: ExerciseType[];
+    photo_url: string[] | null;
+};
+
+export type ExerciseType = {
+    id: number;
+    exercise_name: string;
+    duration_min: number;
+    calories_burned: number;
+    exercise_intensity: ExerciseIntensityKeysType | null;
+    content: string | null;
+};

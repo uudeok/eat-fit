@@ -20,3 +20,9 @@ export const mealsKeys = {
     date: (selectedDate: string) => [{ ...mealsKeys.base[0], selectedDate }] as const,
     detail: (mealId: number) => [{ ...mealsKeys.base[0], mealId }] as const,
 };
+
+export const exercisesKeys = {
+    base: [{ scope: 'exercises' }] as const,
+    all: () => [{ ...exercisesKeys.base[0] }] as const,
+    date: (selectedDate: string) => [{ ...exercisesKeys.base[0], selectedDate }] as const,
+};

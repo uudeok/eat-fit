@@ -1,5 +1,6 @@
-import { EmojiKey } from '@/constants';
+import { EmojiKey, ExerciseIntensityKeysType } from '@/constants';
 import { MealsKeysType } from '@/constants/meals';
+import { ExerciseType } from './res.type';
 
 export type GenderType = 'F' | 'M';
 export type GoalStatusType = 'progress' | 'success' | 'failure';
@@ -87,4 +88,16 @@ export type UpdateMealsArgs = {
     photo_url?: string[] | null;
     meal: MealItemType[];
     id: number;
+};
+
+export type CreateExercisesArgs = {
+    daily_id: number;
+    entry_date: string;
+    exercise: ExerciseType[];
+};
+
+export type UpdateExercisesArgs = {
+    id: number;
+    exercise: ExerciseType[];
+    photo_url?: string[] | null;
 };
