@@ -1,6 +1,6 @@
 .layout {
     display: flex;
-    margin-top: 20px;
+    /* margin-top: 20px; */
     padding: 5px;
     align-items: center;
     cursor: pointer;

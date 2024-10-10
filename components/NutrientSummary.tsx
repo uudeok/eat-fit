@@ -3,20 +3,21 @@
 import styles from '@styles/component/nutrientSummary.module.css';
 import { List, Text, ProgressBar, CircleText, ListCol } from './common';
 import { NutrientsType, calculateTotalNutrients } from '@/shared/utils';
-import { DailyStepType, GoalType } from '@/service/@types/res.type';
+import { GoalType } from '@/service/@types/res.type';
 import { useEffect, useMemo, useState } from 'react';
 import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
-import { useFetchDailyStep } from '@/service/queries/useFetchDailyStep';
 import { MealItemType } from '@/service/@types';
+import { useFetchMeals } from '@/service/queries';
 
 const NutrientSummary = ({ goalData }: { goalData: GoalType }) => {
     const [nutrients, setNutrients] = useState<NutrientsType>({ calories: 0, carbohydrate: 0, protein: 0, fat: 0 });
+
     const { selectedDate, getFormattedDate } = useSelectedDateStore();
     const formattedDate = getFormattedDate();
 
-    const { data: dailyData } = useFetchDailyStep(formattedDate) as { data: DailyStepType | null };
+    const { data: mealsData } = useFetchMeals(formattedDate);
 
-    const meals = useMemo(() => dailyData?.meals.map((data) => data.meal).flat(), [dailyData]);
+    const meals = useMemo(() => mealsData?.map((mealItem) => mealItem.meal).flat(), [mealsData]);
 
     useEffect(() => {
         if (meals && meals.length > 0) {
@@ -54,7 +55,7 @@ const NutrientSummary = ({ goalData }: { goalData: GoalType }) => {
                 <ListCol
                     top={
                         <Text size="xxlg" bold color="white">
-                            {nutrients?.calories || 0} / {goalData.daily_calories} kcal
+                            {nutrients.calories} / {goalData.daily_calories} kcal
                         </Text>
                     }
                     bottom={<ProgressBar current={nutrients.calories} total={goalData.daily_calories} />}

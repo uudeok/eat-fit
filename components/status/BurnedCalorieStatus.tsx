@@ -2,9 +2,25 @@
 
 import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
 import { ListRow, Penel, Text } from '../common';
+import { useFetchExercises } from '@/service/queries';
+import { calculateExercisesTotals } from '@/shared/utils';
+import { useEffect, useState } from 'react';
 
 const BurnedCalorieStatus = () => {
-    const { selectedDate } = useSelectedDateStore();
+    const [burnedCalories, setBurnedCalories] = useState<number>(0);
+    const { getFormattedDate } = useSelectedDateStore();
+    const formattedDate = getFormattedDate();
+
+    const { data: exercisesData } = useFetchExercises(formattedDate);
+
+    useEffect(() => {
+        if (exercisesData) {
+            const exercisesTotals = calculateExercisesTotals(exercisesData.exercise);
+            setBurnedCalories(exercisesTotals.calories_burned);
+        } else {
+            setBurnedCalories(0);
+        }
+    }, [exercisesData]);
 
     return (
         <Penel direction="column" backgroundColor="var(--mainColorLg)">
@@ -16,7 +32,7 @@ const BurnedCalorieStatus = () => {
                 }
                 right={
                     <Text color="white" bold size="xlg">
-                        0 Kcal
+                        {burnedCalories} Kcal
                     </Text>
                 }
             />

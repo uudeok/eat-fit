@@ -4,6 +4,8 @@ export const API_ENDPOINTS = {
     GOALS: `${BASE_URL}/api/goals`,
     MEALS: `${BASE_URL}/api/meals`,
     EXERCISES: `${BASE_URL}/api/exercises`,
+    DAILYSPEC: `${BASE_URL}/api/dailySpec`,
+    DAILYSTEP: `${BASE_URL}/api/dailySpec/step`,
     MEALS_DETAIL: (mealId: number) => `${BASE_URL}/api/meals/${mealId}`,
 } as const;
 

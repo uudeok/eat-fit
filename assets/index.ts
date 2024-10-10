@@ -16,6 +16,7 @@ import Down from './down.svg';
 import Pencil from './pencil.svg';
 import FillXmark from './fillXmark.svg';
 import Flag from './flag.svg';
+import FillFire from './FillFire.svg';
 
 const Icons = {
     FillHome,
@@ -36,6 +37,7 @@ const Icons = {
     Pencil,
     FillXmark,
     Flag,
+    FillFire,
 };
 
 export default Icons;

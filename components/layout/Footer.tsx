@@ -4,7 +4,6 @@ import styles from '@styles/layout/footer.module.css';
 import { usePathname, useRouter } from 'next/navigation';
 import Icons from '@/assets';
 import { FooterPaths } from '@/constants';
-import { getFooterPath } from '@/shared/utils';
 
 const FOOTER_MENU = [
     {
@@ -35,8 +34,8 @@ const Footer = () => {
         <div className={styles.layout}>
             <ul className={styles.footer}>
                 {FOOTER_MENU.map((menu) => (
-                    <li key={menu.label} className={styles.menu} onClick={() => router.push(getFooterPath(menu.path))}>
-                        {path === getFooterPath(menu.path) ? menu.visitied : menu.notVisited}
+                    <li key={menu.label} className={styles.menu} onClick={() => router.push(`/${menu.path}`)}>
+                        {path === `/${menu.path}` ? menu.visitied : menu.notVisited}
                         {menu.label}
                     </li>
                 ))}

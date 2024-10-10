@@ -3,7 +3,6 @@
 import styles from '@styles/component/todayMeals.module.css';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { getMealAddPath } from '@/shared/utils';
 import { Badge, ListRow, Text } from './common';
 import { PlusButton } from './common/Button';
 import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
@@ -24,7 +23,11 @@ const TodayMeals = () => {
                         식단 {meals?.length}개
                     </Text>
                 }
-                right={<PlusButton onClick={() => router.push(getMealAddPath())} />}
+                right={
+                    <div>
+                        <PlusButton onClick={() => router.push('/meals/add')} />
+                    </div>
+                }
             />
 
             {meals?.map((data) => (

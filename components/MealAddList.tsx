@@ -43,6 +43,7 @@ const MealAddList = () => {
             meal_type: selectedMealType,
             meal: meals,
         };
+
         await createMeals(mealData);
         resetMeals();
         router.push('/home');
@@ -56,7 +57,8 @@ const MealAddList = () => {
                 today_weight: 0,
                 mood: null,
             };
-            const dailyData = (await createDailySpec(dailySpecData)) as DailySpecType;
+            const dailyData = await createDailySpec(dailySpecData);
+
             createMealsData(dailyData.id);
         } else {
             createMealsData();

@@ -2,21 +2,22 @@
 
 import styles from '@styles/component/todayExercises.module.css';
 import Image from 'next/image';
-import { Text, List, ListRow, ListCol, Spinner } from './common';
+import Icons from '@/assets';
+import { Text, List, ListRow, ListCol, LoadingBar } from './common';
 import { Button } from './common/Button';
 import { EXERCISE_INTENSITY_LABELS } from '@/constants';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { BurnedCaloriesType, calculateExercisesTotals, getExerciseAddPage } from '@/shared/utils';
+import { BurnedCaloriesType, calculateExercisesTotals } from '@/shared/utils';
 import { useModal } from '@/hooks';
 import { ModalType } from './common/Modal/OverlayContainer';
 import { useFetchExercises } from '@/service/queries';
 import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
 import { ExerciseType } from '@/service/@types/res.type';
 import { useExercisesStore } from '@/shared/store/useExercisesStore';
-import Icons from '@/assets';
 import { useDeleteExercises } from '@/service/mutations/useDeleteExercises';
 import { useUpdateExercises } from '@/service/mutations';
+import EmptyState from './common/EmptyState';
 
 const TodayExercises = () => {
     const router = useRouter();
@@ -27,7 +28,7 @@ const TodayExercises = () => {
 
     const [exerciseTotals, setExerciseTotals] = useState<BurnedCaloriesType>({ duration_min: 0, calories_burned: 0 });
 
-    const { data: exercisesData } = useFetchExercises(formattedDate);
+    const { data: exercisesData, isLoading } = useFetchExercises(formattedDate);
     const { mutateAsync: deleteExercises } = useDeleteExercises(formattedDate);
     const { mutateAsync: updateExercises } = useUpdateExercises(formattedDate);
 
@@ -52,6 +53,7 @@ const TodayExercises = () => {
 
     const removeExerciseItem = async (e: React.MouseEvent, exerciseId: number) => {
         e.stopPropagation();
+
         const isProceed = window.confirm('삭제하시겠습니까?');
 
         if (isProceed) {
@@ -97,42 +99,48 @@ const TodayExercises = () => {
 
             <div className={styles.todayExercise}>
                 <List className={styles.exerciseList}>
-                    {exercisesData?.exercise.map((exercise) => (
-                        <div
-                            key={exercise.id}
-                            className={styles.exerciseItem}
-                            onClick={() => handleExerciseItem(exercise)}
-                        >
-                            <ListRow
-                                left={
-                                    <div className={styles.exerciseName}>
-                                        <Text bold>{exercise.exercise_name}</Text>
-                                        <Text size="sm">
-                                            {exercise.duration_min}분{' '}
-                                            {EXERCISE_INTENSITY_LABELS[exercise.exercise_intensity!]}
-                                        </Text>
-                                    </div>
-                                }
-                                right={
-                                    <div className={styles.action}>
-                                        <Text bold>{exercise.calories_burned} Kcal</Text>
-                                        <Icons.FillXmark
-                                            width={15}
-                                            onClick={(e: React.MouseEvent) => removeExerciseItem(e, exercise.id)}
-                                        />
-                                    </div>
-                                }
-                            />
+                    {isLoading ? (
+                        <LoadingBar />
+                    ) : exercisesData ? (
+                        exercisesData.exercise.map((exercise) => (
+                            <div
+                                key={exercise.id}
+                                className={styles.exerciseItem}
+                                onClick={() => handleExerciseItem(exercise)}
+                            >
+                                <ListRow
+                                    left={
+                                        <div className={styles.exerciseName}>
+                                            <Text bold>{exercise.exercise_name}</Text>
+                                            <Text size="sm">
+                                                {exercise.duration_min}분{' '}
+                                                {EXERCISE_INTENSITY_LABELS[exercise.exercise_intensity!]}
+                                            </Text>
+                                        </div>
+                                    }
+                                    right={
+                                        <div className={styles.action}>
+                                            <Text bold>{exercise.calories_burned} Kcal</Text>
+                                            <Icons.FillXmark
+                                                width={15}
+                                                onClick={(e: React.MouseEvent) => removeExerciseItem(e, exercise.id)}
+                                            />
+                                        </div>
+                                    }
+                                />
 
-                            <div className={styles.content}>
-                                <Text size="sm">{exercise.content}</Text>
+                                <div className={styles.content}>
+                                    <Text size="sm">{exercise.content}</Text>
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        ))
+                    ) : (
+                        <EmptyState bottomText="운동을 기록해주세요" />
+                    )}
                 </List>
             </div>
 
-            <Button className={styles.addButton} onClick={() => router.push(getExerciseAddPage())}>
+            <Button className={styles.addButton} onClick={() => router.push('/exercise/add')}>
                 추가
             </Button>
         </div>

@@ -2,77 +2,64 @@ import { createClient } from '@/shared/utils/supabase/client';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { DailySpecType, DailyStepType } from '../@types/res.type';
 import { CreateDailySpecArgs, UpdateDailySpecArgs } from '../@types';
+import { API_ENDPOINTS } from './config';
 
 const client = createClient();
 
-export async function fetchDailySpec(selectedDate: string, fetch?: SupabaseClient): Promise<DailySpecType | null> {
-    const supabase = fetch || client;
+export async function fetchDailySpec(selectedDate: string): Promise<DailySpecType> {
+    const data = await fetch(`${API_ENDPOINTS.DAILYSPEC}?date=${selectedDate}`);
 
-    const { data } = await supabase
-        .from('dailySpec')
-        .select('*')
-        .eq('entry_date', selectedDate)
-        .throwOnError()
-        .maybeSingle();
+    if (!data.ok) {
+        throw new Error('Faild to fetch dailySpec data');
+    }
 
-    return data;
+    const result = await data.json();
+    return result;
 }
 
-export async function createDailySpec({ goal_id, entry_date, today_weight, mood }: CreateDailySpecArgs) {
-    const { data } = await client
-        .from('dailySpec')
-        .insert([
-            {
-                goal_id: goal_id,
-                entry_date: entry_date,
-                today_weight: today_weight,
-                mood: mood,
-            },
-        ])
-        .select()
-        .throwOnError()
-        .maybeSingle();
+export async function createDailySpec(dailySpecData: CreateDailySpecArgs): Promise<DailySpecType> {
+    const data = await fetch(`${API_ENDPOINTS.DAILYSPEC}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dailySpecData),
+    });
+    if (!data.ok) {
+        throw new Error('Failed to create dailySpec');
+    }
 
-    return data;
+    const result = await data.json();
+
+    return result;
 }
 
-export async function updateDailySpec(updateData: UpdateDailySpecArgs) {
-    const { id, mood, today_weight } = updateData;
+export async function updateDailySpec(updatedData: UpdateDailySpecArgs): Promise<DailySpecType> {
+    const data = await fetch(`${API_ENDPOINTS.DAILYSPEC}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedData),
+    });
 
-    const { data } = await client
-        .from('dailySpec')
-        .update({
-            mood: mood,
-            today_weight: today_weight,
-        })
-        .eq('id', id)
-        .select()
-        .throwOnError();
+    if (!data.ok) {
+        throw new Error('Failed to update dailySpec data');
+    }
 
-    return data;
+    const result = await data.json();
+
+    return result;
 }
 
-/* dailySpec 밑으로 Meals, Exercises 테이블 가져오기 */
-export async function fetchDailyStep(selectedDate: string, fetch?: SupabaseClient): Promise<DailyStepType> {
-    const supabase = fetch || client;
+export async function fetchDailyStep(selectedDate: string) {
+    const data = await fetch(`${API_ENDPOINTS.DAILYSTEP}?date=${selectedDate}`);
 
-    const { data } = (await supabase
-        .from('dailySpec')
-        .select(
-            `
-             *,
-                meals (
-                    id,
-                    meal_type,
-                    serving_time,
-                    meal,
-                    photo_url               
-                )
-            `
-        )
-        .eq('entry_date', selectedDate)
-        .throwOnError()
-        .maybeSingle()) as { data: DailyStepType };
+    if (!data.ok) {
+        throw new Error('Failed to fetch DailyStep Data');
+    }
 
-    return data;
+    const result = await data.json();
+
+    return result;
 }
