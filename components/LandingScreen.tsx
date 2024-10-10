@@ -17,7 +17,6 @@ const LandingScreen = () => {
     const redirectWithDelay = useCallback(async () => {
         await delay(2000);
         setIsFadeOut(true);
-        await delay(500);
 
         if (session) {
             router.push('/goals');

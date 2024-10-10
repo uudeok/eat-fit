@@ -14,7 +14,7 @@ import { MealItemType } from '@/service/@types';
 import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
 import { useRouter } from 'next/navigation';
 import { DailySpecType } from '@/service/@types/res.type';
-import { useFetchDailySpec, useFetchGoalInProgress } from '@/service/queries';
+import { useFetchDailySpec, useFetchGoalsByStatus } from '@/service/queries';
 import { useCreateDailySpec, useCreateMeals } from '@/service/mutations';
 
 const MealAddList = () => {
@@ -26,7 +26,7 @@ const MealAddList = () => {
     const { getFormattedDate } = useSelectedDateStore();
     const formattedDate = getFormattedDate();
 
-    const { data: goalData } = useFetchGoalInProgress();
+    const { data: goalData } = useFetchGoalsByStatus('progress');
     const { data: dailySpec } = useFetchDailySpec(formattedDate);
 
     const { mutateAsync: createDailySpec } = useCreateDailySpec(formattedDate);

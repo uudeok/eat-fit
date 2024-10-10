@@ -1,55 +1,33 @@
 import { GoalRegisterType, GoalStatusType } from '@/service/@types/req.type';
-import { createClient } from '@/shared/utils/supabase/client';
-import { SupabaseClient } from '@supabase/supabase-js';
+import { API_ENDPOINTS } from './config';
 import { GoalType } from '../@types/res.type';
 
-const client = createClient();
+export async function fetchGoalsByStatus(status: GoalStatusType): Promise<GoalType> {
+    const data = await fetch(`${API_ENDPOINTS.GOALS}?status=${status}`);
 
-export async function fetchGoalsByStatus(status: GoalStatusType) {
-    const { data } = await client.from('goals').select('*').eq('goal_status', status).throwOnError();
+    if (!data.ok) {
+        throw new Error('Failed to fetch Goals Data');
+    }
 
-    return data;
+    const result = await data.json();
+
+    return result;
 }
 
-export async function fetchGoalsInprogress(fetch?: SupabaseClient): Promise<GoalType | null> {
-    const supabase = fetch || client;
+export async function createNewGoals(goalData: GoalRegisterType): Promise<GoalType> {
+    const data = await fetch(`${API_ENDPOINTS.GOALS}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(goalData),
+    });
 
-    const { data } = await supabase
-        .from('goals')
-        .select('*')
-        .eq('goal_status', 'progress')
-        .throwOnError()
-        .maybeSingle();
+    if (!data.ok) {
+        throw new Error('Failed to create Goals');
+    }
 
-    // const result = await axios.get("/goals");
+    const result = await data.json();
 
-    return data;
-}
-
-export async function createNewGoals(goalData: GoalRegisterType): Promise<GoalType | null> {
-    const { data } = await client
-        .from('goals')
-        .insert([
-            {
-                gender: goalData.gender,
-                age: goalData.age,
-                height: goalData.height,
-                activity_level: goalData.activity_level,
-                weight: goalData.weight,
-                target_weight: goalData.target_weight,
-                daily_calories: goalData.daily_calories,
-                goal_start_date: goalData.goal_start_date.toISOString(),
-                goal_end_date: goalData.goal_end_date.toISOString(),
-                goal_period: goalData.goal_period,
-                meal_plan: goalData.meal_plan,
-                daily_carb: goalData.daily_carb,
-                daily_protein: goalData.daily_protein,
-                daily_fat: goalData.daily_fat,
-            },
-        ])
-        .select()
-        .throwOnError()
-        .maybeSingle();
-
-    return data;
+    return result;
 }

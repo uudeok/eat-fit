@@ -8,7 +8,7 @@ import { EXERCISE_INTENSITY_LABELS } from '@/constants';
 import { Button } from './common/Button';
 import { useModal } from '@/hooks';
 import { ModalType } from './common/Modal/OverlayContainer';
-import { useFetchDailySpec, useFetchExercises, useFetchGoalInProgress } from '@/service/queries';
+import { useFetchDailySpec, useFetchExercises, useFetchGoalsByStatus } from '@/service/queries';
 import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
 import { useCreateDailySpec, useCreateExercises, useUpdateExercises } from '@/service/mutations';
 import { DailySpecType, ExerciseType } from '@/service/@types/res.type';
@@ -22,7 +22,7 @@ const ExerciseAddList = () => {
     const { getFormattedDate } = useSelectedDateStore();
     const formattedDate = getFormattedDate();
 
-    const { data: goalData } = useFetchGoalInProgress();
+    const { data: goalData } = useFetchGoalsByStatus('progress');
     const { data: dailySpec } = useFetchDailySpec(formattedDate);
     const { data: exercisesData } = useFetchExercises(formattedDate);
 

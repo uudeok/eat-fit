@@ -1,6 +1,6 @@
 export { useFetchDailySpec } from './useFetchDailySpec';
 export { useFetchDailyStep } from './useFetchDailyStep';
-export { useFetchGoalInProgress } from './useFetchGoalsInProgress';
 export { useFetchMeals } from './useFetchMeals';
 export { useFetchMealDetail } from './useFetchMealDetail';
 export { useFetchExercises } from './useFetchExercises';
+export { useFetchGoalsByStatus } from './useFetchGoalsByStatus';

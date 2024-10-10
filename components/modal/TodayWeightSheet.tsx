@@ -12,14 +12,14 @@ import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
 import { useFetchDailySpec } from '@/service/queries/useFetchDailySpec';
 import { useCreateDailySpec } from '@/service/mutations/useCreateDailySpec';
 import { useUpdateDailySpec } from '@/service/mutations/useUpdateDailySpec';
-import { useFetchGoalInProgress } from '@/service/queries';
+import { useFetchGoalsByStatus } from '@/service/queries';
 
 type FormValues = {
     today_weight: null | number;
 };
 
 const TodayWeightSheet = () => {
-    const { data: goalData } = useFetchGoalInProgress();
+    const { data: goalData } = useFetchGoalsByStatus('progress');
 
     const { isOpen, onClose } = useModal(ModalType.todayWeight);
     const { getFormattedDate } = useSelectedDateStore();

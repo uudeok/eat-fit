@@ -12,10 +12,10 @@ import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
 import { useFetchDailySpec } from '@/service/queries/useFetchDailySpec';
 import { useCreateDailySpec } from '@/service/mutations/useCreateDailySpec';
 import { useUpdateDailySpec } from '@/service/mutations/useUpdateDailySpec';
-import { useFetchGoalInProgress } from '@/service/queries';
+import { useFetchGoalsByStatus } from '@/service/queries';
 
 const TodayMoodSheet = () => {
-    const { data: goalData } = useFetchGoalInProgress();
+    const { data: goalData } = useFetchGoalsByStatus('progress');
 
     const { isOpen, onClose } = useModal(ModalType.todayMood);
     const { getFormattedDate } = useSelectedDateStore();
