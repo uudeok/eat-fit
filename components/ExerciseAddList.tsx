@@ -70,6 +70,7 @@ const ExerciseAddList = () => {
 
     const addExercise = () => {
         onOpen();
+        selectExercise(null);
     };
 
     const openExerciseDetail = (exercise: ExerciseType) => {

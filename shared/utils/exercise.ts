@@ -10,8 +10,6 @@ export const calculateExercisesTotals = (exercises: ExerciseType[]): BurnedCalor
         return { duration_min: 0, calories_burned: 0 };
     }
 
-    console.log(exercises);
-
     const totals = exercises.reduce(
         (totals, exercise) => {
             return {

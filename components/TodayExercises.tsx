@@ -2,7 +2,7 @@
 
 import styles from '@styles/component/todayExercises.module.css';
 import Image from 'next/image';
-import { Text, List, ListRow, ListCol } from './common';
+import { Text, List, ListRow, ListCol, Spinner } from './common';
 import { Button } from './common/Button';
 import { EXERCISE_INTENSITY_LABELS } from '@/constants';
 import { useEffect, useState } from 'react';
@@ -14,6 +14,9 @@ import { useFetchExercises } from '@/service/queries';
 import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
 import { ExerciseType } from '@/service/@types/res.type';
 import { useExercisesStore } from '@/shared/store/useExercisesStore';
+import Icons from '@/assets';
+import { useDeleteExercises } from '@/service/mutations/useDeleteExercises';
+import { useUpdateExercises } from '@/service/mutations';
 
 const TodayExercises = () => {
     const router = useRouter();
@@ -25,6 +28,8 @@ const TodayExercises = () => {
     const [exerciseTotals, setExerciseTotals] = useState<BurnedCaloriesType>({ duration_min: 0, calories_burned: 0 });
 
     const { data: exercisesData } = useFetchExercises(formattedDate);
+    const { mutateAsync: deleteExercises } = useDeleteExercises(formattedDate);
+    const { mutateAsync: updateExercises } = useUpdateExercises(formattedDate);
 
     useEffect(() => {
         if (exercisesData && exercisesData.exercise) {
@@ -45,7 +50,24 @@ const TodayExercises = () => {
         onOpen();
     };
 
-    console.log(exercisesData);
+    const removeExerciseItem = async (e: React.MouseEvent, exerciseId: number) => {
+        e.stopPropagation();
+        const isProceed = window.confirm('삭제하시겠습니까?');
+
+        if (isProceed) {
+            const updatedExercises = exercisesData?.exercise.filter((exer) => exer.id !== exerciseId);
+
+            if (updatedExercises!.length === 0) {
+                await deleteExercises(exercisesData!.id);
+                router.replace('/home');
+            } else {
+                await updateExercises({
+                    id: exercisesData!.id,
+                    exercise: updatedExercises!,
+                });
+            }
+        }
+    };
 
     return (
         <div className={styles.layout}>
@@ -91,7 +113,15 @@ const TodayExercises = () => {
                                         </Text>
                                     </div>
                                 }
-                                right={<Text bold>{exercise.calories_burned} Kcal</Text>}
+                                right={
+                                    <div className={styles.action}>
+                                        <Text bold>{exercise.calories_burned} Kcal</Text>
+                                        <Icons.FillXmark
+                                            width={15}
+                                            onClick={(e: React.MouseEvent) => removeExerciseItem(e, exercise.id)}
+                                        />
+                                    </div>
+                                }
                             />
 
                             <div className={styles.content}>

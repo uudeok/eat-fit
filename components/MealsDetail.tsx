@@ -136,7 +136,7 @@ const MealsDetail = ({ mealsId }: { mealsId: string }) => {
                                     </div>
                                 }
                                 right={
-                                    <div className={styles.mealKcal}>
+                                    <div className={styles.action}>
                                         <Text bold>{m.calories} kcal</Text>
                                         <Icons.FillXmark
                                             width={13}

@@ -49,3 +49,20 @@ export async function updateExercises(updateData: UpdateExercisesArgs) {
 
     return result;
 }
+
+export async function deleteExercises(exercisesId: number) {
+    const data = await fetch(`${API_ENDPOINTS.EXERCISES}?id=${exercisesId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+
+    if (!data.ok) {
+        throw new Error('Failed to delete the exercise');
+    }
+
+    const result = await data.json();
+
+    return result;
+}

@@ -6,8 +6,8 @@ interface ExercisesState {
     exerciseItem: ExerciseType | null;
     addExercise: (exercise: ExerciseType) => void;
     selectExercise: (exercise: ExerciseType | null) => void;
-    updateMeal: (updatedExercise: ExerciseType) => void;
-    removeMeal: (id: number) => void;
+    updateExercise: (updatedExercise: ExerciseType) => void;
+    removeExercises: (id: number) => void;
     resetExercises: () => void;
 }
 
@@ -23,13 +23,13 @@ export const useExercisesStore = create<ExercisesState>((set) => ({
         set(() => ({
             exerciseItem: exercise,
         })),
-    updateMeal: (updatedExercise) =>
+    updateExercise: (updatedExercise) =>
         set((state) => ({
             exercises: state.exercises.map((exercise) =>
                 exercise.id === updatedExercise.id ? { ...exercise, ...updatedExercise } : exercise
             ),
         })),
-    removeMeal: (id) =>
+    removeExercises: (id) =>
         set((state) => ({
             exercises: state.exercises.filter((exercise) => exercise.id !== id),
         })),

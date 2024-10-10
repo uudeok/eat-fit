@@ -86,3 +86,27 @@ export async function PUT(request: NextRequest) {
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }
+
+export async function DELETE(request: NextRequest) {
+    const supabase = createClient();
+
+    const { searchParams } = new URL(request.url);
+    const exercisesId = searchParams.get('id');
+
+    if (!exercisesId) {
+        return NextResponse.json({ error: 'Exercises Id parameter is required' }, { status: 400 });
+    }
+
+    try {
+        const { data, error } = await supabase.from('exercises').delete().eq('id', parseInt(exercisesId)).select();
+
+        if (error) {
+            throw new Error(error.message);
+        }
+
+        return NextResponse.json({ message: 'Exercises deleted successfully', data }, { status: 200 });
+    } catch (error: any) {
+        console.error('Error deleting exercise : ', error);
+        return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+}
