@@ -1,0 +1,49 @@
+.layout {
+    /* border: 1px solid black; */
+    padding: 5px;
+    align-items: center;
+}
+
+.horizontal {
+    display: flex;
+}
+
+.vertical {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.profile {
+    border-radius: 50px;
+}
+
+.sm {
+    width: 45px;
+    height: 45px;
+}
+
+.md {
+    width: 50px;
+    height: 50px;
+}
+
+.lg {
+    width: 55px;
+    height: 55px;
+}
+
+.detail {
+    display: flex;
+    flex-direction: column;
+    padding: 7px;
+    gap: 4px;
+    line-height: 1.2;
+}
+
+.detailInfo {
+    display: flex;
+    gap: 5px;
+}

@@ -26,3 +26,8 @@ export const exercisesKeys = {
     all: () => [{ ...exercisesKeys.base[0] }] as const,
     date: (selectedDate: string) => [{ ...exercisesKeys.base[0], selectedDate }] as const,
 };
+
+export const usersKeys = {
+    base: [{ scope: 'users' }] as const,
+    all: () => [{ ...usersKeys.base[0] }] as const,
+};

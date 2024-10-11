@@ -4,3 +4,4 @@ export { useFetchMeals } from './useFetchMeals';
 export { useFetchMealDetail } from './useFetchMealDetail';
 export { useFetchExercises } from './useFetchExercises';
 export { useFetchGoalsByStatus } from './useFetchGoalsByStatus';
+export { useFetchUsers } from './useFetchUsers';

@@ -6,6 +6,7 @@ export const API_ENDPOINTS = {
     EXERCISES: `${BASE_URL}/api/exercises`,
     DAILYSPEC: `${BASE_URL}/api/dailySpec`,
     DAILYSTEP: `${BASE_URL}/api/dailySpec/step`,
+    USERS: `${BASE_URL}/api/users`,
     MEALS_DETAIL: (mealId: number) => `${BASE_URL}/api/meals/${mealId}`,
 } as const;
 

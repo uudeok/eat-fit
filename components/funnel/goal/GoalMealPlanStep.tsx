@@ -22,7 +22,7 @@ type MealPlan = {
     selected: boolean;
 };
 
-const MEAL_PLAN: MealPlan[] = [
+const MEAL_PLAN_OPTIONS: MealPlan[] = [
     { key: 'normal', label: '일반', icon: '/carbohydrate.png', content: '탄단지 균형잡힌 식단', selected: false },
     {
         key: 'proteinFocused',
@@ -80,7 +80,8 @@ const GoalMealPlanStep = ({ onNext }: Props) => {
                     탄단지 비율을 조정해드려요
                 </Text>
             </div>
-            {MEAL_PLAN.map((plan) => (
+
+            {MEAL_PLAN_OPTIONS.map((plan) => (
                 <ListRow
                     key={plan.key}
                     left={
