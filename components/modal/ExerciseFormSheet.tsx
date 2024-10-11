@@ -12,6 +12,10 @@ import { BottomSheet } from '../common/Modal';
 import SheetHeader from '../layout/SheetHeader';
 import { ModalType } from '../common/Modal/OverlayContainer';
 import { useExercisesStore } from '@/shared/store/useExercisesStore';
+import { useFetchExercises } from '@/service/queries';
+import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
+import { useUpdateExercises } from '@/service/mutations';
+import { usePathname } from 'next/navigation';
 
 export type ExerciseFormType = {
     id: number;
@@ -22,12 +26,27 @@ export type ExerciseFormType = {
     content: string | null;
 };
 
+/** 해당 바텀시트를 exercises/add or /home 에서 open 한다
+ *  1. path 가 add 이면 데이터를 생성 -> createExercisesData
+ *  2. path 가 home 이면 기존 데이터를 수정 -> updateExercisesData
+ */
+
 const ExerciseFormSheet = () => {
+    const pathname = usePathname();
+    const path = pathname.split('/').pop();
+    const isEditMode = path !== 'add';
+
+    const { isOpen, onClose } = useModal(ModalType.exerciseForm);
     const { addExercise, exerciseItem, updateExercise } = useExercisesStore();
+
     const [selectedIntensity, setSelectedIntensity] = useState<ExerciseIntensityKeysType | null>(
         exerciseItem?.exercise_intensity || null
     );
-    const { isOpen, onClose } = useModal(ModalType.exerciseForm);
+    const { getFormattedDate } = useSelectedDateStore();
+    const formattedDate = getFormattedDate();
+
+    const { data: exercisesData } = useFetchExercises(formattedDate);
+    const { mutateAsync: updateExercises } = useUpdateExercises(formattedDate);
 
     const { register, handleSubmit, setValue } = useForm<ExerciseFormType>({
         defaultValues: {
@@ -39,6 +58,27 @@ const ExerciseFormSheet = () => {
             content: exerciseItem ? exerciseItem.content : null,
         },
     });
+
+    const updateExercisesData = async (data: ExerciseFormType) => {
+        if (exercisesData && exerciseItem) {
+            const updatedExercises = exercisesData.exercise.map((exer) => {
+                if (exer.id === exerciseItem.id) {
+                    return {
+                        ...exer,
+                        ...data,
+                    };
+                }
+                return exer;
+            });
+
+            await updateExercises({
+                exercise: updatedExercises,
+                id: exercisesData.id,
+            });
+        }
+
+        onClose();
+    };
 
     const createExercisesData = (data: ExerciseFormType) => {
         if (exerciseItem) {
@@ -57,7 +97,7 @@ const ExerciseFormSheet = () => {
 
     return (
         <BottomSheet isOpen={isOpen} onClose={onClose}>
-            <form onSubmit={handleSubmit(createExercisesData)} className={styles.layout}>
+            <form className={styles.layout}>
                 <SheetHeader content="운동 직접 입력하기" onClose={onClose} />
 
                 <ListCol
@@ -129,9 +169,20 @@ const ExerciseFormSheet = () => {
                 <Textarea name="content" register={register} placeholder="예시) 자유형 25m 10세트 (선택)" />
 
                 <div className={styles.addBtn}>
-                    <Button role="confirm" size="lg" disabled={!selectedIntensity}>
-                        추가하기
-                    </Button>
+                    {isEditMode ? (
+                        <Button role="confirm" size="lg" onClick={handleSubmit(updateExercisesData)}>
+                            수정하기
+                        </Button>
+                    ) : (
+                        <Button
+                            role="confirm"
+                            size="lg"
+                            disabled={!selectedIntensity}
+                            onClick={handleSubmit(createExercisesData)}
+                        >
+                            추가하기
+                        </Button>
+                    )}
                 </div>
             </form>
         </BottomSheet>

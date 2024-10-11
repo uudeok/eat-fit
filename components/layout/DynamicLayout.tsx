@@ -12,7 +12,7 @@ const layouts = {
 
 const layoutConfig = {
     primaryLayout: ['/login', '/goals'], // "/" 도 포함임
-    footerLayout: ['/home', '/meals', '/exercise', '/my', '/category'],
+    footerLayout: ['/home', '/meals', '/exercise', '/my', '/community'],
 } as const;
 
 type LayoutKeysType = keyof typeof layoutConfig;

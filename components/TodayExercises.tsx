@@ -3,8 +3,9 @@
 import styles from '@styles/component/todayExercises.module.css';
 import Image from 'next/image';
 import Icons from '@/assets';
+import EmptyState from './common/EmptyState';
 import { Text, List, ListRow, ListCol, LoadingBar } from './common';
-import { Button } from './common/Button';
+import { PlusButton } from './common/Button';
 import { EXERCISE_INTENSITY_LABELS } from '@/constants';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -17,7 +18,6 @@ import { ExerciseType } from '@/service/@types/res.type';
 import { useExercisesStore } from '@/shared/store/useExercisesStore';
 import { useDeleteExercises } from '@/service/mutations/useDeleteExercises';
 import { useUpdateExercises } from '@/service/mutations';
-import EmptyState from './common/EmptyState';
 
 const TodayExercises = () => {
     const router = useRouter();
@@ -140,9 +140,9 @@ const TodayExercises = () => {
                 </List>
             </div>
 
-            <Button className={styles.addButton} onClick={() => router.push('/exercise/add')}>
-                추가
-            </Button>
+            <div className={styles.addBtn}>
+                <PlusButton backgroundColor="var(--green400)" onClick={() => router.push('/exercise/add')} />
+            </div>
         </div>
     );
 };

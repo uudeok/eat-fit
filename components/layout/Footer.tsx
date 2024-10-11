@@ -13,8 +13,8 @@ const FOOTER_MENU = [
         visitied: <Icons.FillHome width={20} />,
     },
     {
-        label: '카테고리',
-        path: FooterPaths.CATEGORY,
+        label: '커뮤니티',
+        path: FooterPaths.COMMUNITY,
         notVisited: <Icons.Bar width={20} />,
         visitied: <Icons.FillBar width={20} />,
     },

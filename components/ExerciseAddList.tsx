@@ -1,9 +1,9 @@
 'use client';
 
 import styles from '@styles/component/exerciseAddList.module.css';
+import Icons from '@/assets';
 import { useExercisesStore } from '@/shared/store/useExercisesStore';
 import { ListRow, Text } from './common';
-import Icons from '@/assets';
 import { EXERCISE_INTENSITY_LABELS } from '@/constants';
 import { Button } from './common/Button';
 import { useModal } from '@/hooks';
@@ -11,13 +11,14 @@ import { ModalType } from './common/Modal/OverlayContainer';
 import { useFetchDailySpec, useFetchExercises, useFetchGoalsByStatus } from '@/service/queries';
 import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
 import { useCreateDailySpec, useCreateExercises, useUpdateExercises } from '@/service/mutations';
-import { DailySpecType, ExerciseType } from '@/service/@types/res.type';
+import { ExerciseType } from '@/service/@types/res.type';
 import { useRouter } from 'next/navigation';
+import { calculateExercisesTotals } from '@/shared/utils';
 
 const ExerciseAddList = () => {
     const router = useRouter();
     const { onOpen } = useModal(ModalType.exerciseForm);
-    const { exercises, selectExercise } = useExercisesStore();
+    const { exercises, selectExercise, removeExercises } = useExercisesStore();
 
     const { getFormattedDate } = useSelectedDateStore();
     const formattedDate = getFormattedDate();
@@ -31,6 +32,8 @@ const ExerciseAddList = () => {
     const { mutateAsync: updateExercises } = useUpdateExercises(formattedDate);
 
     if (!exercises.length) return;
+
+    const exercisesTotals = calculateExercisesTotals(exercises);
 
     const createExercisesData = async (id?: number) => {
         const createData = {
@@ -61,7 +64,7 @@ const ExerciseAddList = () => {
                 today_weight: 0,
                 mood: null,
             };
-            const dailyData = (await createDailySpec(dailySpecData)) as DailySpecType;
+            const dailyData = await createDailySpec(dailySpecData);
             createExercisesData(dailyData.id);
         } else {
             createExercisesData();
@@ -109,7 +112,13 @@ const ExerciseAddList = () => {
                             <Text bold size="lg">
                                 {exercise.calories_burned || 0} kcal
                             </Text>
-                            <Icons.FillXmark width={13} />
+                            <Icons.FillXmark
+                                width={13}
+                                onClick={(e: React.MouseEvent) => {
+                                    e.stopPropagation();
+                                    removeExercises(exercise.id);
+                                }}
+                            />
                         </div>
                     }
                 />
@@ -117,7 +126,7 @@ const ExerciseAddList = () => {
 
             <div className={styles.totalCalories}>
                 <Text bold size="xlg">
-                    120 kcal
+                    {exercisesTotals.calories_burned || 0} kcal
                 </Text>
             </div>
 
