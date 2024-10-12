@@ -10,25 +10,44 @@ import { UpdateUserArgs, UserType } from '@/service/@types';
 import { Button } from './common/Button';
 import Image from 'next/image';
 import { useImageUpload } from '@/hooks';
+import { useUpdateUser } from '@/service/mutations';
 
 const MyPageEdit = ({ userData }: { userData: UserType }) => {
     const router = useRouter();
 
-    const { imageUrl, triggerFileInput, handleFileInputChange, fileRef } = useImageUpload({
+    const { imageUrl, triggerFileInput, handleFileInputChange, fileRef, uploadImageToS3 } = useImageUpload({
         initialImageUrl: userData?.avatar_url || '/user.svg',
     });
 
-    const { register, handleSubmit, setValue } = useForm<UpdateUserArgs>({
+    const { mutateAsync: updateUser } = useUpdateUser();
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<UpdateUserArgs>({
         defaultValues: {
             avatar_url: userData?.avatar_url || '/user.svg',
             nickname: userData?.nickname || '',
-            content: userData?.content || '',
+            content: userData?.content || null,
         },
     });
 
-    const updateUserData = (data: UpdateUserArgs) => {
-        console.log(imageUrl);
-        console.log('data', data);
+    const updateUserData = async (data: UpdateUserArgs) => {
+        const uploadedImageUrl = await uploadImageToS3();
+
+        const updateData = {
+            id: userData.id,
+            avatar_url: uploadedImageUrl || data.avatar_url,
+            content: data.content,
+            nickname: data.nickname,
+        };
+
+        console.log('업데이트 데이터', updateData);
+
+        await updateUser(updateData);
+
+        router.push('/mypage');
     };
 
     return (
@@ -75,7 +94,7 @@ const MyPageEdit = ({ userData }: { userData: UserType }) => {
                 bottom={
                     <div className={styles.nickname}>
                         <Icons.Pencil width={15} />
-                        <Input register={register} name="nickname" placeholder="닉네임" />
+                        <Input register={register} name="nickname" placeholder="닉네임" rules={{ required: true }} />
                     </div>
                 }
             />
@@ -98,6 +117,22 @@ const MyPageEdit = ({ userData }: { userData: UserType }) => {
 };
 
 export default MyPageEdit;
+
+{
+    /* <Input
+register={register}
+name="nickname"
+placeholder="닉네임"
+rules={{
+    required: '닉네임을 입력해주세요',
+    maxLength: {
+        value: 6,
+        message: '닉네임은 최대 6자리까지 입력 가능합니다',
+    },
+}}
+errors={errors}
+/> */
+}
 
 // 'use client';
 

@@ -28,7 +28,7 @@ const Profile = (props: AvatarProps) => {
             />
             <div className={styles.detail}>
                 <Text bold color="var(--grey700)" size="xlg">
-                    {userData?.username}
+                    {userData?.nickname}
                 </Text>
 
                 {showDetails && (

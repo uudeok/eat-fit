@@ -103,7 +103,8 @@ export type UpdateExercisesArgs = {
 };
 
 export type UpdateUserArgs = {
-    avatar_url: string;
+    id: string;
+    avatar_url: string | null;
     nickname: string;
     content: string | null;
 };

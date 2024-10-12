@@ -10,3 +10,5 @@ export { useDeleteMeals } from './useDeleteMeals';
 export { useCreateExercises } from './useCreateExercises';
 export { useUpdateExercises } from './useUpdateExercises';
 export { useDeleteExercises } from './useDeleteExercises';
+
+export { useUpdateUser } from './useUpdateUser';

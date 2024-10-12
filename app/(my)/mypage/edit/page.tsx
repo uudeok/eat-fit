@@ -2,9 +2,12 @@ import MyPageEdit from '@/components/MyPageEdit';
 import { API_ENDPOINTS } from '@/service/supabase/config';
 import { headers } from 'next/headers';
 
+export const dynamic = 'force-dynamic';
+
 const getUserData = async () => {
     const data = await fetch(`${API_ENDPOINTS.USERS}`, {
         headers: headers(),
+        cache: 'no-store',
     });
 
     if (!data.ok) {
