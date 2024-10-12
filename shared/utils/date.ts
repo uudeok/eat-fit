@@ -11,13 +11,26 @@ export function resetHoursDate() {
     return dayjs().startOf('day').toDate();
 }
 
+export function formatCurrentDate() {
+    return dayjs().format(DATE_FORMAT['YYYY-MM-DD']);
+}
+
 export function addDaysAndResetTime(addDay: number) {
-    return dayjs().add(addDay, 'day').startOf('day').toDate();
+    return dayjs().add(addDay, 'day').startOf('day').format(DATE_FORMAT['YYYY-MM-DD']);
 }
 
 export function convertDateFormat(date: Date, format?: keyof typeof DATE_FORMAT) {
     const selectedFormat = format ? DATE_FORMAT[format] : DATE_FORMAT['YYYY-MM-DD'];
     return dayjs(date).format(selectedFormat);
+}
+
+export function calculateDDay(goalEndDate: string) {
+    const today = dayjs();
+    const endDate = dayjs(goalEndDate);
+
+    const dDay = endDate.diff(today, 'day');
+
+    return dDay;
 }
 
 /* timeSheet 에서 시간을 입력하면 24시간 형식으로 변환  */

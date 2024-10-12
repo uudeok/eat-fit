@@ -13,7 +13,7 @@ type TextareaProps<T extends FieldValues> = {
 } & React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 
 const Textarea = <T extends FieldValues>(props: TextareaProps<T>) => {
-    const { id, name, label, placeholder, defaultValue, rules, register } = props;
+    const { id, name, label, placeholder, defaultValue, rules, register, ...prop } = props;
 
     return (
         <div className={styles.memo}>
@@ -27,6 +27,7 @@ const Textarea = <T extends FieldValues>(props: TextareaProps<T>) => {
                 {...(register && register(name, rules))}
                 placeholder={placeholder}
                 defaultValue={defaultValue}
+                {...prop}
             />
         </div>
     );

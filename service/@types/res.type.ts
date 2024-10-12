@@ -80,3 +80,18 @@ export type ExerciseType = {
     exercise_intensity: ExerciseIntensityKeysType | null;
     content: string | null;
 };
+
+export type UserRoleType = 'general' | 'manager' | 'admin';
+export type UserExposeType = 'pubilc' | 'privacy' | 'follower';
+
+export type UserType = {
+    id: string;
+    username: string;
+    nickname: string;
+    avatar_url: string | null;
+    email: string;
+    created_at: string;
+    role: UserRoleType;
+    expose: UserExposeType;
+    content: string | null;
+};

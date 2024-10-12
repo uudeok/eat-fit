@@ -1,4 +1,4 @@
-import { EmojiKey, ExerciseIntensityKeysType } from '@/constants';
+import { EmojiKey } from '@/constants';
 import { MealsKeysType } from '@/constants/meals';
 import { ExerciseType } from './res.type';
 
@@ -16,8 +16,8 @@ export type GoalRegisterType = {
     target_weight: number;
     daily_calories: number;
     goal_period: number;
-    goal_start_date: Date;
-    goal_end_date: Date;
+    goal_start_date: string;
+    goal_end_date: string;
     meal_plan: MealPlanType;
     daily_carb: number;
     daily_protein: number;
@@ -38,8 +38,8 @@ export type WeightInfoType = {
 
 export type GoalCaloriesInfoType = {
     daily_calories: number;
-    goal_start_date: Date;
-    goal_end_date: Date;
+    goal_start_date: string;
+    goal_end_date: string;
     goal_period: number;
 };
 
@@ -100,4 +100,10 @@ export type UpdateExercisesArgs = {
     id: number;
     exercise: ExerciseType[];
     photo_url?: string[] | null;
+};
+
+export type UpdateUserArgs = {
+    avatar_url: string;
+    nickname: string;
+    content: string | null;
 };

@@ -1,0 +1,22 @@
+.layout {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.goalItem {
+    background-color: whitesmoke;
+
+    padding: 15px;
+    width: calc(33.33% - 20px);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border-top: 1px solid var(--grey200);
+    border-bottom: 1px solid var(--grey200);
+}
+
+.goalItem:hover {
+    opacity: 0.9;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}

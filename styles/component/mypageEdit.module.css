@@ -1,0 +1,58 @@
+.layout {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    position: relative;
+    height: 100%;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+}
+
+.imageContainer {
+    display: flex;
+    justify-content: center;
+    position: relative;
+
+    padding: 5px;
+}
+
+.avatar {
+    border-radius: 50px;
+    object-fit: cover;
+}
+
+.cameraIcon {
+    position: absolute;
+    bottom: -7px;
+    right: 177px;
+    z-index: 99;
+}
+
+.nickname {
+    padding: 5px;
+    display: flex;
+    border-bottom: 1px solid grey;
+    margin-bottom: 20px;
+}
+
+.nickname input {
+    font-size: 23px;
+}
+
+.content {
+    height: 200px;
+}
+
+.reviseBtn {
+    margin-top: auto;
+}
+
+.hidden {
+    display: none;
+}

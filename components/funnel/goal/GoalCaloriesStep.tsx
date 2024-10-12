@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react';
 import {
     addDaysAndResetTime,
     calculateCaloriesToGoal,
-    convertDateFormat,
+    formatCurrentDate,
     removeLocalStorageItem,
     setLocalStorageItem,
 } from '@/shared/utils';
@@ -37,7 +37,7 @@ const GoalCaloriesStep = ({ onNext, registerData }: Props) => {
 
     const [goalData, setGoalData] = useState<GoalCaloriesInfoType>({
         daily_calories: dailyCalories,
-        goal_start_date: new Date(),
+        goal_start_date: formatCurrentDate(),
         goal_end_date: addDaysAndResetTime(daysToGoal),
         goal_period: daysToGoal,
     });
@@ -51,7 +51,7 @@ const GoalCaloriesStep = ({ onNext, registerData }: Props) => {
         if (storedData) {
             setGoalData({
                 daily_calories: storedData.daily_calories,
-                goal_start_date: new Date(),
+                goal_start_date: formatCurrentDate(),
                 goal_end_date: addDaysAndResetTime(storedData.goal_period),
                 goal_period: storedData.goal_period,
             });
@@ -117,7 +117,7 @@ const GoalCaloriesStep = ({ onNext, registerData }: Props) => {
                 </div>
 
                 <Text size="sm" color="var(--grey600)">
-                    오늘부터 시작하면 {convertDateFormat(goalData.goal_end_date, 'KYY.MM.DD')} 에 끝나요
+                    오늘부터 시작하면 {goalData.goal_end_date}에 끝나요
                 </Text>
             </div>
 

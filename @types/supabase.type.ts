@@ -277,28 +277,34 @@ export type Database = {
       users: {
         Row: {
           avatar_url: string | null
+          content: string | null
           created_at: string | null
           email: string
           expose: string | null
           id: string
+          nickname: string
           role: string | null
           username: string | null
         }
         Insert: {
           avatar_url?: string | null
+          content?: string | null
           created_at?: string | null
           email: string
           expose?: string | null
           id?: string
+          nickname: string
           role?: string | null
           username?: string | null
         }
         Update: {
           avatar_url?: string | null
+          content?: string | null
           created_at?: string | null
           email?: string
           expose?: string | null
           id?: string
+          nickname?: string
           role?: string | null
           username?: string | null
         }
@@ -309,7 +315,12 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      generate_random_string: {
+        Args: {
+          length: number
+        }
+        Returns: string
+      }
     }
     Enums: {
       ActivityLevelType: "very_low" | "low" | "moderate" | "high" | "very_high"
@@ -318,6 +329,8 @@ export type Database = {
       GoalStatusType: "progress" | "success" | "failure"
       MealPlanType: "normal" | "lowCarbHighFat" | "proteinFocused"
       MealType: "meal" | "snack" | "night_meal"
+      UserExposeType: "public" | "privacy" | "follower"
+      UserRoleType: "general" | "admin" | "manager"
     }
     CompositeTypes: {
       [_ in never]: never
