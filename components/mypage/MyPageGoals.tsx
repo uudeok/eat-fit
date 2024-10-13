@@ -1,7 +1,7 @@
 'use client';
 
 import styles from '@styles/component/myPageGoals.module.css';
-import { List, ListCol, Text } from './common';
+import { List, ListCol, Text } from '../common';
 import { GoalType } from '@/service/@types/res.type';
 import { MEAL_PLAN } from '@/constants';
 import { calculateDDay } from '@/shared/utils';

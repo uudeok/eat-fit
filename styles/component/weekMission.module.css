@@ -1,0 +1,47 @@
+.layout {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    /* border: 1px solid black; */
+    gap: 10px;
+
+    /* background-color: var(--blue50); */
+}
+
+.header {
+    padding: 5px;
+}
+
+.title {
+    display: flex;
+    gap: 5px;
+}
+
+.weeksWrapper {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 2px;
+}
+
+.date {
+    border: 1px solid var(--grey400);
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.date:hover {
+    transform: scale(1.1);
+}
+
+.disabled {
+    color: gray;
+    pointer-events: none;
+    opacity: 0.6;
+}

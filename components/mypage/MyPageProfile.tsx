@@ -1,7 +1,7 @@
 'use client';
 
-import Profile from './common/Profile';
-import { Button } from './common/Button';
+import Profile from '../common/Profile';
+import { Button } from '../common/Button';
 import { useRouter } from 'next/navigation';
 
 const MyPageProfile = () => {

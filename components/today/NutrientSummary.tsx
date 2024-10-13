@@ -1,7 +1,7 @@
 'use client';
 
 import styles from '@styles/component/nutrientSummary.module.css';
-import { List, Text, ProgressBar, CircleText, ListCol } from './common';
+import { List, Text, ProgressBar, CircleText, ListCol } from '../common';
 import { NutrientsType, calculateTotalNutrients } from '@/shared/utils';
 import { GoalType } from '@/service/@types/res.type';
 import { useEffect, useMemo, useState } from 'react';

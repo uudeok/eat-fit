@@ -1,8 +1,20 @@
+import { GoalStatusType } from '@/service/@types';
 import NutrientSummary from './NutrientSummary';
 import TodayStatus from './TodayStatus';
-import { getGoalsData } from '@/app/(goals)/goals/page';
+import { API_ENDPOINTS } from '@/service/supabase/config';
+import { headers } from 'next/headers';
 
 export const revalidate = 0;
+
+const getGoalsData = async (status: GoalStatusType) => {
+    const data = await fetch(`${API_ENDPOINTS.GOALS}?status=${status}`, {
+        headers: headers(),
+        cache: 'no-store',
+    });
+
+    const result = await data.json();
+    return result;
+};
 
 const TodaySummary = async () => {
     const goalData = await getGoalsData('progress');

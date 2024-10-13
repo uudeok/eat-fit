@@ -1,7 +1,7 @@
 'use client';
 
-import { Button } from './common/Button';
-import EmptyState from './common/EmptyState';
+import EmptyState from '../common/EmptyState';
+import { Button } from '../common/Button';
 import { useRouter } from 'next/navigation';
 
 const Community = () => {

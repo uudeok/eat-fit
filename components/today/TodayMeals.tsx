@@ -3,8 +3,8 @@
 import styles from '@styles/component/todayMeals.module.css';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { Badge, ListRow, Text } from './common';
-import { PlusButton } from './common/Button';
+import { Badge, ListRow, Text } from '../common';
+import { PlusButton } from '../common/Button';
 import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
 import { useFetchMeals } from '@/service/queries';
 

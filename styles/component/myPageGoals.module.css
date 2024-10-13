@@ -12,7 +12,7 @@
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
     border-top: 1px solid var(--grey200);
-    border-bottom: 1px solid var(--grey200);
+    /* border-bottom: 1px solid var(--grey200); */
 }
 
 .goalItem:hover {

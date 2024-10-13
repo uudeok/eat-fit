@@ -2,12 +2,12 @@
 
 import styles from '@styles/component/mypageEdit.module.css';
 import Icons from '@/assets';
-import { ListCol, Text } from './common';
-import { Input, Textarea } from './common/Form';
+import { ListCol, Text } from '../common';
+import { Input, Textarea } from '../common/Form';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { UpdateUserArgs, UserType } from '@/service/@types';
-import { Button } from './common/Button';
+import { Button } from '../common/Button';
 import Image from 'next/image';
 import { useImageUpload } from '@/hooks';
 import { useUpdateUser } from '@/service/mutations';

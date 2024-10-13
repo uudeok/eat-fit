@@ -7,7 +7,7 @@ import { redirect } from 'next/navigation';
  *  next/headers 는 page, layout 페이지에서만 호출이 가능하다 다른곳에서는 에러 발생
  */
 
-export const getGoalsData = async (status: GoalStatusType) => {
+const getGoalsData = async (status: GoalStatusType) => {
     const data = await fetch(`${API_ENDPOINTS.GOALS}?status=${status}`, {
         headers: headers(),
         cache: 'no-store',

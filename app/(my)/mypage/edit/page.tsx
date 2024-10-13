@@ -1,4 +1,4 @@
-import MyPageEdit from '@/components/MyPageEdit';
+import MyPageEdit from '@/components/mypage/MyPageEdit';
 import { API_ENDPOINTS } from '@/service/supabase/config';
 import { headers } from 'next/headers';
 

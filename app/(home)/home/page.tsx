@@ -1,7 +1,7 @@
 import MainHeader from '@/components/layout/MainHeader';
-import TodaySummary from '@/components/TodaySummary';
-import TodayMeals from '@/components/TodayMeals';
-import TodayExercises from '@/components/TodayExercises';
+import TodaySummary from '@/components/today/TodaySummary';
+import TodayMeals from '@/components/today/TodayMeals';
+import TodayExercises from '@/components/today/TodayExercises';
 
 const HomePage = async () => {
     return (
