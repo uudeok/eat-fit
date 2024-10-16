@@ -25,6 +25,14 @@ export const useFetchDailySteps = (selectedDates: string[]) => {
             queryKey: dailySpecKeys.withDetails(selectedDate),
             queryFn: () => fetchDailyStep(selectedDate),
             enabled: dayjs(selectedDate).isSameOrBefore(today),
+            staleTIme: staleTIme,
+            gcTime: gcTime,
         })),
+        combine: (results) => {
+            return {
+                data: results.map((result) => result.data),
+                pending: results.some((result) => result.isPending),
+            };
+        },
     });
 };

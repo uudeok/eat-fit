@@ -1,6 +1,7 @@
 import { EmojiKey } from '@/constants';
 import { MealsKeysType } from '@/constants/meals';
 import { ExerciseType } from './res.type';
+import { Nullable } from '@/@types';
 
 export type GenderType = 'F' | 'M';
 export type GoalStatusType = 'progress' | 'success' | 'failure';
@@ -59,19 +60,19 @@ export type CreateDailySpecArgs = {
 
 export type UpdateDailySpecArgs = {
     id: number;
-    today_weight: number | null;
-    mood: EmojiKey | null;
+    today_weight: Nullable<number>;
+    mood: Nullable<EmojiKey>;
 };
 
 export type MealItemType = {
     id: number;
     food_name: string;
-    serving_size?: number | null;
-    calories: number | null;
-    carbohydrate: number | null;
-    protein: number | null;
-    fat: number | null;
-    content: string | null;
+    serving_size?: number;
+    calories: number;
+    carbohydrate: number;
+    protein: number;
+    fat: number;
+    content: string;
 };
 
 export type CreateMealsArgs = {
@@ -84,8 +85,8 @@ export type CreateMealsArgs = {
 /* meals 데이터 중 일부만 수정할 수 있기에 optional 로 지정 */
 export type UpdateMealsArgs = {
     meal_type: MealsKeysType;
-    serving_time: Date | null;
-    photo_url?: string[] | null;
+    serving_time: Nullable<Date>;
+    photo_url?: Nullable<string[]>;
     meal: MealItemType[];
     id: number;
 };

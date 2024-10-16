@@ -4,46 +4,43 @@ import styles from '@styles/component/nutrientSummary.module.css';
 import { List, Text, ProgressBar, CircleText, ListCol } from '../common';
 import { NutrientsType, calculateTotalNutrients } from '@/shared/utils';
 import { GoalType } from '@/service/@types/res.type';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
-import { MealItemType } from '@/service/@types';
 import { useFetchMeals } from '@/service/queries';
 
 const NutrientSummary = ({ goalData }: { goalData: GoalType }) => {
     const [nutrients, setNutrients] = useState<NutrientsType>({ calories: 0, carbohydrate: 0, protein: 0, fat: 0 });
 
-    const { selectedDate, getFormattedDate } = useSelectedDateStore();
+    const { getFormattedDate } = useSelectedDateStore();
     const formattedDate = getFormattedDate();
 
     const { data: mealsData } = useFetchMeals(formattedDate);
 
-    const meals = useMemo(() => mealsData?.map((mealItem) => mealItem.meal).flat(), [mealsData]);
-
     useEffect(() => {
-        if (meals && meals.length > 0) {
-            const nutrientsTotals = calculateTotalNutrients(meals as MealItemType[]);
+        if (mealsData && mealsData.flatMealItem) {
+            const nutrientsTotals = calculateTotalNutrients(mealsData.flatMealItem);
             setNutrients(nutrientsTotals);
         } else {
             setNutrients({ calories: 0, carbohydrate: 0, protein: 0, fat: 0 });
         }
-    }, [meals, selectedDate]);
+    }, [mealsData]);
 
     const NUTRIENTS = [
         {
             label: '탄',
-            value: nutrients?.carbohydrate || 0,
+            value: nutrients?.carbohydrate,
             bgColor: 'var(--mainColorDk)',
             standard: goalData.daily_carb,
         },
         {
             label: '단',
-            value: nutrients?.protein || 0,
+            value: nutrients?.protein,
             bgColor: 'var(--orange300)',
             standard: goalData.daily_protein,
         },
         {
             label: '지',
-            value: nutrients?.fat || 0,
+            value: nutrients?.fat,
             bgColor: 'var(--red300)',
             standard: goalData.daily_fat,
         },

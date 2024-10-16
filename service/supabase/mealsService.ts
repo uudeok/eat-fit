@@ -1,8 +1,9 @@
 import { CreateMealsArgs, UpdateMealsArgs } from '../@types';
 import { MealsType } from '../@types/res.type';
+import { decodeMeals, decodeMealsList, DecodeMealsListType, DecodeMealsType } from '../mappers/mealsMapper';
 import { API_ENDPOINTS } from './config';
 
-export async function fetchMealsData(selectedDate: string): Promise<MealsType[]> {
+export async function fetchMealsData(selectedDate: string): Promise<DecodeMealsListType> {
     const data = await fetch(`${API_ENDPOINTS.MEALS}?date=${selectedDate}`);
 
     if (!data.ok) {
@@ -11,10 +12,10 @@ export async function fetchMealsData(selectedDate: string): Promise<MealsType[]>
 
     const result = await data.json();
 
-    return result;
+    return decodeMealsList(result);
 }
 
-export async function fetchMealsDetail(mealId: number): Promise<MealsType> {
+export async function fetchMealsDetail(mealId: number): Promise<DecodeMealsType> {
     const data = await fetch(`${API_ENDPOINTS.MEALS_DETAIL(mealId)}`);
 
     if (!data.ok) {
@@ -23,7 +24,7 @@ export async function fetchMealsDetail(mealId: number): Promise<MealsType> {
 
     const result = await data.json();
 
-    return result;
+    return decodeMeals(result);
 }
 
 export async function createMeals(mealData: CreateMealsArgs) {

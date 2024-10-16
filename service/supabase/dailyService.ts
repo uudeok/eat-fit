@@ -1,12 +1,12 @@
 import { createClient } from '@/shared/utils/supabase/client';
-import { SupabaseClient } from '@supabase/supabase-js';
-import { DailySpecType, DailyStepType } from '../@types/res.type';
+import { DailyStepType } from '../@types/res.type';
 import { CreateDailySpecArgs, UpdateDailySpecArgs } from '../@types';
 import { API_ENDPOINTS } from './config';
+import { DecodeDailySpec, decodeDailySpec } from '../mappers/dailyMapper';
 
 const client = createClient();
 
-export async function fetchDailySpec(selectedDate: string): Promise<DailySpecType> {
+export async function fetchDailySpec(selectedDate: string): Promise<DecodeDailySpec> {
     const data = await fetch(`${API_ENDPOINTS.DAILYSPEC}?date=${selectedDate}`);
 
     if (!data.ok) {
@@ -14,10 +14,11 @@ export async function fetchDailySpec(selectedDate: string): Promise<DailySpecTyp
     }
 
     const result = await data.json();
-    return result;
+
+    return decodeDailySpec(result);
 }
 
-export async function createDailySpec(dailySpecData: CreateDailySpecArgs): Promise<DailySpecType> {
+export async function createDailySpec(dailySpecData: CreateDailySpecArgs): Promise<DecodeDailySpec> {
     const data = await fetch(`${API_ENDPOINTS.DAILYSPEC}`, {
         method: 'POST',
         headers: {
@@ -31,10 +32,10 @@ export async function createDailySpec(dailySpecData: CreateDailySpecArgs): Promi
 
     const result = await data.json();
 
-    return result;
+    return decodeDailySpec(result);
 }
 
-export async function updateDailySpec(updatedData: UpdateDailySpecArgs): Promise<DailySpecType> {
+export async function updateDailySpec(updatedData: UpdateDailySpecArgs): Promise<DecodeDailySpec> {
     const data = await fetch(`${API_ENDPOINTS.DAILYSPEC}`, {
         method: 'PUT',
         headers: {
@@ -49,10 +50,10 @@ export async function updateDailySpec(updatedData: UpdateDailySpecArgs): Promise
 
     const result = await data.json();
 
-    return result;
+    return decodeDailySpec(result);
 }
 
-export async function fetchDailyStep(selectedDate: string) {
+export async function fetchDailyStep(selectedDate: string): Promise<DailyStepType> {
     const data = await fetch(`${API_ENDPOINTS.DAILYSTEP}?date=${selectedDate}`);
 
     if (!data.ok) {

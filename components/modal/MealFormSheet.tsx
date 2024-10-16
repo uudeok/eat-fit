@@ -10,18 +10,18 @@ import { Input, Textarea } from '../common/Form';
 import SheetHeader from '../layout/SheetHeader';
 import { ModalType } from '../common/Modal/OverlayContainer';
 import { calorieValidation } from '@/shared/utils';
-import { MealItemType } from '@/service/@types';
 import { useMealsStore } from '@/shared/store/useMealsStore';
 import { usePathname } from 'next/navigation';
 import { useUpdateMeals } from '@/service/mutations';
 import { useFetchMealDetail } from '@/service/queries/useFetchMealDetail';
+import { DecodeMealItemType, encodeUpdateMeal } from '@/service/mappers/mealsMapper';
 
 /* 해당 바텀시트를 /meals/add or /meals/[id] 에서 open 한다
    1. path 가 add 이면 데이터를 생성 -> createMealsData
    2. path 가 id 이면 데이터를 수정 -> updateMealsData
 */
 
-const NUTRIENTS: { label: string; key: keyof MealItemType; unit: string }[] = [
+const NUTRIENTS: { label: string; key: keyof DecodeMealItemType; unit: string }[] = [
     { label: '칼로리', key: 'calories', unit: 'kcal' },
     { label: '탄수화물', key: 'carbohydrate', unit: 'g' },
     { label: '단백질', key: 'protein', unit: 'g' },
@@ -37,21 +37,21 @@ const MealFormSheet = () => {
     const { mealItem, addMeal, updateMeal } = useMealsStore();
     const { data: mealDetail } = useFetchMealDetail(Number(path));
 
-    const { mutate: updateMeals } = useUpdateMeals(mealDetail?.entry_date!);
+    const { mutate: updateMeals } = useUpdateMeals(mealDetail?.entryDate!);
 
-    const { register, handleSubmit } = useForm<MealItemType>({
+    const { register, handleSubmit } = useForm<DecodeMealItemType>({
         defaultValues: {
-            id: mealItem ? mealItem.id : Date.now(),
-            food_name: mealItem ? mealItem.food_name : '',
-            calories: mealItem ? mealItem.calories : 0,
-            carbohydrate: mealItem ? mealItem.carbohydrate : 0,
-            protein: mealItem ? mealItem.protein : 0,
-            fat: mealItem ? mealItem.fat : 0,
-            content: mealItem ? mealItem.content : null,
+            id: mealItem?.id || Date.now(),
+            foodName: mealItem?.foodName,
+            calories: mealItem?.calories,
+            carbohydrate: mealItem?.carbohydrate,
+            protein: mealItem?.protein,
+            fat: mealItem?.fat,
+            content: mealItem?.content,
         },
     });
 
-    const createMealsData = (data: MealItemType) => {
+    const createMealsData = (data: DecodeMealItemType) => {
         if (mealItem) {
             updateMeal(data);
         } else {
@@ -62,23 +62,25 @@ const MealFormSheet = () => {
     };
 
     /* meals 데이터 수정 */
-    const updateMealsData = (data: MealItemType) => {
+    const updateMealsData = (data: DecodeMealItemType) => {
         if (mealItem && mealDetail) {
-            const updatedMeals = mealDetail.meal.map((m) => {
-                if (m.id === mealItem.id) {
+            const updatedMeals = mealDetail.mealItem.map((meal) => {
+                if (meal.id === mealItem.id) {
                     return {
-                        ...m,
+                        ...meal,
                         ...data,
                     };
                 }
-                return m;
+                return meal;
+            });
+
+            const updateData = encodeUpdateMeal({
+                ...mealDetail,
+                mealItem: updatedMeals,
             });
 
             updateMeals({
-                id: mealDetail.id,
-                serving_time: mealDetail.serving_time,
-                meal: updatedMeals,
-                meal_type: mealDetail.meal_type,
+                ...updateData,
             });
         }
         onClose();
@@ -92,12 +94,7 @@ const MealFormSheet = () => {
                 <ListCol
                     top={<Text bold>음식 이름 (필수)</Text>}
                     bottom={
-                        <Input
-                            register={register}
-                            rules={{ required: true }}
-                            placeholder="음식 이름"
-                            name="food_name"
-                        />
+                        <Input register={register} rules={{ required: true }} placeholder="음식 이름" name="foodName" />
                     }
                 />
 

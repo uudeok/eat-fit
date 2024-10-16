@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
     }
 
     try {
-        const { data, error } = await supabase.from('meals').select('*').eq('entry_date', selectedDate);
+        const { data, error } = await supabase.from('meals').select('*').eq('entry_date', selectedDate).throwOnError();
 
         if (error) {
             throw new Error(error.message);

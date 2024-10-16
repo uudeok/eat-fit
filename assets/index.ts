@@ -19,6 +19,8 @@ import Flag from './flag.svg';
 import FillFire from './fillFire.svg';
 import FillSetting from './fillSetting.svg';
 import FillUtensil from './fillUtensil.svg';
+import FillReports from './fillReports.svg';
+import FillTrendsup from './fillTrendsup.svg';
 
 const Icons = {
     FillHome,
@@ -42,6 +44,8 @@ const Icons = {
     FillFire,
     FillSetting,
     FillUtensil,
+    FillReports,
+    FillTrendsup,
 };
 
 export default Icons;

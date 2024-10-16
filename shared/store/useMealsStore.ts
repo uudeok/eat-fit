@@ -1,13 +1,13 @@
-import { MealItemType } from '@/service/@types';
+import { DecodeMealItemType } from '@/service/mappers/mealsMapper';
 import { create } from 'zustand';
 
 interface MealsState {
-    meals: MealItemType[];
-    mealItem: MealItemType | null;
-    addMeal: (newMeal: MealItemType) => void;
+    meals: DecodeMealItemType[];
+    mealItem: DecodeMealItemType | null;
+    addMeal: (newMeal: DecodeMealItemType) => void;
     removeMeal: (id: number) => void;
-    selectMeal: (meal: MealItemType | null) => void;
-    updateMeal: (updatedMeal: MealItemType) => void;
+    selectMeal: (meal: DecodeMealItemType | null) => void;
+    updateMeal: (updatedMeal: DecodeMealItemType) => void;
     resetMeals: () => void;
 }
 

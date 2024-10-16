@@ -30,7 +30,7 @@ const TodayWeightSheet = () => {
 
     const { register, handleSubmit } = useForm<FormValues>({
         defaultValues: {
-            today_weight: dailySpec?.today_weight || null,
+            today_weight: dailySpec?.todayWeight || null,
         },
     });
 

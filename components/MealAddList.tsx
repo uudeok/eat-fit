@@ -10,12 +10,11 @@ import { useState } from 'react';
 import Icons from '@/assets';
 import { useModal } from '@/hooks';
 import { ModalType } from './common/Modal/OverlayContainer';
-import { MealItemType } from '@/service/@types';
 import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
 import { useRouter } from 'next/navigation';
-import { DailySpecType } from '@/service/@types/res.type';
 import { useFetchDailySpec, useFetchGoalsByStatus } from '@/service/queries';
 import { useCreateDailySpec, useCreateMeals } from '@/service/mutations';
+import { DecodeMealItemType, encodeCreateMeal } from '@/service/mappers/mealsMapper';
 
 const MealAddList = () => {
     const router = useRouter();
@@ -32,19 +31,21 @@ const MealAddList = () => {
     const { mutateAsync: createDailySpec } = useCreateDailySpec(formattedDate);
     const { mutateAsync: createMeals } = useCreateMeals(formattedDate);
 
-    const nutrientTotals = calculateTotalNutrients(meals);
-
     if (!meals.length) return;
+
+    const nutrientTotals = calculateTotalNutrients(meals);
 
     const createMealsData = async (id?: number) => {
         const mealData = {
-            daily_id: dailySpec?.id! || id!,
-            entry_date: formattedDate,
-            meal_type: selectedMealType,
-            meal: meals,
+            dailyId: dailySpec?.id! || id!,
+            entryDate: formattedDate,
+            mealType: selectedMealType,
+            mealItem: meals,
         };
 
-        await createMeals(mealData);
+        const createData = encodeCreateMeal({ ...mealData });
+
+        await createMeals(createData);
         resetMeals();
         router.push('/home');
     };
@@ -65,7 +66,7 @@ const MealAddList = () => {
         }
     };
 
-    const openMealDetail = (meal: MealItemType) => {
+    const openMealDetail = (meal: DecodeMealItemType) => {
         selectMeal(meal);
         onOpen();
     };
@@ -102,10 +103,10 @@ const MealAddList = () => {
                     left={
                         <div className={styles.foodName}>
                             <Text bold size="lg">
-                                {meal.food_name}
+                                {meal.foodName}
                             </Text>
                             <Text size="sm" color="var(--grey600)">
-                                {meal.serving_size ? `${meal.serving_size}g` : '자유입력'}
+                                {meal.servingSize ? `${meal.servingSize}g` : '자유입력'}
                             </Text>
                         </div>
                     }

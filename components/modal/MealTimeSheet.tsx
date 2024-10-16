@@ -7,24 +7,21 @@ import SheetHeader from '../layout/SheetHeader';
 import { Button } from '../common/Button';
 import { Input } from '../common/Form';
 import { useForm } from 'react-hook-form';
-import { Text, TextToggle } from '../common';
+import { LoadingBar, Text, TextToggle } from '../common';
 import { ModalType } from '../common/Modal/OverlayContainer';
 import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
-import { convertToKST, convertToServingTime, padStartToZero } from '@/shared/utils';
+import { padStartToZero } from '@/shared/utils';
 import { usePathname } from 'next/navigation';
 import { useUpdateMeals } from '@/service/mutations';
 import { useFetchMealDetail } from '@/service/queries/useFetchMealDetail';
-import { MealsType } from '@/service/@types/res.type';
+import { encodeUpdateMeal } from '@/service/mappers/mealsMapper';
 
 export type ServingTimeType = {
-    period: string | null;
-    hour: number | null | string;
-    minutes: number | null | string;
+    kstTime: Date;
+    period: string;
+    hour: number;
+    minutes: number;
 };
-
-/* serving_time 은 무조건 Null 값으로라도 meals 테이블에 존재한다
-   meals 데이터를 가져와서 나머지는 기존 데이터를 그대로 넣어주고 serving_time 만 업데이트 한다
- */
 
 const MealTimeSheet = () => {
     const pathname = usePathname();
@@ -33,16 +30,17 @@ const MealTimeSheet = () => {
     const { isOpen, onClose } = useModal(ModalType.mealTime);
     const { selectedDate } = useSelectedDateStore();
 
-    const { data: mealDetail = {} as MealsType } = useFetchMealDetail(Number(mealId));
-    const { mutate: updateMeals } = useUpdateMeals(mealDetail.entry_date);
+    const { data: mealDetail } = useFetchMealDetail(Number(mealId));
 
-    const initialServingTime = convertToKST(mealDetail.serving_time!);
+    const { mutate: updateMeals } = useUpdateMeals(mealDetail?.entryDate!);
+
+    if (!mealDetail) return <LoadingBar />;
 
     const { register, handleSubmit, setValue } = useForm<ServingTimeType>({
         defaultValues: {
-            period: initialServingTime ? initialServingTime.period : null,
-            hour: initialServingTime ? initialServingTime.hour : null,
-            minutes: initialServingTime ? initialServingTime.minutes : null,
+            period: mealDetail?.servingTime?.period,
+            hour: mealDetail?.servingTime?.hour,
+            minutes: mealDetail?.servingTime?.minutes,
         },
     });
 
@@ -51,17 +49,15 @@ const MealTimeSheet = () => {
     };
 
     const submitServingTime = (data: ServingTimeType) => {
-        const { hour, minutes } = convertToServingTime(data);
-
-        const updatedDate = new Date(selectedDate.getTime());
-        const servingTime = new Date(updatedDate.setHours(hour, minutes));
+        const updatedData = encodeUpdateMeal({
+            ...mealDetail,
+            servingTime: { ...data, kstTime: selectedDate },
+        });
 
         updateMeals({
-            id: mealDetail.id,
-            serving_time: servingTime,
-            meal: mealDetail.meal,
-            meal_type: mealDetail.meal_type,
+            ...updatedData,
         });
+
         onClose();
     };
 
@@ -108,7 +104,7 @@ const MealTimeSheet = () => {
                     left="오전"
                     right="오후"
                     onClick={handlePeriodToggle}
-                    initialValue={initialServingTime?.period}
+                    initialValue={mealDetail.servingTime?.period}
                 />
 
                 <div className={styles.timeTable}>

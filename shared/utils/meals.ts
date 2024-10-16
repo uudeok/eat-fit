@@ -1,4 +1,4 @@
-import { MealItemType } from '@/service/@types';
+import { DecodeMealItemType } from '@/service/mappers/mealsMapper';
 
 export type NutrientsType = {
     calories: number;
@@ -7,7 +7,7 @@ export type NutrientsType = {
     fat: number;
 };
 
-export const calculateTotalNutrients = (meals: MealItemType[]): NutrientsType => {
+export const calculateTotalNutrients = (meals: DecodeMealItemType[]): NutrientsType => {
     if (meals.length === 0) {
         return { calories: 0, carbohydrate: 0, protein: 0, fat: 0 };
     }

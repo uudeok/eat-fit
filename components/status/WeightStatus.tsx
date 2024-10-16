@@ -23,9 +23,9 @@ const WeightStatus = () => {
                     </Text>
                 }
                 right={
-                    dailySpec?.today_weight ? (
+                    dailySpec?.todayWeight ? (
                         <Text color="white" bold size="xlg">
-                            {dailySpec?.today_weight} kg
+                            {dailySpec?.todayWeight} kg
                         </Text>
                     ) : (
                         <Text color="white" bold size="xlg">

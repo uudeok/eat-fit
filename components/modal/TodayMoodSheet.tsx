@@ -39,7 +39,7 @@ const TodayMoodSheet = () => {
             const updateData = {
                 id: dailySpec.id,
                 mood: selectedMood,
-                today_weight: dailySpec.today_weight,
+                today_weight: dailySpec.todayWeight,
             };
 
             updateDailySpec(updateData);
