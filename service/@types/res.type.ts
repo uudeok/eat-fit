@@ -70,7 +70,7 @@ export type ExercisesType = {
     user_id: string;
     entry_date: string;
     exercise: ExerciseType[];
-    photo_url: string[] | null;
+    photo_url: string[];
 };
 
 export type ExerciseType = {
@@ -78,8 +78,8 @@ export type ExerciseType = {
     exercise_name: string;
     duration_min: number;
     calories_burned: number;
-    exercise_intensity: ExerciseIntensityKeysType | null;
-    content: string | null;
+    exercise_intensity: ExerciseIntensityKeysType;
+    content: string;
 };
 
 export type UserRoleType = 'general' | 'manager' | 'admin';

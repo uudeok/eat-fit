@@ -16,7 +16,7 @@ const BurnedCalorieStatus = () => {
     useEffect(() => {
         if (exercisesData) {
             const exercisesTotals = calculateExercisesTotals(exercisesData.exercise);
-            setBurnedCalories(exercisesTotals.calories_burned);
+            setBurnedCalories(exercisesTotals.caloriesBurned);
         } else {
             setBurnedCalories(0);
         }

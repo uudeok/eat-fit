@@ -1,27 +1,27 @@
-import { ExerciseType } from '@/service/@types/res.type';
+import { DecodeExercisesItemType } from '@/service/mappers/exercisesMapper';
 
 export type BurnedCaloriesType = {
-    duration_min: number;
-    calories_burned: number;
+    durationMin: number;
+    caloriesBurned: number;
 };
 
-export const calculateExercisesTotals = (exercises: ExerciseType[]): BurnedCaloriesType => {
+export const calculateExercisesTotals = (exercises: DecodeExercisesItemType[]): BurnedCaloriesType => {
     if (exercises.length === 0) {
-        return { duration_min: 0, calories_burned: 0 };
+        return { durationMin: 0, caloriesBurned: 0 };
     }
 
     const totals = exercises.reduce(
         (totals, exercise) => {
             return {
-                calories_burned: totals.calories_burned + Number(exercise.calories_burned),
-                duration_min: totals.duration_min + Number(exercise.duration_min),
+                caloriesBurned: totals.caloriesBurned + Number(exercise.caloriesBurned),
+                durationMin: totals.durationMin + Number(exercise.durationMin),
             };
         },
-        { calories_burned: 0, duration_min: 0 }
+        { caloriesBurned: 0, durationMin: 0 }
     );
 
     return {
-        calories_burned: totals.calories_burned,
-        duration_min: totals.duration_min,
+        caloriesBurned: totals.caloriesBurned,
+        durationMin: totals.durationMin,
     };
 };

@@ -1,12 +1,13 @@
 import { ExerciseType } from '@/service/@types/res.type';
+import { DecodeExercisesItemType } from '@/service/mappers/exercisesMapper';
 import { create } from 'zustand';
 
 interface ExercisesState {
-    exercises: ExerciseType[];
-    exerciseItem: ExerciseType | null;
-    addExercise: (exercise: ExerciseType) => void;
-    selectExercise: (exercise: ExerciseType | null) => void;
-    updateExercise: (updatedExercise: ExerciseType) => void;
+    exercises: DecodeExercisesItemType[];
+    exerciseItem: DecodeExercisesItemType | null;
+    addExercise: (exercise: DecodeExercisesItemType) => void;
+    selectExercise: (exercise: DecodeExercisesItemType | null) => void;
+    updateExercise: (updatedExercise: DecodeExercisesItemType) => void;
     removeExercises: (id: number) => void;
     resetExercises: () => void;
 }

@@ -1,8 +1,8 @@
 import { API_ENDPOINTS } from './config';
 import { CreateExercisesArgs, UpdateExercisesArgs } from '../@types';
-import { ExercisesType } from '../@types/res.type';
+import { decodeExercises, DecodeExercisesType } from '../mappers/exercisesMapper';
 
-export async function fetchExercisesData(selectedDate: string): Promise<ExercisesType> {
+export async function fetchExercisesData(selectedDate: string): Promise<DecodeExercisesType> {
     const data = await fetch(`${API_ENDPOINTS.EXERCISES}?date=${selectedDate}`);
 
     if (!data.ok) {
@@ -11,7 +11,7 @@ export async function fetchExercisesData(selectedDate: string): Promise<Exercise
 
     const result = await data.json();
 
-    return result;
+    return decodeExercises(result);
 }
 
 export async function createExercises(exercisesData: CreateExercisesArgs) {

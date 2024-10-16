@@ -16,15 +16,8 @@ import { useFetchExercises } from '@/service/queries';
 import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
 import { useUpdateExercises } from '@/service/mutations';
 import { usePathname } from 'next/navigation';
-
-export type ExerciseFormType = {
-    id: number;
-    exercise_name: string;
-    duration_min: number;
-    calories_burned: number;
-    exercise_intensity: ExerciseIntensityKeysType | null;
-    content: string | null;
-};
+import { DecodeExercisesItemType, encodeUpdateExercise } from '@/service/mappers/exercisesMapper';
+import { Nullable } from '@/@types';
 
 /** 해당 바텀시트를 exercises/add or /home 에서 open 한다
  *  1. path 가 add 이면 데이터를 생성 -> createExercisesData
@@ -39,8 +32,8 @@ const ExerciseFormSheet = () => {
     const { isOpen, onClose } = useModal(ModalType.exerciseForm);
     const { addExercise, exerciseItem, updateExercise } = useExercisesStore();
 
-    const [selectedIntensity, setSelectedIntensity] = useState<ExerciseIntensityKeysType | null>(
-        exerciseItem?.exercise_intensity || null
+    const [selectedIntensity, setSelectedIntensity] = useState<Nullable<ExerciseIntensityKeysType>>(
+        exerciseItem?.exerciseIntensity || null
     );
     const { getFormattedDate } = useSelectedDateStore();
     const formattedDate = getFormattedDate();
@@ -48,18 +41,18 @@ const ExerciseFormSheet = () => {
     const { data: exercisesData } = useFetchExercises(formattedDate);
     const { mutateAsync: updateExercises } = useUpdateExercises(formattedDate);
 
-    const { register, handleSubmit, setValue } = useForm<ExerciseFormType>({
+    const { register, handleSubmit, setValue } = useForm<DecodeExercisesItemType>({
         defaultValues: {
             id: exerciseItem ? exerciseItem.id : Date.now(),
-            exercise_name: exerciseItem ? exerciseItem.exercise_name : '',
-            duration_min: exerciseItem ? exerciseItem.duration_min : 0,
-            calories_burned: exerciseItem ? exerciseItem.calories_burned : 0,
-            exercise_intensity: exerciseItem ? exerciseItem.exercise_intensity : null,
-            content: exerciseItem ? exerciseItem.content : null,
+            exerciseName: exerciseItem?.exerciseName,
+            durationMin: exerciseItem?.durationMin,
+            caloriesBurned: exerciseItem?.caloriesBurned,
+            exerciseIntensity: exerciseItem?.exerciseIntensity,
+            content: exerciseItem?.content,
         },
     });
 
-    const updateExercisesData = async (data: ExerciseFormType) => {
+    const updateExercisesData = async (data: DecodeExercisesItemType) => {
         if (exercisesData && exerciseItem) {
             const updatedExercises = exercisesData.exercise.map((exer) => {
                 if (exer.id === exerciseItem.id) {
@@ -71,27 +64,29 @@ const ExerciseFormSheet = () => {
                 return exer;
             });
 
-            await updateExercises({
-                exercise: updatedExercises,
+            const updateData = encodeUpdateExercise({
                 id: exercisesData.id,
+                exercise: updatedExercises,
+            });
+
+            console.log(1, updateData);
+
+            await updateExercises({
+                ...updateData,
             });
         }
 
         onClose();
     };
 
-    const createExercisesData = (data: ExerciseFormType) => {
-        if (exerciseItem) {
-            updateExercise(data);
-        } else {
-            addExercise(data);
-        }
+    const createExercisesData = (data: DecodeExercisesItemType) => {
+        exerciseItem ? updateExercise(data) : addExercise(data);
 
         onClose();
     };
 
     const handleIntensity = (key: ExerciseIntensityKeysType) => {
-        setValue('exercise_intensity', key);
+        setValue('exerciseIntensity', key);
         setSelectedIntensity(key);
     };
 
@@ -106,7 +101,7 @@ const ExerciseFormSheet = () => {
                         <Input
                             register={register}
                             rules={{ required: true }}
-                            name="exercise_name"
+                            name="exerciseName"
                             placeholder="운동 이름"
                         />
                     }
@@ -121,7 +116,7 @@ const ExerciseFormSheet = () => {
                                 register={register}
                                 rules={{ required: true }}
                                 placeholder="0"
-                                name="duration_min"
+                                name="durationMin"
                                 unit="분"
                                 onInput={(e) => {
                                     const input = e.target as HTMLInputElement;
@@ -154,7 +149,7 @@ const ExerciseFormSheet = () => {
                             <Input
                                 type="number"
                                 register={register}
-                                name="calories_burned"
+                                name="caloriesBurned"
                                 placeholder="0"
                                 onInput={(e) => {
                                     const input = e.target as HTMLInputElement;

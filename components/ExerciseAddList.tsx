@@ -11,10 +11,14 @@ import { ModalType } from './common/Modal/OverlayContainer';
 import { useFetchDailySpec, useFetchExercises, useFetchGoalsByStatus } from '@/service/queries';
 import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
 import { useCreateDailySpec, useCreateExercises, useUpdateExercises } from '@/service/mutations';
-import { ExerciseType } from '@/service/@types/res.type';
 import { useRouter } from 'next/navigation';
 import { calculateExercisesTotals } from '@/shared/utils';
 import { encodeCreateDailySpec } from '@/service/mappers/dailyMapper';
+import {
+    DecodeExercisesItemType,
+    encodeCreateExercises,
+    encodeUpdateExercise,
+} from '@/service/mappers/exercisesMapper';
 
 const ExerciseAddList = () => {
     const router = useRouter();
@@ -38,8 +42,8 @@ const ExerciseAddList = () => {
 
     const createExercisesData = async (id?: number) => {
         const createData = {
-            daily_id: dailySpec?.id! || id!,
-            entry_date: formattedDate,
+            dailyId: id!,
+            entryDate: formattedDate,
             exercise: exercises,
         };
 
@@ -49,9 +53,13 @@ const ExerciseAddList = () => {
                 exercise: [...exercisesData.exercise, ...exercises],
             };
 
-            await updateExercises(updatedData);
+            const newData = encodeUpdateExercise({ ...updatedData });
+
+            await updateExercises(newData);
         } else {
-            await createExercises(createData);
+            const newData = encodeCreateExercises({ ...createData });
+
+            await createExercises(newData);
         }
 
         router.push('/home');
@@ -79,7 +87,7 @@ const ExerciseAddList = () => {
         selectExercise(null);
     };
 
-    const openExerciseDetail = (exercise: ExerciseType) => {
+    const openExerciseDetail = (exercise: DecodeExercisesItemType) => {
         selectExercise(exercise);
         onOpen();
     };
@@ -103,17 +111,17 @@ const ExerciseAddList = () => {
                     left={
                         <div className={styles.exerciseName}>
                             <Text bold size="lg">
-                                {exercise.exercise_name}
+                                {exercise.exerciseName}
                             </Text>
                             <Text size="sm" color="var(--grey600)">
-                                {exercise.duration_min}분 {EXERCISE_INTENSITY_LABELS[exercise.exercise_intensity!]}
+                                {exercise.durationMin}분 {EXERCISE_INTENSITY_LABELS[exercise.exerciseIntensity!]}
                             </Text>
                         </div>
                     }
                     right={
                         <div className={styles.action}>
                             <Text bold size="lg">
-                                {exercise.calories_burned || 0} kcal
+                                {exercise.caloriesBurned} kcal
                             </Text>
                             <Icons.FillXmark
                                 width={13}
@@ -129,7 +137,7 @@ const ExerciseAddList = () => {
 
             <div className={styles.totalCalories}>
                 <Text bold size="xlg">
-                    {exercisesTotals.calories_burned || 0} kcal
+                    {exercisesTotals.caloriesBurned} kcal
                 </Text>
             </div>
 

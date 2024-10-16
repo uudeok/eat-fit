@@ -14,39 +14,42 @@ import { useModal } from '@/hooks';
 import { ModalType } from '../common/Modal/OverlayContainer';
 import { useFetchExercises } from '@/service/queries';
 import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
-import { ExerciseType } from '@/service/@types/res.type';
 import { useExercisesStore } from '@/shared/store/useExercisesStore';
 import { useDeleteExercises } from '@/service/mutations/useDeleteExercises';
 import { useUpdateExercises } from '@/service/mutations';
+import { DecodeExercisesItemType, encodeUpdateExercise } from '@/service/mappers/exercisesMapper';
 
 const TodayExercises = () => {
     const router = useRouter();
     const { onOpen } = useModal(ModalType.exerciseForm);
     const { getFormattedDate } = useSelectedDateStore();
+
     const formattedDate = getFormattedDate();
     const { selectExercise } = useExercisesStore();
 
-    const [exerciseTotals, setExerciseTotals] = useState<BurnedCaloriesType>({ duration_min: 0, calories_burned: 0 });
+    const [exerciseTotals, setExerciseTotals] = useState<BurnedCaloriesType>({ durationMin: 0, caloriesBurned: 0 });
 
     const { data: exercisesData, isLoading } = useFetchExercises(formattedDate);
     const { mutateAsync: deleteExercises } = useDeleteExercises(formattedDate);
     const { mutateAsync: updateExercises } = useUpdateExercises(formattedDate);
+
+    console.log(exercisesData);
 
     useEffect(() => {
         if (exercisesData && exercisesData.exercise) {
             const exerciseTotals = calculateExercisesTotals(exercisesData.exercise);
             setExerciseTotals(exerciseTotals);
         } else {
-            setExerciseTotals({ duration_min: 0, calories_burned: 0 });
+            setExerciseTotals({ durationMin: 0, caloriesBurned: 0 });
         }
     }, [exercisesData]);
 
     const EXERCISES_SUMMARY = [
-        { label: '총 운동 시간', value: exerciseTotals.duration_min, unit: '분' },
-        { label: '총 소모량', value: exerciseTotals.calories_burned, unit: 'kcal' },
+        { label: '총 운동 시간', value: exerciseTotals.durationMin, unit: '분' },
+        { label: '총 소모량', value: exerciseTotals.caloriesBurned, unit: 'kcal' },
     ];
 
-    const handleExerciseItem = (exercise: ExerciseType) => {
+    const handleExerciseItem = (exercise: DecodeExercisesItemType) => {
         selectExercise(exercise);
         onOpen();
     };
@@ -63,10 +66,12 @@ const TodayExercises = () => {
                 await deleteExercises(exercisesData!.id);
                 router.replace('/home');
             } else {
-                await updateExercises({
+                const updateData = encodeUpdateExercise({
                     id: exercisesData!.id,
                     exercise: updatedExercises!,
                 });
+
+                await updateExercises({ ...updateData });
             }
         }
     };
@@ -111,16 +116,16 @@ const TodayExercises = () => {
                                 <ListRow
                                     left={
                                         <div className={styles.exerciseName}>
-                                            <Text bold>{exercise.exercise_name}</Text>
+                                            <Text bold>{exercise.exerciseName}</Text>
                                             <Text size="sm">
-                                                {exercise.duration_min}분{' '}
-                                                {EXERCISE_INTENSITY_LABELS[exercise.exercise_intensity!]}
+                                                {exercise.durationMin}분{' '}
+                                                {EXERCISE_INTENSITY_LABELS[exercise.exerciseIntensity!]}
                                             </Text>
                                         </div>
                                     }
                                     right={
                                         <div className={styles.action}>
-                                            <Text bold>{exercise.calories_burned} Kcal</Text>
+                                            <Text bold>{exercise.caloriesBurned} Kcal</Text>
                                             <Icons.FillXmark
                                                 width={15}
                                                 onClick={(e: React.MouseEvent) => removeExerciseItem(e, exercise.id)}
