@@ -64,6 +64,8 @@ export const decodeMealsList = (init: MealsType[]): DecodeMealsListType => ({
     flatMealItem: init.flatMap((meals) => meals.meal.map(decodeMealItem)),
 });
 
+/******************* encode 작성 *******************/
+
 export const encodeMealItem = (init: DecodeMealItemType): MealItemType => ({
     id: init.id,
     content: init.content,

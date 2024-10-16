@@ -1,10 +1,7 @@
-import { createClient } from '@/shared/utils/supabase/client';
 import { DailyStepType } from '../@types/res.type';
 import { CreateDailySpecArgs, UpdateDailySpecArgs } from '../@types';
 import { API_ENDPOINTS } from './config';
 import { DecodeDailySpec, decodeDailySpec } from '../mappers/dailyMapper';
-
-const client = createClient();
 
 export async function fetchDailySpec(selectedDate: string): Promise<DecodeDailySpec> {
     const data = await fetch(`${API_ENDPOINTS.DAILYSPEC}?date=${selectedDate}`);

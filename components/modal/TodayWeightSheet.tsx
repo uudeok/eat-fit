@@ -13,9 +13,10 @@ import { useFetchDailySpec } from '@/service/queries/useFetchDailySpec';
 import { useCreateDailySpec } from '@/service/mutations/useCreateDailySpec';
 import { useUpdateDailySpec } from '@/service/mutations/useUpdateDailySpec';
 import { useFetchGoalsByStatus } from '@/service/queries';
+import { encodeCreateDailySpec, encodeUpdateDailySpec } from '@/service/mappers/dailyMapper';
 
 type FormValues = {
-    today_weight: null | number;
+    todayWeight: number;
 };
 
 const TodayWeightSheet = () => {
@@ -30,7 +31,7 @@ const TodayWeightSheet = () => {
 
     const { register, handleSubmit } = useForm<FormValues>({
         defaultValues: {
-            today_weight: dailySpec?.todayWeight || null,
+            todayWeight: dailySpec?.todayWeight,
         },
     });
 
@@ -41,22 +42,25 @@ const TodayWeightSheet = () => {
         if (!data) return;
 
         if (dailySpec) {
-            const updateData = {
+            const dailySpecData = {
                 id: dailySpec.id,
-                today_weight: data.today_weight,
+                todayWeight: data.todayWeight,
                 mood: dailySpec.mood,
             };
 
+            const updateData = encodeUpdateDailySpec({ ...dailySpecData });
             updateDailySpec(updateData);
         } else {
             const initialData = {
-                goal_id: goalData?.id!,
-                today_weight: data.today_weight,
+                goalId: goalData?.id!,
+                todayWeight: data.todayWeight,
                 mood: null,
-                entry_date: formattedDate,
+                entryDate: formattedDate,
             };
 
-            createDailySpec(initialData);
+            const createData = encodeCreateDailySpec({ ...initialData });
+
+            createDailySpec(createData);
         }
 
         onClose();
@@ -69,7 +73,7 @@ const TodayWeightSheet = () => {
             <form onSubmit={submitTodayWeight} className="flex flex-col gap-6 p-4">
                 <Input
                     register={register}
-                    name="today_weight"
+                    name="todayWeight"
                     placeholder="00.0"
                     unit="kg"
                     rules={{

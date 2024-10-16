@@ -15,6 +15,7 @@ import { useRouter } from 'next/navigation';
 import { useFetchDailySpec, useFetchGoalsByStatus } from '@/service/queries';
 import { useCreateDailySpec, useCreateMeals } from '@/service/mutations';
 import { DecodeMealItemType, encodeCreateMeal } from '@/service/mappers/mealsMapper';
+import { encodeCreateDailySpec } from '@/service/mappers/dailyMapper';
 
 const MealAddList = () => {
     const router = useRouter();
@@ -53,12 +54,14 @@ const MealAddList = () => {
     const submitMeals = async () => {
         if (!dailySpec) {
             const dailySpecData = {
-                goal_id: goalData?.id!,
-                entry_date: formattedDate,
-                today_weight: 0,
+                goalId: goalData?.id!,
+                entryDate: formattedDate,
+                todayWeight: 0,
                 mood: null,
             };
-            const dailyData = await createDailySpec(dailySpecData);
+
+            const createData = encodeCreateDailySpec({ ...dailySpecData });
+            const dailyData = await createDailySpec(createData);
 
             createMealsData(dailyData.id);
         } else {

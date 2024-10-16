@@ -13,6 +13,7 @@ import { useFetchDailySpec } from '@/service/queries/useFetchDailySpec';
 import { useCreateDailySpec } from '@/service/mutations/useCreateDailySpec';
 import { useUpdateDailySpec } from '@/service/mutations/useUpdateDailySpec';
 import { useFetchGoalsByStatus } from '@/service/queries';
+import { encodeCreateDailySpec, encodeUpdateDailySpec } from '@/service/mappers/dailyMapper';
 
 const TodayMoodSheet = () => {
     const { data: goalData } = useFetchGoalsByStatus('progress');
@@ -36,22 +37,26 @@ const TodayMoodSheet = () => {
         if (!selectedMood) return;
 
         if (dailySpec) {
-            const updateData = {
+            const dailySpecData = {
                 id: dailySpec.id,
                 mood: selectedMood,
-                today_weight: dailySpec.todayWeight,
+                todayWeight: dailySpec.todayWeight,
             };
+
+            const updateData = encodeUpdateDailySpec({ ...dailySpecData });
 
             updateDailySpec(updateData);
         } else {
             const initialData = {
-                goal_id: goalData?.id!,
-                entry_date: formattedDate,
-                today_weight: 0,
+                goalId: goalData?.id!,
+                entryDate: formattedDate,
+                todayWeight: 0,
                 mood: selectedMood,
             };
 
-            createDailySpec(initialData);
+            const createData = encodeCreateDailySpec({ ...initialData });
+
+            createDailySpec(createData);
         }
         onClose();
     };
