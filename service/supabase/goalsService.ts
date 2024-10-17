@@ -1,8 +1,9 @@
-import { GoalRegisterType, GoalStatusType } from '@/service/@types/req.type';
+import { CreateGoalArgs, GoalRegisterType, GoalStatusType } from '@/service/@types/req.type';
 import { API_ENDPOINTS } from './config';
 import { GoalType } from '../@types/res.type';
+import { decodeGoal, DecodeGoalType } from '../mappers/goalMapper';
 
-export async function fetchGoalsByStatus(status: GoalStatusType): Promise<GoalType> {
+export async function fetchGoalsByStatus(status: GoalStatusType): Promise<DecodeGoalType> {
     const data = await fetch(`${API_ENDPOINTS.GOALS}?status=${status}`);
 
     if (!data.ok) {
@@ -11,10 +12,10 @@ export async function fetchGoalsByStatus(status: GoalStatusType): Promise<GoalTy
 
     const result = await data.json();
 
-    return result;
+    return decodeGoal(result);
 }
 
-export async function createNewGoals(goalData: GoalRegisterType): Promise<GoalType> {
+export async function createNewGoals(goalData: CreateGoalArgs): Promise<GoalType> {
     const data = await fetch(`${API_ENDPOINTS.GOALS}`, {
         method: 'POST',
         headers: {

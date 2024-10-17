@@ -31,8 +31,8 @@ const GoalWeightInfoStep = ({ onNext }: Props) => {
         formState: { errors },
     } = useForm<WeightInfoType>({
         defaultValues: {
-            weight: initialData ? initialData.weight : 0,
-            target_weight: initialData ? initialData.target_weight : 0,
+            weight: initialData?.weight,
+            targetWeight: initialData?.targetWeight,
         },
     });
 
@@ -87,7 +87,7 @@ const GoalWeightInfoStep = ({ onNext }: Props) => {
                 bottom={
                     <Input
                         register={register}
-                        name="target_weight"
+                        name="targetWeight"
                         placeholder="00.0"
                         unit="kg"
                         rules={{

@@ -13,6 +13,23 @@ export type GoalRegisterType = {
     age: number;
     height: number;
     weight: number;
+    activityLevel: ActivityLevelType;
+    targetWeight: number;
+    dailyCalories: number;
+    goalPeriod: number;
+    startDate: string;
+    endDate: string;
+    mealPlan: MealPlanType;
+    dailyCarb: number;
+    dailyProtein: number;
+    dailyFat: number;
+};
+
+export type CreateGoalArgs = {
+    gender: GenderType;
+    age: number;
+    height: number;
+    weight: number;
     activity_level: ActivityLevelType;
     target_weight: number;
     daily_calories: number;
@@ -29,26 +46,26 @@ export type BasicInfoType = {
     gender: GenderType;
     age: number;
     height: number;
-    activity_level: ActivityLevelType;
+    activityLevel: ActivityLevelType;
 };
 
 export type WeightInfoType = {
     weight: number;
-    target_weight: number;
+    targetWeight: number;
 };
 
 export type GoalCaloriesInfoType = {
-    daily_calories: number;
-    goal_start_date: string;
-    goal_end_date: string;
-    goal_period: number;
+    dailyCalories: number;
+    startDate: string;
+    endDate: string;
+    goalPeriod: number;
 };
 
 export type MealPlanInfoType = {
-    meal_plan: MealPlanType;
-    daily_carb: number;
-    daily_protein: number;
-    daily_fat: number;
+    mealPlan: MealPlanType;
+    dailyCarb: number;
+    dailyProtein: number;
+    dailyFat: number;
 };
 
 export type CreateDailySpecArgs = {

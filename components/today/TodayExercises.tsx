@@ -5,7 +5,6 @@ import Image from 'next/image';
 import Icons from '@/assets';
 import EmptyState from '../common/EmptyState';
 import { Text, List, ListRow, ListCol, LoadingBar } from '../common';
-import { PlusButton } from '../common/Button';
 import { EXERCISE_INTENSITY_LABELS } from '@/constants';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -31,9 +30,7 @@ const TodayExercises = () => {
 
     const { data: exercisesData, isLoading } = useFetchExercises(formattedDate);
     const { mutateAsync: deleteExercises } = useDeleteExercises(formattedDate);
-    const { mutateAsync: updateExercises } = useUpdateExercises(formattedDate);
-
-    console.log(exercisesData);
+    const { mutate: updateExercises } = useUpdateExercises(formattedDate);
 
     useEffect(() => {
         if (exercisesData && exercisesData.exercise) {
@@ -56,7 +53,6 @@ const TodayExercises = () => {
 
     const removeExerciseItem = async (e: React.MouseEvent, exerciseId: number) => {
         e.stopPropagation();
-
         const isProceed = window.confirm('삭제하시겠습니까?');
 
         if (isProceed) {
@@ -64,14 +60,15 @@ const TodayExercises = () => {
 
             if (updatedExercises!.length === 0) {
                 await deleteExercises(exercisesData!.id);
-                router.replace('/home');
+
+                window.location.reload();
             } else {
                 const updateData = encodeUpdateExercise({
                     id: exercisesData!.id,
                     exercise: updatedExercises!,
                 });
 
-                await updateExercises({ ...updateData });
+                updateExercises({ ...updateData });
             }
         }
     };
@@ -145,9 +142,9 @@ const TodayExercises = () => {
                 </List>
             </div>
 
-            <div className={styles.addBtn}>
-                <PlusButton backgroundColor="var(--green400)" onClick={() => router.push('/exercise/add')} />
-            </div>
+            <button className={styles.roundButton} onClick={() => router.push('/exercise/add')}>
+                추가하기
+            </button>
         </div>
     );
 };

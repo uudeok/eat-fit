@@ -32,7 +32,7 @@ const GoalBasicInfoStep = ({ onNext }: Props) => {
 
     const [selectedGender, setSelectedGender] = useState<GenderType | null>(initialData?.gender || null);
     const [selectedActivityLevel, setSelectedActivityLevel] = useState<ActivityLevelType | null>(
-        initialData?.activity_level || null
+        initialData?.activityLevel || null
     );
 
     const {
@@ -42,10 +42,10 @@ const GoalBasicInfoStep = ({ onNext }: Props) => {
         formState: { errors },
     } = useForm<BasicInfoType>({
         defaultValues: {
-            gender: initialData ? initialData.gender : undefined,
-            age: initialData ? initialData.age : 0,
-            height: initialData ? initialData.height : 0,
-            activity_level: initialData ? initialData.activity_level : undefined,
+            gender: initialData?.gender,
+            age: initialData?.age,
+            height: initialData?.height,
+            activityLevel: initialData?.activityLevel,
         },
     });
 
@@ -66,7 +66,7 @@ const GoalBasicInfoStep = ({ onNext }: Props) => {
 
     const handleActivitySelect = (activityLevel: ActivityLevelType) => {
         setSelectedActivityLevel(activityLevel);
-        setValue('activity_level', activityLevel);
+        setValue('activityLevel', activityLevel);
     };
 
     return (

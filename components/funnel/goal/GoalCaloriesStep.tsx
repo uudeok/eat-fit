@@ -33,13 +33,13 @@ const GoalCaloriesStep = ({ onNext, registerData }: Props) => {
     /* 입력받은 데이터 기반 권장 칼로리 및 목표 기간 계산식 */
     const { dailyCalories, daysToGoal } = calculateCaloriesToGoal(registerData);
 
-    const isWeightDifference = registerData.target_weight - registerData.weight !== 0;
+    const isWeightDifference = registerData.targetWeight - registerData.weight !== 0;
 
     const [goalData, setGoalData] = useState<GoalCaloriesInfoType>({
-        daily_calories: dailyCalories,
-        goal_start_date: formatCurrentDate(),
-        goal_end_date: addDaysAndResetTime(daysToGoal),
-        goal_period: daysToGoal,
+        dailyCalories: dailyCalories,
+        startDate: formatCurrentDate(),
+        endDate: addDaysAndResetTime(daysToGoal),
+        goalPeriod: daysToGoal,
     });
 
     const openCaloriesEditSheet = () => {
@@ -50,10 +50,10 @@ const GoalCaloriesStep = ({ onNext, registerData }: Props) => {
     useEffect(() => {
         if (storedData) {
             setGoalData({
-                daily_calories: storedData.daily_calories,
-                goal_start_date: formatCurrentDate(),
-                goal_end_date: addDaysAndResetTime(storedData.goal_period),
-                goal_period: storedData.goal_period,
+                dailyCalories: storedData.dailyCalories,
+                startDate: formatCurrentDate(),
+                endDate: addDaysAndResetTime(storedData.goalPeriod),
+                goalPeriod: storedData.goalPeriod,
             });
         }
     }, [storage]);
@@ -96,7 +96,7 @@ const GoalCaloriesStep = ({ onNext, registerData }: Props) => {
                 <ListRow
                     left={
                         <Text bold size="xxlg">
-                            {goalData.daily_calories} kcal
+                            {goalData.dailyCalories} kcal
                         </Text>
                     }
                     right={
@@ -112,12 +112,12 @@ const GoalCaloriesStep = ({ onNext, registerData }: Props) => {
                 <div className={styles.period}>
                     <Icons.Flag width={18} />
                     <Text bold color="var(--grey700)">
-                        목표 달성까지 <strong className={styles.strong}>{goalData.goal_period}일</strong> 걸려요!
+                        목표 달성까지 <strong className={styles.strong}>{goalData.goalPeriod}일</strong> 걸려요!
                     </Text>
                 </div>
 
                 <Text size="sm" color="var(--grey600)">
-                    오늘부터 시작하면 {goalData.goal_end_date}에 끝나요
+                    오늘부터 시작하면 {goalData.endDate}에 끝나요
                 </Text>
             </div>
 

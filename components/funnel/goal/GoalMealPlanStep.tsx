@@ -57,13 +57,13 @@ const GoalMealPlanStep = ({ onNext }: Props) => {
     const submitMealPlan = () => {
         if (selectedPlan) {
             /* 식단 정보 기반 권장 탄, 단, 지 비율 계산식 */
-            const nutrientRatio = calculateNutrientRatio(initialData.daily_calories, selectedPlan);
+            const nutrientRatio = calculateNutrientRatio(initialData.dailyCalories, selectedPlan);
 
             onNext({
-                meal_plan: selectedPlan,
-                daily_carb: nutrientRatio.daily_carb,
-                daily_protein: nutrientRatio.daily_protein,
-                daily_fat: nutrientRatio.daily_fat,
+                mealPlan: selectedPlan,
+                dailyCarb: nutrientRatio.daily_carb,
+                dailyProtein: nutrientRatio.daily_protein,
+                dailyFat: nutrientRatio.daily_fat,
             });
         }
     };

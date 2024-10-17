@@ -12,7 +12,7 @@ import { calorieValidation, getLocalStorageItem, recalculateCaloriesToGoal, setL
 import { GoalCaloriesInfoType } from '@/service/@types';
 
 type FormValue = {
-    daily_calories: number;
+    dailyCalories: number;
 };
 
 const CalorieEditSheet = () => {
@@ -29,18 +29,18 @@ const CalorieEditSheet = () => {
         formState: { errors },
     } = useForm<FormValue>({
         defaultValues: {
-            daily_calories: initialData ? initialData.daily_calories : 0,
+            dailyCalories: initialData?.dailyCalories,
         },
     });
 
     /* 입력한 칼로리 기반 목표일을 계산해서 로컬스토리지에 저장해준다 */
     const onSubmit = handleSubmit((data) => {
-        initialData.goal_period = recalculateCaloriesToGoal(
-            initialData.daily_calories,
-            initialData.goal_period,
-            data.daily_calories
+        initialData.goalPeriod = recalculateCaloriesToGoal(
+            initialData.dailyCalories,
+            initialData.goalPeriod,
+            data.dailyCalories
         );
-        initialData.daily_calories = data.daily_calories;
+        initialData.dailyCalories = data.dailyCalories;
 
         setLocalStorageItem('goalCalorie', initialData);
 
@@ -56,7 +56,7 @@ const CalorieEditSheet = () => {
                     <Input
                         type="number"
                         register={register}
-                        name="daily_calories"
+                        name="dailyCalories"
                         placeholder="0"
                         unit="kcal"
                         onInput={calorieValidation}

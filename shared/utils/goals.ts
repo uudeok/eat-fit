@@ -26,30 +26,30 @@ export function calculateTDEE({
     weight,
     height,
     age,
-    activity_level,
+    activityLevel,
 }: BasicInfoType & { weight: number }): number {
     const bmr = calculateBMR({ gender, weight, height, age });
 
-    return bmr * ACTIVITY_LEVEL[activity_level];
+    return bmr * ACTIVITY_LEVEL[activityLevel];
 }
 
 /* 체중 변화에 따른 목표 칼로리 계산 함수 */
 export function calculateCaloriesToGoal({
     weight,
-    target_weight,
+    targetWeight,
     gender,
     height,
     age,
-    activity_level,
+    activityLevel,
 }: GoalRegisterType): { dailyCalories: number; daysToGoal: number } {
     const oneWeeks = 7;
-    const weightDifference = target_weight - weight;
+    const weightDifference = targetWeight - weight;
     const tdee = calculateTDEE({
         gender: gender,
         weight: weight,
         height: height,
         age: age,
-        activity_level: activity_level,
+        activityLevel: activityLevel,
     });
 
     if (weightDifference === 0) return { dailyCalories: Math.ceil(tdee), daysToGoal: 60 };
