@@ -9,6 +9,7 @@ import { Input } from '../../common/Form';
 import { useRouter } from 'next/navigation';
 import { calculateWeightRange, getLocalStorageItem, setLocalStorageItem, weightValidation } from '@/shared/utils';
 import { GoalRegisterType, WeightInfoType } from '@/service/@types/req.type';
+import { MAX_WEIGHT, MIN_WEIGHT } from '@/constants';
 
 type Props = {
     onNext: (data: WeightInfoType) => void;
@@ -68,11 +69,11 @@ const GoalWeightInfoStep = ({ onNext }: Props) => {
                         rules={{
                             required: '몸무게를 입력해주세요',
                             min: {
-                                value: 30,
+                                value: MIN_WEIGHT,
                                 message: '최소 30kg 이상 입력 가능합니다.',
                             },
                             max: {
-                                value: 250,
+                                value: MAX_WEIGHT,
                                 message: '최대 250kg까지 입력 가능합니다.',
                             },
                         }}

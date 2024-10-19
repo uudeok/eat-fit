@@ -11,3 +11,6 @@ export const MEAL_PLAN = {
     proteinFocused: '근육',
     lowCarbHighFat: '저탄고지',
 };
+
+export const MIN_WEIGHT = 30;
+export const MAX_WEIGHT = 250;

@@ -3,13 +3,14 @@ import { updateDailySpec } from '../supabase/dailyService';
 import { dailySpecKeys } from '../queryKey';
 import { UpdateDailySpecArgs } from '../@types';
 
-export function useUpdateDailySpec(selectedDate: string) {
+export function useUpdateDailySpec() {
     const queryClient = useQueryClient();
 
     return useMutation({
         mutationFn: (data: UpdateDailySpecArgs) => updateDailySpec(data),
         onSuccess: (data) => {
-            queryClient.invalidateQueries({ queryKey: dailySpecKeys.date(selectedDate) });
+            // queryClient.invalidateQueries({ queryKey: dailySpecKeys.date(selectedDate) });
+            queryClient.invalidateQueries({ queryKey: dailySpecKeys.base });
         },
         onError: (error) => {
             console.error('Error updating DailySpec:', error);

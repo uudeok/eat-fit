@@ -1,18 +1,18 @@
 'use client';
 
-import styles from '@styles/component/caloriesCharts.module.css';
-import { getPastWeekDates, getPastWeeklyDates } from '@/shared/utils';
+import styles from '@styles/component/caloriesChart.module.css';
+import { generateWeeklyDates, getPastWeekDates, getPastWeeklyDates } from '@/shared/utils';
+import type { ChartOptions } from 'chart.js';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import { Button } from '../common/Button';
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { CalChartKeys, CalChartValues } from '@/constants/charts';
 import { DecodeDailyStepType, DecodePickExercisesType, DecodePickMealType } from '@/service/mappers/stepMapper';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { useFetchDailyStepsInRange } from '@/service/queries/useFetchDailyStep';
-import dayjs from 'dayjs';
+import { Text } from '../common';
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ChartDataLabels);
 
 const TOGGLES: { label: CalChartValues; key: CalChartKeys }[] = [
     { label: '일간', key: 'daily' },
@@ -25,44 +25,43 @@ export type DecodeDailyStepListType = {
     exercisesList: DecodePickExercisesType[];
 };
 
-const CaloriesCharts = () => {
+const oneWeeks = 7;
+
+const CaloriesChart = () => {
     const { pastFullWeekDates, pastWeekDates } = getPastWeekDates();
-    const pastWeeklyDates = getPastWeeklyDates();
-    const [viewLabel, setViewLabel] = useState<CalChartKeys>('daily');
+    const pastWeeklyDates = getPastWeeklyDates(oneWeeks);
+    const [viewMode, setViewMode] = useState<CalChartKeys>('daily');
 
     const pastWeekly = pastWeeklyDates.map((date) => date.endDate.short);
 
-    const labels = viewLabel === 'daily' ? pastWeekDates : pastWeekly;
+    const labels = viewMode === 'daily' ? pastWeekDates : pastWeekly;
 
     const startDate = pastFullWeekDates[0];
     const endDate = pastFullWeekDates[6];
 
-    const startWeeklyDate = pastWeeklyDates.map((date) => date.startDate.formatted)[0];
-    const endWeeklyDate = pastWeeklyDates.map((date) => date.endDate.formatted)[6];
+    const weeklyStartDate = pastWeeklyDates.map((date) => date.startDate.formatted)[0];
+    const weeklyEndDate = pastWeeklyDates.map((date) => date.endDate.formatted)[6];
 
-    // 일간
+    // 일간 데이터
     const { data: dailySteps } = useFetchDailyStepsInRange(startDate, endDate);
 
-    // 주간
-    const { data: weeklyStep } = useFetchDailyStepsInRange(startWeeklyDate, endWeeklyDate);
+    // 주간 데이터
+    const { data: weeklyStep } = useFetchDailyStepsInRange(weeklyStartDate, weeklyEndDate);
 
-    const caloriesArray = pastFullWeekDates.map((date) => {
-        const matchingStep = dailySteps?.steps.find((step) => step.dailyStep.entryDate === date);
+    const calculateCalories = useCallback(() => {
+        const caloriesArray = pastFullWeekDates.map((date) => {
+            const matchingStep = dailySteps?.steps.find((step) => step.dailyStep.entryDate === date);
 
-        return {
-            calories: matchingStep ? matchingStep.nutrientTotals.calories : null,
-            burnedCalories: matchingStep ? matchingStep.burnedCaloriesTotals.caloriesBurned : null,
-        };
-    });
-
-    const generateWeeklyDates = () => {
-        return pastWeeklyDates.map(({ startDate }) =>
-            Array.from({ length: 7 }, (_, idx) => dayjs(startDate.formatted).add(idx, 'day').format('YYYY-MM-DD'))
-        );
-    };
+            return {
+                calories: matchingStep ? matchingStep.nutrientTotals.calories : null,
+                burnedCalories: matchingStep ? matchingStep.burnedCaloriesTotals.caloriesBurned : null,
+            };
+        });
+        return caloriesArray;
+    }, [pastFullWeekDates, dailySteps]);
 
     const calculateAverageCalories = useCallback(() => {
-        const weeklyDates = generateWeeklyDates();
+        const weeklyDates = generateWeeklyDates(oneWeeks);
 
         const weeklyCalories = weeklyDates.map((week) => {
             const weeklyData = week.map((date) => {
@@ -89,16 +88,45 @@ const CaloriesCharts = () => {
         return weeklyCalories;
     }, [generateWeeklyDates, weeklyStep]);
 
-    const calories =
-        viewLabel === 'daily'
-            ? caloriesArray.map((data) => data.calories)
+    const calories = useMemo(() => {
+        return viewMode === 'daily'
+            ? calculateCalories().map((data) => data.calories)
             : calculateAverageCalories().map((data) => data.averageCalories);
-    const burnedCalories =
-        viewLabel === 'daily'
-            ? caloriesArray.map((data) => data.burnedCalories)
-            : calculateAverageCalories().map((data) => data.averageBurnedCalories);
+    }, [viewMode, calculateCalories, calculateAverageCalories]);
 
-    const options = {
+    const burnedCalories = useMemo(() => {
+        return viewMode === 'daily'
+            ? calculateCalories().map((data) => data.burnedCalories)
+            : calculateAverageCalories().map((data) => data.averageBurnedCalories);
+    }, [viewMode, calculateCalories, calculateAverageCalories]);
+
+    const data = {
+        labels,
+        datasets: [
+            {
+                label: '소모한 칼로리',
+                data: burnedCalories,
+                backgroundColor: '#FF5274',
+                datalabels: {
+                    color: '#ef5350',
+                },
+                categoryPercentage: 1,
+                barPercentage: 0.9,
+            },
+            {
+                label: '섭취 칼로리',
+                data: calories,
+                backgroundColor: '#4593fc',
+                datalabels: {
+                    color: '#4593fc',
+                },
+                categoryPercentage: 1,
+                barPercentage: 0.9,
+            },
+        ],
+    };
+
+    const options: ChartOptions<'bar'> = {
         maintainAspectRatio: false,
         responsive: true,
         plugins: {
@@ -107,7 +135,19 @@ const CaloriesCharts = () => {
             },
             title: {
                 display: true,
-                text: '',
+            },
+            datalabels: {
+                formatter: (value: number) => (value === 0 ? '' : value),
+                align: 'top',
+                anchor: 'end',
+                labels: {
+                    title: {
+                        font: {
+                            weight: 'bold',
+                            size: 13,
+                        },
+                    },
+                },
             },
         },
 
@@ -116,66 +156,37 @@ const CaloriesCharts = () => {
                 grid: {
                     display: false,
                 },
+
+                // stacked: true,
             },
             y: {
-                grid: {
-                    display: false,
-                },
+                display: false,
             },
         },
-    };
-
-    ChartJS.defaults.set('plugins.datalabels', {
-        align: 'top',
-        anchor: 'end',
-        labels: {
-            title: {
-                font: {
-                    weight: 'bold',
-                },
-            },
-        },
-    });
-
-    const data = {
-        labels,
-        datasets: [
-            {
-                label: '소모한 칼로리',
-                data: burnedCalories,
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                datalabels: {
-                    color: '#ef5350',
-                },
-            },
-            {
-                label: '섭취 칼로리',
-                data: calories,
-                backgroundColor: 'rgba(53, 162, 235, 0.5)',
-                datalabels: {
-                    color: '#4593fc',
-                },
-            },
-        ],
     };
 
     return (
-        <div className={styles.chart}>
-            <Bar options={options} data={data} plugins={[ChartDataLabels]} />
-
-            <div className={styles.toggleBtn}>
+        <>
+            <div className={styles.header}>
+                <Text color="white" bold size="xlg">
+                    일간, 주간별 칼로리를 한눈에 👀
+                </Text>
+            </div>
+            <div className={styles.chart}>
+                <Bar options={options} data={data} plugins={[ChartDataLabels]} />
+            </div>
+            <div className={styles.toggle}>
                 {TOGGLES.map((toggle) => (
-                    <Button
-                        role="round"
+                    <button
+                        onClick={() => setViewMode(toggle.key)}
                         key={toggle.key}
-                        onClick={() => setViewLabel(toggle.key)}
-                        selected={toggle.key === viewLabel}
+                        className={`${styles.toggelBtn} ${toggle.key === viewMode && styles.selected}`}
                     >
                         {toggle.label}
-                    </Button>
+                    </button>
                 ))}
             </div>
-        </div>
+        </>
     );
 };
-export default CaloriesCharts;
+export default CaloriesChart;

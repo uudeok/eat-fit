@@ -10,7 +10,8 @@ export function useCreateMeals(selectedDate: string) {
         mutationFn: (mealData: CreateMealsArgs) => createMeals(mealData),
         onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: mealsKeys.date(selectedDate) });
-            queryClient.invalidateQueries({ queryKey: dailySpecKeys.withDetails(selectedDate) });
+            queryClient.invalidateQueries({ queryKey: dailySpecKeys.base });
+            // queryClient.invalidateQueries({ queryKey: dailySpecKeys.withDetails(selectedDate) });
         },
         onError: (error) => {
             console.error('Error creating meals :', error);

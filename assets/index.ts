@@ -21,6 +21,7 @@ import FillSetting from './fillSetting.svg';
 import FillUtensil from './fillUtensil.svg';
 import FillReports from './fillReports.svg';
 import FillTrendsup from './fillTrendsup.svg';
+import FillLaughFace from './fillLaughFace.svg';
 
 const Icons = {
     FillHome,
@@ -46,6 +47,7 @@ const Icons = {
     FillUtensil,
     FillReports,
     FillTrendsup,
+    FillLaughFace,
 };
 
 export default Icons;

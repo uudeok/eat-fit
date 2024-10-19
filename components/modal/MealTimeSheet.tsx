@@ -32,7 +32,7 @@ const MealTimeSheet = () => {
 
     const { data: mealDetail } = useFetchMealDetail(Number(mealId));
 
-    const { mutate: updateMeals } = useUpdateMeals(mealDetail?.entryDate!);
+    const { mutate: updateMeals } = useUpdateMeals();
 
     if (!mealDetail) return <LoadingBar />;
 

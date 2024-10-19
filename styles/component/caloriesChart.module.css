@@ -1,0 +1,33 @@
+.header {
+    padding: 10px;
+}
+
+.chart {
+    height: 330px;
+}
+
+.toggle {
+    display: flex;
+    padding: 10px;
+    gap: 15px;
+}
+
+.toggelBtn {
+    background-color: #4593fc;
+    color: white;
+    padding: 10px;
+    border-radius: 30px;
+    width: 50%;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.toggelBtn:hover {
+    opacity: 0.8;
+}
+
+.selected {
+    background-color: #ff8c42;
+}
+
+/* 💡 */

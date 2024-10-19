@@ -1,0 +1,23 @@
+.header {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    padding: 10px;
+}
+
+.weightSummary {
+    display: flex;
+
+    gap: 10px;
+}
+
+@media (max-width: 424px) {
+    .weightSummary {
+        flex-direction: column;
+    }
+}
+
+.chart {
+    height: 200px;
+}

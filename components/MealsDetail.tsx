@@ -23,8 +23,8 @@ const MealsDetail = ({ mealsId }: { mealsId: string }) => {
     const { selectMeal } = useMealsStore();
     const { data: mealDetail } = useFetchMealDetail(Number(mealsId));
 
-    const { mutate: updateMeals } = useUpdateMeals(mealDetail?.entryDate!);
-    const { mutate: deleteMeals } = useDeleteMeals(mealDetail?.entryDate!);
+    const { mutate: updateMeals } = useUpdateMeals();
+    const { mutate: deleteMeals } = useDeleteMeals();
 
     if (!mealDetail) return <Spinner />;
 

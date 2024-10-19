@@ -3,14 +3,15 @@ import { UpdateMealsArgs } from '../@types';
 import { updateMeals } from '../supabase/mealsService';
 import { dailySpecKeys, mealsKeys } from '../queryKey';
 
-export function useUpdateMeals(selectedDate: string) {
+export function useUpdateMeals() {
     const queryClient = useQueryClient();
 
     return useMutation({
         mutationFn: (data: UpdateMealsArgs) => updateMeals(data),
         onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: mealsKeys.base });
-            queryClient.invalidateQueries({ queryKey: dailySpecKeys.withDetails(selectedDate) });
+            queryClient.invalidateQueries({ queryKey: dailySpecKeys.base });
+            // queryClient.invalidateQueries({ queryKey: dailySpecKeys.withDetails(selectedDate) });
         },
         onError: (error) => {
             console.error('Error updating Meals Data:', error);
