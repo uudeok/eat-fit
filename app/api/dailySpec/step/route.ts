@@ -5,35 +5,37 @@ export async function GET(request: NextRequest) {
     const supabase = createClient();
 
     const { searchParams } = new URL(request.url);
-    const selectedDate = searchParams.get('date');
 
-    if (!selectedDate) {
-        return NextResponse.json({ error: 'Date parameter is required' }, { status: 400 });
-    }
+    const selectedDate = searchParams.get('date');
+    const startDate = searchParams.get('startDate');
+    const endDate = searchParams.get('endDate');
+
+    let query = supabase.from('dailySpec').select(
+        `
+     *,
+        meals (
+            id,
+            meal_type,
+            serving_time,
+            meal,
+            photo_url               
+        ),
+        exercises (
+            id, 
+            photo_url,
+            exercise
+        )
+    `
+    );
 
     try {
-        const { data, error } = await supabase
-            .from('dailySpec')
-            .select(
-                `
-             *,
-                meals (
-                    id,
-                    meal_type,
-                    serving_time,
-                    meal,
-                    photo_url               
-                ),
-                exercises (
-                    id, 
-                    photo_url,
-                    exercise
-                )
-            `
-            )
-            .eq('entry_date', selectedDate)
-            .throwOnError()
-            .maybeSingle();
+        if (selectedDate) {
+            query.eq('entry_date', selectedDate).maybeSingle();
+        } else {
+            query.gte('entry_date', startDate).lte('entry_date', endDate).order('entry_date', { ascending: true });
+        }
+
+        const { data, error } = await query.throwOnError();
 
         if (error) {
             throw new Error(error.message);

@@ -1,8 +1,7 @@
 import MyPageHeader from '@/components/layout/MyPageHeader';
 import MyPageGoals from '@/components/mypage/MyPageGoals';
+import MyPageOverview from '@/components/mypage/MyPageOverview';
 import MyPageProfile from '@/components/mypage/MyPageProfile';
-import MyReports from '@/components/mypage/MyReports';
-import WeekMission from '@/components/mypage/WeekMission';
 import { GoalStatusType } from '@/service/@types';
 import { API_ENDPOINTS } from '@/service/supabase/config';
 import { headers } from 'next/headers';
@@ -25,8 +24,7 @@ const Mypage = async () => {
             <MyPageHeader />
             <MyPageProfile />
             <MyPageGoals goalData={goalData} />
-            <WeekMission />
-            {/* <MyReports /> */}
+            <MyPageOverview />
         </div>
     );
 };

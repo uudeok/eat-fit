@@ -12,6 +12,7 @@ export const dailySpecKeys = {
     all: () => [{ ...dailySpecKeys.base[0] }] as const,
     date: (selectedDate: string) => [{ ...dailySpecKeys.base[0], selectedDate }] as const,
     withDetails: (selectedDate: string) => [{ ...dailySpecKeys.base[0], selectedDate, include: 'all' }] as const,
+    range: (startDate: string, endDate: string) => [{ ...dailySpecKeys.base[0] }, startDate, endDate] as const,
 };
 
 export const mealsKeys = {

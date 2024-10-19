@@ -47,3 +47,43 @@ export const getWeekDates = (): WeekDaysType => {
 
     return { weekDays, weekFullDates };
 };
+
+/* 오늘을 기준으로 일주일 이전 날짜를 가져온다 */
+export const getPastWeekDates = () => {
+    const today = dayjs();
+    const pastFullWeekDates = [];
+    const pastWeekDates = [];
+
+    for (let i = 6; i >= 0; i--) {
+        pastFullWeekDates.push(today.subtract(i, 'day').format(DATE_FORMAT['YYYY-MM-DD']));
+        pastWeekDates.push(today.subtract(i, 'day').format(DATE_FORMAT['M.D']));
+    }
+
+    return { pastFullWeekDates, pastWeekDates };
+};
+
+/* 오늘을 기준으로 7주전 날짜를 주간으로 가져온다 */
+export const getPastWeeklyDates = () => {
+    const today = dayjs();
+    const weeklyDates = [];
+
+    let currentWeekStart = today.startOf('week').add(1, 'day');
+    let currentWeekEnd = today.endOf('week').add(1, 'day');
+
+    for (let i = 0; i < 7; i++) {
+        weeklyDates.push({
+            startDate: {
+                formatted: currentWeekStart.format(DATE_FORMAT['YYYY-MM-DD']),
+                short: currentWeekStart.format(DATE_FORMAT['M.D']),
+            },
+            endDate: {
+                formatted: currentWeekEnd.format(DATE_FORMAT['YYYY-MM-DD']),
+                short: currentWeekEnd.format(DATE_FORMAT['M.D']),
+            },
+        });
+        currentWeekStart = currentWeekStart.subtract(1, 'week');
+        currentWeekEnd = currentWeekEnd.subtract(1, 'week');
+    }
+
+    return weeklyDates.reverse();
+};

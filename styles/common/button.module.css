@@ -86,3 +86,7 @@
 .sizelg {
     height: 45px;
 }
+
+.selected {
+    background-color: var(--blue400);
+}

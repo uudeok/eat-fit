@@ -1,4 +1,3 @@
-import { DailyStepType } from '../@types/res.type';
 import { CreateDailySpecArgs, UpdateDailySpecArgs } from '../@types';
 import { API_ENDPOINTS } from './config';
 import { DecodeDailySpec, decodeDailySpec } from '../mappers/dailyMapper';
@@ -48,16 +47,4 @@ export async function updateDailySpec(updatedData: UpdateDailySpecArgs): Promise
     const result = await data.json();
 
     return decodeDailySpec(result);
-}
-
-export async function fetchDailyStep(selectedDate: string): Promise<DailyStepType> {
-    const data = await fetch(`${API_ENDPOINTS.DAILYSTEP}?date=${selectedDate}`);
-
-    if (!data.ok) {
-        throw new Error('Failed to fetch DailyStep Data');
-    }
-
-    const result = await data.json();
-
-    return result;
 }

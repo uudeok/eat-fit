@@ -71,3 +71,8 @@
     flex-shrink: 1;
     line-height: 1.2;
 }
+
+.empty {
+    background-color: white;
+    border-radius: 15px;
+}

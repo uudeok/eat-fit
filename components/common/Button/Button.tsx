@@ -9,16 +9,18 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     role?: Role;
     size?: Size;
     className?: string;
+    selected?: boolean;
 }
 
 const Button = (props: ButtonProps) => {
-    const { size = 'md', role = 'none', children, className, ...rest } = props;
+    const { size = 'md', role = 'none', children, className, selected, ...rest } = props;
 
     const roleClass = role ? styles[`role${role}`] : styles[`rolenone`];
     const sizeClass = size ? styles[`size${size}`] : styles[`sizemd`];
+    const isSelected = selected ? styles['selected'] : '';
 
     return (
-        <button className={`${styles.buttonBase} ${roleClass} ${sizeClass} ${className}`} {...props}>
+        <button className={`${styles.buttonBase} ${isSelected} ${roleClass} ${sizeClass} ${className}`} {...props}>
             {children}
         </button>
     );

@@ -47,20 +47,22 @@ export type MealsType = {
     photo_url: string[];
 };
 
-/* daily & meals 테이블 join  */
+/* daily & meals & exercises 테이블 join  */
 export type DailyStepType = {
     created_at: string;
     entry_date: string;
     goal_id: number;
     id: number;
-    meals: MealType[];
-    mood: EmojiKey | null;
-    today_weight: number | null;
+    meals: MealPickType[];
+    exercises: ExercisePickType[];
+    mood: EmojiKey;
+    today_weight: number;
     user_id: string;
 };
 
 /* daily & meals 테이블 join 할때 meals 테이블에서 가져오는 데이터의 타입 */
-export type MealType = Pick<MealsType, 'id' | 'meal_type' | 'photo_url' | 'serving_time' | 'meal'>;
+export type MealPickType = Pick<MealsType, 'id' | 'meal_type' | 'photo_url' | 'serving_time' | 'meal'>;
+export type ExercisePickType = Pick<ExercisesType, 'id' | 'photo_url' | 'exercise'>;
 
 /* exercises 테이블 가져올때 */
 export type ExercisesType = {
