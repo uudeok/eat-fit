@@ -156,8 +156,6 @@ const CaloriesChart = () => {
                 grid: {
                     display: false,
                 },
-
-                // stacked: true,
             },
             y: {
                 display: false,

@@ -5,3 +5,6 @@ export { useFetchMealDetail } from './useFetchMealDetail';
 export { useFetchExercises } from './useFetchExercises';
 export { useFetchGoalsByStatus } from './useFetchGoalsByStatus';
 export { useFetchUsers } from './useFetchUsers';
+
+/* Third Party API */
+export { useFetchChatGPT } from './useFetchChatGPT';

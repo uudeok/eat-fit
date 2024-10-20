@@ -32,3 +32,7 @@ export const usersKeys = {
     base: [{ scope: 'users' }] as const,
     all: () => [{ ...usersKeys.base[0] }] as const,
 };
+
+export const chatGPTKeys = {
+    base: [{ scope: 'chatGPT' }] as const,
+};

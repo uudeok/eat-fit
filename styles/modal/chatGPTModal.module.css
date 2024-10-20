@@ -1,0 +1,61 @@
+.layout {
+    padding: 20px;
+    overflow-y: scroll;
+    height: 500px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    cursor: pointer;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 5px;
+}
+
+.anaylsis {
+    padding: 10px;
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.possibility {
+    width: 300px;
+    padding: 10px;
+    background-color: #f0f0f0;
+    text-align: center;
+    border-radius: 12px;
+}
+
+.evaluates,
+.tips,
+.cheering {
+    width: 300px;
+    padding: 5px;
+    background-color: #f0f0f0;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    line-height: 1.8;
+}
+
+.tips {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.cheering {
+    margin-bottom: 30px;
+}
+
+.possibility:hover,
+.evaluates:hover,
+.tips:hover,
+.cheering:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+    transition: all 0.3s ease;
+}

@@ -11,6 +11,7 @@ import { ListRow, Text } from '../common';
 import { useFetchGoalsByStatus } from '@/service/queries';
 import Icons from '@/assets';
 import { MAX_WEIGHT, MIN_WEIGHT } from '@/constants';
+import { useCallback } from 'react';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Legend, ChartDataLabels);
 
@@ -28,7 +29,7 @@ const WeightChart = () => {
         { value: goalData?.targetWeight, label: '목표 몸무게', icon: <Icons.Flag width={15} /> },
     ];
 
-    const getDailyWeight = () => {
+    const getDailyWeight = useCallback(() => {
         const weightArray = pastFullWeekDates.map((date) => {
             const machingStep = dailySteps?.steps.find((step) => step.dailyStep.entryDate === date);
 
@@ -40,7 +41,7 @@ const WeightChart = () => {
             };
         });
         return weightArray;
-    };
+    }, [dailySteps, goalData, pastFullWeekDates]);
 
     const options: ChartOptions<'line'> = {
         maintainAspectRatio: false,

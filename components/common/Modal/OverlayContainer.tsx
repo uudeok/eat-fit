@@ -13,6 +13,7 @@ import {
     CalorieEditSheet,
     MaintainWeightSheet,
 } from '@/components/modal';
+import ChatGPTAnalysisModal from '@/components/modal/ChatGPTAnalysisModal';
 
 type Props = {
     modals: Record<ModalKeysType, ReactNode>;
@@ -27,6 +28,7 @@ export const ModalType = {
     mealTime: 'mealTime',
     calorieEdit: 'calorieEdit',
     maintainWeight: 'maintainWeight',
+    chatGPTAnalysis: 'chatGPTAnalysis',
 } as const;
 
 export type ModalKeysType = keyof typeof ModalType;
@@ -56,6 +58,7 @@ const OverlayContainer = () => (
             mealTime: <MealTimeSheet />,
             calorieEdit: <CalorieEditSheet />,
             maintainWeight: <MaintainWeightSheet />,
+            chatGPTAnalysis: <ChatGPTAnalysisModal />,
         }}
     />
 );

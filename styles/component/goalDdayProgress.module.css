@@ -1,0 +1,21 @@
+.layout {
+    padding: 20px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.title {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    text-align: center;
+    padding: 10px;
+}
+
+.title strong {
+    color: #4593fc;
+    font-size: 27px;
+}
