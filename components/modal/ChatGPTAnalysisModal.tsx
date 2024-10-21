@@ -9,19 +9,7 @@ import { ListCol, LoadingBar, Text } from '../common';
 import LoadingAnalysis from '../mypage/LoadingAnalysis';
 import { useEffect, useState } from 'react';
 import { Button } from '../common/Button';
-
-const weeklyWeight = [
-    { weight: 62.5 },
-    { weight: 62.5 },
-    { weight: 62.5 },
-    { weight: 62.4 },
-    { weight: 62.5 },
-    { weight: 61.9 },
-    { weight: 61.7 },
-];
-
-const burnedCalories = [0, null, 120, 395, 0, 297, 0];
-const calories = [10, null, 152, 889, 507, 1401, 0];
+import { useReportStore } from '@/shared/store/useReportStore';
 
 type AnalyzeDataType = {
     possibility: string;
@@ -31,6 +19,7 @@ type AnalyzeDataType = {
 };
 
 const ChatGPTAnalysisModal = () => {
+    const { progressionRage, weeklyWeight, calories, burnedCalories } = useReportStore();
     const { isOpen, onClose } = useModal(ModalType.chatGPTAnalysis);
     const { data: goalData } = useFetchGoalsByStatus('progress');
 
@@ -43,7 +32,7 @@ const ChatGPTAnalysisModal = () => {
         weeklyWeight: weeklyWeight,
         burnedCalories: burnedCalories,
         calories: calories,
-        progressionRate: 5,
+        progressionRate: progressionRage,
     });
 
     useEffect(() => {
@@ -128,12 +117,12 @@ const ChatGPTAnalysisModal = () => {
                                 }
                             />
                         </div>
+
+                        <Button role="round" onClick={onClose}>
+                            확인!
+                        </Button>
                     </div>
                 )}
-
-                <Button role="round" onClick={onClose}>
-                    확인!
-                </Button>
             </div>
         </Modal>
     );

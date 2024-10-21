@@ -11,12 +11,14 @@ import { ListRow, Text } from '../common';
 import { useFetchGoalsByStatus } from '@/service/queries';
 import Icons from '@/assets';
 import { MAX_WEIGHT, MIN_WEIGHT } from '@/constants';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
+import { useReportStore } from '@/shared/store/useReportStore';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Legend, ChartDataLabels);
 
 const WeightChart = () => {
     const { pastFullWeekDates, pastWeekDates } = getPastWeekDates();
+    const { setWeeklyWeight } = useReportStore();
 
     const startDate = pastFullWeekDates[0];
     const endDate = pastFullWeekDates[6];
@@ -30,18 +32,21 @@ const WeightChart = () => {
     ];
 
     const getDailyWeight = useCallback(() => {
-        const weightArray = pastFullWeekDates.map((date) => {
-            const machingStep = dailySteps?.steps.find((step) => step.dailyStep.entryDate === date);
+        return pastFullWeekDates.map((date) => {
+            const matchingStep = dailySteps?.steps.find((step) => step.dailyStep.entryDate === date);
 
-            return {
-                weight:
-                    machingStep && machingStep.dailyStep.todayWeight > 0
-                        ? machingStep.dailyStep.todayWeight
-                        : goalData?.weight,
-            };
+            return matchingStep && matchingStep.dailyStep.todayWeight > 0
+                ? matchingStep.dailyStep.todayWeight
+                : goalData?.weight || 0;
         });
-        return weightArray;
     }, [dailySteps, goalData, pastFullWeekDates]);
+
+    useEffect(() => {
+        if (goalData && dailySteps) {
+            const dailyWeightData = getDailyWeight();
+            setWeeklyWeight(dailyWeightData);
+        }
+    }, [goalData, dailySteps]);
 
     const options: ChartOptions<'line'> = {
         maintainAspectRatio: false,
@@ -85,7 +90,7 @@ const WeightChart = () => {
         labels: pastWeekDates,
         datasets: [
             {
-                data: getDailyWeight().map((data) => data.weight),
+                data: getDailyWeight(),
                 fill: false,
                 borderColor: '#4593fc',
                 tension: 0.1,

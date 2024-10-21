@@ -1,16 +1,23 @@
 'use client';
 
 import styles from '@styles/component/caloriesChart.module.css';
-import { generateWeeklyDates, getPastWeekDates, getPastWeeklyDates } from '@/shared/utils';
+import {
+    AverageCaloiresType,
+    calculateAverageCalories,
+    calculateCalories,
+    CaloiresType,
+    getPastWeekDates,
+    getPastWeeklyDates,
+} from '@/shared/utils';
 import type { ChartOptions } from 'chart.js';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import { useCallback, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CalChartKeys, CalChartValues } from '@/constants/charts';
-import { DecodeDailyStepType, DecodePickExercisesType, DecodePickMealType } from '@/service/mappers/stepMapper';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { useFetchDailyStepsInRange } from '@/service/queries/useFetchDailyStep';
 import { Text } from '../common';
+import { useReportStore } from '@/shared/store/useReportStore';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ChartDataLabels);
 
@@ -19,18 +26,17 @@ const TOGGLES: { label: CalChartValues; key: CalChartKeys }[] = [
     { label: '주간', key: 'weekly' },
 ];
 
-export type DecodeDailyStepListType = {
-    dailyStepList: DecodeDailyStepType[];
-    mealsList: DecodePickMealType[];
-    exercisesList: DecodePickExercisesType[];
-};
-
 const oneWeeks = 7;
 
 const CaloriesChart = () => {
+    const { setCalories } = useReportStore();
+    const [viewMode, setViewMode] = useState<CalChartKeys>('daily');
+
+    const [dailyCaloriesData, setDailyCaloriesData] = useState<CaloiresType[]>([]);
+    const [weeklyAverageCalories, setWeeklyAverageCalories] = useState<AverageCaloiresType[]>([]);
+
     const { pastFullWeekDates, pastWeekDates } = getPastWeekDates();
     const pastWeeklyDates = getPastWeeklyDates(oneWeeks);
-    const [viewMode, setViewMode] = useState<CalChartKeys>('daily');
 
     const pastWeekly = pastWeeklyDates.map((date) => date.endDate.short);
 
@@ -48,57 +54,31 @@ const CaloriesChart = () => {
     // 주간 데이터
     const { data: weeklyStep } = useFetchDailyStepsInRange(weeklyStartDate, weeklyEndDate);
 
-    const calculateCalories = useCallback(() => {
-        const caloriesArray = pastFullWeekDates.map((date) => {
-            const matchingStep = dailySteps?.steps.find((step) => step.dailyStep.entryDate === date);
+    useEffect(() => {
+        if (dailySteps) {
+            const caloriesData = calculateCalories(dailySteps);
 
-            return {
-                calories: matchingStep ? matchingStep.nutrientTotals.calories : null,
-                burnedCalories: matchingStep ? matchingStep.burnedCaloriesTotals.caloriesBurned : null,
-            };
-        });
-        return caloriesArray;
-    }, [pastFullWeekDates, dailySteps]);
+            setDailyCaloriesData(caloriesData);
+            setCalories(caloriesData);
+        }
+    }, [dailySteps]);
 
-    const calculateAverageCalories = useCallback(() => {
-        const weeklyDates = generateWeeklyDates(oneWeeks);
+    useEffect(() => {
+        if (weeklyStep) {
+            const averageCaloriesData = calculateAverageCalories(weeklyStep);
+            setWeeklyAverageCalories(averageCaloriesData);
+        }
+    }, [weeklyStep]);
 
-        const weeklyCalories = weeklyDates.map((week) => {
-            const weeklyData = week.map((date) => {
-                const matchedStep = weeklyStep?.steps.find((step) => step.dailyStep.entryDate === date);
+    const calories =
+        viewMode === 'daily'
+            ? dailyCaloriesData?.map((data) => data.calories)
+            : weeklyAverageCalories?.map((data) => data.averageCalories);
 
-                return {
-                    calories: matchedStep ? matchedStep.nutrientTotals.calories : null,
-                    burnedCalories: matchedStep ? matchedStep.burnedCaloriesTotals.caloriesBurned : null,
-                };
-            });
-
-            const totalCalories = weeklyData.reduce((sum, day) => sum + (day.calories || 0), 0);
-            const totalBurnedCalories = weeklyData.reduce((sum, day) => sum + (day.burnedCalories || 0), 0);
-
-            const averageCalories = totalCalories / 7 || 0;
-            const averageBurnedCalories = totalBurnedCalories / 7 || 0;
-
-            return {
-                averageCalories: Math.round(averageCalories),
-                averageBurnedCalories: Math.round(averageBurnedCalories),
-            };
-        });
-
-        return weeklyCalories;
-    }, [generateWeeklyDates, weeklyStep]);
-
-    const calories = useMemo(() => {
-        return viewMode === 'daily'
-            ? calculateCalories().map((data) => data.calories)
-            : calculateAverageCalories().map((data) => data.averageCalories);
-    }, [viewMode, calculateCalories, calculateAverageCalories]);
-
-    const burnedCalories = useMemo(() => {
-        return viewMode === 'daily'
-            ? calculateCalories().map((data) => data.burnedCalories)
-            : calculateAverageCalories().map((data) => data.averageBurnedCalories);
-    }, [viewMode, calculateCalories, calculateAverageCalories]);
+    const burnedCalories =
+        viewMode === 'daily'
+            ? dailyCaloriesData?.map((data) => data.burnedCalories)
+            : weeklyAverageCalories?.map((data) => data.averageBurnedCalories);
 
     const data = {
         labels,

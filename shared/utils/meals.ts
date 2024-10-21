@@ -1,4 +1,6 @@
 import { DecodeMealItemType } from '@/service/mappers/mealsMapper';
+import { generateWeeklyDates, getPastWeekDates } from './date';
+import { DecodeDailyStepInRangeType } from '@/service/mappers/stepMapper';
 
 export type NutrientsType = {
     calories: number;
@@ -6,6 +8,8 @@ export type NutrientsType = {
     protein: number;
     fat: number;
 };
+
+const oneWeeks = 7;
 
 export const calculateTotalNutrients = (meals: DecodeMealItemType[]): NutrientsType => {
     if (meals.length === 0) {
@@ -30,4 +34,57 @@ export const calculateTotalNutrients = (meals: DecodeMealItemType[]): NutrientsT
         protein: Math.round(totals.protein * 10) / 10,
         fat: Math.round(totals.fat * 10) / 10,
     };
+};
+
+export type CaloiresType = {
+    calories: number;
+    burnedCalories: number;
+};
+
+export type AverageCaloiresType = {
+    averageCalories: number;
+    averageBurnedCalories: number;
+};
+
+export const calculateCalories = (dailySteps: DecodeDailyStepInRangeType): CaloiresType[] => {
+    const { pastFullWeekDates } = getPastWeekDates();
+
+    const caloriesArray = pastFullWeekDates.map((date) => {
+        const matchingStep = dailySteps?.steps.find((step) => step.dailyStep.entryDate === date);
+
+        return {
+            calories: matchingStep ? matchingStep.nutrientTotals.calories : 0,
+            burnedCalories: matchingStep ? matchingStep.burnedCaloriesTotals.caloriesBurned : 0,
+        };
+    });
+
+    return caloriesArray;
+};
+
+export const calculateAverageCalories = (weeklyStep: DecodeDailyStepInRangeType): AverageCaloiresType[] => {
+    const weeklyDates = generateWeeklyDates(oneWeeks);
+
+    const weeklyCalories = weeklyDates.map((week) => {
+        const weeklyData = week.map((date) => {
+            const matchedStep = weeklyStep?.steps.find((step) => step.dailyStep.entryDate === date);
+
+            return {
+                calories: matchedStep ? matchedStep.nutrientTotals.calories : 0,
+                burnedCalories: matchedStep ? matchedStep.burnedCaloriesTotals.caloriesBurned : 0,
+            };
+        });
+
+        const totalCalories = weeklyData.reduce((sum, day) => sum + (day.calories || 0), 0);
+        const totalBurnedCalories = weeklyData.reduce((sum, day) => sum + (day.burnedCalories || 0), 0);
+
+        const averageCalories = totalCalories / 7 || 0;
+        const averageBurnedCalories = totalBurnedCalories / 7 || 0;
+
+        return {
+            averageCalories: Math.round(averageCalories),
+            averageBurnedCalories: Math.round(averageBurnedCalories),
+        };
+    });
+
+    return weeklyCalories;
 };

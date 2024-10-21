@@ -1,13 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
 import { chatGPTKeys } from '../queryKey';
 import { CallGPTType, fetchGPTAnalysis } from '@/shared/utils/api/chatGPT';
+import { getNextSundayMidnight } from '@/shared/utils';
 
-const staleTime = 7 * 24 * 60 * 60 * 1000; // 7일 동안 캐시된 데이터 사용
-const gcTime = 7 * 24 * 60 * 60 * 1000; // 7일 동안 캐시 유지
+const oneDay = 60 * 60 * 24 * 1000;
+const staleTime = getNextSundayMidnight() - Date.now();
+const gcTime = staleTime + oneDay;
 
 export const useFetchChatGPT = ({ goalData, weeklyWeight, burnedCalories, calories, progressionRate }: CallGPTType) => {
     return useQuery({
-        queryKey: chatGPTKeys.base,
+        queryKey: chatGPTKeys.analysis({ goalData, weeklyWeight, burnedCalories, calories, progressionRate }),
         queryFn: () => fetchGPTAnalysis({ goalData, weeklyWeight, burnedCalories, calories, progressionRate }),
         staleTime: staleTime,
         gcTime: gcTime,

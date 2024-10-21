@@ -55,3 +55,11 @@ export function convertToServingTime(time: ServingTimeType): Date | null {
 
     return new Date(servingTime);
 }
+
+export const getNextSundayMidnight = () => {
+    const now = new Date();
+    const nextSunday = new Date(now);
+    nextSunday.setDate(now.getDate() + (7 - now.getDay()));
+    nextSunday.setHours(0, 0, 0, 0);
+    return nextSunday.getTime();
+};

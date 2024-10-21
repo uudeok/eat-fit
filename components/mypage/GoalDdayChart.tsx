@@ -5,10 +5,12 @@ import { useFetchGoalsByStatus } from '@/service/queries';
 import { ListRow, ProgressBar, Text } from '../common';
 import dayjs from 'dayjs';
 import { getDdayProgressMessage } from '@/shared/utils';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
+import { useReportStore } from '@/shared/store/useReportStore';
 
 const GoalDdayChart = () => {
     const { data: goalData } = useFetchGoalsByStatus('progress');
+    const { setProgressionRage } = useReportStore();
 
     const today = dayjs().toDate().getTime();
     const startDate = dayjs(goalData?.startDate).toDate().getTime();
@@ -19,9 +21,14 @@ const GoalDdayChart = () => {
         const elapsedDuration = today - startDate;
 
         const percentage = Math.min((elapsedDuration / totalDuration) * 100, 100);
+        const roundedProgress = Math.round(percentage);
 
-        return Math.round(percentage);
+        return roundedProgress;
     }, [today, startDate, endDate]);
+
+    useEffect(() => {
+        setProgressionRage(progressPercentage);
+    }, [progressPercentage]);
 
     return (
         <div className={styles.layout}>

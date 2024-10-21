@@ -10,7 +10,7 @@ export function useCreateExercises(selectedDate: string) {
         mutationFn: (exercisesData: CreateExercisesArgs) => createExercises(exercisesData),
         onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: exercisesKeys.date(selectedDate) });
-            queryClient.invalidateQueries({ queryKey: dailySpecKeys.withDetails(selectedDate) });
+            queryClient.invalidateQueries({ queryKey: dailySpecKeys.base });
         },
         onError: (error) => {
             console.error('Error creating Exercises :', error);

@@ -1,8 +1,8 @@
 import MyReportsHeader from '../layout/MyReportsHeader';
 import CaloriesChart from './CaloriesChart';
 import GoalDdayChart from './GoalDdayChart';
-import ProgressEvaluator from './ProgressEvaluator';
 import WeightChart from './WeightChart';
+import AIEvaluator from './AIEvaluator';
 
 const MyReports = () => {
     return (
@@ -14,7 +14,7 @@ const MyReports = () => {
                 <CaloriesChart />
                 <WeightChart />
 
-                <ProgressEvaluator />
+                <AIEvaluator />
             </div>
         </>
     );

@@ -5,7 +5,7 @@ import { Text } from '../common';
 import { Button } from '../common/Button';
 import { ModalType } from '../common/Modal/OverlayContainer';
 
-const ProgressEvaluator = () => {
+const AIEvaluator = () => {
     const { onOpen } = useModal(ModalType.chatGPTAnalysis);
 
     return (
@@ -21,4 +21,4 @@ const ProgressEvaluator = () => {
     );
 };
 
-export default ProgressEvaluator;
+export default AIEvaluator;
