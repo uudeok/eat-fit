@@ -1,6 +1,6 @@
 import { DecodeGoalType } from '@/service/mappers/goalMapper';
 
-export type CallGPTType = {
+export type CreateGPTType = {
     goalData: DecodeGoalType;
     weeklyWeight: any;
     burnedCalories: any;
@@ -21,7 +21,7 @@ export const fetchGPTAnalysis = async ({
     burnedCalories,
     calories,
     progressionRate,
-}: CallGPTType) => {
+}: CreateGPTType) => {
     const messages = [
         {
             role: 'system',

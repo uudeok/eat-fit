@@ -37,6 +37,7 @@ export const calculateTotalNutrients = (meals: DecodeMealItemType[]): NutrientsT
 };
 
 export type CaloiresType = {
+    date?: string;
     calories: number;
     burnedCalories: number;
 };
@@ -46,13 +47,13 @@ export type AverageCaloiresType = {
     averageBurnedCalories: number;
 };
 
-export const calculateCalories = (dailySteps: DecodeDailyStepInRangeType): CaloiresType[] => {
-    const { pastFullWeekDates } = getPastWeekDates();
-
-    const caloriesArray = pastFullWeekDates.map((date) => {
+export const calculateCalories = (dailySteps: DecodeDailyStepInRangeType, dateRange: string[]) => {
+    // dateRange는 ['YYYY-MM-DD', 'YYYY-MM-DD', ...] 형식의 날짜 배열
+    const caloriesArray = dateRange.map((date) => {
         const matchingStep = dailySteps?.steps.find((step) => step.dailyStep.entryDate === date);
 
         return {
+            date: date,
             calories: matchingStep ? matchingStep.nutrientTotals.calories : 0,
             burnedCalories: matchingStep ? matchingStep.burnedCaloriesTotals.caloriesBurned : 0,
         };

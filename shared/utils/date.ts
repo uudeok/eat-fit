@@ -48,7 +48,7 @@ export const getWeekDates = (): WeekDaysType => {
     return { weekDays, weekFullDates };
 };
 
-/* 오늘을 기준으로 일주일 이전 날짜를 가져온다 */
+/* '오늘'을 기준으로 일주일 이전 날짜를 가져온다 */
 export const getPastWeekDates = () => {
     const today = dayjs();
     const pastFullWeekDates = [];
@@ -73,7 +73,7 @@ export type PastWeeklyDatesType = {
     };
 };
 
-/* 오늘을 기준으로 매개변수만큼 이전 날짜를 주간 단위로 가져온다 */
+/* '오늘'을 기준으로 매개변수만큼 이전 날짜를 주간 단위로 가져온다 */
 export const getPastWeeklyDates = (numberOfWeeks: number): PastWeeklyDatesType[] => {
     const today = dayjs();
     const weeklyDates = [];
@@ -100,7 +100,7 @@ export const getPastWeeklyDates = (numberOfWeeks: number): PastWeeklyDatesType[]
     return weeklyDates.reverse(); // 최신 날짜부터 반환하려면 배열을 뒤집어 줌
 };
 
-// 일주일 생성 (몇주)
+// '오늘'을 기준으로 일주일 생성 (몇주)
 export const generateWeeklyDates = (numberOfWeeks: number) => {
     const pastWeeklyDates = getPastWeeklyDates(numberOfWeeks);
 

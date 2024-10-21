@@ -56,12 +56,14 @@ const CaloriesChart = () => {
 
     useEffect(() => {
         if (dailySteps) {
-            const caloriesData = calculateCalories(dailySteps);
+            const caloriesData = calculateCalories(dailySteps, pastFullWeekDates);
 
             setDailyCaloriesData(caloriesData);
             setCalories(caloriesData);
         }
     }, [dailySteps]);
+
+    console.log(dailyCaloriesData);
 
     useEffect(() => {
         if (weeklyStep) {

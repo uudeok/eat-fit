@@ -33,7 +33,7 @@ const TodayMeals = () => {
 
             {mealsData?.isEmpty ? (
                 <div className={styles.empty}>
-                    <EmptyState bottomText="식단을 입력해주세요" />
+                    <EmptyState bottomText="식단을 기록해주세요" />
                 </div>
             ) : (
                 mealsData?.mealsList.map((data) => (
