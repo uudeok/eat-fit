@@ -10,7 +10,7 @@ import { useReportStore } from '@/shared/store/useReportStore';
 
 const GoalDdayChart = () => {
     const { data: goalData } = useFetchGoalsByStatus('progress');
-    const { setProgressionRage } = useReportStore();
+    const { setProgressionRate } = useReportStore();
 
     const today = dayjs().toDate().getTime();
     const startDate = dayjs(goalData?.startDate).toDate().getTime();
@@ -27,7 +27,7 @@ const GoalDdayChart = () => {
     }, [today, startDate, endDate]);
 
     useEffect(() => {
-        setProgressionRage(progressPercentage);
+        setProgressionRate(progressPercentage);
     }, [progressPercentage]);
 
     return (

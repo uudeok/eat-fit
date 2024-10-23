@@ -12,66 +12,64 @@ import { useReportStore } from '@/shared/store/useReportStore';
 import LoadingAnalysis from '../mypage/LoadingAnalysis';
 import dayjs from 'dayjs';
 import { useCreateAnalysis, useUpdateAnalysis } from '@/service/mutations';
+import { DecodeAnalysis } from '@/service/mappers/analysisMapper';
+import { DecodeGoalType } from '@/service/mappers/goalMapper';
 
 const ChatGPTAnalysisModal = () => {
     const { isOpen, onClose } = useModal(ModalType.chatGPTAnalysis);
-    const { progressionRage, weeklyWeight, calories, burnedCalories } = useReportStore();
+    const { progressionRate, weeklyWeight, calories, burnedCalories } = useReportStore();
 
-    const { data: goalData } = useFetchGoalsByStatus('progress');
-    const { data: analyzedData, isLoading } = useFetchAnalysis();
+    const { data: goalData } = useFetchGoalsByStatus('progress') as { data: DecodeGoalType };
+    const { data: analysisData, isLoading } = useFetchAnalysis();
 
-    const { mutateAsync: createAnalysis, isPending: isWaitingCreate } = useCreateAnalysis();
-    const { mutateAsync: updateAnalysis, isPending: isWaitingUpdate } = useUpdateAnalysis();
+    const { mutateAsync: createAnalysis, isPending: isCreating } = useCreateAnalysis();
+    const { mutateAsync: updateAnalysis, isPending: isUpdating } = useUpdateAnalysis();
 
-    const checkAndCreateData = useCallback(async () => {
+    const isAnalysisExpired = (analysis: DecodeAnalysis) => {
+        if (!analysis) return false;
         const today = dayjs();
+        return dayjs(analysis.deadline).isBefore(today, 'day');
+    };
 
-        const isDataExpired = analyzedData && dayjs(analyzedData.deadline).isBefore(today, 'day');
+    const handleAnalysis = useCallback(async () => {
+        if (isLoading || !goalData) return;
 
-        if (!analyzedData && !isLoading && goalData) {
-            const createAnalysisData = {
-                goalData: goalData,
-                progressionRate: progressionRage,
-                weeklyWeight: weeklyWeight,
-                calories: calories,
-                burnedCalories: burnedCalories,
-            };
-
-            await createAnalysis(createAnalysisData);
+        if (!analysisData) {
+            await createNewAnalysis();
+        } else if (isAnalysisExpired(analysisData)) {
+            await updateExistingAnalysis();
         }
+    }, [goalData, isLoading, analysisData]);
 
-        if (analyzedData && !isLoading && isDataExpired) {
-            const updateAnalysisData = {
-                id: analyzedData.id,
-                goalData: goalData!,
-                progressionRate: progressionRage,
-                weeklyWeight: weeklyWeight,
-                calories: calories,
-                burnedCalories: burnedCalories,
-            };
+    const createNewAnalysis = async () => {
+        const newAnalysisData = prepareAnalysisData();
+        await createAnalysis(newAnalysisData);
+    };
 
-            await updateAnalysis(updateAnalysisData);
-        }
-    }, [
+    const updateExistingAnalysis = async () => {
+        const updatedAnalysisData = {
+            ...prepareAnalysisData(),
+            id: analysisData!.id,
+        };
+        await updateAnalysis(updatedAnalysisData);
+    };
+
+    const prepareAnalysisData = () => ({
         goalData,
-        progressionRage,
+        progressionRate,
         weeklyWeight,
         calories,
         burnedCalories,
-        isLoading,
-        analyzedData,
-        createAnalysis,
-        updateAnalysis,
-    ]);
+    });
 
     useEffect(() => {
-        checkAndCreateData();
-    }, [checkAndCreateData]);
+        handleAnalysis();
+    }, [handleAnalysis]);
 
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
             <div className={styles.layout}>
-                {isWaitingCreate || isLoading || isWaitingUpdate ? (
+                {isCreating || isLoading || isUpdating ? (
                     <LoadingAnalysis />
                 ) : (
                     <div>
@@ -79,6 +77,7 @@ const ChatGPTAnalysisModal = () => {
                             <Text bold size="xxlg">
                                 🎯 분석한 내용을 알려드릴게요
                             </Text>
+                            <Text size="sm">분석은 일주일 간격으로 업데이트 됩니다‼️</Text>
                         </div>
 
                         <div className={styles.anaylsis}>
@@ -91,7 +90,7 @@ const ChatGPTAnalysisModal = () => {
                                 bottom={
                                     <div className={styles.possibility}>
                                         <Text bold size="xlg" color="var(--blue800)">
-                                            {analyzedData?.possibility}
+                                            {analysisData?.possibility}
                                         </Text>
                                     </div>
                                 }
@@ -106,7 +105,7 @@ const ChatGPTAnalysisModal = () => {
                                 bottom={
                                     <div className={styles.evaluates}>
                                         <Text bold color="var(--grey800)">
-                                            {analyzedData?.evaluates}
+                                            {analysisData?.evaluates}
                                         </Text>
                                     </div>
                                 }
@@ -120,7 +119,7 @@ const ChatGPTAnalysisModal = () => {
                                 }
                                 bottom={
                                     <div className={styles.tips}>
-                                        {analyzedData?.tips.map((tip, idx) => (
+                                        {analysisData?.tips.map((tip, idx) => (
                                             <Text key={idx} bold color="var(--grey800)">
                                                 {idx + 1}. {tip}
                                             </Text>
@@ -138,7 +137,7 @@ const ChatGPTAnalysisModal = () => {
                                 bottom={
                                     <div className={styles.cheering}>
                                         <Text bold color="var(--grey800)">
-                                            {analyzedData?.cheering}
+                                            {analysisData?.cheering}
                                         </Text>
                                     </div>
                                 }
