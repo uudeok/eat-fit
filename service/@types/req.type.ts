@@ -2,6 +2,7 @@ import { EmojiKey } from '@/constants';
 import { MealsKeysType } from '@/constants/meals';
 import { ExerciseType } from './res.type';
 import { Nullable } from '@/@types';
+import { DecodeGoalType } from '../mappers/goalMapper';
 
 export type GenderType = 'F' | 'M';
 export type GoalStatusType = 'progress' | 'success' | 'failure';
@@ -125,4 +126,21 @@ export type UpdateUserArgs = {
     avatar_url: string | null;
     nickname: string;
     content: string | null;
+};
+
+export type CreateAnalysisArgs = {
+    goalData: DecodeGoalType;
+    weeklyWeight: number[];
+    burnedCalories: number[];
+    calories: number[];
+    progressionRate: number;
+};
+
+export type UpdateAnalysisArgs = {
+    goalData: DecodeGoalType;
+    weeklyWeight: number[];
+    burnedCalories: number[];
+    calories: number[];
+    progressionRate: number;
+    id: number;
 };

@@ -63,8 +63,6 @@ const CaloriesChart = () => {
         }
     }, [dailySteps]);
 
-    console.log(dailyCaloriesData);
-
     useEffect(() => {
         if (weeklyStep) {
             const averageCaloriesData = calculateAverageCalories(weeklyStep);

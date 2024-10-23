@@ -4,47 +4,74 @@ import styles from '@styles/modal/chatGPTModal.module.css';
 import { useModal } from '@/hooks';
 import { ModalType } from '../common/Modal/OverlayContainer';
 import { Modal } from '../common/Modal';
-import { useFetchChatGPT, useFetchGoalsByStatus } from '@/service/queries';
-import { ListCol, LoadingBar, Text } from '../common';
-import LoadingAnalysis from '../mypage/LoadingAnalysis';
-import { useEffect, useState } from 'react';
+import { ListCol, Text } from '../common';
 import { Button } from '../common/Button';
+import { useFetchAnalysis, useFetchGoalsByStatus } from '@/service/queries';
+import { useCallback, useEffect } from 'react';
 import { useReportStore } from '@/shared/store/useReportStore';
-
-type AnalyzeDataType = {
-    possibility: string;
-    tips: string[];
-    cheering: string;
-    evaluates: string;
-};
+import LoadingAnalysis from '../mypage/LoadingAnalysis';
+import dayjs from 'dayjs';
+import { useCreateAnalysis, useUpdateAnalysis } from '@/service/mutations';
 
 const ChatGPTAnalysisModal = () => {
-    const { progressionRage, weeklyWeight, calories, burnedCalories } = useReportStore();
     const { isOpen, onClose } = useModal(ModalType.chatGPTAnalysis);
+    const { progressionRage, weeklyWeight, calories, burnedCalories } = useReportStore();
+
     const { data: goalData } = useFetchGoalsByStatus('progress');
+    const { data: analyzedData, isLoading } = useFetchAnalysis();
 
-    const [data, setData] = useState<AnalyzeDataType>();
+    const { mutateAsync: createAnalysis, isPending: isWaitingCreate } = useCreateAnalysis();
+    const { mutateAsync: updateAnalysis, isPending: isWaitingUpdate } = useUpdateAnalysis();
 
-    if (!goalData) return <LoadingBar />;
+    const checkAndCreateData = useCallback(async () => {
+        const today = dayjs();
 
-    const { data: analysisData, isLoading } = useFetchChatGPT({
-        goalData: goalData,
-        weeklyWeight: weeklyWeight,
-        burnedCalories: burnedCalories,
-        calories: calories,
-        progressionRate: progressionRage,
-    });
+        const isDataExpired = analyzedData && dayjs(analyzedData.deadline).isBefore(today, 'day');
+
+        if (!analyzedData && !isLoading && goalData) {
+            const createAnalysisData = {
+                goalData: goalData,
+                progressionRate: progressionRage,
+                weeklyWeight: weeklyWeight,
+                calories: calories,
+                burnedCalories: burnedCalories,
+            };
+
+            await createAnalysis(createAnalysisData);
+        }
+
+        if (analyzedData && !isLoading && isDataExpired) {
+            const updateAnalysisData = {
+                id: analyzedData.id,
+                goalData: goalData!,
+                progressionRate: progressionRage,
+                weeklyWeight: weeklyWeight,
+                calories: calories,
+                burnedCalories: burnedCalories,
+            };
+
+            await updateAnalysis(updateAnalysisData);
+        }
+    }, [
+        goalData,
+        progressionRage,
+        weeklyWeight,
+        calories,
+        burnedCalories,
+        isLoading,
+        analyzedData,
+        createAnalysis,
+        updateAnalysis,
+    ]);
 
     useEffect(() => {
-        if (analysisData) {
-            setData(JSON.parse(analysisData));
-        }
-    }, [analysisData]);
+        checkAndCreateData();
+    }, [checkAndCreateData]);
 
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
             <div className={styles.layout}>
-                {isLoading ? (
+                {isWaitingCreate || isLoading || isWaitingUpdate ? (
                     <LoadingAnalysis />
                 ) : (
                     <div>
@@ -64,7 +91,7 @@ const ChatGPTAnalysisModal = () => {
                                 bottom={
                                     <div className={styles.possibility}>
                                         <Text bold size="xlg" color="var(--blue800)">
-                                            {data?.possibility}
+                                            {analyzedData?.possibility}
                                         </Text>
                                     </div>
                                 }
@@ -79,7 +106,7 @@ const ChatGPTAnalysisModal = () => {
                                 bottom={
                                     <div className={styles.evaluates}>
                                         <Text bold color="var(--grey800)">
-                                            {data?.evaluates}
+                                            {analyzedData?.evaluates}
                                         </Text>
                                     </div>
                                 }
@@ -93,7 +120,7 @@ const ChatGPTAnalysisModal = () => {
                                 }
                                 bottom={
                                     <div className={styles.tips}>
-                                        {data?.tips.map((tip, idx) => (
+                                        {analyzedData?.tips.map((tip, idx) => (
                                             <Text key={idx} bold color="var(--grey800)">
                                                 {idx + 1}. {tip}
                                             </Text>
@@ -111,7 +138,7 @@ const ChatGPTAnalysisModal = () => {
                                 bottom={
                                     <div className={styles.cheering}>
                                         <Text bold color="var(--grey800)">
-                                            {data?.cheering}
+                                            {analyzedData?.cheering}
                                         </Text>
                                     </div>
                                 }

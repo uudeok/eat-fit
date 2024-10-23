@@ -34,6 +34,44 @@ export type Database = {
   }
   public: {
     Tables: {
+      analysis: {
+        Row: {
+          cheering: string
+          created_at: string
+          evaluates: string
+          id: number
+          possibility: string
+          tips: string[]
+          user_id: string
+        }
+        Insert: {
+          cheering: string
+          created_at?: string
+          evaluates: string
+          id?: number
+          possibility: string
+          tips: string[]
+          user_id?: string
+        }
+        Update: {
+          cheering?: string
+          created_at?: string
+          evaluates?: string
+          id?: number
+          possibility?: string
+          tips?: string[]
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "analysis_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       dailySpec: {
         Row: {
           created_at: string
@@ -84,13 +122,6 @@ export type Database = {
             referencedRelation: "goals"
             referencedColumns: ["user_id"]
           },
-          {
-            foreignKeyName: "dailySpec_user_id_fkey2"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
         ]
       }
       exercises: {
@@ -130,18 +161,11 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "exercises_user_id_fkey"
+            foreignKeyName: "exercises_user_id_fkey1"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "exercises_user_id_fkey2"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "goals"
-            referencedColumns: ["user_id"]
           },
         ]
       }
@@ -206,15 +230,7 @@ export type Database = {
           user_id?: string
           weight?: number
         }
-        Relationships: [
-          {
-            foreignKeyName: "Goals_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: true
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       meals: {
         Row: {
@@ -259,18 +275,11 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "meals_user_id_fkey"
+            foreignKeyName: "meals_user_id_fkey2"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "meals_user_id_fkey1"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "goals"
-            referencedColumns: ["user_id"]
           },
         ]
       }
@@ -418,4 +427,19 @@ export type Enums<
   ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
   : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
     ? PublicSchema["Enums"][PublicEnumNameOrOptions]
+    : never
+
+export type CompositeTypes<
+  PublicCompositeTypeNameOrOptions extends
+    | keyof PublicSchema["CompositeTypes"]
+    | { schema: keyof Database },
+  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+    schema: keyof Database
+  }
+    ? keyof Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    : never = never,
+> = PublicCompositeTypeNameOrOptions extends { schema: keyof Database }
+  ? Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof PublicSchema["CompositeTypes"]
+    ? PublicSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
     : never

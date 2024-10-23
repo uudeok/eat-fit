@@ -69,8 +69,6 @@ const ExerciseFormSheet = () => {
                 exercise: updatedExercises,
             });
 
-            console.log(1, updateData);
-
             await updateExercises({
                 ...updateData,
             });

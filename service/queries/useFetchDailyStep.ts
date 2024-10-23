@@ -8,7 +8,7 @@ dayjs.extend(isSameOrBefore);
 
 const today = dayjs().format(DATE_FORMAT['YYYY-MM-DD']);
 
-const staleTIme = 5 * 60 * 1000; // 5분 동안 캐시된 데이터 사용
+const staleTime = 5 * 60 * 1000; // 5분 동안 캐시된 데이터 사용
 const gcTime = 10 * 60 * 1000; // 10분 동안 캐시 유지
 
 /* 해당 날짜의 step 가져오기 */
@@ -16,7 +16,7 @@ export const useFetchDailyStep = (selectedDate: string) => {
     return useQuery({
         queryKey: dailySpecKeys.withDetails(selectedDate),
         queryFn: () => fetchDailyStep(selectedDate),
-        staleTime: staleTIme,
+        staleTime: staleTime,
         gcTime: gcTime,
     });
 };
@@ -28,7 +28,7 @@ export const useFetchDailySteps = (selectedDates: string[]) => {
             queryKey: dailySpecKeys.withDetails(selectedDate),
             queryFn: () => fetchDailyStep(selectedDate),
             enabled: dayjs(selectedDate).isSameOrBefore(today),
-            staleTIme: staleTIme,
+            staleTime: staleTime,
             gcTime: gcTime,
         })),
         combine: (results) => {
@@ -45,7 +45,7 @@ export const useFetchDailyStepsInRange = (startDate: string, endDate: string) =>
     return useQuery({
         queryKey: dailySpecKeys.range(startDate, endDate),
         queryFn: () => fetchDailyStepsInRange(startDate, endDate),
-        staleTime: staleTIme,
+        staleTime: staleTime,
         gcTime: gcTime,
     });
 };

@@ -7,4 +7,4 @@ export { useFetchGoalsByStatus } from './useFetchGoalsByStatus';
 export { useFetchUsers } from './useFetchUsers';
 
 /* Third Party API */
-export { useFetchChatGPT } from './useFetchChatGPT';
+export { useFetchAnalysis } from './useFetchAnalysis';

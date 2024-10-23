@@ -98,3 +98,13 @@ export type UserType = {
     expose: UserExposeType;
     content: string | null;
 };
+
+export type AnalyzeDataType = {
+    user_id: string;
+    id: number;
+    created_at: Date;
+    possibility: string;
+    tips: string[];
+    cheering: string;
+    evaluates: string;
+};

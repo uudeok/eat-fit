@@ -34,8 +34,8 @@ export const usersKeys = {
     all: () => [{ ...usersKeys.base[0] }] as const,
 };
 
-export const chatGPTKeys = {
-    base: [{ scope: 'chatGPT' }] as const,
+export const analysisKeys = {
+    base: [{ scope: 'analysis' }] as const,
     analysis: ({ goalData, weeklyWeight, burnedCalories, calories, progressionRate }: CreateGPTType) =>
-        [{ ...chatGPTKeys.base[0], goalData, weeklyWeight, burnedCalories, calories, progressionRate }] as const,
+        [{ ...analysisKeys.base[0], goalData, weeklyWeight, burnedCalories, calories, progressionRate }] as const,
 };
