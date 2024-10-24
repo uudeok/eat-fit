@@ -18,6 +18,7 @@ export type DecodeDailyStepType = {
     goalId: number;
     mood: EmojiKey;
     todayWeight: number;
+    diary: string;
     meals: DecodePickMealType[];
     exercises: DecodePickExercisesType[];
 };
@@ -57,6 +58,7 @@ export const decodeDailyStep = (init: DailyStepType): DecodeDailyStepType => ({
     goalId: init.goal_id,
     mood: init.mood,
     todayWeight: init.today_weight,
+    diary: init.diary,
     meals: init.meals.map(decodeDailyMeals),
     exercises: init.exercises.map(decodeDailyExercises),
 });

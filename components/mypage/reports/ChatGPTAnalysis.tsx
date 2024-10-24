@@ -1,11 +1,11 @@
 'use client';
 
 import { useModal } from '@/hooks';
-import { Text } from '../common';
-import { Button } from '../common/Button';
-import { ModalType } from '../common/Modal/OverlayContainer';
+import { Text } from '../../common';
+import { Button } from '../../common/Button';
+import { ModalType } from '../../common/Modal/OverlayContainer';
 
-const AIEvaluator = () => {
+const ChatGPTAnalysis = () => {
     const { onOpen } = useModal(ModalType.chatGPTAnalysis);
 
     const handleAnalysisData = () => {
@@ -25,4 +25,4 @@ const AIEvaluator = () => {
     );
 };
 
-export default AIEvaluator;
+export default ChatGPTAnalysis;

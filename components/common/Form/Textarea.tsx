@@ -1,6 +1,7 @@
 import styles from '@styles/common/textarea.module.css';
 import { FieldValues, UseFormRegister, Path, RegisterOptions } from 'react-hook-form';
 import Text from '../Text';
+import LoadingBar from '../LoadingBar';
 
 type TextareaProps<T extends FieldValues> = {
     name: Path<T>;
@@ -10,10 +11,11 @@ type TextareaProps<T extends FieldValues> = {
     defaultValue?: string;
     rules?: RegisterOptions<T, Path<T>>;
     register: UseFormRegister<T>;
+    isLoading?: boolean;
 } & React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 
 const Textarea = <T extends FieldValues>(props: TextareaProps<T>) => {
-    const { id, name, label, placeholder, defaultValue, rules, register, ...prop } = props;
+    const { id, name, label, placeholder, defaultValue, rules, register, isLoading, ...prop } = props;
 
     return (
         <div className={styles.memo}>
@@ -22,13 +24,17 @@ const Textarea = <T extends FieldValues>(props: TextareaProps<T>) => {
                     {label ? label : '메모'}
                 </Text>
             </label>
-            <textarea
-                id={id}
-                {...(register && register(name, rules))}
-                placeholder={placeholder}
-                defaultValue={defaultValue}
-                {...prop}
-            />
+            {isLoading ? (
+                <LoadingBar />
+            ) : (
+                <textarea
+                    id={id}
+                    {...(register && register(name, rules))}
+                    placeholder={placeholder}
+                    defaultValue={defaultValue}
+                    {...prop}
+                />
+            )}
         </div>
     );
 };

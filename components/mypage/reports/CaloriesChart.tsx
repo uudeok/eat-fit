@@ -16,7 +16,7 @@ import { useEffect, useState } from 'react';
 import { CalChartKeys, CalChartValues } from '@/constants/charts';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { useFetchDailyStepsInRange } from '@/service/queries/useFetchDailyStep';
-import { Text } from '../common';
+import { Text } from '../../common';
 import { useReportStore } from '@/shared/store/useReportStore';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ChartDataLabels);

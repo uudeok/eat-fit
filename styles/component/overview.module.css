@@ -1,5 +1,111 @@
 .layout {
     padding: 15px;
+    border-radius: 10px;
+    background-color: #e3f2fd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.monthController {
+    display: flex;
+    gap: 4px;
+    padding: 5px;
+}
+
+.table {
+    width: 100%;
+    margin-top: 30px;
+}
+
+.table th {
+    padding: 12px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+    color: var(--grey700);
+}
+
+.date {
+    height: 55px;
+    width: 45px;
+    text-align: center;
+    padding: 4px;
+}
+
+.dateCell {
+    background-color: #ffffff;
+    color: #333;
+    width: 40px;
+    height: 40px;
+    border-radius: 50px;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.3s, background-color 0.3s, color 0.3s;
+}
+
+.dateCell:hover {
+    transform: scale(1.1);
+}
+
+.notCurrent {
+    display: none;
+}
+
+.bubble {
+    position: absolute;
+    top: -7px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--mainHover);
+    padding: 2px 5px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: bold;
+    color: white;
+    white-space: nowrap;
+}
+
+.todayTextWrapper {
+    text-align: center;
+    margin-top: 3px;
+}
+
+.over {
+    background-color: var(--red200);
+    color: white;
+}
+
+.low {
+    background-color: var(--blue200);
+    color: white;
+}
+
+.nonData {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+    padding: 10px;
+}
+
+.summary {
+    padding: 10px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.summaryInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.diary {
+    height: 130px;
+}
+
+/* .layout {
+    padding: 15px;
     cursor: pointer;
 
     border-radius: 10px;
@@ -76,4 +182,4 @@
 .low {
     background-color: var(--blue200);
     color: white;
-}
+} */

@@ -2,7 +2,7 @@
 
 import styles from '@styles/modal/loadingAnalysis.module.css';
 import Image from 'next/image';
-import { Text } from '../common';
+import { Text } from '../../common';
 import { useFetchUsers } from '@/service/queries';
 import Icons from '@/assets';
 

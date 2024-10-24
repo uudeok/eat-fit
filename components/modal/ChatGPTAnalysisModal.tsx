@@ -9,7 +9,7 @@ import { Button } from '../common/Button';
 import { useFetchAnalysis, useFetchGoalsByStatus } from '@/service/queries';
 import { useCallback, useEffect } from 'react';
 import { useReportStore } from '@/shared/store/useReportStore';
-import LoadingAnalysis from '../mypage/LoadingAnalysis';
+import LoadingAnalysis from '../mypage/reports/LoadingAnalysis';
 import dayjs from 'dayjs';
 import { useCreateAnalysis, useUpdateAnalysis } from '@/service/mutations';
 import { DecodeAnalysis } from '@/service/mappers/analysisMapper';

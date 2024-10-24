@@ -1,11 +1,11 @@
-import MyOverViewHeader from '@/components/layout/MyOverviewHeader';
-import OverView from '@/components/mypage/OverView';
+import SectionHeader from '@/components/layout/SectionHeader';
+import MyDiray from '@/components/mypage/overview/MyDiray';
 
 const OverViewPage = () => {
     return (
         <>
-            <MyOverViewHeader title="모아보기" iconName="FillBar" />
-            <OverView />
+            <SectionHeader title="모아보기" iconName="FillBar" />
+            <MyDiray />
         </>
     );
 };

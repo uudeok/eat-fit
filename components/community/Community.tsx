@@ -10,7 +10,12 @@ const Community = () => {
     return (
         <div className="mt-28">
             <EmptyState bottomText="준비중 입니다." />
-            <Button onClick={() => router.push('/home')}>메인으로</Button>
+
+            <div className="w-44 m-auto">
+                <Button onClick={() => router.push('/home')} role="round">
+                    메인으로
+                </Button>
+            </div>
         </div>
     );
 };

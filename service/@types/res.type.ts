@@ -32,6 +32,7 @@ export type DailySpecType = {
     today_weight: Nullable<number>;
     mood: Nullable<EmojiKey>;
     created_at: string;
+    diary: string;
 };
 
 /* meals 테이블 가져올때  */
@@ -56,6 +57,7 @@ export type DailyStepType = {
     meals: MealPickType[];
     exercises: ExercisePickType[];
     mood: EmojiKey;
+    diary: string;
     today_weight: number;
     user_id: string;
 };

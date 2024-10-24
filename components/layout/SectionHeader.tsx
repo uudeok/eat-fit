@@ -9,7 +9,7 @@ export type Props = {
     title: string;
 };
 
-const MyOverViewHeader = ({ iconName, title }: Props) => {
+const SectionHeader = ({ iconName, title }: Props) => {
     const router = useRouter();
 
     const DynamicIcon = iconName ? Icons[iconName] : Icons['Bar'];
@@ -29,4 +29,4 @@ const MyOverViewHeader = ({ iconName, title }: Props) => {
     );
 };
 
-export default MyOverViewHeader;
+export default SectionHeader;

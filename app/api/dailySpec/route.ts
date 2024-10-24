@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
 
 export async function PUT(request: NextRequest) {
     const supabase = createClient();
-    const { id, today_weight, mood } = await request.json();
+    const { id, today_weight, mood, diary } = await request.json();
 
     if (!id) {
         return NextResponse.json({ error: 'ID is required for update' }, { status: 400 });
@@ -72,6 +72,7 @@ export async function PUT(request: NextRequest) {
             .update({
                 mood,
                 today_weight,
+                diary: diary || null,
             })
             .eq('id', id)
             .select()

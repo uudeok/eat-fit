@@ -8,9 +8,9 @@ import { ModalType } from '../common/Modal/OverlayContainer';
 import { Alarm, List, ListRow, Text } from '../common';
 import dayjs from 'dayjs';
 import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
-import 'dayjs/locale/ko';
 import { DATE_FORMAT } from '@/constants';
 dayjs.locale('ko');
+import 'dayjs/locale/ko';
 
 const MainHeader = () => {
     const { onOpen } = useModal(ModalType.mainCalendar);

@@ -2,7 +2,7 @@
 
 import styles from '@styles/component/goalDdayProgress.module.css';
 import { useFetchGoalsByStatus } from '@/service/queries';
-import { ListRow, ProgressBar, Text } from '../common';
+import { ListRow, ProgressBar, Text } from '../../common';
 import dayjs from 'dayjs';
 import { getDdayProgressMessage } from '@/shared/utils';
 import { useEffect, useMemo } from 'react';

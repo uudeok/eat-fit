@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import styles from '@styles/common/emoji.module.css';
 import { useState } from 'react';
-import { EMOJI, EmojiKey } from '@/constants';
+import { EMOJI_LIST, EmojiKey } from '@/constants';
 
 type Props = {
     width: number;
@@ -21,7 +21,7 @@ const Emotions = ({ width, height, onClick }: Props) => {
 
     return (
         <div className={styles.container}>
-            {EMOJI.map((emoji) => (
+            {EMOJI_LIST.map((emoji) => (
                 <div
                     key={emoji.key}
                     className={`${styles.emotionItem} ${selectedEmotion === emoji.key ? styles.selected : ''}`}

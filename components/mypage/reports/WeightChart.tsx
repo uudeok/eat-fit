@@ -7,7 +7,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Legend } from 'chart.js';
 import { useFetchDailyStepsInRange } from '@/service/queries/useFetchDailyStep';
 import { getPastWeekDates } from '@/shared/utils';
-import { ListRow, Text } from '../common';
+import { ListRow, Text } from '../../common';
 import { useFetchGoalsByStatus } from '@/service/queries';
 import Icons from '@/assets';
 import { MAX_WEIGHT, MIN_WEIGHT } from '@/constants';

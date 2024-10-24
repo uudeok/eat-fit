@@ -21,10 +21,6 @@ export function addDaysAndResetTime(addDay: number, utcDate?: Date) {
     return formattedDate;
 }
 
-// export function addDaysAndResetTime(addDay: number) {
-//     return dayjs().add(addDay, 'day').startOf('day').format(DATE_FORMAT['YYYY-MM-DD']);
-// }
-
 export function convertDateFormat(date: Date, format?: keyof typeof DATE_FORMAT) {
     const selectedFormat = format ? DATE_FORMAT[format] : DATE_FORMAT['YYYY-MM-DD'];
     return dayjs(date).format(selectedFormat);

@@ -80,6 +80,7 @@ export type UpdateDailySpecArgs = {
     id: number;
     today_weight: Nullable<number>;
     mood: Nullable<EmojiKey>;
+    diary: string;
 };
 
 export type MealItemType = {

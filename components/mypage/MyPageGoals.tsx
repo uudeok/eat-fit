@@ -1,21 +1,25 @@
 'use client';
 
 import styles from '@styles/component/myPageGoals.module.css';
-import { List, ListCol, Text } from '../common';
-import { GoalType } from '@/service/@types/res.type';
+import { List, ListCol, Spinner, Text } from '../common';
 import { MEAL_PLAN } from '@/constants';
 import { calculateDDay } from '@/shared/utils';
 import Icons from '@/assets';
+import { useFetchGoalsByStatus } from '@/service/queries';
 
-const MyPageGoals = ({ goalData }: { goalData: GoalType }) => {
-    const dDay = calculateDDay(goalData.goal_end_date);
+const MyPageGoals = () => {
+    const { data: goalData } = useFetchGoalsByStatus('progress');
+
+    if (!goalData) return <Spinner />;
+
+    const dDay = calculateDDay(goalData.endDate);
 
     const GOALS = [
-        { label: '목표 몸무게', value: goalData.target_weight, unit: 'kg' },
+        { label: '목표 몸무게', value: goalData.targetWeight, unit: 'kg' },
         { label: 'D-day', value: dDay, unit: '일', icon: <Icons.Flag width={15} /> },
         {
             label: '목표변경',
-            value: MEAL_PLAN[goalData.meal_plan],
+            value: MEAL_PLAN[goalData.mealPlan],
             unit: '식단',
         },
     ];

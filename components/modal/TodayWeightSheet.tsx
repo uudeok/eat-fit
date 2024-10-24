@@ -46,6 +46,7 @@ const TodayWeightSheet = () => {
                 id: dailySpec.id,
                 todayWeight: data.todayWeight,
                 mood: dailySpec.mood,
+                diary: dailySpec.diary,
             };
 
             const updateData = encodeUpdateDailySpec({ ...dailySpecData });

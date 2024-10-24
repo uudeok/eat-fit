@@ -41,6 +41,7 @@ const TodayMoodSheet = () => {
                 id: dailySpec.id,
                 mood: selectedMood,
                 todayWeight: dailySpec.todayWeight,
+                diary: dailySpec.diary,
             };
 
             const updateData = encodeUpdateDailySpec({ ...dailySpecData });
