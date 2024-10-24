@@ -22,11 +22,12 @@ export const decodeDailySpec = (init: DailySpecType): DecodeDailySpec => ({
     diary: init.diary,
 });
 
-type CreateDailySpecType = {
+export type CreateDailySpecType = {
     goalId: number;
     entryDate: string;
     todayWeight: number;
     mood: Nullable<EmojiKey>;
+    diary: Nullable<string>;
 };
 
 export const encodeCreateDailySpec = (init: CreateDailySpecType): CreateDailySpecArgs => ({
@@ -36,7 +37,7 @@ export const encodeCreateDailySpec = (init: CreateDailySpecType): CreateDailySpe
     mood: init.mood,
 });
 
-type UpdateDailySpecType = {
+export type UpdateDailySpecType = {
     id: number;
     todayWeight: number;
     mood: Nullable<EmojiKey>;

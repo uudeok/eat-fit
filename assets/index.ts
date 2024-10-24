@@ -23,6 +23,7 @@ import FillReports from './fillReports.svg';
 import FillTrendsup from './fillTrendsup.svg';
 import FillLaughFace from './fillLaughFace.svg';
 import FillCheck from './fillCheck.svg';
+import FillStaggeredBar from './fillStaggeredBar.svg';
 
 const Icons = {
     FillHome,
@@ -50,6 +51,7 @@ const Icons = {
     FillTrendsup,
     FillLaughFace,
     FillCheck,
+    FillStaggeredBar,
 };
 
 export default Icons;
