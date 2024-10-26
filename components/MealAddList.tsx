@@ -29,7 +29,7 @@ const MealAddList = () => {
     const { data: goalData } = useFetchGoalsByStatus('progress');
     const { data: dailySpec } = useFetchDailySpec(formattedDate);
 
-    const { mutateAsync: createDailySpec } = useCreateDailySpec(formattedDate);
+    const { mutateAsync: createDailySpec } = useCreateDailySpec();
     const { mutateAsync: createMeals } = useCreateMeals(formattedDate);
 
     if (!meals.length) return;
@@ -58,6 +58,7 @@ const MealAddList = () => {
                 entryDate: formattedDate,
                 todayWeight: 0,
                 mood: null,
+                diary: null,
             };
 
             const createData = encodeCreateDailySpec({ ...dailySpecData });

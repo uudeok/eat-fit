@@ -35,13 +35,14 @@ export const encodeCreateDailySpec = (init: CreateDailySpecType): CreateDailySpe
     entry_date: init.entryDate,
     today_weight: init.todayWeight,
     mood: init.mood,
+    diary: init.diary,
 });
 
 export type UpdateDailySpecType = {
     id: number;
     todayWeight: number;
     mood: Nullable<EmojiKey>;
-    diary: string;
+    diary: Nullable<string>;
 };
 
 export const encodeUpdateDailySpec = (init: UpdateDailySpecType): UpdateDailySpecArgs => ({

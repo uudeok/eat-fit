@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
 
     try {
         const body = await request.json();
-        const { goal_id, entry_date, today_weight, mood } = body;
+        const { goal_id, entry_date, today_weight, mood, diary } = body;
 
         if (!goal_id || !entry_date) {
             return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
 
         const { data, error } = await supabase
             .from('dailySpec')
-            .insert([{ goal_id, entry_date, today_weight, mood }])
+            .insert([{ goal_id, entry_date, today_weight, mood, diary }])
             .select()
             .throwOnError()
             .maybeSingle();

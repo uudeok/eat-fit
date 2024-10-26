@@ -13,8 +13,10 @@ import { Button } from '../common/Button';
 
 const CalendarModal = () => {
     const { isOpen, onClose } = useModal(ModalType.mainCalendar);
-    const { weeks, dateCells, prevMonthController, nextMonthController, curYear, curMonth } = useCalendar();
+
     const { selectedDate, setSelectedDate } = useSelectedDateStore();
+    const { weeks, dateCells, prevMonthController, nextMonthController, curYear, curMonth } = useCalendar();
+
     const [clickedDate, setClickedDate] = useState<Date>(selectedDate);
 
     const handleDate = (date: Date) => {

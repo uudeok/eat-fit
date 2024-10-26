@@ -32,7 +32,7 @@ const ExerciseAddList = () => {
     const { data: dailySpec } = useFetchDailySpec(formattedDate);
     const { data: exercisesData } = useFetchExercises(formattedDate);
 
-    const { mutateAsync: createDailySpec } = useCreateDailySpec(formattedDate);
+    const { mutateAsync: createDailySpec } = useCreateDailySpec();
     const { mutateAsync: createExercises } = useCreateExercises(formattedDate);
     const { mutateAsync: updateExercises } = useUpdateExercises(formattedDate);
 
@@ -72,6 +72,7 @@ const ExerciseAddList = () => {
                 entryDate: formattedDate,
                 todayWeight: 0,
                 mood: null,
+                diary: null,
             };
 
             const createData = encodeCreateDailySpec({ ...dailySpecData });

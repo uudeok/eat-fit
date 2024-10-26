@@ -35,7 +35,7 @@ const TodayWeightSheet = () => {
         },
     });
 
-    const { mutate: createDailySpec } = useCreateDailySpec(formattedDate);
+    const { mutate: createDailySpec } = useCreateDailySpec();
     const { mutate: updateDailySpec } = useUpdateDailySpec();
 
     const submitTodayWeight = handleSubmit((data) => {
@@ -57,6 +57,7 @@ const TodayWeightSheet = () => {
                 todayWeight: data.todayWeight,
                 mood: null,
                 entryDate: formattedDate,
+                diary: null,
             };
 
             const createData = encodeCreateDailySpec({ ...initialData });

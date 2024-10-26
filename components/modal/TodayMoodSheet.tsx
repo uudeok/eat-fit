@@ -24,7 +24,7 @@ const TodayMoodSheet = () => {
     const formattedDate = getFormattedDate();
 
     const { data: dailySpec } = useFetchDailySpec(formattedDate);
-    const { mutate: createDailySpec } = useCreateDailySpec(formattedDate);
+    const { mutate: createDailySpec } = useCreateDailySpec();
     const { mutate: updateDailySpec } = useUpdateDailySpec();
 
     const [selectedMood, setSelectedMood] = useState<EmojiKey | null>(null);
@@ -52,6 +52,7 @@ const TodayMoodSheet = () => {
                 goalId: goalData?.id!,
                 entryDate: formattedDate,
                 todayWeight: 0,
+                diary: null,
                 mood: selectedMood,
             };
 

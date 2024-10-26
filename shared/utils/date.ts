@@ -118,3 +118,14 @@ export const generateWeeklyDates = (numberOfWeeks: number) => {
         )
     );
 };
+
+export const getMonthRange = (curYear: number, curMonth: number) => {
+    const firstDay = dayjs(`${curYear}-${curMonth + 1}`)
+        .startOf('month')
+        .format(DATE_FORMAT['YYYY-MM-DD']);
+    const lastDay = dayjs(`${curYear}-${curMonth + 1}`)
+        .endOf('month')
+        .format(DATE_FORMAT['YYYY-MM-DD']);
+
+    return { firstDay, lastDay };
+};

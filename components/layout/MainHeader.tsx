@@ -14,8 +14,9 @@ import 'dayjs/locale/ko';
 
 const MainHeader = () => {
     const { onOpen } = useModal(ModalType.mainCalendar);
-    const { nextDateController, prevDateController } = useCalendar();
     const { selectedDate } = useSelectedDateStore();
+
+    const { nextDateController, prevDateController } = useCalendar();
 
     const dateLabel = dayjs(selectedDate).format(DATE_FORMAT['M.D']);
     const dayOfWeek = dayjs(selectedDate).format(DATE_FORMAT.ddd);

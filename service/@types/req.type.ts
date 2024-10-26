@@ -74,13 +74,14 @@ export type CreateDailySpecArgs = {
     entry_date: string;
     today_weight: number | null;
     mood: EmojiKey | null;
+    diary: string | null;
 };
 
 export type UpdateDailySpecArgs = {
     id: number;
     today_weight: Nullable<number>;
     mood: Nullable<EmojiKey>;
-    diary: string;
+    diary: Nullable<string>;
 };
 
 export type MealItemType = {

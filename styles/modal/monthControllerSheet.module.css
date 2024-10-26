@@ -1,0 +1,39 @@
+.monthController {
+    padding: 20px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.monthGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    gap: 12px;
+    padding: 16px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.month {
+    padding: 12px;
+    background-color: #f7f7f7;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.month:hover {
+    background-color: #e0e0e0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.selectedMonth {
+    background-color: #d0eaff;
+    /* border: 2px solid #1e90ff; */
+}
+
+.yearNavigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}

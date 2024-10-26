@@ -1,21 +1,27 @@
 'use client';
 
-import { useCalendar } from '@/hooks';
 import { Spinner } from '../../common';
-import { DATE_FORMAT } from '@/constants';
 import { useFetchDailyStepsInRange } from '@/service/queries/useFetchDailyStep';
-import dayjs from 'dayjs';
 import DiaryForm from './DiaryForm';
 import DiaryCalendar from './DiaryCalendar';
 import SectionHeader from '@/components/layout/SectionHeader';
+import { useCalendar } from '@/hooks';
+import { getMonthRange } from '@/shared/utils';
+import { useEffect } from 'react';
+import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
 
 const MyDiray = () => {
-    const { curMonth, curYear } = useCalendar();
+    const { curYear, curMonth } = useCalendar();
+    const { setSelectedDate } = useSelectedDateStore();
 
-    const firstDay = dayjs().year(curYear).month(curMonth).date(1).format(DATE_FORMAT['YYYY-MM-DD']);
-    const lastDay = dayjs().year(curYear).month(curMonth).endOf('month').format(DATE_FORMAT['YYYY-MM-DD']);
-
+    const { firstDay, lastDay } = getMonthRange(curYear, curMonth);
     const { data: dailySteps } = useFetchDailyStepsInRange(firstDay, lastDay);
+
+    useEffect(() => {
+        return () => {
+            setSelectedDate(new Date());
+        };
+    }, []);
 
     if (!dailySteps) return <Spinner />;
 
