@@ -42,15 +42,23 @@ export const heightValidation = (e: React.FormEvent<HTMLInputElement>) => {
     return Number(input.value);
 };
 
-export const weightValidation = (e: React.FormEvent<HTMLInputElement>) => {
-    const input = e.target as HTMLInputElement;
+// const validateWeightInput = (value: string): string => {
+//     // 정규 표현식을 사용하여 유효성 검사
+//     const regex = /^(?!0\d)\d{0,3}(\.\d{0,1})?$/;
 
-    input.value = removeLeadingZero(input.value);
-    input.value = removeNonNumericWithoutDot(input.value);
-    input.value = formatDecimal(input.value, 1);
+//     return regex.test(value) ? value : value.slice(0, 3); // 유효하지 않으면 빈 문자열 반환
+// };
 
-    return Number(input.value);
-};
+// export const weightValidation = (e: React.FormEvent<HTMLInputElement>) => {
+//     const input = e.target as HTMLInputElement;
+
+//     input.value = removeLeadingZero(input.value);
+//     input.value = removeNonNumericWithoutDot(input.value);
+//     input.value = formatDecimal(input.value, 1);
+//     input.value = validateWeightInput(input.value);
+
+//     return Number(input.value);
+// };
 
 export const calorieValidation = (e: React.FormEvent<HTMLInputElement>) => {
     const input = e.target as HTMLInputElement;

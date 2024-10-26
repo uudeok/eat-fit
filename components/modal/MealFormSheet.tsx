@@ -9,12 +9,13 @@ import { BottomSheet } from '../common/Modal';
 import { Input, Textarea } from '../common/Form';
 import SheetHeader from '../layout/SheetHeader';
 import { ModalType } from '../common/Modal/OverlayContainer';
-import { calorieValidation } from '@/shared/utils';
 import { useMealsStore } from '@/shared/store/useMealsStore';
 import { usePathname } from 'next/navigation';
 import { useUpdateMeals } from '@/service/mutations';
 import { useFetchMealDetail } from '@/service/queries/useFetchMealDetail';
 import { DecodeMealItemType, encodeUpdateMeal } from '@/service/mappers/mealsMapper';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { mealsFormSchema, mealsFormValidation } from '@/shared/utils/validation/mealsForm';
 
 /* 해당 바텀시트를 /meals/add or /meals/[id] 에서 open 한다
    1. path 가 add 이면 데이터를 생성 -> createMealsData
@@ -39,7 +40,12 @@ const MealFormSheet = () => {
 
     const { mutate: updateMeals } = useUpdateMeals();
 
-    const { register, handleSubmit } = useForm<DecodeMealItemType>({
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<DecodeMealItemType>({
+        resolver: zodResolver(mealsFormSchema),
         defaultValues: {
             id: mealItem?.id || Date.now(),
             foodName: mealItem?.foodName,
@@ -94,7 +100,13 @@ const MealFormSheet = () => {
                 <ListCol
                     top={<Text bold>음식 이름 (필수)</Text>}
                     bottom={
-                        <Input register={register} rules={{ required: true }} placeholder="음식 이름" name="foodName" />
+                        <Input
+                            register={register}
+                            rules={{ required: true }}
+                            placeholder="음식 이름"
+                            name="foodName"
+                            errors={errors}
+                        />
                     }
                 />
 
@@ -109,7 +121,8 @@ const MealFormSheet = () => {
                                         name={nutrient.key}
                                         placeholder="0"
                                         unit={nutrient.unit}
-                                        onInput={calorieValidation}
+                                        onInput={mealsFormValidation}
+                                        errors={errors}
                                     />
                                 }
                             />

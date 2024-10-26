@@ -98,7 +98,7 @@ export type UserType = {
     created_at: string;
     role: UserRoleType;
     expose: UserExposeType;
-    content: string | null;
+    content: string;
 };
 
 export type AnalyzeDataType = {

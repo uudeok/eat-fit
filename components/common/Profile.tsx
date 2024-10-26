@@ -15,12 +15,10 @@ const Profile = (props: AvatarProps) => {
 
     const { data: userData } = useFetchUsers();
 
-    const avatar_url = userData?.avatar_url || '/user.svg';
-
     return (
         <div className={`${styles[direction]} ${styles.layout}`}>
             <img
-                src={avatar_url}
+                src={userData?.avatarUrl}
                 alt="profile img"
                 width="45px"
                 height="45px"

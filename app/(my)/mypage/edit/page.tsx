@@ -1,4 +1,5 @@
 import MyPageEdit from '@/components/mypage/MyPageEdit';
+import { decodeUser } from '@/service/mappers/userMapper';
 import { API_ENDPOINTS } from '@/service/supabase/config';
 import { headers } from 'next/headers';
 
@@ -16,7 +17,7 @@ const getUserData = async () => {
 
     const result = await data.json();
 
-    return result;
+    return decodeUser(result);
 };
 
 const MyPageEditPage = async () => {

@@ -18,6 +18,8 @@ import { useUpdateExercises } from '@/service/mutations';
 import { usePathname } from 'next/navigation';
 import { DecodeExercisesItemType, encodeUpdateExercise } from '@/service/mappers/exercisesMapper';
 import { Nullable } from '@/@types';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { exerciseFormSchema, exerciseFormValidation } from '@/shared/utils/validation/exerciseForm';
 
 /** 해당 바텀시트를 exercises/add or /home 에서 open 한다
  *  1. path 가 add 이면 데이터를 생성 -> createExercisesData
@@ -41,7 +43,13 @@ const ExerciseFormSheet = () => {
     const { data: exercisesData } = useFetchExercises(formattedDate);
     const { mutateAsync: updateExercises } = useUpdateExercises(formattedDate);
 
-    const { register, handleSubmit, setValue } = useForm<DecodeExercisesItemType>({
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        formState: { errors },
+    } = useForm<DecodeExercisesItemType>({
+        resolver: zodResolver(exerciseFormSchema),
         defaultValues: {
             id: exerciseItem ? exerciseItem.id : Date.now(),
             exerciseName: exerciseItem?.exerciseName,
@@ -101,6 +109,7 @@ const ExerciseFormSheet = () => {
                             rules={{ required: true }}
                             name="exerciseName"
                             placeholder="운동 이름"
+                            errors={errors}
                         />
                     }
                 />
@@ -116,10 +125,8 @@ const ExerciseFormSheet = () => {
                                 placeholder="0"
                                 name="durationMin"
                                 unit="분"
-                                onInput={(e) => {
-                                    const input = e.target as HTMLInputElement;
-                                    input.value = input.value.replace(/\D/g, '');
-                                }}
+                                onInput={exerciseFormValidation}
+                                errors={errors}
                             />
                         }
                     />
@@ -149,11 +156,9 @@ const ExerciseFormSheet = () => {
                                 register={register}
                                 name="caloriesBurned"
                                 placeholder="0"
-                                onInput={(e) => {
-                                    const input = e.target as HTMLInputElement;
-                                    input.value = input.value.replace(/\D/g, '');
-                                }}
+                                onInput={exerciseFormValidation}
                                 unit="kcal"
+                                errors={errors}
                             />
                         }
                     />

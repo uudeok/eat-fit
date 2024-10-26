@@ -80,6 +80,16 @@ const MealAddList = () => {
         onOpen();
     };
 
+    const removeMeals = (e: React.MouseEvent, mealId: number) => {
+        e.stopPropagation();
+
+        if (meals.length > 1) {
+            removeMeal(mealId);
+        } else {
+            resetMeals();
+        }
+    };
+
     return (
         <div className={styles.layout}>
             <ListRow
@@ -119,13 +129,7 @@ const MealAddList = () => {
                             <Text bold size="lg">
                                 {meal.calories || 0} kcal
                             </Text>
-                            <Icons.FillXmark
-                                width={13}
-                                onClick={(e: React.MouseEvent) => {
-                                    e.stopPropagation();
-                                    removeMeal(meal.id);
-                                }}
-                            />
+                            <Icons.FillXmark width={13} onClick={(e: React.MouseEvent) => removeMeals(e, meal.id)} />
                         </div>
                     }
                 />

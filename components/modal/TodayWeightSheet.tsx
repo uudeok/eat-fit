@@ -7,13 +7,14 @@ import { Button } from '../common/Button';
 import SheetHeader from '../layout/SheetHeader';
 import { Input } from '../common/Form';
 import { useForm } from 'react-hook-form';
-import { weightValidation } from '@/shared/utils';
 import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
 import { useFetchDailySpec } from '@/service/queries/useFetchDailySpec';
 import { useCreateDailySpec } from '@/service/mutations/useCreateDailySpec';
 import { useUpdateDailySpec } from '@/service/mutations/useUpdateDailySpec';
 import { useFetchGoalsByStatus } from '@/service/queries';
 import { encodeCreateDailySpec, encodeUpdateDailySpec } from '@/service/mappers/dailyMapper';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { weightSchema, weightValidation } from '@/shared/utils/validation/weight';
 
 type FormValues = {
     todayWeight: number;
@@ -29,7 +30,12 @@ const TodayWeightSheet = () => {
 
     const { data: dailySpec } = useFetchDailySpec(formattedDate);
 
-    const { register, handleSubmit } = useForm<FormValues>({
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<FormValues>({
+        resolver: zodResolver(weightSchema),
         defaultValues: {
             todayWeight: dailySpec?.todayWeight,
         },
@@ -78,10 +84,8 @@ const TodayWeightSheet = () => {
                     name="todayWeight"
                     placeholder="00.0"
                     unit="kg"
-                    rules={{
-                        required: '몸무게를 입력해주세요',
-                    }}
                     onInput={weightValidation}
+                    errors={errors}
                 />
 
                 <Button role="confirm" size="lg">

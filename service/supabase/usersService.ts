@@ -1,7 +1,8 @@
 import { UpdateUserArgs, UserType } from '../@types';
+import { DecodeUser, decodeUser } from '../mappers/userMapper';
 import { API_ENDPOINTS } from './config';
 
-export async function fetchUsersData(): Promise<UserType> {
+export async function fetchUsersData(): Promise<DecodeUser> {
     const data = await fetch(`${API_ENDPOINTS.USERS}`);
 
     if (!data.ok) {
@@ -10,7 +11,7 @@ export async function fetchUsersData(): Promise<UserType> {
 
     const result = await data.json();
 
-    return result;
+    return decodeUser(result);
 }
 
 export async function updateUser(updateData: UpdateUserArgs): Promise<UserType> {

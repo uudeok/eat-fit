@@ -37,6 +37,7 @@
 .nickname {
     padding: 5px;
     display: flex;
+    flex-direction: column;
     border-bottom: 1px solid grey;
     margin-bottom: 20px;
 }

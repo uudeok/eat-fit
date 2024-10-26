@@ -6,17 +6,19 @@ import { ListCol, Text } from '../common';
 import { Input, Textarea } from '../common/Form';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-import { UpdateUserArgs, UserType } from '@/service/@types';
 import { Button } from '../common/Button';
 import Image from 'next/image';
 import { useImageUpload } from '@/hooks';
 import { useUpdateUser } from '@/service/mutations';
+import { DecodeUser, encodeUser, UpdateUserType } from '@/service/mappers/userMapper';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { contentValidation, mypageEditFormSchema } from '@/shared/utils/validation/mypageEditForm';
 
-const MyPageEdit = ({ userData }: { userData: UserType }) => {
+const MyPageEdit = ({ userData }: { userData: DecodeUser }) => {
     const router = useRouter();
 
     const { imageUrl, triggerFileInput, handleFileInputChange, fileRef, uploadImageToS3 } = useImageUpload({
-        initialImageUrl: userData?.avatar_url || '/user.svg',
+        initialImageUrl: userData?.avatarUrl || '/user.svg',
     });
 
     const { mutateAsync: updateUser } = useUpdateUser();
@@ -25,27 +27,29 @@ const MyPageEdit = ({ userData }: { userData: UserType }) => {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm<UpdateUserArgs>({
+    } = useForm<UpdateUserType>({
+        resolver: zodResolver(mypageEditFormSchema),
         defaultValues: {
-            avatar_url: userData?.avatar_url || '/user.svg',
-            nickname: userData?.nickname || '',
-            content: userData?.content || null,
+            id: userData.id,
+            avatarUrl: userData?.avatarUrl,
+            nickname: userData?.nickname,
+            content: userData?.content,
         },
     });
 
-    const updateUserData = async (data: UpdateUserArgs) => {
+    const updateUserData = async (data: UpdateUserType) => {
         const uploadedImageUrl = await uploadImageToS3();
 
         const updateData = {
             id: userData.id,
-            avatar_url: uploadedImageUrl || data.avatar_url,
+            avatarUrl: uploadedImageUrl || data.avatarUrl,
             content: data.content,
             nickname: data.nickname,
         };
 
-        console.log('업데이트 데이터', updateData);
+        const updateUserData = encodeUser({ ...updateData });
 
-        await updateUser(updateData);
+        await updateUser(updateUserData);
 
         router.push('/mypage');
     };
@@ -87,14 +91,21 @@ const MyPageEdit = ({ userData }: { userData: UserType }) => {
 
             <ListCol
                 top={
-                    <Text bold color="var(--grey700)">
-                        닉네임
-                    </Text>
+                    <div>
+                        <Text bold color="var(--grey700)">
+                            닉네임
+                        </Text>
+                    </div>
                 }
                 bottom={
                     <div className={styles.nickname}>
-                        <Icons.Pencil width={15} />
-                        <Input register={register} name="nickname" placeholder="닉네임" rules={{ required: true }} />
+                        <Input
+                            register={register}
+                            name="nickname"
+                            placeholder="닉네임"
+                            rules={{ required: true }}
+                            errors={errors}
+                        />
                     </div>
                 }
             />
@@ -102,9 +113,10 @@ const MyPageEdit = ({ userData }: { userData: UserType }) => {
             <Textarea
                 register={register}
                 name="content"
-                placeholder="내 소개를 작성해보세요"
+                placeholder="내 소개를 작성해보세요 (150자)"
                 label="내 소개"
                 className={styles.content}
+                onInput={contentValidation}
             />
 
             <div className={styles.reviseBtn}>
@@ -118,57 +130,56 @@ const MyPageEdit = ({ userData }: { userData: UserType }) => {
 
 export default MyPageEdit;
 
-{
-    /* <Input
-register={register}
-name="nickname"
-placeholder="닉네임"
-rules={{
-    required: '닉네임을 입력해주세요',
-    maxLength: {
-        value: 6,
-        message: '닉네임은 최대 6자리까지 입력 가능합니다',
-    },
-}}
-errors={errors}
-/> */
-}
-
 // 'use client';
 
 // import styles from '@styles/component/mypageEdit.module.css';
 // import Icons from '@/assets';
-// import { ListCol, Text } from './common';
-// import { Input, Textarea } from './common/Form';
+// import { ListCol, Text } from '../common';
+// import { Input, Textarea } from '../common/Form';
 // import { useForm } from 'react-hook-form';
 // import { useRouter } from 'next/navigation';
 // import { UpdateUserArgs, UserType } from '@/service/@types';
-// import { Button } from './common/Button';
+// import { Button } from '../common/Button';
 // import Image from 'next/image';
-// import { useRef } from 'react';
+// import { useImageUpload } from '@/hooks';
+// import { useUpdateUser } from '@/service/mutations';
 
 // const MyPageEdit = ({ userData }: { userData: UserType }) => {
 //     const router = useRouter();
-//     const fileRef = useRef<HTMLInputElement>(null);
 
-//     const avatar_url = userData?.avatar_url || '/user.svg';
+//     const { imageUrl, triggerFileInput, handleFileInputChange, fileRef, uploadImageToS3 } = useImageUpload({
+//         initialImageUrl: userData?.avatar_url || '/user.svg',
+//     });
 
-//     const { register, handleSubmit, setValue } = useForm<UpdateUserArgs>({
+//     const { mutateAsync: updateUser } = useUpdateUser();
+
+//     const {
+//         register,
+//         handleSubmit,
+//         formState: { errors },
+//     } = useForm<UpdateUserArgs>({
 //         defaultValues: {
 //             avatar_url: userData?.avatar_url || '/user.svg',
 //             nickname: userData?.nickname || '',
-//             content: userData?.content || '',
+//             content: userData?.content || null,
 //         },
 //     });
 
-//     const updateUserData = (data: UpdateUserArgs) => {
-//         console.log('data', data);
-//     };
+//     const updateUserData = async (data: UpdateUserArgs) => {
+//         const uploadedImageUrl = await uploadImageToS3();
 
-//     const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-//         if (e.target.files) {
-//             console.log(e.target.files);
-//         }
+//         const updateData = {
+//             id: userData.id,
+//             avatar_url: uploadedImageUrl || data.avatar_url,
+//             content: data.content,
+//             nickname: data.nickname,
+//         };
+
+//         console.log('업데이트 데이터', updateData);
+
+//         await updateUser(updateData);
+
+//         router.push('/mypage');
 //     };
 
 //     return (
@@ -181,14 +192,20 @@ errors={errors}
 //             </div>
 
 //             <div className={styles.imageContainer}>
-//                 <img src={avatar_url} alt="profile img" width="80px" height="80px" className={styles.avatar} />
+//                 <img
+//                     src={imageUrl || '/user.svg'}
+//                     alt="profile img"
+//                     width="80px"
+//                     height="80px"
+//                     className={styles.avatar}
+//                 />
 //                 <Image
 //                     src="/camera.png"
 //                     alt="Camera Icon"
 //                     width={30}
 //                     height={30}
 //                     className={styles.cameraIcon}
-//                     onClick={() => fileRef.current?.click()}
+//                     onClick={triggerFileInput}
 //                 />
 
 //                 <input
@@ -209,7 +226,7 @@ errors={errors}
 //                 bottom={
 //                     <div className={styles.nickname}>
 //                         <Icons.Pencil width={15} />
-//                         <Input register={register} name="nickname" placeholder="닉네임" />
+//                         <Input register={register} name="nickname" placeholder="닉네임" rules={{ required: true }} />
 //                     </div>
 //                 }
 //             />
