@@ -15,7 +15,7 @@ import { useUpdateMeals } from '@/service/mutations';
 import { useFetchMealDetail } from '@/service/queries/useFetchMealDetail';
 import { DecodeMealItemType, encodeUpdateMeal } from '@/service/mappers/mealsMapper';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { mealsFormSchema, mealsFormValidation } from '@/shared/utils/validation/mealsForm';
+import { mealsFormSchema, mealsFormValidation } from '@/shared/utils/validation/mealsFormValidation';
 
 /* 해당 바텀시트를 /meals/add or /meals/[id] 에서 open 한다
    1. path 가 add 이면 데이터를 생성 -> createMealsData

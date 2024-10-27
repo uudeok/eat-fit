@@ -8,8 +8,9 @@ import { ModalType } from '../common/Modal/OverlayContainer';
 import { useForm } from 'react-hook-form';
 import { Input } from '../common/Form';
 import { Button } from '../common/Button';
-import { calorieValidation, getLocalStorageItem, recalculateCaloriesToGoal, setLocalStorageItem } from '@/shared/utils';
+import { getLocalStorageItem, recalculateCaloriesToGoal, setLocalStorageItem } from '@/shared/utils';
 import { GoalCaloriesInfoType } from '@/service/@types';
+import { caloriesValidation } from '@/shared/utils/validation';
 
 type FormValue = {
     dailyCalories: number;
@@ -59,7 +60,7 @@ const CalorieEditSheet = () => {
                         name="dailyCalories"
                         placeholder="0"
                         unit="kcal"
-                        onInput={calorieValidation}
+                        onInput={caloriesValidation}
                         rules={{
                             min: {
                                 value: 500,

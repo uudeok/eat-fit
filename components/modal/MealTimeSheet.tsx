@@ -7,20 +7,20 @@ import SheetHeader from '../layout/SheetHeader';
 import { Button } from '../common/Button';
 import { Input } from '../common/Form';
 import { useForm } from 'react-hook-form';
-import { LoadingBar, Text, TextToggle } from '../common';
+import { Text, TextToggle } from '../common';
 import { ModalType } from '../common/Modal/OverlayContainer';
 import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
-import { padStartToZero } from '@/shared/utils';
 import { usePathname } from 'next/navigation';
 import { useUpdateMeals } from '@/service/mutations';
 import { useFetchMealDetail } from '@/service/queries/useFetchMealDetail';
 import { encodeUpdateMeal } from '@/service/mappers/mealsMapper';
+import { hourValidation, minutesValidation } from '@/shared/utils/validation/mealTimeValidation';
 
 export type ServingTimeType = {
     kstTime: Date;
     period: string;
-    hour: number;
-    minutes: number;
+    hour: string;
+    minutes: string;
 };
 
 const MealTimeSheet = () => {
@@ -33,8 +33,6 @@ const MealTimeSheet = () => {
     const { data: mealDetail } = useFetchMealDetail(Number(mealId));
 
     const { mutate: updateMeals } = useUpdateMeals();
-
-    if (!mealDetail) return <LoadingBar />;
 
     const { register, handleSubmit, setValue } = useForm<ServingTimeType>({
         defaultValues: {
@@ -49,50 +47,18 @@ const MealTimeSheet = () => {
     };
 
     const submitServingTime = (data: ServingTimeType) => {
-        const updatedData = encodeUpdateMeal({
-            ...mealDetail,
-            servingTime: { ...data, kstTime: selectedDate },
-        });
+        if (mealDetail) {
+            const updatedData = encodeUpdateMeal({
+                ...mealDetail,
+                servingTime: { ...data, kstTime: selectedDate },
+            });
 
-        updateMeals({
-            ...updatedData,
-        });
+            updateMeals({
+                ...updatedData,
+            });
+        }
 
         onClose();
-    };
-
-    const hourValidation = (e: React.ChangeEvent<HTMLInputElement>) => {
-        let value = e.target.value;
-
-        if (value.length > 2) {
-            value = value.slice(0, 2);
-        }
-
-        let numValue = Number(value);
-
-        if (numValue >= 13 && numValue <= 24) {
-            numValue -= 12;
-        } else if (numValue > 24) {
-            numValue = 12;
-        }
-
-        setValue('hour', numValue);
-    };
-
-    const minutesValidation = (e: React.ChangeEvent<HTMLInputElement>) => {
-        let value = e.target.value;
-
-        if (value.length > 2) {
-            value = value.slice(0, 2);
-        }
-
-        let numValue = Number(value);
-
-        if (numValue > 59) {
-            numValue = 59;
-        }
-
-        setValue('minutes', numValue);
     };
 
     return (
@@ -104,7 +70,7 @@ const MealTimeSheet = () => {
                     left="오전"
                     right="오후"
                     onClick={handlePeriodToggle}
-                    initialValue={mealDetail.servingTime?.period}
+                    initialValue={mealDetail?.servingTime?.period}
                 />
 
                 <div className={styles.timeTable}>
@@ -116,7 +82,6 @@ const MealTimeSheet = () => {
                         placeholder="00"
                         className={styles.timeInput}
                         onInput={hourValidation}
-                        onBlur={(e) => padStartToZero(e, 2)}
                     />
                     <Text bold size="xxlg" color="var(--grey700)">
                         :
@@ -129,7 +94,6 @@ const MealTimeSheet = () => {
                         placeholder="00"
                         className={styles.timeInput}
                         onInput={minutesValidation}
-                        onBlur={(e) => padStartToZero(e, 2)}
                     />
                 </div>
 

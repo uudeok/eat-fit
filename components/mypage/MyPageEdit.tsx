@@ -12,7 +12,7 @@ import { useImageUpload } from '@/hooks';
 import { useUpdateUser } from '@/service/mutations';
 import { DecodeUser, encodeUser, UpdateUserType } from '@/service/mappers/userMapper';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { contentValidation, mypageEditFormSchema } from '@/shared/utils/validation/mypageEditForm';
+import { contentValidation, mypageEditFormSchema } from '@/shared/utils/validation/mypageEditValidation';
 
 const MyPageEdit = ({ userData }: { userData: DecodeUser }) => {
     const router = useRouter();

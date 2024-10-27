@@ -20,7 +20,10 @@ const LoadingAnalysis = () => {
             <Image src="/analysis.gif" alt="analyzing" width={140} height={140} />
 
             <Text bold size="xlg">
-                {userData?.nickname}님의 데이터를 분석하고 있어요
+                {userData?.nickname}님의
+            </Text>
+            <Text bold size="xlg">
+                데이터를 분석하고 있어요
             </Text>
 
             <div className={styles.loadingText}>

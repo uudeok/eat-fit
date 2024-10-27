@@ -8,7 +8,8 @@ import { Input } from '../../common/Form';
 import { useForm } from 'react-hook-form';
 import { ActivityLevelType, BasicInfoType, GenderType, GoalRegisterType } from '@/service/@types/req.type';
 import { useState } from 'react';
-import { ageValidation, getLocalStorageItem, heightValidation, setLocalStorageItem } from '@/shared/utils';
+import { getLocalStorageItem, setLocalStorageItem } from '@/shared/utils';
+import { ageValidation, heightValidation } from '@/shared/utils/validation';
 
 type Props = {
     onNext: (data: BasicInfoType) => void;

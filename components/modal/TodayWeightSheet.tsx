@@ -14,7 +14,7 @@ import { useUpdateDailySpec } from '@/service/mutations/useUpdateDailySpec';
 import { useFetchGoalsByStatus } from '@/service/queries';
 import { encodeCreateDailySpec, encodeUpdateDailySpec } from '@/service/mappers/dailyMapper';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { weightSchema, weightValidation } from '@/shared/utils/validation/weight';
+import { weightSchema, weightValidation } from '@/shared/utils/validation';
 
 type FormValues = {
     todayWeight: number;

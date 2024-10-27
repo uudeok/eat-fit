@@ -25,8 +25,8 @@ export function convertToKST(time: Date): ServingTimeType | null {
 
     const kstTime = new Date(time);
 
-    let hour = Number(dayjs(kstTime).format('HH').padStart(2, '0'));
-    let minutes = Number(dayjs(kstTime).format('mm').padStart(2, '0'));
+    let hour = Number(dayjs(kstTime).format('HH'));
+    let minutes = Number(dayjs(kstTime).format('mm'));
     let period: string;
 
     if (hour >= 12) {
@@ -41,7 +41,11 @@ export function convertToKST(time: Date): ServingTimeType | null {
         }
     }
 
-    return { kstTime, period, hour, minutes };
+    // 한 자리 숫자일 경우 앞에 0 추가
+    const formattedHour = hour.toString().padStart(2, '0');
+    const formattedMinutes = minutes.toString().padStart(2, '0');
+
+    return { kstTime, period, hour: formattedHour, minutes: formattedMinutes };
 }
 
 /* ServingTimeType 을 서버에 보낼 Date 형식으로 변환해준다  */

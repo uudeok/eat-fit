@@ -48,7 +48,7 @@ const createAnalysisMessage = (data: CreateAnalysisArgs) => [
             **반드시 위의 분석을 한국어로 번역하여 응답해 주세요!** 형식은 다음과 같아야 합니다:
 
             {
-                "possibility": "percentage chance",
+                "possibility": "Please indicate the probability in percentages",
                 "evaluates": "analysis of habits",
                 "cheering": "motivational message",
                 "tips": ["tip1", "tip2", "tip3"]

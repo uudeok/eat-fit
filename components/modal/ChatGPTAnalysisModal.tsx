@@ -31,16 +31,6 @@ const ChatGPTAnalysisModal = () => {
         return dayjs(analysis.deadline).isBefore(today, 'day');
     };
 
-    const handleAnalysis = useCallback(async () => {
-        if (isLoading || !goalData) return;
-
-        if (!analysisData) {
-            await createNewAnalysis();
-        } else if (isAnalysisExpired(analysisData)) {
-            await updateExistingAnalysis();
-        }
-    }, [goalData, isLoading, analysisData]);
-
     const createNewAnalysis = async () => {
         const newAnalysisData = prepareAnalysisData();
         await createAnalysis(newAnalysisData);
@@ -53,6 +43,16 @@ const ChatGPTAnalysisModal = () => {
         };
         await updateAnalysis(updatedAnalysisData);
     };
+
+    const handleAnalysis = useCallback(async () => {
+        if (isLoading || !goalData) return;
+
+        if (!analysisData) {
+            await createNewAnalysis();
+        } else if (isAnalysisExpired(analysisData)) {
+            await updateExistingAnalysis();
+        }
+    }, [goalData, isLoading, analysisData]);
 
     const prepareAnalysisData = () => ({
         goalData,

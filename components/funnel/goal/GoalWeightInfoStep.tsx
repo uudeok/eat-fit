@@ -7,9 +7,10 @@ import { ListCol, Text } from '../../common';
 import { useForm } from 'react-hook-form';
 import { Input } from '../../common/Form';
 import { useRouter } from 'next/navigation';
-import { calculateWeightRange, getLocalStorageItem, setLocalStorageItem, weightValidation } from '@/shared/utils';
+import { calculateWeightRange, getLocalStorageItem, setLocalStorageItem } from '@/shared/utils';
 import { GoalRegisterType, WeightInfoType } from '@/service/@types/req.type';
-import { MAX_WEIGHT, MIN_WEIGHT } from '@/constants';
+import { createGoalWeightSchema, weightValidation } from '@/shared/utils/validation';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 type Props = {
     onNext: (data: WeightInfoType) => void;
@@ -26,11 +27,14 @@ const GoalWeightInfoStep = ({ onNext }: Props) => {
     /* 정상 체중 범위를 구하기 위한 계산식 */
     const { minWeight, maxWeight } = calculateWeightRange(initialData?.height);
 
+    const seihgtSchema = createGoalWeightSchema(minWeight, maxWeight);
+
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm<WeightInfoType>({
+        resolver: zodResolver(seihgtSchema),
         defaultValues: {
             weight: initialData?.weight,
             targetWeight: initialData?.targetWeight,
@@ -66,17 +70,6 @@ const GoalWeightInfoStep = ({ onNext }: Props) => {
                         name="weight"
                         placeholder="00.0"
                         unit="kg"
-                        rules={{
-                            required: '몸무게를 입력해주세요',
-                            min: {
-                                value: MIN_WEIGHT,
-                                message: '최소 30kg 이상 입력 가능합니다.',
-                            },
-                            max: {
-                                value: MAX_WEIGHT,
-                                message: '최대 250kg까지 입력 가능합니다.',
-                            },
-                        }}
                         onInput={weightValidation}
                         errors={errors}
                     />
@@ -91,17 +84,6 @@ const GoalWeightInfoStep = ({ onNext }: Props) => {
                         name="targetWeight"
                         placeholder="00.0"
                         unit="kg"
-                        rules={{
-                            required: '목표 몸무게를 입력해주세요',
-                            min: {
-                                value: minWeight,
-                                message: `정상 체중 범위 내의 ${minWeight}kg 이상 입력 가능합니다`,
-                            },
-                            max: {
-                                value: maxWeight,
-                                message: `정상 체중 범위 내의 ${maxWeight}kg 이하로 입력 가능합니다`,
-                            },
-                        }}
                         onInput={weightValidation}
                         errors={errors}
                     />
