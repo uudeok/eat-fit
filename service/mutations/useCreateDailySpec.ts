@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { createDailySpec } from '../supabase/dailyService';
+import { createDailySpec } from '../api/dailyService';
 import { CreateDailySpecArgs } from '../@types';
 import { dailySpecKeys } from '../queryKey';
 

@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { dailySpecKeys, exercisesKeys } from '../queryKey';
-import { deleteExercises } from '../supabase/exercisesService';
+import { deleteExercises } from '../api/exercisesService';
 
 export function useDeleteExercises(selectedDate: string) {
     const queryClient = useQueryClient();

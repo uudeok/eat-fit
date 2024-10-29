@@ -1,5 +1,5 @@
 import { CreateGoalArgs, GoalRegisterType } from '@/service/@types';
-import { createNewGoals } from '@/service/supabase/goalsService';
+import { createNewGoals } from '@/service/api/goalsService';
 import { useMutation } from '@tanstack/react-query';
 
 export function useCreateGoal() {

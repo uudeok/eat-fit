@@ -1,5 +1,5 @@
 import { GoalStatusType } from '@/service/@types';
-import { API_ENDPOINTS } from '@/service/supabase/config';
+import { API_ENDPOINTS } from '@/service/api/config';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 

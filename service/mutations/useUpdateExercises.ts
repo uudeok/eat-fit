@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { UpdateExercisesArgs } from '../@types';
 import { dailySpecKeys, exercisesKeys } from '../queryKey';
-import { updateExercises } from '../supabase/exercisesService';
+import { updateExercises } from '../api/exercisesService';
 
 export function useUpdateExercises(selectedDate: string) {
     const queryClient = useQueryClient();

@@ -3,7 +3,7 @@ import { dailySpecKeys } from '../queryKey';
 import dayjs from 'dayjs';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import { DATE_FORMAT } from '@/constants';
-import { fetchDailyStep, fetchDailyStepsInRange } from '../supabase/stepService';
+import { fetchDailyStep, fetchDailyStepsInRange } from '../api/stepService';
 dayjs.extend(isSameOrBefore);
 
 const today = dayjs().format(DATE_FORMAT['YYYY-MM-DD']);

@@ -10,6 +10,7 @@ export const API_ENDPOINTS = {
     USERS: `${BASE_URL}/api/users`,
     ANALYSIS: `${BASE_URL}/api/analysis`,
     CHAT_GPT: `${GPT_BASE_URL}`,
+
     MEALS_DETAIL: (mealId: number) => `${BASE_URL}/api/meals/${mealId}`,
 } as const;
 

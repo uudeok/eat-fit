@@ -1,6 +1,6 @@
 import MyPageEdit from '@/components/mypage/MyPageEdit';
 import { decodeUser } from '@/service/mappers/userMapper';
-import { API_ENDPOINTS } from '@/service/supabase/config';
+import { API_ENDPOINTS } from '@/service/api/config';
 import { headers } from 'next/headers';
 
 export const dynamic = 'force-dynamic';

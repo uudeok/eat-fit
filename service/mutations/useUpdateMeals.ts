@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { UpdateMealsArgs } from '../@types';
-import { updateMeals } from '../supabase/mealsService';
+import { updateMeals } from '../api/mealsService';
 import { dailySpecKeys, mealsKeys } from '../queryKey';
 
 export function useUpdateMeals() {

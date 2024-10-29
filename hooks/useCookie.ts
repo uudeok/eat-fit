@@ -1,5 +1,7 @@
-import { CookieName } from '@/constants';
+'use client';
+
 import dayjs from 'dayjs';
+import { CookieName } from '@/constants';
 import { useCookies } from 'react-cookie';
 
 interface CookieOptions {

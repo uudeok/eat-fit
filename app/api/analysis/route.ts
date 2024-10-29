@@ -1,5 +1,5 @@
 import { CreateAnalysisArgs } from '@/service/@types';
-import { API_ENDPOINTS } from '@/service/supabase/config';
+import { API_ENDPOINTS } from '@/service/api/config';
 import { createClient } from '@/shared/utils/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
 

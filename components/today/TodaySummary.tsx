@@ -1,7 +1,7 @@
 import { GoalStatusType } from '@/service/@types';
 import NutrientSummary from './NutrientSummary';
 import TodayStatus from './TodayStatus';
-import { API_ENDPOINTS } from '@/service/supabase/config';
+import { API_ENDPOINTS } from '@/service/api/config';
 import { headers } from 'next/headers';
 
 export const revalidate = 0;
