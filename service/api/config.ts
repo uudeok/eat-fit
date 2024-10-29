@@ -9,6 +9,7 @@ export const API_ENDPOINTS = {
     DAILYSTEP: `${BASE_URL}/api/dailySpec/step`,
     USERS: `${BASE_URL}/api/users`,
     ANALYSIS: `${BASE_URL}/api/analysis`,
+    MAIL: `${BASE_URL}/api/mail`,
     CHAT_GPT: `${GPT_BASE_URL}`,
 
     MEALS_DETAIL: (mealId: number) => `${BASE_URL}/api/meals/${mealId}`,

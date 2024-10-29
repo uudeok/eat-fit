@@ -7,6 +7,17 @@ import { useRouter } from 'next/navigation';
 const Community = () => {
     const router = useRouter();
 
+    // const getRandomInt = (count: number) => {
+    //     return Math.floor(Math.random() * count);
+    // };
+
+    // const random = getRandomInt(2);
+    // console.log('rnadom', random);
+
+    // if (random === 1) {
+    //     throw new Error('Error occured WeightStatus');
+    // }
+
     return (
         <div className="mt-28">
             <EmptyState bottomText="준비중 입니다." />
