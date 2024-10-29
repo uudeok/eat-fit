@@ -20,7 +20,7 @@ export const mypageEditFormSchema = z.object({
     nickname: z
         .string()
         .trim()
-        .regex(nicknameRegex, { message: '닉네임은 한글, 영어, 숫자만 입력 가능합니다' })
+        .regex(nicknameRegex, { message: '한글, 영어, 숫자만 입력 가능합니다 (띄어쓰기 허용X)' })
         .min(2, { message: '최소 2자 이상이어야 합니다.' })
         .max(10, { message: '최대 10자 이내로 입력해야 합니다.' }),
     content: z.string().trim().max(150, { message: '내용은 150자 이내로 입력해야 합니다.' }),

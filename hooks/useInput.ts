@@ -1,7 +1,7 @@
 'use client';
 
+import { removeNonNumeric, removeNonNumericWithoutDot } from '@/shared/utils/validation';
 import { useState, useRef, Dispatch, SetStateAction, useCallback } from 'react';
-import { removeNonNumeric, removeNonNumericWithoutDot } from '@/shared/utils';
 
 /* 간단한 유효성 검사 가능 type 에 따라 추가 로직 구현 가능 */
 

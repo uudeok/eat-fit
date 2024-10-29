@@ -18,8 +18,8 @@ const Profile = (props: AvatarProps) => {
     return (
         <div className={`${styles[direction]} ${styles.layout}`}>
             <img
-                src={userData?.avatarUrl}
-                alt="profile img"
+                src={userData?.avatarUrl || '/user.svg'}
+                alt="profile"
                 width="45px"
                 height="45px"
                 className={`${styles.profile} ${styles[size]}`}

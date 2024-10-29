@@ -18,6 +18,3 @@ export function useCreateMeals(selectedDate: string) {
         },
     });
 }
-
-/* 선택한 날짜에 meals 데이터를 생성한다 -> 동일한 Key 무효화한다  */
-/* dailySpec & meals join 데이터에도 마찬가지로 무효화 시켜준다 */
