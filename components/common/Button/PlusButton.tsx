@@ -1,17 +1,19 @@
 'use client';
 
 import styles from '@styles/common/plusButton.module.css';
-import { CSSProperties, useState } from 'react';
+import { ButtonHTMLAttributes, CSSProperties, useState } from 'react';
 import Icons from '@/assets';
 
-type Props = {
+interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
     onClick?: () => void;
     size?: 'sm' | 'md' | 'lg';
     backgroundColor?: CSSProperties['backgroundColor'];
     color?: string;
-};
+    className?: string;
+}
 
-const PlusButton = ({ onClick, size = 'md', color, backgroundColor }: Props) => {
+const PlusButton = (props: Props) => {
+    const { onClick, size = 'md', color, backgroundColor, className } = props;
     const [isActive, setIsActive] = useState(true);
 
     const handleClick = () => {
@@ -21,7 +23,7 @@ const PlusButton = ({ onClick, size = 'md', color, backgroundColor }: Props) => 
 
     return (
         <button
-            className={`${styles.addBtn} ${styles[size]} ${isActive && styles.active}`}
+            className={`${styles.addBtn} ${styles[size]} ${isActive && styles.active} ${className}`}
             onClick={handleClick}
             style={{ color, backgroundColor }}
         >

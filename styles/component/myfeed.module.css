@@ -1,0 +1,72 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.1); /* 투명도 낮춤 */
+    backdrop-filter: blur(2px); /* 배경에 흐림 효과 추가 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    border-radius: 3px;
+    transition: opacity 0.3s ease; /* 부드러운 나타남 효과 */
+}
+
+.layout {
+    height: 100%;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.feedBtn {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+.menuList {
+    /* border: 1px solid black; */
+    position: absolute;
+    bottom: 70px;
+    right: 20px;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.menuItem {
+    background-color: white;
+    padding: 10px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.menuItem:hover {
+    opacity: 0.9;
+}
+
+.open {
+    border: 1px solid red;
+}
+
+.hide {
+    display: none;
+}
