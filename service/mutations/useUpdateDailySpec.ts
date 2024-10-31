@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateDailySpec } from '../api/dailyService';
-import { dailySpecKeys } from '../queryKey';
+import { dailySpecKeys } from '../utils/queryKey';
 import { UpdateDailySpecArgs } from '../@types';
 
 export function useUpdateDailySpec() {

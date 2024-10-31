@@ -1,6 +1,7 @@
 import { CreateDailySpecArgs, UpdateDailySpecArgs } from '../@types';
 import { API_ENDPOINTS } from './config';
 import { DecodeDailySpec, decodeDailySpec } from '../mappers/dailyMapper';
+import { defaultFetch } from '../utils/createFetch';
 
 export async function fetchDailySpec(selectedDate: string): Promise<DecodeDailySpec> {
     const data = await fetch(`${API_ENDPOINTS.DAILYSPEC}?date=${selectedDate}`);
@@ -13,6 +14,15 @@ export async function fetchDailySpec(selectedDate: string): Promise<DecodeDailyS
 
     return decodeDailySpec(result);
 }
+
+// export async function createDailySpec2(dailySpecData: CreateDailySpecArgs) {
+//     const data = await defaultFetch('/dailySpec', {
+//         method: 'POST',
+//         body: JSON.stringify(dailySpecData),
+//     });
+
+//     return data.json();
+// }
 
 export async function createDailySpec(dailySpecData: CreateDailySpecArgs): Promise<DecodeDailySpec> {
     const data = await fetch(`${API_ENDPOINTS.DAILYSPEC}`, {
@@ -30,6 +40,18 @@ export async function createDailySpec(dailySpecData: CreateDailySpecArgs): Promi
 
     return decodeDailySpec(result);
 }
+
+// export async function updateDailySpec2(updatedData: UpdateDailySpecArgs) {
+//     const data = await defaultFetch('/dailySpec', {
+//         method: 'PUT',
+//         body: JSON.stringify(updatedData),
+//     });
+
+//     const result = await data.json();
+
+//     console.log('@', result);
+//     return result;
+// }
 
 export async function updateDailySpec(updatedData: UpdateDailySpecArgs): Promise<DecodeDailySpec> {
     const data = await fetch(`${API_ENDPOINTS.DAILYSPEC}`, {

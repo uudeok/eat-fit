@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { usersKeys } from '../queryKey';
+import { usersKeys } from '../utils/queryKey';
 import { fetchUsersData } from '../api/usersService';
 
 const staleTime = 5 * 60 * 1000; // 5분 동안 캐시된 데이터 사용

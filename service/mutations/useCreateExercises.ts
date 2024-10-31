@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { CreateExercisesArgs } from '../@types';
 import { createExercises } from '../api/exercisesService';
-import { dailySpecKeys, exercisesKeys } from '../queryKey';
+import { dailySpecKeys, exercisesKeys } from '../utils/queryKey';
 
 export function useCreateExercises(selectedDate: string) {
     const queryClient = useQueryClient();

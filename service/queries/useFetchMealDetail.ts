@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { mealsKeys } from '../queryKey';
+import { mealsKeys } from '../utils/queryKey';
 import { fetchMealsDetail } from '../api/mealsService';
 
 const staleTime = 5 * 60 * 1000; // 5분 동안 캐시된 데이터 사용

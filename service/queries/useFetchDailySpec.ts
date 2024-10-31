@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { dailySpecKeys } from '../queryKey';
+import { dailySpecKeys } from '../utils/queryKey';
 import { fetchDailySpec } from '../api/dailyService';
 
 const staleTime = 5 * 60 * 1000; // 5분 동안 캐시된 데이터 사용

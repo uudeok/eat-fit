@@ -1,5 +1,4 @@
-import { CreateGPTType } from '@/shared/utils/api/chatGPT';
-import { GoalStatusType } from './@types';
+import { CreateAnalysisArgs, GoalStatusType } from './@types';
 
 export const goalsKeys = {
     base: [{ scope: 'goals' }] as const,
@@ -36,6 +35,6 @@ export const usersKeys = {
 
 export const analysisKeys = {
     base: [{ scope: 'analysis' }] as const,
-    analysis: ({ goalData, weeklyWeight, burnedCalories, calories, progressionRate }: CreateGPTType) =>
+    analysis: ({ goalData, weeklyWeight, burnedCalories, calories, progressionRate }: CreateAnalysisArgs) =>
         [{ ...analysisKeys.base[0], goalData, weeklyWeight, burnedCalories, calories, progressionRate }] as const,
 };

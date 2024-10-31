@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createAnalysis } from '../api/analysisService';
-import { analysisKeys } from '../queryKey';
+import { analysisKeys } from '../utils/queryKey';
 import { CreateAnalysisArgs } from '../@types';
 
 export function useCreateAnalysis() {

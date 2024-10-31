@@ -13,6 +13,10 @@ const getGoalsData = async (status: GoalStatusType) => {
         cache: 'no-store',
     });
 
+    if (!data.ok) {
+        throw new Error('Failed to fetch goals data');
+    }
+
     const result = await data.json();
     return result;
 };

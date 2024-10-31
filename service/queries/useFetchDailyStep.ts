@@ -1,5 +1,5 @@
 import { useQueries, useQuery } from '@tanstack/react-query';
-import { dailySpecKeys } from '../queryKey';
+import { dailySpecKeys } from '../utils/queryKey';
 import dayjs from 'dayjs';
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import { DATE_FORMAT } from '@/constants';

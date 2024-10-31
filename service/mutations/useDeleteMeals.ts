@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { dailySpecKeys, mealsKeys } from '../queryKey';
+import { dailySpecKeys, mealsKeys } from '../utils/queryKey';
 import { deleteMeals } from '../api/mealsService';
 
 export function useDeleteMeals() {

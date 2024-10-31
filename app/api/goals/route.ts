@@ -13,16 +13,12 @@ export async function GET(request: NextRequest) {
     }
 
     try {
-        const { data, error } = await supabase
+        const { data } = await supabase
             .from('goals')
             .select('*')
             .eq('goal_status', status)
             .throwOnError()
             .maybeSingle();
-
-        if (error) {
-            throw new Error(error.message);
-        }
 
         return NextResponse.json(data, { status: 200 });
     } catch (error: any) {
@@ -55,7 +51,7 @@ export async function POST(request: NextRequest) {
             daily_fat,
         } = body;
 
-        const { data, error } = await supabase
+        const { data } = await supabase
             .from('goals')
             .insert([
                 {
@@ -77,10 +73,6 @@ export async function POST(request: NextRequest) {
             ])
             .select()
             .throwOnError();
-
-        if (error) {
-            throw new Error(error.message);
-        }
 
         return NextResponse.json(data, { status: 201 });
     } catch (error: any) {
