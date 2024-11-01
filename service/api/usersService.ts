@@ -1,13 +1,10 @@
 import { UpdateUserArgs, UserType } from '../@types';
 import { DecodeUser, decodeUser } from '../mappers/userMapper';
+import { defaultFetch } from '../utils/defaultFetch';
 import { API_ENDPOINTS } from './config';
 
 export async function fetchUsersData(): Promise<DecodeUser> {
-    const data = await fetch(`${API_ENDPOINTS.USERS}`);
-
-    if (!data.ok) {
-        throw new Error('Failed to fetch Users Data');
-    }
+    const data = await defaultFetch('/users');
 
     const result = await data.json();
 
@@ -15,16 +12,7 @@ export async function fetchUsersData(): Promise<DecodeUser> {
 }
 
 export async function updateUser(updateData: UpdateUserArgs): Promise<UserType> {
-    const data = await fetch(`${API_ENDPOINTS.USERS}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(updateData),
-    });
-    if (!data.ok) {
-        throw new Error('Failed to update Users Data');
-    }
+    const data = await defaultFetch('/users', { method: 'PUT', body: JSON.stringify(updateData) });
 
     const result = await data.json();
 

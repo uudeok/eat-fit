@@ -1,13 +1,9 @@
 import { CreateGoalArgs, GoalStatusType } from '@/service/@types/req.type';
-import { API_ENDPOINTS } from './config';
 import { decodeGoal, DecodeGoalType } from '../mappers/goalMapper';
+import { defaultFetch } from '../utils/defaultFetch';
 
 export async function fetchGoalsByStatus(status: GoalStatusType): Promise<DecodeGoalType> {
-    const data = await fetch(`${API_ENDPOINTS.GOALS}?status=${status}`);
-
-    if (!data.ok) {
-        throw new Error('Failed to fetch Goals Data');
-    }
+    const data = await defaultFetch(`/goals?status=${status}`);
 
     const result = await data.json();
 
@@ -15,17 +11,7 @@ export async function fetchGoalsByStatus(status: GoalStatusType): Promise<Decode
 }
 
 export async function createNewGoals(goalData: CreateGoalArgs): Promise<DecodeGoalType> {
-    const data = await fetch(`${API_ENDPOINTS.GOALS}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(goalData),
-    });
-
-    if (!data.ok) {
-        throw new Error('Failed to create Goals');
-    }
+    const data = await defaultFetch('/goals', { method: 'POST', body: JSON.stringify(goalData) });
 
     const result = await data.json();
 

@@ -1,13 +1,10 @@
-import { API_ENDPOINTS } from './config';
 import { CreateExercisesArgs, UpdateExercisesArgs } from '../@types';
 import { decodeExercises, DecodeExercisesType } from '../mappers/exercisesMapper';
+import { defaultFetch } from '../utils/defaultFetch';
+import { API_ENDPOINTS } from './config';
 
 export async function fetchExercisesData(selectedDate: string): Promise<DecodeExercisesType> {
-    const data = await fetch(`${API_ENDPOINTS.EXERCISES}?date=${selectedDate}`);
-
-    if (!data.ok) {
-        throw new Error('Failed to fetch Exercises Data');
-    }
+    const data = await defaultFetch(`${API_ENDPOINTS.EXERCISES}?date=${selectedDate}`);
 
     const result = await data.json();
 
@@ -15,17 +12,10 @@ export async function fetchExercisesData(selectedDate: string): Promise<DecodeEx
 }
 
 export async function createExercises(exercisesData: CreateExercisesArgs) {
-    const data = await fetch(`${API_ENDPOINTS.EXERCISES}`, {
+    const data = await defaultFetch(`${API_ENDPOINTS.EXERCISES}`, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
         body: JSON.stringify(exercisesData),
     });
-
-    if (!data.ok) {
-        throw new Error('Failed to create Exercises');
-    }
 
     const result = await data.json();
 
@@ -33,17 +23,7 @@ export async function createExercises(exercisesData: CreateExercisesArgs) {
 }
 
 export async function updateExercises(updateData: UpdateExercisesArgs) {
-    const data = await fetch(`${API_ENDPOINTS.EXERCISES}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(updateData),
-    });
-
-    if (!data.ok) {
-        throw new Error('Failed to update exercises data');
-    }
+    const data = await defaultFetch(`${API_ENDPOINTS.EXERCISES}`, { method: 'PUT', body: JSON.stringify(updateData) });
 
     const result = await data.json();
 
@@ -51,16 +31,7 @@ export async function updateExercises(updateData: UpdateExercisesArgs) {
 }
 
 export async function deleteExercises(exercisesId: number) {
-    const data = await fetch(`${API_ENDPOINTS.EXERCISES}?id=${exercisesId}`, {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    });
-
-    if (!data.ok) {
-        throw new Error('Failed to delete the exercise');
-    }
+    const data = await defaultFetch(`${API_ENDPOINTS.EXERCISES}?id=${exercisesId}`, { method: 'DELETE' });
 
     const result = await data.json();
 

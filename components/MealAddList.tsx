@@ -32,6 +32,8 @@ const MealAddList = () => {
     const { mutateAsync: createDailySpec } = useCreateDailySpec();
     const { mutateAsync: createMeals } = useCreateMeals(formattedDate);
 
+    console.log('22', goalData);
+
     if (!meals.length) return;
 
     const nutrientTotals = calculateTotalNutrients(meals);

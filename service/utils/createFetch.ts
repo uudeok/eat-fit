@@ -1,17 +1,27 @@
-type FetchOptions = {
+import { displayLoadingIndicator, hideLoadingIndicator } from '@/shared/utils';
+
+type FetchOptions<ReqType = unknown, ResType = Response> = {
     baseUrl: string;
     headers: Record<string, string>;
-    interceptors: {
-        request?: any;
-        response?: any;
+    interceptors?: {
+        request?: (args: [string, RequestInit]) => Promise<[string, RequestInit]> | [string, RequestInit];
+        response?: (response: ResType, requestArgs: [string, RequestInit]) => Promise<ResType> | ResType;
     };
+    timer?: number;
 };
-
 type OptionsType = Omit<RequestInit, 'headers'> & {
     headers?: Record<string, string>;
 };
 
-function returnFetch({ baseUrl = '', headers = {}, interceptors = {} }: FetchOptions) {
+export const setLoading = (isLoading: boolean) => {
+    if (isLoading) {
+        displayLoadingIndicator();
+    } else {
+        hideLoadingIndicator();
+    }
+};
+
+export function returnFetch({ baseUrl = '', headers = {}, interceptors = {}, timer }: FetchOptions) {
     const { request: requestInterceptor, response: responseInterceptor } = interceptors;
 
     return async (url: string, options: OptionsType = {}) => {
@@ -26,46 +36,31 @@ function returnFetch({ baseUrl = '', headers = {}, interceptors = {} }: FetchOpt
 
         let requestArgs: [string, RequestInit] = [finalUrl, finalOptions];
 
+        let loadingTimer: NodeJS.Timeout | undefined;
+
         if (requestInterceptor) {
             requestArgs = await requestInterceptor(requestArgs);
+
+            if (timer !== undefined) {
+                loadingTimer = setTimeout(() => {
+                    setLoading(true);
+                }, timer);
+            }
         }
 
         let response: Response;
 
         response = await fetch(...requestArgs);
 
-        if (!response.ok) {
-            console.error('Fetch request failed, Error Status : ', response.status);
-            throw new Error('Fetch request failed');
-        }
-
         if (responseInterceptor) {
             response = await responseInterceptor(response, requestArgs);
         }
 
+        if (loadingTimer) {
+            clearTimeout(loadingTimer);
+        }
+        setLoading(false);
+
         return response;
     };
 }
-
-export const defaultFetch = returnFetch({
-    baseUrl: 'http://localhost:3000/api',
-    headers: {
-        'Content-Type': 'application/json',
-    },
-    interceptors: {
-        request: async (args: any) => {
-            // 요청을 가로채서 어떠한 로직을 실행할 수 있다.
-            console.log('args', args);
-            console.log('헤더에 토큰을 넣거나 할 수 있다');
-            return args;
-        },
-        response: async (response: any, requestArgs: any) => {
-            // 응답을 가로채서 어떠한 로직을 실행할 수 있다.
-            console.log('response', response);
-            console.log('requestArgs', requestArgs);
-            console.log('에러 처리를 할 수 있따');
-
-            return response;
-        },
-    },
-});
