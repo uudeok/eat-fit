@@ -13,7 +13,9 @@ export default function ErrorBoundary({ error, reset }: { error: Error & { diges
     useEffect(() => {
         const handleSendErrorMail = async () => {
             try {
-                await sendErrorMail({ errorLocation: path, errorMessage: error.message });
+                const errorMessage = error.message || 'Error Occured';
+
+                await sendErrorMail({ errorLocation: path, errorMessage: errorMessage });
             } catch (sendError) {
                 console.error('Failed to send error email:', sendError);
             }
@@ -22,6 +24,7 @@ export default function ErrorBoundary({ error, reset }: { error: Error & { diges
         handleSendErrorMail();
         console.error('Logged error:', error);
     }, [error, path]);
+
     return (
         <div className="responsiveHeight item-center flex flex-col justify-center text-center p-5">
             <div>

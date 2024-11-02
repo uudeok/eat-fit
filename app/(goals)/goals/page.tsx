@@ -1,5 +1,6 @@
 import { GoalStatusType } from '@/service/@types';
 import { API_ENDPOINTS } from '@/service/api/config';
+import { defaultFetch } from '@/service/utils/defaultFetch';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
@@ -8,14 +9,10 @@ import { redirect } from 'next/navigation';
  */
 
 const getGoalsData = async (status: GoalStatusType) => {
-    const data = await fetch(`${API_ENDPOINTS.GOALS}?status=${status}`, {
+    const data = await defaultFetch(`${API_ENDPOINTS.GOALS}?status=${status}`, {
         headers: headers(),
         cache: 'no-store',
     });
-
-    if (!data.ok) {
-        throw new Error('Failed to fetch goals data');
-    }
 
     const result = await data.json();
     return result;

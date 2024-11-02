@@ -1,5 +1,5 @@
 import { CreateAnalysisArgs } from '@/service/@types';
-import { API_ENDPOINTS } from '@/service/api/config';
+import { chatGPTFetch } from '@/service/utils/chatGPTFetch';
 import { createClient } from '@/shared/utils/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -70,12 +70,8 @@ export async function POST(request: NextRequest) {
 
         const messages = createAnalysisMessage(body);
 
-        const response = await fetch(`${API_ENDPOINTS.CHAT_GPT}`, {
+        const response = await chatGPTFetch('', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${process.env.NEXT_PUBLIC_GPT_API_KEY}`,
-            },
             body: JSON.stringify({
                 model: 'gpt-4o-mini',
                 messages,
@@ -130,12 +126,8 @@ export async function PUT(request: NextRequest) {
 
         const messages = createAnalysisMessage(body);
 
-        const response = await fetch(`${API_ENDPOINTS.CHAT_GPT}`, {
+        const response = await chatGPTFetch('', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${process.env.NEXT_PUBLIC_GPT_API_KEY}`,
-            },
             body: JSON.stringify({
                 model: 'gpt-4o-mini',
                 messages,

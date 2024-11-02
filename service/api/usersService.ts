@@ -4,7 +4,7 @@ import { defaultFetch } from '../utils/defaultFetch';
 import { API_ENDPOINTS } from './config';
 
 export async function fetchUsersData(): Promise<DecodeUser> {
-    const data = await defaultFetch('/users');
+    const data = await defaultFetch(`${API_ENDPOINTS.USERS}`);
 
     const result = await data.json();
 
@@ -12,7 +12,7 @@ export async function fetchUsersData(): Promise<DecodeUser> {
 }
 
 export async function updateUser(updateData: UpdateUserArgs): Promise<UserType> {
-    const data = await defaultFetch('/users', { method: 'PUT', body: JSON.stringify(updateData) });
+    const data = await defaultFetch(`${API_ENDPOINTS.USERS}`, { method: 'PUT', body: JSON.stringify(updateData) });
 
     const result = await data.json();
 

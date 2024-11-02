@@ -1,22 +1,20 @@
+import { API_ENDPOINTS } from '../api/config';
 import { sendErrorMail } from '../api/mailService';
 import { returnFetch } from './createFetch';
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
-
-export const defaultFetch = returnFetch({
-    baseUrl: `${BASE_URL}/api`,
+export const chatGPTFetch = returnFetch({
+    baseUrl: `${API_ENDPOINTS.CHAT_GPT}`,
     defaultHeaders: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_GPT_API_KEY}`,
     },
     interceptors: {
         request: async (args: [string, RequestInit]) => {
-            const [url, options] = args;
-
             return args;
         },
         response: async (response: Response, requestArgs: [string, RequestInit]) => {
             if (!response.ok) {
-                const errorMessage = `Fetch request failed with status: ${response.status}`;
+                const errorMessage = `Fetch ChatGPT request failed with status: ${response.status}`;
                 console.error(errorMessage);
 
                 const errorOptions = {

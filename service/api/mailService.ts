@@ -1,3 +1,4 @@
+import { defaultFetch } from '../utils/defaultFetch';
 import { API_ENDPOINTS } from './config';
 
 export type ErrorOptions = {
@@ -6,17 +7,7 @@ export type ErrorOptions = {
 };
 
 export async function sendErrorMail(errorOptions: ErrorOptions) {
-    const data = await fetch(API_ENDPOINTS.MAIL, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(errorOptions),
-    });
-
-    if (!data.ok) {
-        throw new Error('Failed to fetch Mail');
-    }
+    const data = await defaultFetch(`${API_ENDPOINTS.MAIL}`, { method: 'POST', body: JSON.stringify(errorOptions) });
 
     const result = await data.json();
 

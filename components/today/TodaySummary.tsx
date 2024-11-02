@@ -3,11 +3,12 @@ import NutrientSummary from './NutrientSummary';
 import TodayStatus from './TodayStatus';
 import { API_ENDPOINTS } from '@/service/api/config';
 import { headers } from 'next/headers';
+import { defaultFetch } from '@/service/utils/defaultFetch';
 
-export const revalidate = 0;
+// export const revalidate = 0;
 
 const getGoalsData = async (status: GoalStatusType) => {
-    const data = await fetch(`${API_ENDPOINTS.GOALS}?status=${status}`, {
+    const data = await defaultFetch(`${API_ENDPOINTS.GOALS}?status=${status}`, {
         headers: headers(),
         cache: 'no-store',
     });

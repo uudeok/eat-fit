@@ -1,16 +1,17 @@
 import { displayLoadingIndicator, hideLoadingIndicator } from '@/shared/utils';
+import { applyDefaultHeaders } from './applyDaultOptions';
 
 type FetchOptions<ReqType = unknown, ResType = Response> = {
     baseUrl: string;
-    headers: Record<string, string>;
+    defaultHeaders: Record<string, string> | Headers;
     interceptors?: {
         request?: (args: [string, RequestInit]) => Promise<[string, RequestInit]> | [string, RequestInit];
         response?: (response: ResType, requestArgs: [string, RequestInit]) => Promise<ResType> | ResType;
     };
-    timer?: number;
+    timeout?: number;
 };
 type OptionsType = Omit<RequestInit, 'headers'> & {
-    headers?: Record<string, string>;
+    headers?: Record<string, string> | Headers;
 };
 
 export const setLoading = (isLoading: boolean) => {
@@ -21,16 +22,23 @@ export const setLoading = (isLoading: boolean) => {
     }
 };
 
-export function returnFetch({ baseUrl = '', headers = {}, interceptors = {}, timer }: FetchOptions) {
+export function returnFetch({ baseUrl = '', defaultHeaders = {}, interceptors = {}, timeout }: FetchOptions) {
     const { request: requestInterceptor, response: responseInterceptor } = interceptors;
 
-    return async (url: string, options: OptionsType = {}) => {
-        const finalUrl = `${baseUrl}${url}`;
+    return async (url?: string, options: OptionsType = {}) => {
+        const finalUrl = url ? `${baseUrl}${url}` : baseUrl;
+
+        let mergedHeader;
+
+        if (options.headers) {
+            mergedHeader = applyDefaultHeaders(defaultHeaders, options.headers);
+        }
+
         const finalOptions: RequestInit = {
             ...options,
             headers: {
-                ...headers,
-                ...(options.headers || {}),
+                ...defaultHeaders,
+                ...mergedHeader,
             },
         };
 
@@ -41,10 +49,10 @@ export function returnFetch({ baseUrl = '', headers = {}, interceptors = {}, tim
         if (requestInterceptor) {
             requestArgs = await requestInterceptor(requestArgs);
 
-            if (timer !== undefined) {
+            if (timeout) {
                 loadingTimer = setTimeout(() => {
                     setLoading(true);
-                }, timer);
+                }, timeout);
             }
         }
 
