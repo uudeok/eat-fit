@@ -21,7 +21,7 @@ const Search = (props: Props) => {
 
     return (
         <form className={styles.search} onSubmit={handleSearch}>
-            <Image src="/search.png" width={25} height={20} alt="search" />
+            <Image src="/images/search.png" width={25} height={20} alt="search" />
             <InputBase
                 placeholder={placeHolder ? placeHolder : '입력해주세요'}
                 value={value}

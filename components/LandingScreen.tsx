@@ -34,7 +34,7 @@ const LandingScreen = () => {
     return (
         <div className={`${styles.layout} ${isFadeOut && styles['fadeOut']}`}>
             <div className={styles.imageWrapper}>
-                <Image src="/eatfit3.png" alt="intro image" width={150} height={150} priority />
+                <Image src="/images/logo.png" alt="intro image" width={150} height={150} priority />
             </div>
             <div className={styles.textWrapper}>
                 <p className={styles.title}>EAT-FIT</p>

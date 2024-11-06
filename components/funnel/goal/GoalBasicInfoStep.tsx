@@ -89,7 +89,7 @@ const GoalBasicInfoStep = ({ onNext }: Props) => {
                                 onClick={() => handleGenderSelect(g.key as GenderType)}
                             >
                                 <Image
-                                    src={selectedGender === g.key ? g.selected : g.emj}
+                                    src={selectedGender === g.key ? `/images/${g.selected}` : `/images/${g.emj}`}
                                     alt={g.key}
                                     width={100}
                                     height={100}
@@ -168,7 +168,7 @@ const GoalBasicInfoStep = ({ onNext }: Props) => {
                                 }`}
                                 onClick={() => handleActivitySelect(act.key as ActivityLevelType)}
                             >
-                                <Image src={act.emj} alt={act.key} width={70} height={70} />
+                                <Image src={`/images/${act.emj}`} alt={act.key} width={70} height={70} />
                                 <Text size="sm" bold color="var(--grey600)">
                                     {act.value}
                                 </Text>

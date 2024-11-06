@@ -4,6 +4,8 @@ import { createClient } from '@/shared/utils/supabase/client';
 import { Provider } from '@supabase/supabase-js';
 import { OauthButton } from '../common/Button';
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
 const Login = () => {
     const supabase = createClient();
 
@@ -11,7 +13,7 @@ const Login = () => {
         const { error } = await supabase.auth.signInWithOAuth({
             provider: provider,
             options: {
-                redirectTo: 'http://localhost:3000/auth/callback',
+                redirectTo: `${baseUrl}/auth/callback`,
             },
         });
 

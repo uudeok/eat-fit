@@ -25,9 +25,9 @@ const MoodStatus = () => {
                 }
                 right={
                     dailySpec?.mood ? (
-                        <Image src={`/emotion_fill_${dailySpec.mood}.png`} width={30} height={30} alt="mood" />
+                        <Image src={`/images/emotion_fill_${dailySpec.mood}.png`} width={30} height={30} alt="mood" />
                     ) : (
-                        <Image src="/question.png" alt="mood" width={30} height={30} />
+                        <Image src="/images/question.png" alt="mood" width={30} height={30} />
                     )
                 }
             />

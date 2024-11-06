@@ -28,7 +28,7 @@ const Emotions = ({ width, height, onClick }: Props) => {
                     onClick={() => handleClick(emoji.key)}
                 >
                     <Image
-                        src={selectedEmotion === emoji.key ? emoji.filledPath : emoji.path}
+                        src={selectedEmotion === emoji.key ? `/images/${emoji.filledPath}` : `/images/${emoji.path}`}
                         alt={emoji.label}
                         className={styles.emotionImage}
                         width={width}

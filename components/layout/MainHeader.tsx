@@ -40,7 +40,7 @@ const MainHeader = () => {
                         }
                         middle={
                             <div className={styles.dateLabel} onClick={onOpen}>
-                                <Image src="/calendar.png" alt="calendar icon" width={20} height={15} />
+                                <Image src="/images/calendar.png" alt="calendar icon" width={20} height={15} />
                                 <Text bold>{isToday ? '오늘' : `${dateLabel} (${dayOfWeek})`}</Text>
                                 <Icons.Down width={10} />
                             </div>

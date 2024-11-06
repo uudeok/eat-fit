@@ -76,7 +76,7 @@ const TodayExercises = () => {
     return (
         <div className={styles.layout}>
             <div className={styles.summary}>
-                <Image src="/exercise_jump.png" alt="jump rope icon" width={140} height={120} />
+                <Image src="/images/exercise_jump.png" alt="jump rope icon" width={140} height={120} />
 
                 <div className={styles.summaryLayout}>
                     {EXERCISES_SUMMARY.map((summary) => (

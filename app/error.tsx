@@ -33,7 +33,7 @@ export default function ErrorBoundary({ error, reset }: { error: Error & { diges
                 <p className="mx-auto mt-8 mb-8 max-w-lg text-xs text-input-border-color">
                     Error Message: {error?.message || '없음'}
                 </p>
-                <Image src="/oops.png" alt="error" width={100} height={100} />
+                <Image src="/images/oops.png" alt="error" width={100} height={100} />
                 <div className="mt-8 p-4 flex flex-col gap-5">
                     <Button role="round" onClick={() => router.replace('/home')}>
                         홈으로

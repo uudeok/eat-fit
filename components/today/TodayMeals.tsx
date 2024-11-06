@@ -39,7 +39,7 @@ const TodayMeals = () => {
                 mealsData?.mealsList.map((data) => (
                     <div key={data.id} className={styles.mealCard} onClick={() => router.push(`/meals/${data.id}`)}>
                         <Image
-                            src={`/${data.mealType}.png`}
+                            src={`/images/${data.mealType}.png`}
                             alt="meal"
                             className={styles.mealImage}
                             width={80}

@@ -24,7 +24,7 @@ const MyFeed = () => {
     return (
         <div className={`${styles.layout} ${isOpen && styles.overlay}`}>
             <div className={styles.main}>
-                <Image src="/emotion_sad.png" alt="emoji" width={30} height={30} />
+                <Image src="/images/emotion_sad.png" alt="emoji" width={30} height={30} />
                 <Text bold size="sm" color="var(--grey700)">
                     등록된 피드가 없어요
                 </Text>

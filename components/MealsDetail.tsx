@@ -74,14 +74,20 @@ const MealsDetail = ({ mealsId }: { mealsId: string }) => {
                 </div>
                 <div className={styles.imageContainer}>
                     <Image
-                        src="/rice.png"
+                        src="/images/rice.png"
                         alt="Meal Image"
                         width={150}
                         height={150}
                         className={styles.mealImage}
                         priority
                     />
-                    <Image src="/camera.png" alt="Camera Icon" width={30} height={30} className={styles.cameraIcon} />
+                    <Image
+                        src="/images/camera.png"
+                        alt="Camera Icon"
+                        width={30}
+                        height={30}
+                        className={styles.cameraIcon}
+                    />
                 </div>
 
                 <div className={styles.nutrientInfo}>

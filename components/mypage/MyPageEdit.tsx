@@ -18,7 +18,7 @@ const MyPageEdit = ({ userData }: { userData: DecodeUser }) => {
     const router = useRouter();
 
     const { imageUrl, triggerFileInput, handleFileInputChange, fileRef, uploadImageToS3 } = useImageUpload({
-        initialImageUrl: userData?.avatarUrl || '/user.svg',
+        initialImageUrl: userData?.avatarUrl || '/images/user.svg',
     });
 
     const { mutateAsync: updateUser } = useUpdateUser();
@@ -65,14 +65,14 @@ const MyPageEdit = ({ userData }: { userData: DecodeUser }) => {
 
             <div className={styles.imageContainer}>
                 <img
-                    src={imageUrl || '/user.svg'}
+                    src={imageUrl || '/images/user.svg'}
                     alt="profile img"
                     width="80px"
                     height="80px"
                     className={styles.avatar}
                 />
                 <Image
-                    src="/camera.png"
+                    src="/images/camera.png"
                     alt="Camera Icon"
                     width={30}
                     height={30}

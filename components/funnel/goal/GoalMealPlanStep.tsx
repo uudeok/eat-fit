@@ -86,7 +86,7 @@ const GoalMealPlanStep = ({ onNext }: Props) => {
                     key={plan.key}
                     left={
                         <div className={styles.plan}>
-                            <Image src={plan.icon} alt={plan.label} width={45} height={45} />
+                            <Image src={`/images/${plan.icon}`} alt={plan.label} width={45} height={45} />
                             <div className={styles.planInfo}>
                                 <Text bold size="lg">
                                     {plan.label}

@@ -17,7 +17,7 @@ const LoadingAnalysis = () => {
 
     return (
         <div className={styles.layout}>
-            <Image src="/analysis.gif" alt="analyzing" width={140} height={140} />
+            <Image src="/images/analysis.gif" alt="analyzing" width={140} height={140} />
 
             <Text bold size="xlg">
                 {userData?.nickname}님의
