@@ -1,10 +1,10 @@
 export const EMOJI_LIST = [
-    { label: '기분짱', key: 'good', path: '/emotion_good.png', filledPath: '/emotion_fill_good.png' },
-    { label: '슬퍼', key: 'sad', path: '/emotion_sad.png', filledPath: '/emotion_fill_sad.png' },
-    { label: '우울행', key: 'gloomy', path: '/emotion_gloomy.png', filledPath: '/emotion_fill_gloomy.png' },
-    { label: '배고파', key: 'hungry', path: '/emotion_hungry.png', filledPath: '/emotion_fill_hungry.png' },
-    { label: '피곤행', key: 'tired', path: '/emotion_tired.png', filledPath: '/emotion_fill_tired.png' },
-    { label: '화났어', key: 'angry', path: '/emotion_angry.png', filledPath: '/emotion_fill_angry.png' },
+    { label: '기분짱', key: 'good', path: 'emotion_good.png', filledPath: 'emotion_fill_good.png' },
+    { label: '슬퍼', key: 'sad', path: 'emotion_sad.png', filledPath: 'emotion_fill_sad.png' },
+    { label: '우울행', key: 'gloomy', path: 'emotion_gloomy.png', filledPath: 'emotion_fill_gloomy.png' },
+    { label: '배고파', key: 'hungry', path: 'emotion_hungry.png', filledPath: 'emotion_fill_hungry.png' },
+    { label: '피곤행', key: 'tired', path: 'emotion_tired.png', filledPath: 'emotion_fill_tired.png' },
+    { label: '화났어', key: 'angry', path: 'emotion_angry.png', filledPath: 'emotion_fill_angry.png' },
 ] as const;
 
 export const EMOJI_LABEL = [
