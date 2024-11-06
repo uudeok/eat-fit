@@ -30,7 +30,7 @@ const createAnalysisMessage = (data: CreateAnalysisArgs) => [
             `,
     },
     {
-        role: 'user',
+        role: 'system',
         content: `
             ## User Data ##
             goalData: ${JSON.stringify(data.goalData)},

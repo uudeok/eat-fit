@@ -1,4 +1,4 @@
-import { CreateAnalysisArgs, GoalStatusType } from './@types';
+import { CreateAnalysisArgs, GoalStatusType } from '../@types';
 
 export const goalsKeys = {
     base: [{ scope: 'goals' }] as const,
