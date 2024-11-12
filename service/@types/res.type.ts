@@ -110,3 +110,28 @@ export type AnalyzeDataType = {
     cheering: string;
     evaluates: string;
 };
+
+export type FoodDataType = {
+    DESC_KOR: string;
+    FOOD_CD: string;
+    GROUP_NAME: string;
+    MAKER_NAME: string;
+    NUM: string;
+    NUTR_CONT1: string;
+    NUTR_CONT2: string;
+    NUTR_CONT3: string;
+    NUTR_CONT4: string;
+    NUTR_CONT5: string;
+    NUTR_CONT6: string;
+    NUTR_CONT7: string;
+    NUTR_CONT8: string;
+    NUTR_CONT9: string;
+    RESEARCH_YEAR: string;
+    SAMPLING_MONTH_CD: string;
+    SAMPLING_MONTH_NAME: string;
+    SAMPLING_REGION_CD: string;
+    SAMPLING_REGION_NAME: string;
+    SERVING_SIZE: string;
+    SERVING_UNIT: string;
+    SUB_REF_NAME: string;
+};

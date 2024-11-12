@@ -1,7 +1,7 @@
 'use client';
 
 import styles from '@styles/common/plusButton.module.css';
-import { ButtonHTMLAttributes, CSSProperties, useState } from 'react';
+import { ButtonHTMLAttributes, CSSProperties, useEffect, useState } from 'react';
 import Icons from '@/assets';
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {

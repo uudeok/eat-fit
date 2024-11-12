@@ -18,7 +18,6 @@ const MyFeed = () => {
 
     const handleFeedMenu = () => {
         confirmAction('아직 준비중이에요');
-        setIsOpen(false);
     };
 
     return (

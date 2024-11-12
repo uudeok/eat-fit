@@ -7,16 +7,17 @@ import { useInput } from '@/hooks';
 
 type Props = {
     placeHolder?: string;
-    onClick: (value: string) => void;
+    onSubmit: (value: string) => void;
 };
 
 const Search = (props: Props) => {
-    const { placeHolder, onClick } = props;
+    const { placeHolder, onSubmit } = props;
     const [value, onChangeInput, isValid, setValue] = useInput();
 
     const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        onClick(value);
+        onSubmit(value);
+        // setValue('');
     };
 
     return (

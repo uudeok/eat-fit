@@ -38,3 +38,7 @@ export const analysisKeys = {
     analysis: ({ goalData, weeklyWeight, burnedCalories, calories, progressionRate }: CreateAnalysisArgs) =>
         [{ ...analysisKeys.base[0], goalData, weeklyWeight, burnedCalories, calories, progressionRate }] as const,
 };
+
+export const foodDataKeys = {
+    base: [{ scope: 'foodData' }] as const,
+};
