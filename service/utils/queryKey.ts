@@ -41,4 +41,5 @@ export const analysisKeys = {
 
 export const foodDataKeys = {
     base: [{ scope: 'foodData' }] as const,
+    keyword: (keyword: string) => [{ ...foodDataKeys.base[0], keyword }],
 };

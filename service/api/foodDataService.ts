@@ -1,5 +1,5 @@
-import { decodeFoodData, docodeFoodDataList } from '../mappers/foodDataMapper';
-import { defaultFetch } from '../utils/defaultFetch';
+import { docodeFoodDataList } from '../mappers/foodDataMapper';
+import { returnFetchWithLoadingIndicator } from '../utils/returnFetchWithLoadingIndicator';
 import { API_ENDPOINTS } from './config';
 
 export type FoodDataArgs = {
@@ -8,10 +8,11 @@ export type FoodDataArgs = {
     keyword?: string;
 };
 
-export async function fetchFoodData(args: FoodDataArgs) {
+export async function fetchFoodSearchResults(args: FoodDataArgs) {
     const { startIdx, endIdx, keyword } = args;
-    const response = await defaultFetch(
-        `${API_ENDPOINTS.FOODDATA}?startIdx=${startIdx}&endIdx=${endIdx}&DESC_KOR=${keyword}`
+
+    const response = await returnFetchWithLoadingIndicator(
+        `${API_ENDPOINTS.FOOD_DATA}?startIdx=${startIdx}&endIdx=${endIdx}&DESC_KOR=${keyword}`
     );
 
     const result = await response.json();

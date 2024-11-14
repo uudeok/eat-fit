@@ -1,9 +1,10 @@
-import { API_ENDPOINTS } from '../api/config';
 import { sendErrorMail } from '../api/mailService';
 import { returnFetch } from './createFetch';
 
-export const foodDataFetch = returnFetch({
-    baseUrl: `${API_ENDPOINTS.FOOD_API}`,
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
+export const returnFetchWithLoadingIndicator = returnFetch({
+    baseUrl: `${BASE_URL}/api`,
     defaultHeaders: {
         'Content-Type': 'application/json',
     },
@@ -11,8 +12,8 @@ export const foodDataFetch = returnFetch({
         request: async (args: [string, RequestInit]) => {
             const [url, options] = args;
 
-            console.log('url', url);
-            console.log('options', options);
+            console.log(9, url);
+            console.log(10, options);
 
             return args;
         },
@@ -33,4 +34,5 @@ export const foodDataFetch = returnFetch({
             return response;
         },
     },
+    showLoading: true,
 });

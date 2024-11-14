@@ -5,20 +5,10 @@
 
 .header {
     padding: 10px;
-    /* border: 1px solid black; */
     display: flex;
     flex-direction: column;
     gap: 15px;
     cursor: pointer;
-
-    background-color: white;
-}
-
-.searchCount {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
     background-color: white;
 }
 

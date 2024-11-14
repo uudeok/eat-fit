@@ -12,7 +12,7 @@ export const API_ENDPOINTS = {
     MAIL: '/mail',
     ANALYSIS: '/analysis',
     CHAT_GPT: `${GPT_BASE_URL}`,
-    FOODDATA: '/foodData',
+    FOOD_DATA: '/foodData',
     FOOD_API: `${FOOD_BASE_URL}`,
 } as const;
 

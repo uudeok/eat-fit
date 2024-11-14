@@ -80,6 +80,13 @@ export function returnFetch({
     };
 }
 
+/** 정리
+ *  returnFetch 를 사용하는 경우는 아래 중 한가지 사항이라도 추가되어야 할때 custom fetch 함수를 만든다.
+ * 1. baseUrl 이 다르다
+ * 2. header 옵션이 다르다
+ * 3. interceptor 설정을 추가해야 한다
+ */
+
 // import { displayLoadingIndicator, hideLoadingIndicator } from '@/shared/utils';
 // import { applyDefaultHeaders } from './applyDaultOptions';
 
