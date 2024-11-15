@@ -9,25 +9,26 @@ import { useMealsStore } from '@/shared/store/useMealsStore';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { foodDataKeys } from '@/service/utils/queryKey';
 import { fetchFoodSearchResults } from '@/service/api/foodDataService';
+import EmptyState from './common/EmptyState';
 
 const MealSearchList = ({ keyword }: { keyword: string }) => {
     const { onOpen } = useModal(ModalType.mealForm);
     const { selectMeal, addMeal } = useMealsStore();
 
-    console.log(keyword);
-
     const {
-        data: searchDatas,
+        data: searchDatas = [],
         hasNextPage,
         fetchNextPage,
+        isFetching,
     } = useInfiniteQuery({
         queryKey: foodDataKeys.keyword(keyword),
-        queryFn: ({ pageParam }) =>
-            fetchFoodSearchResults({ startIdx: pageParam, endIdx: pageParam + 9, keyword: keyword }),
+        queryFn: ({ pageParam }) => fetchFoodSearchResults({ pageNum: pageParam, pageSize: 15, keyword: keyword }),
         initialPageParam: 1,
         enabled: !!keyword,
-        getNextPageParam: (lastPage, allPages, lastPageParam) => {
-            return lastPage.foodList.length === 10 ? lastPageParam + 10 : undefined;
+        retry: 0,
+        getNextPageParam: (lastPage) => {
+            const totalPages = Math.ceil(lastPage.meta.totalCount / lastPage.meta.pageSize);
+            return lastPage.meta.pageNum < totalPages ? lastPage.meta.pageNum + 1 : undefined;
         },
         select: (data) => {
             const foodList = data.pages.flatMap((page) => page.foodList);
@@ -41,7 +42,7 @@ const MealSearchList = ({ keyword }: { keyword: string }) => {
         hasNextPage: hasNextPage,
     });
 
-    if (!keyword) return;
+    if (!keyword) return null;
 
     const openMealDetail = (meal: DecodeFoodDataType) => {
         selectMeal(meal);
@@ -53,7 +54,7 @@ const MealSearchList = ({ keyword }: { keyword: string }) => {
     return (
         <>
             <ul className={styles.layout}>
-                {searchDatas?.map((item) => (
+                {searchDatas.map((item) => (
                     <ListRow
                         onClick={() => openMealDetail(item)}
                         className={styles.foodItem}
@@ -77,6 +78,12 @@ const MealSearchList = ({ keyword }: { keyword: string }) => {
                         }
                     />
                 ))}
+
+                {!isFetching && searchDatas.length === 0 && (
+                    <div>
+                        <EmptyState bottomText="검색결과가 없습니다" />
+                    </div>
+                )}
             </ul>
 
             <div ref={observerEl} />
@@ -90,14 +97,14 @@ export default MealSearchList;
 
 // import styles from '@styles/component/mealSearchList.module.css';
 // import { DecodeFoodDataType } from '@/service/mappers/foodDataMapper';
-// import { ListRow, LoadingBar, Text } from './common';
+// import { ListRow, Text } from './common';
 // import { useInfiniteScroll, useModal } from '@/hooks';
 // import { ModalType } from './common/Modal/OverlayContainer';
 // import { useMealsStore } from '@/shared/store/useMealsStore';
 // import { useInfiniteQuery } from '@tanstack/react-query';
 // import { foodDataKeys } from '@/service/utils/queryKey';
-// import { fetchFoodData } from '@/service/api/foodDataService';
-// import Loading from '@/app/loading';
+// import { fetchFoodSearchResults } from '@/service/api/foodDataService';
+// import EmptyState from './common/EmptyState';
 
 // const MealSearchList = ({ keyword }: { keyword: string }) => {
 //     const { onOpen } = useModal(ModalType.mealForm);
@@ -107,15 +114,14 @@ export default MealSearchList;
 //         data: searchDatas,
 //         hasNextPage,
 //         fetchNextPage,
-//         isFetchingNextPage,
-//         isFetching,
 //     } = useInfiniteQuery({
 //         queryKey: foodDataKeys.keyword(keyword),
-//         queryFn: ({ pageParam }) => fetchFoodData({ startIdx: pageParam, endIdx: pageParam + 9, keyword: keyword }),
+//         queryFn: ({ pageParam }) => fetchFoodSearchResults({ pageNum: pageParam, pageSize: 10, keyword: keyword }),
 //         initialPageParam: 1,
 //         enabled: !!keyword,
-//         getNextPageParam: (lastPage, allPages, lastPageParam) => {
-//             return lastPage.foodList.length === 10 ? lastPageParam + 10 : undefined;
+//         getNextPageParam: (lastPage) => {
+//             const totalPages = Math.ceil(lastPage.meta.totalCount / lastPage.meta.pageSize);
+//             return lastPage.meta.pageNum < totalPages ? lastPage.meta.pageNum + 1 : undefined;
 //         },
 //         select: (data) => {
 //             const foodList = data.pages.flatMap((page) => page.foodList);
@@ -141,32 +147,38 @@ export default MealSearchList;
 //     return (
 //         <>
 //             <ul className={styles.layout}>
-//                 {searchDatas?.map((item) => (
-//                     <ListRow
-//                         onClick={() => openMealDetail(item)}
-//                         className={styles.foodItem}
-//                         key={item.id}
-//                         left={
-//                             <div className={styles.foodName}>
-//                                 <Text bold size="lg">
-//                                     {item.foodName}
-//                                 </Text>
-//                                 <Text size="sm" color="var(--grey600)">
-//                                     {item.servingSize ? `${item.servingSize}g` : '자유입력'}
-//                                 </Text>
-//                             </div>
-//                         }
-//                         right={
-//                             <div className={styles.action}>
-//                                 <Text bold size="lg">
-//                                     {item.calories || 0} kcal
-//                                 </Text>
-//                             </div>
-//                         }
-//                     />
-//                 ))}
+//                 {searchDatas ? (
+//                     searchDatas?.map((item) => (
+//                         <ListRow
+//                             onClick={() => openMealDetail(item)}
+//                             className={styles.foodItem}
+//                             key={item.id}
+//                             left={
+//                                 <div className={styles.foodName}>
+//                                     <Text bold size="lg">
+//                                         {item.foodName}
+//                                     </Text>
+//                                     <Text size="sm" color="var(--grey600)">
+//                                         {item.servingSize ? `${item.servingSize}g` : '자유입력'}
+//                                     </Text>
+//                                 </div>
+//                             }
+//                             right={
+//                                 <div className={styles.action}>
+//                                     <Text bold size="lg">
+//                                         {item.calories || 0} kcal
+//                                     </Text>
+//                                 </div>
+//                             }
+//                         />
+//                     ))
+//                 ) : (
+//                     <div>
+//                         <EmptyState bottomText="검색결과가 없습니다" />
+//                     </div>
+//                 )}
 //             </ul>
-//             {isFetchingNextPage && <LoadingBar />}
+
 //             <div ref={observerEl} />
 //         </>
 //     );

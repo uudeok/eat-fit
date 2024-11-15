@@ -1,25 +1,25 @@
 import { foodDataFetch } from '@/service/utils/foodDataFetch';
 import { NextResponse } from 'next/server';
 
-const defaultStartIdx = 1;
-const defaultEndIdx = 10;
+const defaultPageNum = 1;
+const defaultPageSize = 10;
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
 
-    const apiKey = process.env.NEXT_PUBLIC_FOOD_API_KEY;
-    const serviceId = process.env.NEXT_PUBLIC_FOOD_SERVICE_ID;
+    const serviceKey = process.env.NEXT_PUBLIC_FOOD_SERVICE_KEY;
+    const pageNum = searchParams.get('pageNum') || defaultPageNum;
+    const pageSize = searchParams.get('pageSize') || defaultPageSize;
+    const keyword = searchParams.get('keyword');
 
-    const startIdx = searchParams.get('startIdx') || defaultStartIdx;
-    const endIdx = searchParams.get('endIdx') || defaultEndIdx;
-    const keyword = searchParams.get('DESC_KOR') || '';
+    if (!keyword) {
+        return NextResponse.json({ error: 'Keyword parameter is missing' }, { status: 400 });
+    }
 
     try {
-        const result = await foodDataFetch(`/${apiKey}/${serviceId}/json/${startIdx}/${endIdx}/DESC_KOR=${keyword}`);
-
-        console.log(123456778, result);
-        console.log('@@@', result.headers.get('content-type'));
-        console.log('@@@@', result.headers);
+        const result = await foodDataFetch(
+            `?serviceKey=${serviceKey}&pageNo=${pageNum}&numOfRows=${pageSize}&type=json&FOOD_NM_KR=${keyword}`
+        );
 
         const data = await result.json();
 

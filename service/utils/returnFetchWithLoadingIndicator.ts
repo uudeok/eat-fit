@@ -12,9 +12,6 @@ export const returnFetchWithLoadingIndicator = returnFetch({
         request: async (args: [string, RequestInit]) => {
             const [url, options] = args;
 
-            console.log(9, url);
-            console.log(10, options);
-
             return args;
         },
         response: async (response: Response, requestArgs: [string, RequestInit]) => {

@@ -11,9 +11,6 @@ export const foodDataFetch = returnFetch({
         request: async (args: [string, RequestInit]) => {
             const [url, options] = args;
 
-            console.log('url', url);
-            console.log('options', options);
-
             return args;
         },
         response: async (response: Response, requestArgs: [string, RequestInit]) => {
