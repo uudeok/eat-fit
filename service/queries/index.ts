@@ -8,3 +8,4 @@ export { useFetchUsers } from './useFetchUsers';
 
 /* Third Party API */
 export { useFetchAnalysis } from './useFetchAnalysis';
+export { useFetchHealthMet } from './useFetchHealthMet';

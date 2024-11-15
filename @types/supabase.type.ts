@@ -75,6 +75,7 @@ export type Database = {
       dailySpec: {
         Row: {
           created_at: string
+          diary: string | null
           entry_date: string
           goal_id: number
           id: number
@@ -84,6 +85,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string
+          diary?: string | null
           entry_date: string
           goal_id: number
           id?: number
@@ -93,6 +95,7 @@ export type Database = {
         }
         Update: {
           created_at?: string
+          diary?: string | null
           entry_date?: string
           goal_id?: number
           id?: number
@@ -282,6 +285,24 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      met: {
+        Row: {
+          exercise_name: string
+          id: number
+          met: number
+        }
+        Insert: {
+          exercise_name: string
+          id?: number
+          met: number
+        }
+        Update: {
+          exercise_name?: string
+          id?: number
+          met?: number
+        }
+        Relationships: []
       }
       users: {
         Row: {

@@ -1,4 +1,3 @@
-import { ExerciseType } from '@/service/@types/res.type';
 import { DecodeExercisesItemType } from '@/service/mappers/exercisesMapper';
 import { create } from 'zustand';
 

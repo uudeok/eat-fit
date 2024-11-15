@@ -340,3 +340,9 @@ export type FoodApiResponse = {
         items: FoodItemType[];
     };
 };
+
+export type HealthMetApiResponse = {
+    id: number;
+    met: number;
+    exercise_name: string;
+};

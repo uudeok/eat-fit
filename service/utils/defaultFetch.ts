@@ -19,11 +19,11 @@ export const defaultFetch = returnFetch({
                 const errorMessage = `Fetch request failed with status: ${response.status}`;
                 console.error(errorMessage);
 
-                const errorOptions = {
-                    errorLocation: requestArgs[0],
-                    errorMessage: errorMessage,
-                };
-                await sendErrorMail(errorOptions);
+                // const errorOptions = {
+                //     errorLocation: requestArgs[0],
+                //     errorMessage: errorMessage,
+                // };
+                // await sendErrorMail(errorOptions);
 
                 throw new Error(errorMessage);
             }
