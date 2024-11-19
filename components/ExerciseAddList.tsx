@@ -23,7 +23,7 @@ import {
 const ExerciseAddList = () => {
     const router = useRouter();
     const { onOpen } = useModal(ModalType.exerciseForm);
-    const { exercises, selectExercise, removeExercises } = useExercisesStore();
+    const { exercises, selectExercise, removeExercises, exerciseItem } = useExercisesStore();
 
     const { getFormattedDate } = useSelectedDateStore();
     const formattedDate = getFormattedDate();

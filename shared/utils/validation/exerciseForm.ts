@@ -1,8 +1,10 @@
-import { removeNonNumeric } from './validationUtils';
+import { removeLeadingZero, removeNonNumeric } from './validationUtils';
 import { z } from 'zod';
 
 export const exerciseFormValidation = (e: React.FormEvent<HTMLInputElement>) => {
     const input = e.target as HTMLInputElement;
+
+    input.value = removeLeadingZero(input.value);
 
     input.value = removeNonNumeric(input.value);
 

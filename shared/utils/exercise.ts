@@ -1,3 +1,4 @@
+import { ExerciseIntensityKeysType, INTENSITY_LEVEL } from '@/constants';
 import { DecodeExercisesItemType } from '@/service/mappers/exercisesMapper';
 
 export type BurnedCaloriesType = {
@@ -24,4 +25,18 @@ export const calculateExercisesTotals = (exercises: DecodeExercisesItemType[]): 
         caloriesBurned: totals.caloriesBurned,
         durationMin: totals.durationMin,
     };
+};
+
+type CalculateCaloriesParams = {
+    met: number;
+    weight: number;
+    duration: number;
+    intensity: ExerciseIntensityKeysType;
+};
+
+export const calculateCaloriesBurned = ({ met, weight, duration, intensity }: CalculateCaloriesParams): number => {
+    const durationInHours = duration / 60; // 시간을 시간 단위로 변환
+    const intensityLevel = INTENSITY_LEVEL[intensity];
+
+    return Math.round(met * intensityLevel * weight * durationInHours);
 };

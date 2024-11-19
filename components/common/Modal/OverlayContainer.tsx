@@ -15,6 +15,7 @@ import {
     MonthControllerSheet,
 } from '@/components/modal';
 import ChatGPTAnalysisModal from '@/components/modal/ChatGPTAnalysisModal';
+import ExerciseMetCalculatorSheet from '@/components/modal/ExerciseMetCalculatorSheet';
 
 type Props = {
     modals: Record<ModalKeysType, ReactNode>;
@@ -31,6 +32,7 @@ export const ModalType = {
     maintainWeight: 'maintainWeight',
     chatGPTAnalysis: 'chatGPTAnalysis',
     monthController: 'monthController',
+    exerciseMetCalculator: 'exerciseMetCalculator',
 } as const;
 
 export type ModalKeysType = keyof typeof ModalType;
@@ -62,6 +64,7 @@ const OverlayContainer = () => (
             maintainWeight: <MaintainWeightSheet />,
             chatGPTAnalysis: <ChatGPTAnalysisModal />,
             monthController: <MonthControllerSheet />,
+            exerciseMetCalculator: <ExerciseMetCalculatorSheet />,
         }}
     />
 );

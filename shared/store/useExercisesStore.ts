@@ -1,9 +1,12 @@
 import { DecodeExercisesItemType } from '@/service/mappers/exercisesMapper';
+import { DecodeHealthMetDataType } from '@/service/mappers/healthMetMapper';
 import { create } from 'zustand';
 
 interface ExercisesState {
     exercises: DecodeExercisesItemType[];
     exerciseItem: DecodeExercisesItemType | null;
+    exerciseMet: DecodeHealthMetDataType | null;
+    selectExerciseMet: (exerciseMet: DecodeHealthMetDataType) => void;
     addExercise: (exercise: DecodeExercisesItemType) => void;
     selectExercise: (exercise: DecodeExercisesItemType | null) => void;
     updateExercise: (updatedExercise: DecodeExercisesItemType) => void;
@@ -14,6 +17,7 @@ interface ExercisesState {
 export const useExercisesStore = create<ExercisesState>((set) => ({
     exercises: [],
     exerciseItem: null,
+    exerciseMet: null,
 
     addExercise: (newExercise) =>
         set((state) => ({
@@ -37,5 +41,9 @@ export const useExercisesStore = create<ExercisesState>((set) => ({
         set(() => ({
             exercises: [],
             exerciseItem: null,
+        })),
+    selectExerciseMet: (newExerciseMet) =>
+        set(() => ({
+            exerciseMet: newExerciseMet,
         })),
 }));
