@@ -18,7 +18,7 @@ const MyPageGoals = () => {
         { label: '목표 몸무게', value: goalData.targetWeight, unit: 'kg' },
         { label: 'D-day', value: dDay, unit: '일', icon: <Icons.Flag width={15} /> },
         {
-            label: '목표변경',
+            label: '식단',
             value: MEAL_PLAN[goalData.mealPlan],
             unit: '식단',
         },

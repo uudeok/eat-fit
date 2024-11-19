@@ -1,19 +1,21 @@
 import './globals.css';
-
-import type { Metadata } from 'next';
 import { OverlayContainer } from '@/components/common/Modal';
 import DynamicLayout from '@/components/layout/DynamicLayout';
 import AuthProvider from '@/shared/context/AuthProvider';
 import QueryProvider from '@/shared/context/QueryProvider';
+import { getMetadata } from '@/shared/utils/metadata';
 
-export const metadata: Metadata = {
-    title: 'Eat-Fit',
-    description: '맛있게 먹고 건강하게 빼는 습관',
+export const generateMetadata = () => {
+    return getMetadata();
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
     return (
         <html lang="ko">
+            <head>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                <link rel="shortcut icon" href="/images/diet.png" />
+            </head>
             <body>
                 <QueryProvider>
                     <AuthProvider>
