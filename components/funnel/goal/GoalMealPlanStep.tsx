@@ -23,18 +23,18 @@ type MealPlan = {
 };
 
 const MEAL_PLAN_OPTIONS: MealPlan[] = [
-    { key: 'normal', label: '일반', icon: '/carbohydrate.png', content: '탄단지 균형잡힌 식단', selected: false },
+    { key: 'normal', label: '일반', icon: 'carbohydrate.png', content: '탄단지 균형잡힌 식단', selected: false },
     {
         key: 'proteinFocused',
         label: '근육',
-        icon: '/protein.png',
+        icon: 'protein.png',
         content: '근육 생성을 위한 단백질 위주 식단',
         selected: false,
     },
     {
         key: 'lowCarbHighFat',
         label: '저탄고지',
-        icon: '/fat.png',
+        icon: 'fat.png',
         content: '탄수화물 제한, 저탄고지 위주 식단',
         selected: false,
     },

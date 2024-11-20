@@ -16,16 +16,16 @@ type Props = {
 };
 
 const GENDER = [
-    { key: 'F', value: '여성', emj: '/female.png', selected: '/female_fill.png' },
-    { key: 'M', value: '남성', emj: '/male.png', selected: '/male_fill.png' },
+    { key: 'F', value: '여성', emj: 'female.png', selected: 'female_fill.png' },
+    { key: 'M', value: '남성', emj: 'male.png', selected: 'male_fill.png' },
 ];
 
 const ACTIVITY_LEVEL = [
-    { key: 'very_low', value: '매우 적음', emj: '/very_low.png', content: '혼자 있는게 제일 좋아 ! 난 집순이,집돌이' },
-    { key: 'low', value: '적음', emj: '/low.png', content: '주로 앉아있는 직장인, 학생' },
-    { key: 'moderate', value: '보통', emj: '/moderate.png', content: '난 주 1~2회 가볍게 운동해' },
-    { key: 'high', value: '많음', emj: '/high.png', content: '꾸준히 하는 운동이 있어' },
-    { key: 'very_high', value: '매우 많음', emj: '/very_high.png', content: '육체노동 혹은 매일 땀흘리면서 운동해' },
+    { key: 'very_low', value: '매우 적음', emj: 'very_low.png', content: '혼자 있는게 제일 좋아 ! 난 집순이,집돌이' },
+    { key: 'low', value: '적음', emj: 'low.png', content: '주로 앉아있는 직장인, 학생' },
+    { key: 'moderate', value: '보통', emj: 'moderate.png', content: '난 주 1~2회 가볍게 운동해' },
+    { key: 'high', value: '많음', emj: 'high.png', content: '꾸준히 하는 운동이 있어' },
+    { key: 'very_high', value: '매우 많음', emj: 'very_high.png', content: '육체노동 혹은 매일 땀흘리면서 운동해' },
 ];
 
 const GoalBasicInfoStep = ({ onNext }: Props) => {

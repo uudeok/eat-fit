@@ -12,13 +12,20 @@ import GoalWeightInfoStep from './GoalWeightInfoStep';
 import GoalCaloriesStep from './GoalCaloriesStep';
 import GoalMealPlanStep from './GoalMealPlanStep';
 import { encodeCreateGoal } from '@/service/mappers/goalMapper';
+import StepProgress from '@/components/common/StepProgressBar';
 
 const GoalStep = () => {
     const router = useRouter();
-    const [Funnel, setStep] = useFunnel(['goalIntro', 'basicInfo', 'weightInfo', 'goalInfo', 'mealPlan'] as const, {
+
+    const funnelStep = ['goalIntro', 'basicInfo', 'weightInfo', 'goalInfo', 'mealPlan'] as const;
+    const [currentStep, setCurrnetStep] = useState<number>(0);
+
+    const [Funnel, setStep] = useFunnel(funnelStep, {
         initialStep: 'goalIntro',
         stepQueryKey: 'goal-step',
-        // onStepChange: (step) => console.log(`Current step: ${step}`),
+        onStepChange: (step) => {
+            setCurrnetStep(funnelStep.indexOf(step));
+        },
     });
 
     const [registerData, setRegisterData] = useState<GoalRegisterType>({
@@ -52,6 +59,7 @@ const GoalStep = () => {
 
     return (
         <Funnel>
+            <div className="p-2">{currentStep > 0 && <StepProgress totalSteps={4} currentStep={currentStep} />}</div>
             <Funnel.Step name="goalIntro">
                 <GoalIntro
                     onNext={() => {
@@ -61,7 +69,6 @@ const GoalStep = () => {
                     }}
                 />
             </Funnel.Step>
-
             <Funnel.Step name="basicInfo">
                 <GoalBasicInfoStep
                     onNext={(data) => {
@@ -70,7 +77,6 @@ const GoalStep = () => {
                     }}
                 />
             </Funnel.Step>
-
             <Funnel.Step name="weightInfo">
                 <GoalWeightInfoStep
                     onNext={(data) => {
@@ -79,7 +85,6 @@ const GoalStep = () => {
                     }}
                 />
             </Funnel.Step>
-
             <Funnel.Step name="goalInfo">
                 <GoalCaloriesStep
                     registerData={registerData}

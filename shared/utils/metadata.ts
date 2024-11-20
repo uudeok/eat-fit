@@ -4,8 +4,8 @@ import { Metadata } from 'next';
 export type MetaDataType = {
     title: string;
     description: string;
-    ogImage: string;
-    asPath: string;
+    ogImage?: string;
+    asPath?: string;
 };
 
 export const getMetadata = (metadataProps?: MetaDataType) => {

@@ -18,7 +18,7 @@ export const getDdayProgressMessage = (percentage: number) => {
     } else if (percentage <= 30) {
         return '조금씩 나아지고 있어요! 계속 힘내세요!';
     } else if (percentage <= 50) {
-        return '중반에 접어들었어요! 목표에 가까워지고 있습니다!';
+        return '반까지 왔어요! 목표에 가까워지고 있습니다!';
     } else if (percentage <= 80) {
         return '거의 다 왔어요! 마지막 스퍼트입니다!';
     } else {

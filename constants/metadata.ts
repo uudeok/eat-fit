@@ -5,7 +5,7 @@ export const META = {
     keyword: ['다이어트', '운동', '건강', '자기관리', '목표', '식단'],
     siteName: 'EAT-FIT | 잇핏',
     url: 'https://eat-fit.net',
-    ogImage: 'https://s3-eatfit-images.s3.ap-northeast-2.amazonaws.com/public/eatfit.png',
+    ogImage: 'https://s3-eatfit-images.s3.ap-northeast-2.amazonaws.com/eatfit.png',
     naverVerification: '85cd8fbd00e9fe8096249ea82feab592cc7bf9ad',
     googleVerification: 'e0CYOuRhxe2a1_9djPIMDdjAB1OkRyFH-AUgGyiqcEg',
 };
