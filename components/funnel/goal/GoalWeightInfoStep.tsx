@@ -7,10 +7,12 @@ import { ListCol, Text } from '../../common';
 import { useForm } from 'react-hook-form';
 import { Input } from '../../common/Form';
 import { useRouter } from 'next/navigation';
-import { calculateWeightRange, getLocalStorageItem, setLocalStorageItem } from '@/shared/utils';
+import { calculateWeightRange } from '@/shared/utils';
 import { GoalRegisterType, WeightInfoType } from '@/service/@types/req.type';
 import { createGoalWeightSchema, weightValidation } from '@/shared/utils/validation';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useCache } from '@/hooks/useCache';
+import { SESSION_KEYS } from '@/constants';
 
 type Props = {
     onNext: (data: WeightInfoType) => void;
@@ -18,10 +20,13 @@ type Props = {
 
 const GoalWeightInfoStep = ({ onNext }: Props) => {
     const router = useRouter();
-    const initialData: GoalRegisterType | null = getLocalStorageItem('goalData');
+    const sessionCache = useCache('session');
+    const initialData: GoalRegisterType | null = sessionCache.getItem(SESSION_KEYS.GOAL);
 
     if (!initialData) {
-        throw new Error('로컬스토리지에 goalData 데이터가 없습니다');
+        alert('목표 데이터가 없습니다. 첫 번째 단계로 돌아가 입력해 주세요.');
+        router.push('/goals');
+        return null;
     }
 
     /* 정상 체중 범위를 구하기 위한 계산식 */
@@ -47,7 +52,7 @@ const GoalWeightInfoStep = ({ onNext }: Props) => {
             ...data,
         };
 
-        setLocalStorageItem('goalData', goalData);
+        sessionCache.setItem(SESSION_KEYS.GOAL, goalData);
 
         onNext(data);
     });

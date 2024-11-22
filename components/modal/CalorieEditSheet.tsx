@@ -8,20 +8,28 @@ import { ModalType } from '../common/Modal/OverlayContainer';
 import { useForm } from 'react-hook-form';
 import { Input } from '../common/Form';
 import { Button } from '../common/Button';
-import { getLocalStorageItem, recalculateCaloriesToGoal, setLocalStorageItem } from '@/shared/utils';
+import { recalculateCaloriesToGoal } from '@/shared/utils';
 import { GoalCaloriesInfoType } from '@/service/@types';
 import { caloriesValidation } from '@/shared/utils/validation';
+import { useCache } from '@/hooks/useCache';
+import { SESSION_KEYS } from '@/constants';
+import { useRouter } from 'next/navigation';
 
 type FormValue = {
     dailyCalories: number;
 };
 
 const CalorieEditSheet = () => {
-    const initialData: GoalCaloriesInfoType | null = getLocalStorageItem('goalCalorie');
+    const router = useRouter();
+    const sessionCache = useCache('session');
+    const initialData: GoalCaloriesInfoType | null = sessionCache.getItem(SESSION_KEYS.GOAL_KACL);
+
     const { isOpen, onClose } = useModal(ModalType.calorieEdit);
 
     if (!initialData) {
-        throw new Error('로컬 스토리지에 goalCalorie 데이터가 없습니다.');
+        alert('목표 데이터가 없습니다. 첫 번째 단계로 돌아가 입력해 주세요.');
+        router.push('/goals');
+        return null;
     }
 
     const {
@@ -43,7 +51,7 @@ const CalorieEditSheet = () => {
         );
         initialData.dailyCalories = data.dailyCalories;
 
-        setLocalStorageItem('goalCalorie', initialData);
+        sessionCache.setItem(SESSION_KEYS.GOAL_KACL, initialData);
 
         onClose();
     });

@@ -1,31 +1,7 @@
-import { GoalStatusType } from '@/service/@types';
-import { API_ENDPOINTS } from '@/service/api/config';
-import { defaultFetch } from '@/service/utils/defaultFetch';
-import { headers } from 'next/headers';
-import { redirect } from 'next/navigation';
-
-/** 서버에서 호출하기 위해서는 headers 객체를 생성해줘야 한다
- *  next/headers 는 page, layout 페이지에서만 호출이 가능하다 다른곳에서는 에러 발생
- */
-
-const getGoalsData = async (status: GoalStatusType) => {
-    const data = await defaultFetch(`${API_ENDPOINTS.GOALS}?status=${status}`, {
-        headers: headers(),
-        cache: 'no-store',
-    });
-
-    const result = await data.json();
-    return result;
-};
+import GoalsRedirector from '@/components/GoalsRedirector';
 
 const GoalsPage = async () => {
-    const goalData = await getGoalsData('progress');
-
-    if (goalData) {
-        redirect('/home');
-    } else {
-        redirect('/goals/register');
-    }
+    return <GoalsRedirector />;
 };
 
 export default GoalsPage;

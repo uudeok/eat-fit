@@ -1,11 +1,11 @@
 'use client';
 
 import dayjs from 'dayjs';
-import { CookieName } from '@/constants';
+import { CookieKeys } from '@/constants';
 import { useCookies } from 'react-cookie';
 
 interface CookieOptions {
-    name: CookieName;
+    name: CookieKeys;
     value: any;
     expires?: string | Date | { days?: number; hours?: number; minutes?: number };
     path?: string;
@@ -62,12 +62,12 @@ export const useCookie = () => {
         }
     };
 
-    const deleteCustomCookie = (name: CookieName, path = '/') => {
+    const deleteCustomCookie = (name: CookieKeys, path = '/') => {
         removeCookie(name, { path });
         console.log(`Cookie '${name}' has been deleted.`);
     };
 
-    const isCookieValid = (name: CookieName): boolean => {
+    const isCookieValid = (name: CookieKeys): boolean => {
         const cookie = cookies[name];
         if (!cookie) return false;
 

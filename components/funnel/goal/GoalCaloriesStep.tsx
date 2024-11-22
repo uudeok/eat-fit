@@ -9,13 +9,9 @@ import { Button } from '../../common/Button';
 import { useModal } from '@/hooks';
 import { ModalType } from '../../common/Modal/OverlayContainer';
 import { useEffect, useState } from 'react';
-import {
-    addDaysAndResetTime,
-    calculateCaloriesToGoal,
-    formatCurrentDate,
-    removeLocalStorageItem,
-    setLocalStorageItem,
-} from '@/shared/utils';
+import { addDaysAndResetTime, calculateCaloriesToGoal, formatCurrentDate } from '@/shared/utils';
+import { useCache } from '@/hooks/useCache';
+import { SESSION_KEYS } from '@/constants';
 
 type Props = {
     onNext: (data: GoalCaloriesInfoType) => void;
@@ -27,8 +23,20 @@ const GoalCaloriesStep = ({ onNext, registerData }: Props) => {
     const { onOpen: openCaloriesEdit } = useModal(ModalType.calorieEdit);
     const { onOpen: openMaintainWeight } = useModal(ModalType.maintainWeight);
 
-    const storage = localStorage.getItem('goalCalorie');
-    const storedData: GoalRegisterType = storage ? JSON.parse(storage) : null;
+    const sessionCache = useCache('session');
+    const initalData = sessionCache.getRawItem(SESSION_KEYS.GOAL_KACL);
+
+    useEffect(() => {
+        if (initalData) {
+            const parseData = JSON.parse(initalData);
+            setGoalData({
+                dailyCalories: parseData.dailyCalories,
+                startDate: formatCurrentDate(),
+                endDate: addDaysAndResetTime(parseData.goalPeriod),
+                goalPeriod: parseData.goalPeriod,
+            });
+        }
+    }, [initalData]);
 
     /* 입력받은 데이터 기반 권장 칼로리 및 목표 기간 계산식 */
     const { dailyCalories, daysToGoal } = calculateCaloriesToGoal(registerData);
@@ -44,19 +52,8 @@ const GoalCaloriesStep = ({ onNext, registerData }: Props) => {
 
     const openCaloriesEditSheet = () => {
         openCaloriesEdit();
-        setLocalStorageItem('goalCalorie', goalData);
+        sessionCache.setItem(SESSION_KEYS.GOAL_KACL, goalData);
     };
-
-    useEffect(() => {
-        if (storedData) {
-            setGoalData({
-                dailyCalories: storedData.dailyCalories,
-                startDate: formatCurrentDate(),
-                endDate: addDaysAndResetTime(storedData.goalPeriod),
-                goalPeriod: storedData.goalPeriod,
-            });
-        }
-    }, [storage]);
 
     const submitGoalData = () => {
         const data = {
@@ -64,12 +61,13 @@ const GoalCaloriesStep = ({ onNext, registerData }: Props) => {
             ...goalData,
         };
 
-        setLocalStorageItem('goalData', data);
+        sessionCache.setItem(SESSION_KEYS.GOAL, data);
+
         onNext(goalData);
     };
 
     const handleBack = () => {
-        removeLocalStorageItem('goalCalorie');
+        sessionCache.removeItem(SESSION_KEYS.GOAL_KACL);
         router.back();
     };
 

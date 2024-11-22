@@ -8,7 +8,9 @@ import { Button } from '../../common/Button';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { GoalRegisterType, MealPlanInfoType, MealPlanType } from '@/service/@types';
-import { calculateNutrientRatio, getLocalStorageItem } from '@/shared/utils';
+import { calculateNutrientRatio } from '@/shared/utils';
+import { useCache } from '@/hooks/useCache';
+import { SESSION_KEYS } from '@/constants';
 
 type Props = {
     onNext: (data: MealPlanInfoType) => void;
@@ -43,11 +45,14 @@ const MEAL_PLAN_OPTIONS: MealPlan[] = [
 const GoalMealPlanStep = ({ onNext }: Props) => {
     const router = useRouter();
     const [selectedPlan, setSelectedPlan] = useState<MealPlanType>();
+    const sessionCache = useCache('session');
 
-    const initialData: GoalRegisterType | null = getLocalStorageItem('goalData');
+    const initialData: GoalRegisterType | null = sessionCache.getItem(SESSION_KEYS.GOAL);
 
     if (!initialData) {
-        throw new Error('로컬스토리지에 goalData 데이터가 없습니다');
+        alert('목표 데이터가 없습니다. 첫 번째 단계로 돌아가 입력해 주세요.');
+        router.push('/goals');
+        return null;
     }
 
     const handleCheckboxChange = (key: MealPlanType) => {

@@ -8,8 +8,9 @@ import { Input } from '../../common/Form';
 import { useForm } from 'react-hook-form';
 import { ActivityLevelType, BasicInfoType, GenderType, GoalRegisterType } from '@/service/@types/req.type';
 import { useState } from 'react';
-import { getLocalStorageItem, setLocalStorageItem } from '@/shared/utils';
 import { ageValidation, heightValidation } from '@/shared/utils/validation';
+import { useCache } from '@/hooks/useCache';
+import { SESSION_KEYS } from '@/constants';
 
 type Props = {
     onNext: (data: BasicInfoType) => void;
@@ -29,7 +30,8 @@ const ACTIVITY_LEVEL = [
 ];
 
 const GoalBasicInfoStep = ({ onNext }: Props) => {
-    const initialData: GoalRegisterType | null = getLocalStorageItem('goalData');
+    const sessionCache = useCache('session');
+    const initialData: GoalRegisterType | null = sessionCache.getItem(SESSION_KEYS.GOAL);
 
     const [selectedGender, setSelectedGender] = useState<GenderType | null>(initialData?.gender || null);
     const [selectedActivityLevel, setSelectedActivityLevel] = useState<ActivityLevelType | null>(
@@ -55,7 +57,7 @@ const GoalBasicInfoStep = ({ onNext }: Props) => {
             return;
         }
 
-        setLocalStorageItem('goalData', data);
+        sessionCache.setItem(SESSION_KEYS.GOAL, data);
 
         onNext(data);
     });

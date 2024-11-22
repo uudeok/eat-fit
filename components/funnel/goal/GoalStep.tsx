@@ -5,7 +5,6 @@ import { useState } from 'react';
 import { GoalRegisterType, MealPlanInfoType } from '@/service/@types/req.type';
 import { useCreateGoal } from '@/service/mutations/useCreateGoal';
 import { useRouter } from 'next/navigation';
-import { removeLocalStorageItem } from '@/shared/utils';
 import GoalIntro from './GoalIntro';
 import GoalBasicInfoStep from './GoalBasicInfoStep';
 import GoalWeightInfoStep from './GoalWeightInfoStep';
@@ -63,8 +62,6 @@ const GoalStep = () => {
             <Funnel.Step name="goalIntro">
                 <GoalIntro
                     onNext={() => {
-                        removeLocalStorageItem('goalData');
-                        removeLocalStorageItem('goalCalorie');
                         setStep('basicInfo');
                     }}
                 />
