@@ -5,4 +5,4 @@ export * from './exercise';
 export * from './goal';
 export * from './meals';
 export * from './nutrients';
-export * from './cookies';
+export * from './cacheKeys';

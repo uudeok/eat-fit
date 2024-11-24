@@ -1,4 +1,5 @@
 import './globals.css';
+import Toast from '@/components/common/Toast';
 import { OverlayContainer } from '@/components/common/Modal';
 import DynamicLayout from '@/components/layout/DynamicLayout';
 import AuthProvider from '@/shared/context/AuthProvider';
@@ -22,6 +23,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                         <DynamicLayout>{children}</DynamicLayout>
                     </AuthProvider>
                     <OverlayContainer />
+                    <Toast />
                 </QueryProvider>
             </body>
         </html>

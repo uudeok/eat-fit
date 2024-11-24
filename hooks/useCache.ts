@@ -9,27 +9,44 @@ export type CookieKeys = valueOf<typeof COOKIE_KEYS>;
 export type LocalKeys = valueOf<typeof LOCAL_KEYS>;
 export type SessionKeys = valueOf<typeof SESSION_KEYS>;
 
-interface CacheInterface<KeyType extends string = string> {
-    setItem(key: KeyType, value: any, options?: any): void;
-    getItem<T>(key: KeyType): T | null;
+type CacheKeys = CookieKeys | LocalKeys | SessionKeys;
+
+type CacheTypes = 'cookie' | 'local' | 'session';
+
+type CookieOptions = {
+    sameSite?: 'lax' | 'strict' | 'none';
+    expires?: Date | string;
+    secure?: boolean;
+    path?: string;
+    httpOnly?: boolean;
+    maxAge?: number;
+    domain?: string;
+};
+
+interface CacheInterface<KeyType extends CacheKeys = CacheKeys, ValueType = unknown> {
+    setItem(key: KeyType, value: ValueType, options?: KeyType extends CookieKeys ? CookieOptions : undefined): void;
+    getItem<T = ValueType>(key: KeyType): T | null;
     removeItem(key: KeyType): void;
     clear(): void;
 }
 
 // 추상 클래스: 공통 로직 처리
-abstract class BaseStorage<KeyType extends string = string> implements CacheInterface<KeyType> {
-    abstract setRawItem(key: KeyType, value: string, options?: any): void;
+abstract class BaseStorage<KeyType extends CacheKeys = CacheKeys, ValueType = unknown>
+    implements CacheInterface<KeyType, ValueType>
+{
+    abstract setRawItem(key: KeyType, value: string, options?: CookieOptions): void;
     abstract getRawItem(key: KeyType): string | null;
     abstract removeRawItem(key: KeyType): void;
     abstract clearAll(): void;
 
-    setItem(key: KeyType, value: any, options?: any) {
+    setItem(key: KeyType, value: ValueType, options?: CookieOptions) {
         const serializedValue = JSON.stringify(value);
         this.setRawItem(key, serializedValue, options);
     }
 
     getItem<T>(key: KeyType): T | null {
         const rawValue = this.getRawItem(key);
+        console.log('rawValue', rawValue);
         return rawValue ? JSON.parse(rawValue) : null;
     }
 
@@ -45,20 +62,25 @@ abstract class BaseStorage<KeyType extends string = string> implements CacheInte
 // 쿠키 스토리지
 class CookieStorage extends BaseStorage<CookieKeys> {
     private cookies: Record<string, string>;
-    private setCookie: (key: CookieKeys, value: string, options?: any) => void;
-    private removeCookie: (key: CookieKeys, options?: any) => void;
+    private setCookie: (key: CookieKeys, value: string, options?: CookieOptions) => void;
+    private removeCookie: (key: CookieKeys) => void;
 
-    constructor(cookies: any, setCookie: any, removeCookie: any) {
+    constructor(
+        cookies: Record<CookieKeys, string>,
+        setCookie: (key: CookieKeys, value: string, options?: CookieOptions) => void,
+        removeCookie: (key: CookieKeys) => void
+    ) {
         super();
         this.cookies = cookies;
         this.setCookie = setCookie;
         this.removeCookie = removeCookie;
     }
 
-    setRawItem(key: CookieKeys, value: string, options: any = {}) {
+    setRawItem(key: CookieKeys, value: string, options: CookieOptions = {}) {
+        const serializedValue = JSON.stringify(value); // JSON 직렬화
         const { expires, path = '/', secure = true, sameSite = 'lax' } = options;
         const expireDate = dayjs(expires).toDate();
-        this.setCookie(key, value, { expires: expireDate, path, secure, sameSite });
+        this.setCookie(key, serializedValue, { expires: expireDate, path, secure, sameSite });
     }
 
     getRawItem(key: CookieKeys) {
@@ -70,7 +92,21 @@ class CookieStorage extends BaseStorage<CookieKeys> {
     }
 
     clearAll() {
-        console.warn('Clearing all cookies is not directly supported via this API.');
+        console.warn('쿠키를 모두 삭제하는 기능을 지원하지 않습니다.');
+    }
+
+    isCookieValid(key: CookieKeys): boolean {
+        const cookie = this.getRawItem(key);
+        if (!cookie) return false;
+
+        try {
+            const parsedCookie = JSON.parse(cookie);
+            const expirationDate = parsedCookie?.expireDate;
+
+            return expirationDate ? dayjs().isBefore(dayjs(expirationDate)) : false;
+        } catch {
+            return false;
+        }
     }
 }
 
@@ -80,7 +116,7 @@ class LocalStorage extends BaseStorage<LocalKeys> {
         localStorage.setItem(key, value);
     }
 
-    getRawItem(key: LocalKeys) {
+    override getRawItem(key: LocalKeys) {
         return localStorage.getItem(key);
     }
 
@@ -119,7 +155,6 @@ class CacheFactory {
     static createCache(storageType: 'cookie' | 'local' | 'session', cookies?: any): CacheInterface {
         switch (storageType) {
             case 'cookie':
-                if (!cookies) throw new Error('Cookies context is required for cookie storage');
                 return new CookieStorage(cookies[0], cookies[1], cookies[2]);
             case 'local':
                 return new LocalStorage();
@@ -132,16 +167,13 @@ class CacheFactory {
 }
 
 // 훅 정의
-export const useCache = <T extends 'cookie' | 'local' | 'session'>(
+export const useCache = <T extends CacheTypes>(
     storageType: T
 ): T extends 'cookie' ? CookieStorage : T extends 'local' ? LocalStorage : SessionStorage => {
     const cookies = useCookies();
 
     switch (storageType) {
         case 'cookie':
-            if (!cookies) {
-                throw new Error('Cookies context is required for cookie storage');
-            }
             return CacheFactory.createCache('cookie', cookies) as any;
 
         case 'local':

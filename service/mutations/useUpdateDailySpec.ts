@@ -9,7 +9,6 @@ export function useUpdateDailySpec() {
     return useMutation({
         mutationFn: (data: UpdateDailySpecArgs) => updateDailySpec(data),
         onSuccess: (data) => {
-            // queryClient.invalidateQueries({ queryKey: dailySpecKeys.date(selectedDate) });
             queryClient.invalidateQueries({ queryKey: dailySpecKeys.base });
         },
         onError: (error) => {
