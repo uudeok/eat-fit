@@ -26,11 +26,10 @@ const GoalWeightInfoStep = ({ onNext }: Props) => {
     if (!initialData) {
         alert('목표 데이터가 없습니다. 첫 번째 단계로 돌아가 입력해 주세요.');
         router.push('/goals');
-        return null;
     }
 
     /* 정상 체중 범위를 구하기 위한 계산식 */
-    const { minWeight, maxWeight } = calculateWeightRange(initialData?.height);
+    const { minWeight, maxWeight } = calculateWeightRange(initialData?.height!);
 
     const seihgtSchema = createGoalWeightSchema(minWeight, maxWeight);
 

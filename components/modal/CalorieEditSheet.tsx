@@ -26,12 +26,6 @@ const CalorieEditSheet = () => {
 
     const { isOpen, onClose } = useModal(ModalType.calorieEdit);
 
-    if (!initialData) {
-        alert('목표 데이터가 없습니다. 첫 번째 단계로 돌아가 입력해 주세요.');
-        router.push('/goals');
-        return null;
-    }
-
     const {
         register,
         handleSubmit,
@@ -41,6 +35,12 @@ const CalorieEditSheet = () => {
             dailyCalories: initialData?.dailyCalories,
         },
     });
+
+    if (!initialData) {
+        alert('목표 데이터가 없습니다. 첫 번째 단계로 돌아가 입력해 주세요.');
+        router.push('/goals');
+        return;
+    }
 
     /* 입력한 칼로리 기반 목표일을 계산해서 로컬스토리지에 저장해준다 */
     const onSubmit = handleSubmit((data) => {
