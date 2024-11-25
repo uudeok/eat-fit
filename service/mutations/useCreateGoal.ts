@@ -1,7 +1,9 @@
-import { CreateGoalArgs, GoalRegisterType } from '@/service/@types';
+import { CreateGoalArgs } from '@/service/@types';
 import { createNewGoals } from '@/service/api/goalsService';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { goalsKeys } from '../utils/queryKey';
+import toastNotify from '@/shared/utils/toast';
+import { TOAST_MESSAGES } from '@/constants';
 
 export function useCreateGoal() {
     const queryClient = useQueryClient();
@@ -13,6 +15,7 @@ export function useCreateGoal() {
         },
         onError: (error) => {
             console.error('Error creating goal:', error);
+            toastNotify.error(TOAST_MESSAGES.ERROR);
         },
     });
 }

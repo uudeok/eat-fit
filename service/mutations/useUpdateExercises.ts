@@ -2,6 +2,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { UpdateExercisesArgs } from '../@types';
 import { dailySpecKeys, exercisesKeys } from '../utils/queryKey';
 import { updateExercises } from '../api/exercisesService';
+import toastNotify from '@/shared/utils/toast';
+import { TOAST_MESSAGES } from '@/constants';
 
 export function useUpdateExercises(selectedDate: string) {
     const queryClient = useQueryClient();
@@ -11,9 +13,13 @@ export function useUpdateExercises(selectedDate: string) {
         onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: exercisesKeys.base });
             queryClient.invalidateQueries({ queryKey: dailySpecKeys.withDetails(selectedDate) });
+
+            toastNotify.success(TOAST_MESSAGES.SUCCESS);
         },
         onError: (error) => {
             console.error('Error updating Exercises Data:', error);
+
+            toastNotify.error(TOAST_MESSAGES.ERROR);
         },
     });
 }

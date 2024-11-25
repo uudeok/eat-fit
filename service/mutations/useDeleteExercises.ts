@@ -1,6 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { dailySpecKeys, exercisesKeys } from '../utils/queryKey';
 import { deleteExercises } from '../api/exercisesService';
+import toastNotify from '@/shared/utils/toast';
+import { TOAST_MESSAGES } from '@/constants';
 
 export function useDeleteExercises(selectedDate: string) {
     const queryClient = useQueryClient();
@@ -10,9 +12,13 @@ export function useDeleteExercises(selectedDate: string) {
         onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: exercisesKeys.base });
             queryClient.invalidateQueries({ queryKey: dailySpecKeys.withDetails(selectedDate) });
+
+            toastNotify.success(TOAST_MESSAGES.SUCCESS);
         },
         onError: (error) => {
             console.error('Error deleting exercises:', error);
+
+            toastNotify.error(TOAST_MESSAGES.ERROR);
         },
     });
 }

@@ -242,3 +242,33 @@ input[type='number'] {
     bottom: 0;
     width: 100%;
 }
+
+.Toastify__close-button {
+    display: none;
+}
+
+.Toastify__toast-container {
+    margin-bottom: 48px !important;
+}
+
+.Toastify__toast--info {
+    background-color: #2196f3 !important;
+    color: #ffffff !important;
+}
+
+.Toastify__toast--warning {
+    background-color: #ff9800 !important;
+    color: #000000 !important;
+}
+
+.Toastify__toast--success {
+    background-color: var(--mainHover) !important;
+    color: #ffffff !important;
+    border-radius: 15px !important;
+}
+
+.Toastify__toast--error {
+    background-color: #f44336 !important;
+    color: #ffffff !important;
+    border-radius: 15px !important;
+}

@@ -2,6 +2,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createDailySpec } from '../api/dailyService';
 import { CreateDailySpecArgs } from '../@types';
 import { dailySpecKeys } from '../utils/queryKey';
+import toastNotify from '@/shared/utils/toast';
+import { TOAST_MESSAGES } from '@/constants';
 
 export function useCreateDailySpec() {
     const queryClient = useQueryClient();
@@ -13,6 +15,8 @@ export function useCreateDailySpec() {
         },
         onError: (error) => {
             console.error('Error creating DailySpec:', error);
+
+            toastNotify.error(TOAST_MESSAGES.ERROR);
         },
     });
 }
