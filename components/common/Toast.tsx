@@ -1,3 +1,5 @@
+'use client';
+
 import { Flip, ToastContainer, ToastOptions } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -13,6 +15,6 @@ export const defaultOptions: ToastOptions = {
     transition: Flip,
 };
 
-export const Toast = () => <ToastContainer {...defaultOptions} limit={1} style={{ height: '20px' }} />;
+const Toast = () => <ToastContainer {...defaultOptions} limit={1} style={{ height: '20px' }} />;
 
 export default Toast;

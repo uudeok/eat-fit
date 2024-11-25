@@ -3,13 +3,13 @@ import { Provider } from '@supabase/supabase-js';
 
 type OauthProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
     provider: Provider;
-    content?: string;
+    children?: React.ReactNode;
 };
 
-const OauthButton = ({ provider, content, ...props }: OauthProps) => {
+const OauthButton = ({ provider, children, ...props }: OauthProps) => {
     return (
         <button className={styles[provider]} {...props}>
-            {content ? content : `${provider} 로그인`}
+            {children || `${provider} 로그인`}
         </button>
     );
 };
