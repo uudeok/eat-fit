@@ -2,8 +2,8 @@
 
 import { useFetchGoalsByStatus } from '@/service/queries';
 import { useRouter } from 'next/navigation';
-import { Spinner } from './common';
 import { useEffect } from 'react';
+import Image from 'next/image';
 
 const GoalsRedirector = () => {
     const router = useRouter();
@@ -17,7 +17,13 @@ const GoalsRedirector = () => {
         }
     }, [goalData]);
 
-    return isFetching && <Spinner />;
+    return (
+        isFetching && (
+            <div className="fixed inset-0 flex items-center justify-center z-50">
+                <Image src="/images/loading.gif" alt="loading" width={100} height={100} priority />
+            </div>
+        )
+    );
 };
 
 export default GoalsRedirector;
