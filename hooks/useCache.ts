@@ -46,7 +46,6 @@ abstract class BaseStorage<KeyType extends CacheKeys = CacheKeys, ValueType = un
 
     getItem<T>(key: KeyType): T | null {
         const rawValue = this.getRawItem(key);
-        console.log('rawValue', rawValue);
         return rawValue ? JSON.parse(rawValue) : null;
     }
 

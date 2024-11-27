@@ -52,7 +52,8 @@ const GoalCaloriesStep = ({ onNext, registerData }: Props) => {
 
     const openCaloriesEditSheet = () => {
         openCaloriesEdit();
-        sessionCache.setItem(SESSION_KEYS.GOAL_KACL, goalData);
+
+        sessionCache.setItem(SESSION_KEYS.GOAL_KACL, { ...goalData, standard: dailyCalories });
     };
 
     const submitGoalData = () => {

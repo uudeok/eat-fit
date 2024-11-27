@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 type UseFunnelOptions<T extends readonly string[]> = {
     initialStep?: T[number]; // steps 배열의 요소 중 하나
     stepQueryKey?: string;
-    onStepChange?: (step: T[number]) => void; // steps 배열의 요소 중 하나
+    onStepChange?: (step: T[number]) => void;
 };
 
 export const useFunnel = <T extends readonly string[]>(steps: T, options: UseFunnelOptions<T> = {}) => {
@@ -41,17 +41,15 @@ export const useFunnel = <T extends readonly string[]>(steps: T, options: UseFun
             return;
         }
 
-        // 쿼리 파라미터 업데이트
-        const newSearchParams = new URLSearchParams(window.location.search);
-        newSearchParams.set(stepQueryKey, step);
+        setCurrentStep(step);
 
-        // URL 업데이트
-        router.push(`?${newSearchParams.toString()}`);
-
-        // currentStep은 쿼리 파라미터에 의해 업데이트됨
         if (onStepChange) {
             onStepChange(step);
         }
+
+        const newSearchParams = new URLSearchParams(window.location.search);
+        newSearchParams.set(stepQueryKey, step);
+        router.push(`?${newSearchParams.toString()}`);
     };
 
     const Funnel = ({ children }: { children: React.ReactNode }) => {

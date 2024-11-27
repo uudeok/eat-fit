@@ -70,6 +70,7 @@ const GoalWeightInfoStep = ({ onNext }: Props) => {
                 top={<Text bold>현재 몸무게</Text>}
                 bottom={
                     <Input
+                        inputMode="numeric"
                         register={register}
                         name="weight"
                         placeholder="00.0"
@@ -84,6 +85,7 @@ const GoalWeightInfoStep = ({ onNext }: Props) => {
                 top={<Text bold>목표 몸무게</Text>}
                 bottom={
                     <Input
+                        inputMode="numeric"
                         register={register}
                         name="targetWeight"
                         placeholder="00.0"

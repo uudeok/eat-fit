@@ -42,7 +42,6 @@ export function calculateCaloriesToGoal({
     age,
     activityLevel,
 }: GoalRegisterType): { dailyCalories: number; daysToGoal: number } {
-    const oneWeeks = 7;
     const weightDifference = targetWeight - weight;
     const tdee = calculateTDEE({
         gender: gender,
@@ -54,17 +53,49 @@ export function calculateCaloriesToGoal({
 
     if (weightDifference === 0) return { dailyCalories: Math.ceil(tdee), daysToGoal: 60 };
 
+    const caloriePerKg = 7700; // 1kg당 필요한 칼로리
+    const totalCaloriesToLose = Math.abs(weightDifference) * caloriePerKg; // 감량 or 증량 해야 할 총 칼로리
+
     const dailyCalorieAdjustment = weightDifference > 0 ? 500 : -500;
+    const dailyCalories = Math.ceil(tdee + dailyCalorieAdjustment);
 
-    let dailyCalories = Math.ceil(tdee + dailyCalorieAdjustment);
-
-    let daysToGoal = Math.ceil((Math.abs(weightDifference) / 0.5) * oneWeeks);
+    const dailyCalorieDeficit = Math.abs(dailyCalorieAdjustment); // 하루 칼로리 적자 (절대값)
+    const daysToGoal = Math.ceil(totalCaloriesToLose / dailyCalorieDeficit); // 목표 기간 계산
 
     return { dailyCalories, daysToGoal };
 }
 
-export function recalculateCaloriesToGoal(currentCalories: number, currentDaysToGoal: number, newCalories: number) {
-    return Math.ceil((newCalories * currentDaysToGoal) / currentCalories);
+export function recalculateCaloriesToGoal({
+    currentCalories,
+    newCalories,
+    currentWeight,
+    targetWeight,
+}: {
+    currentCalories: number;
+    newCalories: number;
+    currentWeight: number;
+    targetWeight: number;
+}) {
+    const weightDiff = targetWeight - currentWeight;
+    const target = weightDiff > 0 ? 'gain' : 'lose';
+
+    const caloriePerKg = 7700;
+    const dailyCalorieAdjustment = 500;
+
+    const caloriesDiff = currentCalories - newCalories;
+
+    let adjustmentKcalPerDay;
+    if (target === 'gain') {
+        adjustmentKcalPerDay = dailyCalorieAdjustment - caloriesDiff;
+    } else {
+        adjustmentKcalPerDay = dailyCalorieAdjustment + caloriesDiff;
+    }
+
+    const dailyWeightChange = Math.round((adjustmentKcalPerDay / caloriePerKg) * 1000) / 1000;
+
+    const daysToGoal = Math.ceil(Math.abs(weightDiff) / dailyWeightChange);
+
+    return daysToGoal;
 }
 
 export function calculateWeightRange(height: number): { minWeight: number; maxWeight: number } {

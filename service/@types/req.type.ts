@@ -62,6 +62,10 @@ export type GoalCaloriesInfoType = {
     goalPeriod: number;
 };
 
+export type GoalCaloriesInfoWithStandardType = GoalCaloriesInfoType & {
+    standard: number; // 추가된 필드
+};
+
 export type MealPlanInfoType = {
     mealPlan: MealPlanType;
     dailyCarb: number;
