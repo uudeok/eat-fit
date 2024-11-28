@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { fetchGoalsByStatus } from '../api/goalsService';
+import { fetchGoalsByStatus } from '../api/goalsApi';
 import { GoalStatusType } from '../@types';
 import { goalsKeys } from '../utils/queryKey';
 

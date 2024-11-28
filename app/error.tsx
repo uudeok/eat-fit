@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/common/Button';
-import { sendErrorMail } from '@/service/api/mailService';
+import { sendErrorMail } from '@/service/api/mailApi';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';

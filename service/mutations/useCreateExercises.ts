@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { CreateExercisesArgs } from '../@types';
-import { createExercises } from '../api/exercisesService';
+import { createExercises } from '../api/exercisesApi';
 import { dailySpecKeys, exercisesKeys } from '../utils/queryKey';
 import toastNotify from '@/shared/utils/toast';
 import { TOAST_MESSAGES } from '@/constants';

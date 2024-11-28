@@ -8,7 +8,7 @@ import { ModalType } from './common/Modal/OverlayContainer';
 import { useMealsStore } from '@/shared/store/useMealsStore';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { foodDataKeys } from '@/service/utils/queryKey';
-import { fetchFoodSearchResults } from '@/service/api/foodDataService';
+import { fetchFoodSearchResults } from '@/service/api/foodDataApi';
 import EmptyState from './common/EmptyState';
 
 const MealSearchList = ({ keyword }: { keyword: string }) => {

@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { exercisesKeys } from '../utils/queryKey';
-import { fetchExercisesData } from '../api/exercisesService';
+import { fetchExercisesData } from '../api/exercisesApi';
 
 const staleTime = 5 * 60 * 1000; // 5분 동안 캐시된 데이터 사용
 const gcTime = 10 * 60 * 1000; // 10분 동안 캐시 유지

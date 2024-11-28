@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { analysisKeys } from '../utils/queryKey';
-import { updateAnalysis } from '../api/analysisService';
+import { updateAnalysis } from '../api/analysisApi';
 import { UpdateAnalysisArgs } from '../@types';
 import toastNotify from '@/shared/utils/toast';
 import { TOAST_MESSAGES } from '@/constants';

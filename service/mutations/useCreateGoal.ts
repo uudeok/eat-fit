@@ -1,9 +1,9 @@
 import { CreateGoalArgs } from '@/service/@types';
-import { createNewGoals } from '@/service/api/goalsService';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { goalsKeys } from '../utils/queryKey';
 import toastNotify from '@/shared/utils/toast';
 import { TOAST_MESSAGES } from '@/constants';
+import { createNewGoals } from '../api/goalsApi';
 
 export function useCreateGoal() {
     const queryClient = useQueryClient();

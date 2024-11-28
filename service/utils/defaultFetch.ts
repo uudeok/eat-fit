@@ -1,4 +1,4 @@
-import { sendErrorMail } from '../api/mailService';
+import { sendErrorMail } from '../api/mailApi';
 import { returnFetch } from './createFetch';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;

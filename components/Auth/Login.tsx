@@ -5,7 +5,7 @@ import { createClient } from '@/shared/utils/supabase/client';
 import { Provider } from '@supabase/supabase-js';
 import { OauthButton } from '../common/Button';
 import { ListCol } from '../common';
-import { sendErrorMail } from '@/service/api/mailService';
+import { sendErrorMail } from '@/service/api/mailApi';
 import { useEffect, useState } from 'react';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;

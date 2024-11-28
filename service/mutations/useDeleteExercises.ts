@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { dailySpecKeys, exercisesKeys } from '../utils/queryKey';
-import { deleteExercises } from '../api/exercisesService';
+import { deleteExercises } from '../api/exercisesApi';
 import toastNotify from '@/shared/utils/toast';
 import { TOAST_MESSAGES } from '@/constants';
 

@@ -1,5 +1,5 @@
 import { API_ENDPOINTS } from '../api/config';
-import { sendErrorMail } from '../api/mailService';
+import { sendErrorMail } from '../api/mailApi';
 import { returnFetch } from './createFetch';
 
 export const foodDataFetch = returnFetch({

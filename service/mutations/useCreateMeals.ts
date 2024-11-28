@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { CreateMealsArgs } from '../@types';
-import { createMeals } from '../api/mealsService';
+import { createMeals } from '../api/mealsApi';
 import { dailySpecKeys, mealsKeys } from '../utils/queryKey';
 import toastNotify from '@/shared/utils/toast';
 import { TOAST_MESSAGES } from '@/constants';
