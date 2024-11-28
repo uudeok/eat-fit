@@ -11,7 +11,7 @@ export const defaultOptions: ToastOptions = {
     pauseOnFocusLoss: false,
     draggable: true,
     pauseOnHover: true,
-    theme: 'light',
+    theme: 'colored',
     transition: Flip,
 };
 

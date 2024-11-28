@@ -10,7 +10,8 @@ const MyPageHeader = () => {
                         마이페이지
                     </Text>
                 }
-                right={<Icons.FillSetting width={20} className="cursor-pointer" />}
+                right=""
+                // right={<Icons.FillSetting width={20} className="cursor-pointer" />}
             />
         </div>
     );

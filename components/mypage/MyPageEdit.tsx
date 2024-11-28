@@ -2,7 +2,7 @@
 
 import styles from '@styles/component/mypageEdit.module.css';
 import Icons from '@/assets';
-import { ListCol, Text } from '../common';
+import { ListCol, LoadingBar, Spinner, Text } from '../common';
 import { Input, Textarea } from '../common/Form';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
@@ -21,7 +21,7 @@ const MyPageEdit = ({ userData }: { userData: DecodeUser }) => {
         initialImageUrl: userData?.avatarUrl || '/images/user.svg',
     });
 
-    const { mutateAsync: updateUser } = useUpdateUser();
+    const { mutateAsync: updateUser, isPending } = useUpdateUser();
 
     const {
         register,
@@ -120,8 +120,8 @@ const MyPageEdit = ({ userData }: { userData: DecodeUser }) => {
             />
 
             <div className={styles.reviseBtn}>
-                <Button role="round" size="lg">
-                    수정하기
+                <Button role="round" size="lg" disabled={isPending}>
+                    {isPending ? <Spinner /> : '수정하기'}
                 </Button>
             </div>
         </form>

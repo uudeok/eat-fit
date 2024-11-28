@@ -25,9 +25,7 @@ const MainHeader = () => {
     return (
         <div className={styles.layout}>
             <div className={styles.top}>
-                <div className={styles.theme}>
-                    <Alarm />
-                </div>
+                <div className={styles.theme}>{/* <Alarm /> */}</div>
             </div>
 
             <div className={styles.bottom}>

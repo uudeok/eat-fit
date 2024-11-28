@@ -19,7 +19,6 @@ const ExerciseAddPage = () => {
     const [keyword, setKeyword] = useState<string>('');
 
     const handleSearch = (inputValue: string) => {
-        console.log(inputValue);
         setKeyword(inputValue);
     };
 

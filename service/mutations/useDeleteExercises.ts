@@ -12,6 +12,7 @@ export function useDeleteExercises(selectedDate: string) {
         onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: exercisesKeys.base });
             queryClient.invalidateQueries({ queryKey: dailySpecKeys.withDetails(selectedDate) });
+            // queryClient.invalidateQueries({ queryKey: dailySpecKeys.base });
 
             toastNotify.success(TOAST_MESSAGES.SUCCESS);
         },

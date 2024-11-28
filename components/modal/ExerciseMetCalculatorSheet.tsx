@@ -27,11 +27,11 @@ const ExerciseMetCalculatorSheet = () => {
 
     const { register, handleSubmit, setValue, watch } = useForm<DecodeExercisesItemType>({
         defaultValues: {
-            id: exerciseMet?.id,
+            id: Date.now(),
             exerciseName: exerciseMet?.exerciseName,
             durationMin: 0,
             caloriesBurned: 0,
-            exerciseIntensity: 'moderate',
+            exerciseIntensity: undefined,
             content: '',
         },
     });
