@@ -14,3 +14,6 @@ export { default as Alarm } from './Alarm';
 export { default as Spinner } from './Spinner';
 export { default as LoadingBar } from './LoadingBar';
 export { default as TextToggle } from './TextToggle';
+export { default as Toast } from './Toast';
+export { default as StepProgressBar } from './StepProgressBar';
+export { default as LoadingAnimation } from './LoadingAnimation';

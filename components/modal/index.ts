@@ -9,3 +9,4 @@ export { default as MaintainWeightSheet } from './MaintainWeightSheet';
 export { default as CahtGPTAnalysisModal } from './ChatGPTAnalysisModal';
 export { default as MonthControllerSheet } from './MonthControllerSheet';
 export { default as ExerciseMetCalculatorSheet } from './ExerciseMetCalculatorSheet';
+export { default as MealSearchFormSheet } from './MealSearchFormSheet';

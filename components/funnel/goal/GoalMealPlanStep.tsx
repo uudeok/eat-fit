@@ -3,7 +3,7 @@
 import styles from '@styles/component/goalMealPlan.module.css';
 import Icons from '@/assets';
 import Image from 'next/image';
-import { ListRow, Text } from '../../common';
+import { ListRow, LoadingAnimation, Text } from '../../common';
 import { Button } from '../../common/Button';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -45,6 +45,7 @@ const MEAL_PLAN_OPTIONS: MealPlan[] = [
 const GoalMealPlanStep = ({ onNext }: Props) => {
     const router = useRouter();
     const [selectedPlan, setSelectedPlan] = useState<MealPlanType>();
+
     const sessionCache = useCache('session');
 
     const initialData: GoalRegisterType | null = sessionCache.getItem(SESSION_KEYS.GOAL);

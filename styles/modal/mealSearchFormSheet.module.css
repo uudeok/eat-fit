@@ -1,0 +1,19 @@
+.layout {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+.nutrientGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.addBtn {
+    margin-top: 10px;
+    padding: 3px;
+}

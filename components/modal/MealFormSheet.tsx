@@ -16,18 +16,12 @@ import { useFetchMealDetail } from '@/service/queries/useFetchMealDetail';
 import { DecodeMealItemType, encodeUpdateMeal } from '@/service/mappers/mealsMapper';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { mealsFormSchema, mealsFormValidation } from '@/shared/utils/validation/mealsFormValidation';
+import { NUTRIENTS } from '@/constants';
 
 /* 해당 바텀시트를 /meals/add or /meals/[id] 에서 open 한다
    1. path 가 add 이면 데이터를 생성 -> createMealsData
    2. path 가 id 이면 데이터를 수정 -> updateMealsData
 */
-
-const NUTRIENTS: { label: string; key: keyof DecodeMealItemType; unit: string }[] = [
-    { label: '칼로리', key: 'calories', unit: 'kcal' },
-    { label: '탄수화물', key: 'carbohydrate', unit: 'g' },
-    { label: '단백질', key: 'protein', unit: 'g' },
-    { label: '지방', key: 'fat', unit: 'g' },
-];
 
 const MealFormSheet = () => {
     const pathname = usePathname();

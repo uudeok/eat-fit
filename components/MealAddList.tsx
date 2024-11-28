@@ -46,6 +46,8 @@ const MealAddList = () => {
 
         const createData = encodeCreateMeal({ ...mealData });
 
+        console.log('create', createData);
+
         await createMeals(createData);
         resetMeals();
         router.push('/home');

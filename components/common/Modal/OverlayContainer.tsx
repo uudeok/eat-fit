@@ -13,6 +13,7 @@ import {
     CalorieEditSheet,
     MaintainWeightSheet,
     MonthControllerSheet,
+    MealSearchFormSheet,
 } from '@/components/modal';
 import ChatGPTAnalysisModal from '@/components/modal/ChatGPTAnalysisModal';
 import ExerciseMetCalculatorSheet from '@/components/modal/ExerciseMetCalculatorSheet';
@@ -33,6 +34,7 @@ export const ModalType = {
     chatGPTAnalysis: 'chatGPTAnalysis',
     monthController: 'monthController',
     exerciseMetCalculator: 'exerciseMetCalculator',
+    mealSearchFormSheet: 'mealSearchFormSheet',
 } as const;
 
 export type ModalKeysType = keyof typeof ModalType;
@@ -65,6 +67,7 @@ const OverlayContainer = () => (
             chatGPTAnalysis: <ChatGPTAnalysisModal />,
             monthController: <MonthControllerSheet />,
             exerciseMetCalculator: <ExerciseMetCalculatorSheet />,
+            mealSearchFormSheet: <MealSearchFormSheet />,
         }}
     />
 );

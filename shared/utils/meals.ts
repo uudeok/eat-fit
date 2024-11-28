@@ -89,3 +89,18 @@ export const calculateAverageCalories = (weeklyStep: DecodeDailyStepInRangeType)
 
     return weeklyCalories;
 };
+
+export const calculateNutrients = (original: DecodeMealItemType, newServingSize: number) => {
+    if (!original.servingSize) return original;
+
+    const ratio = newServingSize / original.servingSize;
+
+    return {
+        ...original,
+        servingSize: Number(newServingSize),
+        calories: parseFloat((original.calories * ratio).toFixed(2)),
+        carbohydrate: parseFloat((original.carbohydrate * ratio).toFixed(2)),
+        protein: parseFloat((original.protein * ratio).toFixed(2)),
+        fat: parseFloat((original.fat * ratio).toFixed(2)),
+    };
+};

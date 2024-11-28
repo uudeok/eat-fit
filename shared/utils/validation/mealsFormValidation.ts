@@ -32,4 +32,8 @@ export const mealsFormSchema = z.object({
     foodName: z.string().min(1, { message: '음식 이름은 필수입니다' }),
     content: z.string().optional(),
     id: z.number(),
+    servingSize: z.preprocess((value) => {
+        const parsedValue = parseFloat(value as string);
+        return isNaN(parsedValue) ? 0 : parsedValue;
+    }, z.number()),
 });

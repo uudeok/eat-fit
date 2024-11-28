@@ -9,6 +9,9 @@ interface MealsState {
     selectMeal: (meal: DecodeMealItemType | null) => void;
     updateMeal: (updatedMeal: DecodeMealItemType) => void;
     resetMeals: () => void;
+
+    searchMeal: DecodeMealItemType | null;
+    setSearchMeal: (meal: DecodeMealItemType) => void;
 }
 
 export const useMealsStore = create<MealsState>((set) => ({
@@ -35,5 +38,11 @@ export const useMealsStore = create<MealsState>((set) => ({
         set(() => ({
             meals: [],
             mealItem: null,
+        })),
+
+    searchMeal: null,
+    setSearchMeal: (meal) =>
+        set(() => ({
+            searchMeal: meal,
         })),
 }));
