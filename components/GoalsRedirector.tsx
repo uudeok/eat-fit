@@ -15,7 +15,7 @@ const GoalsRedirector = () => {
         } else {
             router.push('/goals/register');
         }
-    }, [goalData]);
+    }, [goalData, isFetching]);
 
     return (
         isFetching && (
