@@ -1,7 +1,7 @@
 'use client';
 
 import styles from '@styles/modal/chatGPTModal.module.css';
-import { useCookie, useModal } from '@/hooks';
+import { useModal } from '@/hooks';
 import { ModalType } from '../common/Modal/OverlayContainer';
 import { Modal } from '../common/Modal';
 import { ListCol, Text } from '../common';
@@ -14,24 +14,30 @@ import { useCreateAnalysis, useUpdateAnalysis } from '@/service/mutations';
 import { DecodeAnalysis } from '@/service/mappers/analysisMapper';
 import { DecodeGoalType } from '@/service/mappers/goalMapper';
 import { COOKIE_KEYS } from '@/constants';
+import { useCache } from '@/hooks/useCache';
 
 const ChatGPTAnalysisModal = () => {
     const { isOpen, onClose } = useModal(ModalType.chatGPTAnalysis);
     const { progressionRate, weeklyWeight, calories, burnedCalories } = useReportStore();
-    const { setCustomCookie, getCustomCookie, deleteCustomCookie, isCookieValid } = useCookie();
+    const cache = useCache('cookie');
 
-    const cachedData = getCustomCookie(COOKIE_KEYS.ANALYSIS) as DecodeAnalysis;
-    const isValidCookie = isCookieValid(COOKIE_KEYS.ANALYSIS); // true 라면 아직 유효한 캐시다
+    const cachedData: DecodeAnalysis | null = cache.getItem(COOKIE_KEYS.ANALYSIS);
+    const isValidCookie = cache.isCookieValid(COOKIE_KEYS.ANALYSIS);
+
+    console.log('cachedData', cachedData);
+    console.log('isValidCookie?', isValidCookie);
 
     const { data: goalData } = useFetchGoalsByStatus('progress') as { data: DecodeGoalType };
     /* isValidCookie 가 true 라면 반대 false 보내서 API 요청 x, false 라면 반대 true 를 보내서 요청을 보낸다 */
     const { data: analysisData, isLoading } = useFetchAnalysis(!isValidCookie);
 
+    console.log('analysisData', analysisData);
+
     const { mutateAsync: createAnalysis, isPending: isCreating } = useCreateAnalysis();
     const { mutateAsync: updateAnalysis, isPending: isUpdating } = useUpdateAnalysis();
 
     const setCookieAnalysisData = (newData: DecodeAnalysis) => {
-        setCustomCookie({ name: COOKIE_KEYS.ANALYSIS, value: newData, expires: newData.deadline });
+        cache.setItem(COOKIE_KEYS.ANALYSIS, newData, { expires: newData.deadline });
     };
 
     const createNewAnalysis = async () => {
@@ -47,7 +53,8 @@ const ChatGPTAnalysisModal = () => {
         };
         const newData = await updateAnalysis(updatedAnalysisData);
 
-        deleteCustomCookie(COOKIE_KEYS.ANALYSIS);
+        cache.removeItem(COOKIE_KEYS.ANALYSIS);
+
         setCookieAnalysisData(newData);
     };
 
