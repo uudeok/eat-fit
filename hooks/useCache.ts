@@ -2,16 +2,21 @@
 
 import { COOKIE_KEYS, LOCAL_KEYS, SESSION_KEYS } from '@/constants';
 import { useCookies } from 'react-cookie';
-import dayjs from 'dayjs';
 import { valueOf } from '@/@types';
+import dayjs from 'dayjs';
 
 export type CookieKeys = valueOf<typeof COOKIE_KEYS>;
 export type LocalKeys = valueOf<typeof LOCAL_KEYS>;
 export type SessionKeys = valueOf<typeof SESSION_KEYS>;
 
-type CacheKeys = CookieKeys | LocalKeys | SessionKeys;
+type StorageKeyMap = {
+    cookie: CookieKeys;
+    local: LocalKeys;
+    session: SessionKeys;
+};
 
-type CacheTypes = 'cookie' | 'local' | 'session';
+type CacheTypes = keyof StorageKeyMap;
+type CacheKeys = StorageKeyMap[CacheTypes];
 
 type CookieOptions = {
     sameSite?: 'lax' | 'strict' | 'none';
@@ -42,20 +47,11 @@ abstract class BaseStorage<KeyType extends CacheKeys = CacheKeys, ValueType = un
     setItem(key: KeyType, value: ValueType, options?: CookieOptions) {
         // 객체나 배열만 JSON.stringify로 직렬화
         const serializedValue = typeof value === 'object' && value !== null ? JSON.stringify(value) : value;
-
-        console.log('setItem 에서의 value', serializedValue);
         this.setRawItem(key, serializedValue as string, options);
     }
 
-    // setItem(key: KeyType, value: ValueType, options?: CookieOptions) {
-    //     const serializedValue = JSON.stringify(value);
-    //     console.log('setItem 에서의 value ', serializedValue);
-    //     this.setRawItem(key, serializedValue, options);
-    // }
-
     getItem<T>(key: KeyType): T | null {
         const rawValue = this.getRawItem(key);
-        console.log('getItem 에서의 value', rawValue);
 
         if (!rawValue) return null;
 
@@ -64,14 +60,8 @@ abstract class BaseStorage<KeyType extends CacheKeys = CacheKeys, ValueType = un
             return rawValue as T;
         }
 
-        // 문자열인 경우 파싱
         return JSON.parse(rawValue) as T;
     }
-
-    // getItem<T>(key: KeyType): T | null {
-    //     const rawValue = this.getRawItem(key);
-    //     return rawValue ? JSON.parse(rawValue) : null;
-    // }
 
     removeItem(key: KeyType) {
         this.removeRawItem(key);
@@ -100,7 +90,7 @@ class CookieStorage extends BaseStorage<CookieKeys> {
     }
 
     setRawItem(key: CookieKeys, value: string, options: CookieOptions = {}) {
-        console.log('setRawItem 에서의 value', value);
+        // console.log('setRawItem 에서의 value', value);
         const { expires, path = '/', secure = true, sameSite = 'lax' } = options;
         const expireDate = dayjs(expires).toDate();
         this.setCookie(key, value, { expires: expireDate, path, secure, sameSite });
@@ -120,14 +110,10 @@ class CookieStorage extends BaseStorage<CookieKeys> {
 
     isCookieValid(key: CookieKeys): boolean {
         const cookie: any = this.getRawItem(key);
-        console.log('12345', cookie);
+
         if (!cookie) return false;
 
-        console.log('456');
-
         try {
-            // const parsedCookie = JSON.parse(cookie);
-            // console.log('isCookieValid', parsedCookie);
             const expirationDate = cookie?.deadline;
 
             return expirationDate ? dayjs().isBefore(dayjs(expirationDate)) : false;
@@ -196,7 +182,11 @@ class CacheFactory {
 // 훅 정의
 export const useCache = <T extends CacheTypes>(
     storageType: T
-): T extends 'cookie' ? CookieStorage : T extends 'local' ? LocalStorage : SessionStorage => {
+): StorageKeyMap[T] extends CookieKeys
+    ? CookieStorage
+    : StorageKeyMap[T] extends LocalKeys
+    ? LocalStorage
+    : SessionStorage => {
     const cookies = useCookies();
 
     switch (storageType) {

@@ -10,6 +10,8 @@ export const chatGPTFetch = returnFetch({
     },
     interceptors: {
         request: async (args: [string, RequestInit]) => {
+            const [url, options] = args;
+
             return args;
         },
         response: async (response: Response, requestArgs: [string, RequestInit]) => {

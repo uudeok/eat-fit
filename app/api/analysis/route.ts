@@ -2,23 +2,7 @@ import { CreateAnalysisArgs } from '@/service/@types';
 import { chatGPTFetch } from '@/service/utils/chatGPTFetch';
 import { createClient } from '@/shared/utils/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
-
-export async function GET(request: NextRequest) {
-    const supabase = createClient();
-
-    try {
-        const { data, error } = await supabase.from('analysis').select('*').maybeSingle();
-
-        if (error) {
-            throw new Error(error.message);
-        }
-
-        return NextResponse.json(data, { status: 200 });
-    } catch (error: any) {
-        console.error('Error fetching Analysis Data:', error);
-        return NextResponse.json({ error: error.message }, { status: 500 });
-    }
-}
+import dayjs from 'dayjs';
 
 const createAnalysisMessage = (data: CreateAnalysisArgs) => [
     {
@@ -48,7 +32,7 @@ const createAnalysisMessage = (data: CreateAnalysisArgs) => [
             **반드시 위의 분석을 한국어로 번역하여 응답해 주세요!** 형식은 다음과 같아야 합니다:
 
             {
-                 "possibility": "Please indicate the probability in percentages only",
+                "possibility": "Please indicate the probability in percentages(%) only",
                 "evaluates": "analysis of habits",
                 "cheering": "motivational message",
                 "tips": ["tip1", "tip2", "tip3"]
@@ -68,6 +52,26 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
         }
 
+        const { data: analysisData, error: fetchError } = await supabase.from('analysis').select('*').maybeSingle();
+
+        if (fetchError) {
+            throw new Error(fetchError.message);
+        }
+
+        if (analysisData) {
+            const { created_at } = analysisData;
+
+            // createdAt 기준으로 일주일 뒤 날짜 계산
+            const deadline = dayjs(created_at).add(7, 'day');
+            const now = dayjs();
+
+            // 유효한 데이터라면 기존 데이터를 반환
+            if (now.isBefore(deadline)) {
+                return NextResponse.json(analysisData, { status: 200 });
+            }
+        }
+
+        // 데이터가 없거나 만료된 경우 ChatGPT API 호출
         const messages = createAnalysisMessage(body);
 
         const response = await chatGPTFetch('', {
@@ -88,84 +92,45 @@ export async function POST(request: NextRequest) {
             throw new Error('Failed to parse OpenAI response');
         }
 
-        const { data, error } = await supabase
-            .from('analysis')
-            .insert([
-                {
+        // 새 데이터 작성 또는 기존 데이터 업데이트
+        if (analysisData) {
+            // 기존 데이터 업데이트
+            const { error: updateError } = await supabase
+                .from('analysis')
+                .update({
                     possibility: parsedMessage.possibility,
                     evaluates: parsedMessage.evaluates,
                     cheering: parsedMessage.cheering,
                     tips: parsedMessage.tips,
-                },
-            ])
-            .select()
-            .throwOnError()
-            .maybeSingle();
+                })
+                .eq('id', analysisData.id)
+                .throwOnError();
 
-        if (error) {
-            throw new Error(error.message);
+            if (updateError) {
+                throw new Error(updateError.message);
+            }
+        } else {
+            const { error: insertError } = await supabase
+                .from('analysis')
+                .insert([
+                    {
+                        possibility: parsedMessage.possibility,
+                        evaluates: parsedMessage.evaluates,
+                        cheering: parsedMessage.cheering,
+                        tips: parsedMessage.tips,
+                    },
+                ])
+                .throwOnError();
+
+            if (insertError) {
+                throw new Error(insertError.message);
+            }
         }
 
-        return NextResponse.json(data, { status: 201 });
+        // 새 데이터를 반환
+        return NextResponse.json(parsedMessage, { status: 201 });
     } catch (error: any) {
-        console.error('Error creating Analysis Data:', error);
-        return NextResponse.json({ error: error.message }, { status: 500 });
-    }
-}
-
-export async function PUT(request: NextRequest) {
-    const supabase = createClient();
-
-    try {
-        const body = await request.json();
-        const { goalData, weeklyWeight, burnedCalories, calories, progressionRate, id } = body;
-
-        if (!goalData || !weeklyWeight || !burnedCalories || !calories || !progressionRate) {
-            return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
-        }
-
-        const messages = createAnalysisMessage(body);
-
-        const response = await chatGPTFetch('', {
-            method: 'POST',
-            body: JSON.stringify({
-                model: 'gpt-4o-mini',
-                messages,
-                temperature: 0.7,
-            }),
-        });
-
-        const responseData = await response.json();
-
-        let parsedMessage;
-
-        try {
-            parsedMessage = JSON.parse(responseData.choices[0].message.content);
-        } catch (parseError) {
-            throw new Error('Failed to parse OpenAI response');
-        }
-
-        const { data, error } = await supabase
-            .from('analysis')
-            .update({
-                possibility: parsedMessage.possibility,
-                evaluates: parsedMessage.evaluates,
-                cheering: parsedMessage.cheering,
-                tips: parsedMessage.tips,
-                created_at: new Date().toISOString(),
-            })
-            .eq('id', id)
-            .select()
-            .throwOnError()
-            .maybeSingle();
-
-        if (error) {
-            throw new Error(error.message);
-        }
-
-        return NextResponse.json(data, { status: 201 });
-    } catch (error: any) {
-        console.error('Error updating Analysis Data:', error);
+        console.error('Error processing Analysis Data:', error);
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }

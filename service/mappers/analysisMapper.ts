@@ -14,6 +14,12 @@ export type DecodeAnalysis = {
     deadline: string;
 };
 
+function addMinutes(date: Date, minutes: number) {
+    const result = new Date(date); // 입력된 날짜를 기반으로 새 Date 객체 생성
+    result.setMinutes(result.getMinutes() + minutes); // 기존 분에 원하는 분(minutes) 추가
+    return result.toString();
+}
+
 export const decodeAnalysis = (init: AnalyzeDataType): DecodeAnalysis => ({
     cheering: init.cheering,
     evaluates: init.evaluates,
@@ -22,5 +28,6 @@ export const decodeAnalysis = (init: AnalyzeDataType): DecodeAnalysis => ({
     userId: init.user_id,
     id: init.id,
     createdAt: formatCurrentDate(init.created_at),
+    // deadline: addMinutes(init.created_at, 2),
     deadline: addDaysAndResetTime(oneWeeks, init.created_at),
 });
