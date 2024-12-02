@@ -1,25 +1,80 @@
 'use client';
 
-import { useFunnel } from '@/hooks';
 import { useState } from 'react';
-import { GoalRegisterType, MealPlanInfoType } from '@/service/@types/req.type';
-import { useCreateGoal } from '@/service/mutations/useCreateGoal';
-import { useRouter } from 'next/navigation';
 import GoalIntro from './GoalIntro';
 import GoalBasicInfoStep from './GoalBasicInfoStep';
 import GoalWeightInfoStep from './GoalWeightInfoStep';
 import GoalCaloriesStep from './GoalCaloriesStep';
 import GoalMealPlanStep from './GoalMealPlanStep';
-import { encodeCreateGoal } from '@/service/mappers/goalMapper';
+import { StepData, useFunnel } from '@/hooks/useFunnel2';
 import StepProgress from '@/components/common/StepProgressBar';
+import { BasicInfoType, GoalCaloriesInfoType, MealPlanInfoType, WeightInfoType } from '@/service/@types';
+import GoalRegister from './GoalRegister';
 
 const GoalStep = () => {
-    const router = useRouter();
+    const funnelStep = ['goalIntro', 'basicInfo', 'weightInfo', 'caloriesInfo', 'mealPlan', 'goalRegister'];
 
-    const funnelStep = ['goalIntro', 'basicInfo', 'weightInfo', 'goalInfo', 'mealPlan'] as const;
+    const [registerData, setRegisterData] = useState({});
     const [currentStep, setCurrnetStep] = useState<number>(0);
 
-    const [Funnel, setStep] = useFunnel(funnelStep, {
+    const steps = [
+        {
+            name: 'goalIntro',
+            component: GoalIntro,
+            props: {
+                onNext: () => setStep('basicInfo'),
+            },
+        },
+        {
+            name: 'basicInfo',
+            component: GoalBasicInfoStep,
+            props: {
+                onNext: (data: BasicInfoType) => {
+                    setRegisterData((prev) => ({ ...prev, ...data }));
+                    setStep('weightInfo');
+                },
+            },
+        },
+        {
+            name: 'weightInfo',
+            component: GoalWeightInfoStep,
+            props: {
+                onNext: (data: WeightInfoType) => {
+                    setRegisterData((prev) => ({ ...prev, ...data }));
+                    setStep('caloriesInfo');
+                },
+            },
+        },
+        {
+            name: 'caloriesInfo',
+            component: GoalCaloriesStep,
+            props: {
+                onNext: (data: GoalCaloriesInfoType) => {
+                    setRegisterData((prev) => ({ ...prev, ...data }));
+                    setStep('mealPlan');
+                },
+            },
+        },
+        {
+            name: 'mealPlan',
+            component: GoalMealPlanStep,
+            props: {
+                onNext: (data: MealPlanInfoType) => {
+                    setRegisterData((prev) => ({ ...prev, ...data }));
+                    setStep('goalRegister');
+                },
+            },
+        },
+        {
+            name: 'goalRegister',
+            component: GoalRegister,
+            props: {
+                registerData,
+            },
+        },
+    ] as StepData<string>[];
+
+    const [Funnel, setStep, FunnelGraph] = useFunnel(steps, {
         initialStep: 'goalIntro',
         stepQueryKey: 'goal-step',
         onStepChange: (step) => {
@@ -27,78 +82,14 @@ const GoalStep = () => {
         },
     });
 
-    const [registerData, setRegisterData] = useState<GoalRegisterType>({
-        gender: 'F',
-        age: 0,
-        height: 0,
-        activityLevel: 'moderate',
-        weight: 0,
-        targetWeight: 0,
-        dailyCalories: 0,
-        startDate: '',
-        endDate: '',
-        goalPeriod: 0,
-        mealPlan: 'normal',
-        dailyCarb: 0,
-        dailyFat: 0,
-        dailyProtein: 0,
-    });
-
-    const { mutate: createGoal } = useCreateGoal();
-
-    const submitGoalData = (goalData: MealPlanInfoType) => {
-        try {
-            const createData = encodeCreateGoal({ ...registerData, ...goalData });
-            createGoal({ ...createData });
-            router.push('/home');
-        } catch (err) {
-            throw err;
-        }
-    };
-
     return (
-        <Funnel>
-            <div className="p-2">{currentStep > 0 && <StepProgress totalSteps={4} currentStep={currentStep} />}</div>
-            <Funnel.Step name="goalIntro">
-                <GoalIntro
-                    onNext={() => {
-                        setStep('basicInfo');
-                    }}
-                />
-            </Funnel.Step>
-            <Funnel.Step name="basicInfo">
-                <GoalBasicInfoStep
-                    onNext={(data) => {
-                        setRegisterData((prev) => ({ ...prev, ...data }));
-                        setStep('weightInfo');
-                    }}
-                />
-            </Funnel.Step>
-            <Funnel.Step name="weightInfo">
-                <GoalWeightInfoStep
-                    onNext={(data) => {
-                        setRegisterData((prev) => ({ ...prev, ...data }));
-                        setStep('goalInfo');
-                    }}
-                />
-            </Funnel.Step>
-            <Funnel.Step name="goalInfo">
-                <GoalCaloriesStep
-                    registerData={registerData}
-                    onNext={(data) => {
-                        setRegisterData((prev) => ({ ...prev, ...data }));
-                        setStep('mealPlan');
-                    }}
-                />
-            </Funnel.Step>
-            <Funnel.Step name="mealPlan">
-                <GoalMealPlanStep
-                    onNext={(data) => {
-                        submitGoalData(data);
-                    }}
-                />
-            </Funnel.Step>
-        </Funnel>
+        <>
+            <div className="p-2">
+                {currentStep > 0 && <StepProgress totalSteps={funnelStep.length - 2} currentStep={currentStep} />}
+            </div>
+            <Funnel />
+            {currentStep > 0 && <FunnelGraph />}
+        </>
     );
 };
 

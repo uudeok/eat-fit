@@ -3,7 +3,7 @@
 import styles from '@styles/component/goalMealPlan.module.css';
 import Icons from '@/assets';
 import Image from 'next/image';
-import { ListRow, LoadingAnimation, Text } from '../../common';
+import { ListRow, Text } from '../../common';
 import { Button } from '../../common/Button';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -50,18 +50,18 @@ const GoalMealPlanStep = ({ onNext }: Props) => {
 
     const initialData: GoalRegisterType | null = sessionCache.getItem(SESSION_KEYS.GOAL);
 
-    if (!initialData) {
-        alert('목표 데이터가 없습니다. 첫 번째 단계로 돌아가 입력해 주세요.');
-        router.push('/goals');
-        return null;
-    }
+    // if (!initialData) {
+    //     alert('목표 데이터가 없습니다. 첫 번째 단계로 돌아가 입력해 주세요.');
+    //     router.push('/goals');
+    //     return null;
+    // }
 
     const handleCheckboxChange = (key: MealPlanType) => {
         setSelectedPlan(key);
     };
 
     const submitMealPlan = () => {
-        if (selectedPlan) {
+        if (selectedPlan && initialData) {
             /* 식단 정보 기반 권장 탄, 단, 지 비율 계산식 */
             const nutrientRatio = calculateNutrientRatio(initialData.dailyCalories, selectedPlan);
 

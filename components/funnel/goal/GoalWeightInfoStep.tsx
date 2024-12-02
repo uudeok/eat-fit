@@ -23,10 +23,10 @@ const GoalWeightInfoStep = ({ onNext }: Props) => {
     const sessionCache = useCache('session');
     const initialData: GoalRegisterType | null = sessionCache.getItem(SESSION_KEYS.GOAL);
 
-    if (!initialData) {
-        alert('목표 데이터가 없습니다. 첫 번째 단계로 돌아가 입력해 주세요.');
-        router.push('/goals');
-    }
+    // if (!initialData) {
+    //     alert('목표 데이터가 없습니다. 첫 번째 단계로 돌아가 입력해 주세요.');
+    //     router.push('/goals');
+    // }
 
     /* 정상 체중 범위를 구하기 위한 계산식 */
     const { minWeight, maxWeight } = calculateWeightRange(initialData?.height!);
