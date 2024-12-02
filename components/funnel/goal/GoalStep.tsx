@@ -49,6 +49,7 @@ const GoalStep = () => {
             name: 'caloriesInfo',
             component: GoalCaloriesStep,
             props: {
+                registerData,
                 onNext: (data: GoalCaloriesInfoType) => {
                     setRegisterData((prev) => ({ ...prev, ...data }));
                     setStep('mealPlan');

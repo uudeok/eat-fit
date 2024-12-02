@@ -15,15 +15,16 @@ import { SESSION_KEYS } from '@/constants';
 
 type Props = {
     onNext: (data: GoalCaloriesInfoType) => void;
+    registerData: GoalRegisterType;
 };
 
-const GoalCaloriesStep = ({ onNext }: Props) => {
+const GoalCaloriesStep = ({ onNext, registerData }: Props) => {
     const router = useRouter();
     const { onOpen: openCaloriesEdit } = useModal(ModalType.calorieEdit);
     const { onOpen: openMaintainWeight } = useModal(ModalType.maintainWeight);
 
     const sessionCache = useCache('session');
-    const basicData: GoalRegisterType | null = sessionCache.getItem(SESSION_KEYS.GOAL);
+    // const basicData: GoalRegisterType | null = sessionCache.getItem(SESSION_KEYS.GOAL);
     const initalData = sessionCache.getRawItem(SESSION_KEYS.GOAL_KACL);
 
     useEffect(() => {
@@ -38,16 +39,16 @@ const GoalCaloriesStep = ({ onNext }: Props) => {
         }
     }, [initalData]);
 
-    if (!basicData) {
-        alert('목표 데이터가 없습니다. 첫 번째 단계로 돌아가 입력해 주세요.');
-        router.push('/goals');
-        return;
-    }
+    // if (!basicData) {
+    //     alert('목표 데이터가 없습니다. 첫 번째 단계로 돌아가 입력해 주세요.');
+    //     router.push('/goals');
+    //     return null;
+    // }
 
     /* 입력받은 데이터 기반 권장 칼로리 및 목표 기간 계산식 */
-    const { dailyCalories, daysToGoal } = calculateCaloriesToGoal(basicData);
+    const { dailyCalories, daysToGoal } = calculateCaloriesToGoal({ ...registerData });
 
-    const isWeightDifference = basicData.targetWeight - basicData.weight !== 0;
+    const isWeightDifference = registerData.targetWeight - registerData.weight !== 0;
 
     const [goalData, setGoalData] = useState<GoalCaloriesInfoType>({
         dailyCalories: dailyCalories,
@@ -64,7 +65,7 @@ const GoalCaloriesStep = ({ onNext }: Props) => {
 
     const submitGoalData = () => {
         const data = {
-            ...basicData,
+            ...registerData,
             ...goalData,
         };
 

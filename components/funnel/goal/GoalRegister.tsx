@@ -27,7 +27,7 @@ const GoalRegister = ({ registerData }: { registerData: GoalRegisterType }) => {
 
     return (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-100">
-            <LoadingAnimation />;
+            <LoadingAnimation />
         </div>
     );
 };
