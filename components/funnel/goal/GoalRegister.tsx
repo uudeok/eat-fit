@@ -9,7 +9,7 @@ const GoalRegister = ({ registerData }: { registerData: GoalRegisterType }) => {
     console.log(registerData);
     const router = useRouter();
 
-    const { mutate: createGoal, isPaused: isCreating } = useCreateGoal();
+    const { mutate: createGoal } = useCreateGoal();
 
     const submitGoalData = () => {
         try {

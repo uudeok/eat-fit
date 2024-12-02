@@ -1,6 +1,6 @@
 'use client';
 
-import { StepData } from '@/hooks/useFunnel2';
+import { StepData } from '@/hooks/useFunnel';
 
 export const getGraph = (steps: StepData<string>[], currentStep: string) => {
     const result: string[] = ['graph TD'];

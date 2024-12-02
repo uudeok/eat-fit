@@ -6,7 +6,7 @@ import GoalBasicInfoStep from './GoalBasicInfoStep';
 import GoalWeightInfoStep from './GoalWeightInfoStep';
 import GoalCaloriesStep from './GoalCaloriesStep';
 import GoalMealPlanStep from './GoalMealPlanStep';
-import { StepData, useFunnel } from '@/hooks/useFunnel2';
+import { StepData, useFunnel } from '@/hooks/useFunnel';
 import StepProgress from '@/components/common/StepProgressBar';
 import { BasicInfoType, GoalCaloriesInfoType, MealPlanInfoType, WeightInfoType } from '@/service/@types';
 import GoalRegister from './GoalRegister';
