@@ -60,7 +60,7 @@ export const useFunnel = <T extends string>(steps: StepData<T>[], options: UseFu
             mermaidRef.current.innerHTML = graphDefinition;
 
             try {
-                const { svg, bindFunctions } = await mermaid.render('mermaid-funnel', graphDefinition);
+                const { svg, bindFunctions } = await mermaid.render(`mermaid-funnel-${stepQueryKey}`, graphDefinition);
                 mermaidRef.current.innerHTML = svg;
                 bindFunctions?.(mermaidRef.current);
             } catch (error) {
@@ -103,7 +103,7 @@ export const useFunnel = <T extends string>(steps: StepData<T>[], options: UseFu
 
     const FunnelGraph = () => {
         const isDevMode = process.env.NODE_ENV === 'development';
-        const [isVisible, setIsVisible] = useState(false); // 그래프 표시 상태
+        const [isVisible, setIsVisible] = useState(false);
 
         if (!isDevMode) return null;
 
@@ -116,15 +116,17 @@ export const useFunnel = <T extends string>(steps: StepData<T>[], options: UseFu
                 style={{
                     position: 'fixed',
                     bottom: '40px',
-                    left: '50%',
-                    transform: 'translateX(-50%)',
+                    left: isVisible ? '50%' : 'auto',
+                    right: isVisible ? 'auto' : '20px',
+                    transform: isVisible ? 'translateX(-50%)' : 'none',
                     zIndex: 1000,
-                    background: 'rgba(255, 255, 255, 0.9)',
+                    background: '#F3F3F3',
                     padding: '10px',
-                    borderRadius: '8px',
+                    borderRadius: isVisible ? '0px' : '50%',
                     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
                     cursor: 'pointer',
                     textAlign: 'center',
+                    transition: 'all 0.3s ease',
                 }}
             >
                 <div
@@ -134,7 +136,7 @@ export const useFunnel = <T extends string>(steps: StepData<T>[], options: UseFu
                         zIndex: 1500,
                     }}
                 />
-                <Button onClick={toggleGraphVisibility}>{isVisible ? 'closeGraph' : 'openGraph'}</Button>
+                <Button onClick={toggleGraphVisibility}>{isVisible ? 'close' : 'open'}</Button>
             </div>
         );
     };

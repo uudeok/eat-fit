@@ -12,12 +12,13 @@ import { BasicInfoType, GoalCaloriesInfoType, MealPlanInfoType, WeightInfoType }
 import GoalRegister from './GoalRegister';
 
 const GoalStep = () => {
-    const funnelStep = ['goalIntro', 'basicInfo', 'weightInfo', 'caloriesInfo', 'mealPlan', 'goalRegister'];
+    const funnelStep = ['goalIntro', 'basicInfo', 'weightInfo', 'caloriesInfo', 'mealPlan', 'goalRegister'] as const;
+    type FunnelStep = (typeof funnelStep)[number];
 
     const [registerData, setRegisterData] = useState({});
     const [currentStep, setCurrnetStep] = useState<number>(0);
 
-    const steps = [
+    const steps: StepData<FunnelStep>[] = [
         {
             name: 'goalIntro',
             component: GoalIntro,
@@ -73,7 +74,7 @@ const GoalStep = () => {
                 registerData,
             },
         },
-    ] as StepData<string>[];
+    ];
 
     const [Funnel, setStep, FunnelGraph] = useFunnel(steps, {
         initialStep: 'goalIntro',
