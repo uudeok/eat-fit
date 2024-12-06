@@ -2,8 +2,8 @@
 
 import { useFetchGoalsByStatus } from '@/service/queries';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
 import { LoadingAnimation } from './common';
+import { useEffect } from 'react';
 
 const GoalsRedirector = () => {
     const router = useRouter();
