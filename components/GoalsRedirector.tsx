@@ -10,6 +10,8 @@ const GoalsRedirector = () => {
     const { data: goalData, isFetching } = useFetchGoalsByStatus('progress');
 
     useEffect(() => {
+        if (isFetching) return;
+
         if (goalData && !isFetching) {
             router.push('/home');
         } else {

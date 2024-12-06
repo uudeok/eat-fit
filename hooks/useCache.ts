@@ -3,11 +3,11 @@
 import { COOKIE_KEYS, LOCAL_KEYS, SESSION_KEYS } from '@/constants';
 import { useCookies } from 'react-cookie';
 import { valueOf } from '@/@types';
-import dayjs from 'dayjs';
 import { CookieStorage } from '@/shared/storage/CookieStorage';
 import { LocalStorage } from '@/shared/storage/LocalStorage';
 import { SessionStorage } from '@/shared/storage/SessionStorage';
 import { CacheFactory } from '@/shared/storage/CacheFactory';
+
 export type CookieKeys = valueOf<typeof COOKIE_KEYS>;
 export type LocalKeys = valueOf<typeof LOCAL_KEYS>;
 export type SessionKeys = valueOf<typeof SESSION_KEYS>;
