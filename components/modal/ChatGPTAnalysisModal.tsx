@@ -14,6 +14,7 @@ import { useCreateAnalysis } from '@/service/mutations';
 import { DecodeAnalysis } from '@/service/mappers/analysisMapper';
 import { DecodeGoalType } from '@/service/mappers/goalMapper';
 import { COOKIE_KEYS } from '@/constants';
+import dayjs from 'dayjs';
 
 const ChatGPTAnalysisModal = () => {
     const cookie = useCache('cookie');
@@ -23,10 +24,8 @@ const ChatGPTAnalysisModal = () => {
     const { data: goalData } = useFetchGoalsByStatus('progress') as { data: DecodeGoalType };
     const { mutateAsync: createAnalysis, isPending: isCreating } = useCreateAnalysis();
 
-    const { data: storedAnalysisData, isValid: isAnalysisCookieValid } = (() => {
-        const data: DecodeAnalysis | null = cookie.getItem(COOKIE_KEYS.ANALYSIS);
-        return { data, isValid: cookie.isCookieValid(COOKIE_KEYS.ANALYSIS) };
-    })();
+    const storedAnalysisData: DecodeAnalysis | null = cookie.getItem(COOKIE_KEYS.ANALYSIS);
+    const isAnalysisCookieValid: boolean = cookie.isCookieValid(COOKIE_KEYS.ANALYSIS);
 
     const [analysisData, setAnalysisData] = useState<DecodeAnalysis>();
 
@@ -47,6 +46,8 @@ const ChatGPTAnalysisModal = () => {
 
         saveAnalysisToCookie(newData);
     };
+
+    console.log(dayjs());
 
     const initializeAnalysis = useCallback(async () => {
         if (!goalData || isCreating) return;

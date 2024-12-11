@@ -17,7 +17,6 @@ export const defaultFetch = returnFetch({
         response: async (response: Response, requestArgs: [string, RequestInit]) => {
             if (!response.ok) {
                 const errorMessage = `Fetch request failed with status: ${response.status}`;
-                console.error(errorMessage);
 
                 const errorOptions = {
                     errorLocation: requestArgs[0],

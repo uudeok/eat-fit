@@ -4,7 +4,7 @@ import styles from '@styles/component/exerciseAddList.module.css';
 import Icons from '@/assets';
 import { useExercisesStore } from '@/shared/store/useExercisesStore';
 import { ListRow, Text } from './common';
-import { EXERCISE_INTENSITY_LABELS } from '@/constants';
+import { EXERCISE_INTENSITY_LABELS, LOCAL_KEYS } from '@/constants';
 import { Button } from './common/Button';
 import { useModal } from '@/hooks';
 import { ModalType } from './common/Modal/OverlayContainer';

@@ -62,8 +62,12 @@ export async function POST(request: NextRequest) {
             const { created_at } = analysisData;
 
             // createdAt 기준으로 일주일 뒤 날짜 계산
-            const deadline = dayjs(created_at).add(7, 'day');
+            const deadline = dayjs(created_at).add(7, 'day').toDate();
             const now = dayjs();
+
+            console.log('createdAt', created_at);
+            console.log('deadline', deadline);
+            console.log(1, now.isBefore(deadline));
 
             // 유효한 데이터라면 기존 데이터를 반환
             if (now.isBefore(deadline)) {
