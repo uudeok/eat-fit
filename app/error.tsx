@@ -10,8 +10,6 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
     const router = useRouter();
     const path = usePathname();
 
-    console.log('error 발생', error);
-
     useEffect(() => {
         const handleSendErrorMail = async () => {
             try {
