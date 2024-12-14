@@ -233,6 +233,10 @@ input[type='number'] {
     flex: 1;
 }
 
+.rootLayout::-webkit-scrollbar {
+    display: none;
+}
+
 .layout::-webkit-scrollbar {
     display: none;
 }

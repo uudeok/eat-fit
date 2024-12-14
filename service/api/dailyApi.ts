@@ -23,7 +23,10 @@ export async function createDailySpec(dailySpecData: CreateDailySpecArgs): Promi
 }
 
 export async function updateDailySpec(updatedData: UpdateDailySpecArgs): Promise<DecodeDailySpec> {
-    const data = await defaultFetch(`${API_ENDPOINTS.DAILYSPEC}`, { method: 'PUT', body: JSON.stringify(updatedData) });
+    const data = await defaultFetch(`${API_ENDPOINTS.DAILYSPEC}`, {
+        method: 'PUT',
+        body: JSON.stringify(updatedData),
+    });
 
     const result = await data.json();
 

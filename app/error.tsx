@@ -6,9 +6,11 @@ import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
-export default function ErrorBoundary({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
+export default function Error({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
     const router = useRouter();
     const path = usePathname();
+
+    console.log('error 발생', error);
 
     useEffect(() => {
         const handleSendErrorMail = async () => {

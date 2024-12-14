@@ -9,6 +9,7 @@ export type DecodeUser = {
     role: UserRoleType;
     expose: UserExposeType;
     content: string;
+    createdAt: string;
 };
 
 export const decodeUser = (init: UserType): DecodeUser => ({
@@ -20,6 +21,7 @@ export const decodeUser = (init: UserType): DecodeUser => ({
     role: init.role,
     expose: init.expose,
     content: init.content,
+    createdAt: init.created_at,
 });
 
 export type UpdateUserType = {
