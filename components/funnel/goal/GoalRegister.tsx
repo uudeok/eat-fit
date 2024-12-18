@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 const GoalRegister = ({ registerData }: { registerData: GoalRegisterType }) => {
-    console.log(registerData);
     const router = useRouter();
 
     const { mutate: createGoal } = useCreateGoal();
