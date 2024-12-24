@@ -1,5 +1,6 @@
 import Icons from '@/assets';
 import { ListRow, Text } from '../common';
+import Link from 'next/link';
 
 const MyPageHeader = () => {
     return (
@@ -10,8 +11,11 @@ const MyPageHeader = () => {
                         마이페이지
                     </Text>
                 }
-                right=""
-                // right={<Icons.FillSetting width={20} className="cursor-pointer" />}
+                right={
+                    <Link href="/mypage/setting">
+                        <Icons.FillSetting width={20} className="cursor-pointer" />
+                    </Link>
+                }
             />
         </div>
     );

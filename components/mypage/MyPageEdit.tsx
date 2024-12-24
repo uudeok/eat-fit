@@ -2,7 +2,7 @@
 
 import styles from '@styles/component/mypageEdit.module.css';
 import Icons from '@/assets';
-import { ListCol, LoadingBar, Spinner, Text } from '../common';
+import { ListCol, Spinner, Text } from '../common';
 import { Input, Textarea } from '../common/Form';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
