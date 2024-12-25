@@ -14,7 +14,6 @@ import { useCreateAnalysis } from '@/service/mutations';
 import { DecodeAnalysis } from '@/service/mappers/analysisMapper';
 import { DecodeGoalType } from '@/service/mappers/goalMapper';
 import { COOKIE_KEYS } from '@/constants';
-import dayjs from 'dayjs';
 
 const ChatGPTAnalysisModal = () => {
     const cookie = useCache('cookie');
@@ -46,8 +45,6 @@ const ChatGPTAnalysisModal = () => {
 
         saveAnalysisToCookie(newData);
     };
-
-    console.log(dayjs());
 
     const initializeAnalysis = useCallback(async () => {
         if (!goalData || isCreating) return;

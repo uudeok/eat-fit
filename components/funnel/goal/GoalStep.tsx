@@ -18,6 +18,16 @@ const GoalStep = () => {
     const [registerData, setRegisterData] = useState({});
     const [currentStep, setCurrnetStep] = useState<number>(0);
 
+    const wrapOnNext = (originalOnNext: (data: any) => void, stepName: string, capturedData: Record<string, any>) => {
+        return (data: any) => {
+            console.log(`Step ${stepName} Data:`, data); // 로그 출력
+            capturedData[stepName] = data; // 데이터를 캡처
+            originalOnNext(data); // 원래 onNext 호출
+        };
+    };
+
+    const capturedData: Record<string, any> = {};
+
     const steps: StepData<FunnelStep>[] = [
         {
             name: 'goalIntro',
@@ -29,6 +39,7 @@ const GoalStep = () => {
         {
             name: 'basicInfo',
             component: GoalBasicInfoStep,
+
             props: {
                 onNext: (data: BasicInfoType) => {
                     setRegisterData((prev) => ({ ...prev, ...data }));
@@ -39,6 +50,7 @@ const GoalStep = () => {
         {
             name: 'weightInfo',
             component: GoalWeightInfoStep,
+
             props: {
                 onNext: (data: WeightInfoType) => {
                     setRegisterData((prev) => ({ ...prev, ...data }));

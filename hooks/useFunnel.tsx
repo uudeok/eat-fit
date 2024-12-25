@@ -23,6 +23,8 @@ export const useFunnel = <T extends string>(steps: StepData<T>[], options: UseFu
     const router = useRouter();
     const searchParams = useSearchParams();
 
+    console.log(steps);
+
     const [currentStep, setCurrentStep] = useState<T>(initialStep || steps[0].name);
     const mermaidRef = useRef<HTMLDivElement>(null);
 
@@ -56,7 +58,7 @@ export const useFunnel = <T extends string>(steps: StepData<T>[], options: UseFu
     const renderGraph = async () => {
         if (mermaidRef.current) {
             const graphDefinition = getGraph(steps, currentStep);
-            // console.log(graphDefinition);
+
             mermaidRef.current.innerHTML = graphDefinition;
 
             try {
@@ -140,5 +142,41 @@ export const useFunnel = <T extends string>(steps: StepData<T>[], options: UseFu
             </div>
         );
     };
-    return [Funnel, setStep, FunnelGraph] as const;
+
+    const TestTool = ({
+        steps,
+        onSubmit,
+    }: {
+        steps: StepData<string>[];
+        onSubmit: (data: Record<string, any>) => void;
+    }) => {
+        const [testInputs, setTestInputs] = useState<Record<string, any>>({});
+
+        const handleInputChange = (stepName: string, value: any) => {
+            setTestInputs((prev) => ({ ...prev, [stepName]: value }));
+        };
+
+        const handleSubmit = () => {
+            onSubmit(testInputs);
+        };
+
+        return (
+            <div className="test-tool">
+                {steps.map((step) => (
+                    <div key={step.name}>
+                        <h3>{step.name}</h3>
+                        <input
+                            type="text"
+                            placeholder={`Enter input for ${step.name}`}
+                            value={testInputs[step.name] || ''}
+                            onChange={(e) => handleInputChange(step.name, e.target.value)}
+                        />
+                    </div>
+                ))}
+                <button onClick={handleSubmit}>Calculate Result</button>
+            </div>
+        );
+    };
+
+    return [Funnel, setStep, FunnelGraph, TestTool] as const;
 };
