@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## EAT-FIT
 
-## Getting Started
+EAT-FIT은 목표 몸무게를 설정하고, D-DAY까지 매일 섭취한 칼로리와 소모한 칼로리를 기록하며 마치 1:1 퍼스널 트레이너처럼 목표 달성을 돕는 서비스입니다.
 
-First, run the development server:
+## 주요 기능
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+-   하루 섭취 영양분 계산
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+기본 정보를 입력(몸무게, 나이, 성별, 키, 운동량 등)하면 적절한 하루 섭취 영양분을 자동으로 계산합니다.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+![목표 설정](image-2.png)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+-   일일 상태 기록
 
-## Learn More
+매일의 상태(기분, 몸무게, 일상 등)를 간단히 기록할 수 있습니다.
+한 달간 기록한 데이터를 한눈에 확인하며 진행 상황을 점검할 수 있습니다.
 
-To learn more about Next.js, take a look at the following resources:
+![몸무게 기록](image-7.png)
+![일기장](<Dec-25-2024 21-24-52.gif>)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+-   음식 섭취 관리
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+먹은 음식을 검색하거나, 직접 입력하여 그날 섭취한 칼로리와 영양소(탄수화물, 단백질, 지방)를 기록합니다.
 
-## Deploy on Vercel
+![alt text](<Dec-25-2024 21-16-07.gif>)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+-   운동 소모 관리
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+운동을 검색하거나 직접 소모한 칼로리를 기록하여 활동량을 추적합니다.
+
+![alt text](<Dec-25-2024 21-19-41.gif>)
+
+-   AI 리포트 제공
+
+일주일 단위로 목표 몸무게 도달 가능성을 AI가 분석하고, 맞춤형 리포트를 작성하여 방향성을 제시합니다.
+
+![리포트](<Dec-25-2024 00-13-33.gif>)
+
+---
+
+## 프로젝트 진행하며 느낀점
+
+프론트엔드 개발자로서, 백엔드 개발자 없이 혼자 프로젝트를 진행하며 Supabase 가 큰 도움이 되었습니다. Supabase는 손쉽게 데이터베이스와 인증, 서버리스 API 등을 구현할 수 있도록 도와주는 서비스로, 이를 통해 백엔드 작업의 복잡함을 줄일 수 있었습니다. 이 과정에서 단순히 데이터를 불러오는 것을 넘어서, "프론트엔드에서 데이터를 어떻게 효율적으로 사용할지", "데이터를 관리하는 최적의 방법은 무엇일지"에 대해 고민하고 적용할 수 있는 좋은 경험이었습니다.
+
+이전 프로젝트에서는 Next.js 14 App Router를 처음 사용하며 적응하는 데 중점을 두었고, 이번 프로젝트에서는 그 기능에 익숙해져 효율적으로 활용하려 노력했습니다. 예를 들어, 이전에는 사용하지 않았던 Route Handler 를 이번에는 적극 활용했습니다. Next.js가 제공하는 서버리스 환경을 통해 서버 로직과 클라이언트 로직을 명확히 분리하며, 보다 구조적인 코드를 작성할 수 있었습니다.
+
+또한, 이전 프로젝트에서 느꼈던 개선점 중 하나였던 에러 로깅을 이번 EAT-FIT 프로젝트에서 보완했습니다. 과거에는 배포 후 운영 중 발생한 에러를 파악하는 데 어려움이 있었으나, 이번에는 에러 발생 시 자동으로 이메일 알림을 발송하도록 구현했습니다. 이를 통해, 운영 중에 발생하는 에러를 빠르게 대응할 수 있었습니다. 이러한 개선 덕분에 안정적인 서비스를 제공하는 것을 넘어, 잠재적인 문제를 예측하고 대비할 수 있다는 자신감을 얻을 수 있었습니다.
+
+이번 프로젝트는 단순히 기능 구현에 그치지 않고, 운영 중 발생할 수 있는 문제를 미리 예측하고 대비하는 중요한 경험이었습니다. 앞으로도 프로젝트를 진행하면서 이러한 경험을 바탕으로 문제 해결 능력을 더욱 키워 나가고, 더 나은 서비스를 제공하기 위해 계속해서 개선해 나갈 계획입니다.
+
+## 아쉬운 점 및 개선 사항
+
+1. 테스트 코드를 작성하고 싶었으나 시간적 제약으로 인해 도입하지 못한 점이 아쉽습니다. 계산 로직이나 중요한 기능들이 많았고, 이러한 부분에 대한 단위 테스트가 있다면 안정성을 더욱 높일 수 있었을 것 같습니다. 향후 테스트 코드에 대해 더 공부하고, 이를 통해 기능별 검증을 체계적으로 진행하여 더 견고한 프로젝트를 만들어 나갈 계획입니다.
+
+2. 리팩토링의 필요성도 느꼈습니다. 프로젝트가 진행되면서 코드가 점차 복잡해지다 보니, 몇몇 부분에서 중복된 코드나 가독성이 떨어지는 부분들이 생겼습니다. 이를 해결하기 위해 리팩토링을 계획하고 있었으나, 시간 내에 완벽하게 정리하지 못한 점은 아쉬운 부분입니다. 앞으로는 코드의 재사용성과 가독성을 높이기 위해 리팩토링을 주기적으로 진행할 예정입니다.
+
+3. 운영 중에 유저들로부터 받은 피드백을 하나씩 반영해 나가고 있지만, 모든 피드백을 다 반영하지 못한 점이 아쉽습니다. 사용자 경험을 더욱 직관적이고 효율적으로 개선하기 위해, 다양한 사용자 테스트와 피드백을 바탕으로 개선 작업을 지속적으로 진행할 계획입니다. 또한, 유저들로부터 더 쉽게 개선 사항을 받을 수 있는 매개체를 도입하여, 향후 서비스 품질을 더욱 높여 나가려고 합니다.
