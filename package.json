@@ -7,8 +7,7 @@
         "dev": "next dev",
         "gen-types": "supabase gen types typescript --linked > @types/supabase.type.ts",
         "lint": "next lint",
-        "start": "next start",
-        "deploy:sst": "sst deploy --stage production"
+        "start": "next start"
     },
     "dependencies": {
         "@hookform/resolvers": "^3.9.0",

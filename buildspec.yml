@@ -17,8 +17,7 @@ phases:
     build:
         commands:
             - echo Build started on `date`
-            - export DEBUG="*"
-            - npm run deploy:sst
+            - npx sst deploy --stage production
     post_build:
         commands:
             - echo Build completed on `date`
