@@ -14,6 +14,7 @@ import {
     MaintainWeightSheet,
     MonthControllerSheet,
     MealSearchFormSheet,
+    GoalCompletionModal,
 } from '@/components/modal';
 import ChatGPTAnalysisModal from '@/components/modal/ChatGPTAnalysisModal';
 import ExerciseMetCalculatorSheet from '@/components/modal/ExerciseMetCalculatorSheet';
@@ -35,6 +36,7 @@ export const ModalType = {
     monthController: 'monthController',
     exerciseMetCalculator: 'exerciseMetCalculator',
     mealSearchFormSheet: 'mealSearchFormSheet',
+    goalCompletionModal: 'goalCompletionModal',
 } as const;
 
 export type ModalKeysType = keyof typeof ModalType;
@@ -68,6 +70,7 @@ const OverlayContainer = () => (
             monthController: <MonthControllerSheet />,
             exerciseMetCalculator: <ExerciseMetCalculatorSheet />,
             mealSearchFormSheet: <MealSearchFormSheet />,
+            goalCompletionModal: <GoalCompletionModal />,
         }}
     />
 );

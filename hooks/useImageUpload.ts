@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useRef, ChangeEvent } from 'react';
 import AWS from 'aws-sdk';
 import Compressor from 'compressorjs';

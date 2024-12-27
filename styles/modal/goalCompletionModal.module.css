@@ -1,0 +1,13 @@
+.layout {
+    border: 1px solid black;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.content {
+    font-size: 17px;
+    padding: 5px;
+}

@@ -1,3 +1,5 @@
+'use client';
+
 import { ModalKeysType } from '@/components/common/Modal/OverlayContainer';
 import { useModalStore } from '@/shared/store/useModalStore';
 
