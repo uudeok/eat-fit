@@ -8,7 +8,7 @@ phases:
             - echo node version check
             - node -v
             - npm -v
-            - npm install -g aws-cdk # CDK 설치
+            - npm install -g aws-cdk
             - npm install -g sst
     pre_build:
         commands:
