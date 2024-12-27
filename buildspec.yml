@@ -1,0 +1,26 @@
+version: 0.2
+
+phases:
+    install:
+        runtime-versions:
+            nodejs: 20
+        commands:
+            - echo node version check
+            - node -v
+            - npm -v
+            - npm install -g aws-cdk # CDK 설치
+            - npm install -g sst
+    pre_build:
+        commands:
+            - echo Installing source NPM dependencies...
+            - npm install
+    build:
+        commands:
+            - echo Build started on `date`
+            - npx sst deploy --stage production
+    post_build:
+        commands:
+            - echo Build completed on `date`
+artifacts:
+    files:
+        - '**/*'
