@@ -17,9 +17,6 @@ phases:
     build:
         commands:
             - echo Build started on `date`
-            - export DEBUG="*"
-            - export AWS_REGION=ap-northeast-2
-            - export SST_STAGE=production
             - npx sst deploy --stage production
     post_build:
         commands:
