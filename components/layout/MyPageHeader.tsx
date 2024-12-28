@@ -13,7 +13,7 @@ const MyPageHeader = () => {
                 }
                 right={
                     <Link href="/mypage/setting">
-                        <Icons.FillSetting width={20} className="cursor-pointer" />
+                        <Icons.Setting width={20} className="cursor-pointer" />
                     </Link>
                 }
             />

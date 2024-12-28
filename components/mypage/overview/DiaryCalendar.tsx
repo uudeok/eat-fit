@@ -70,7 +70,7 @@ const DiaryCalendar = ({ dailySteps }: { dailySteps: DecodeDailyStepInRangeType 
             value: data?.burnedCalories,
             unit: 'kcal',
             color: 'var(--red200)',
-            icon: <Icons.FillFire width={15} />,
+            icon: <Icons.Fire width={15} />,
         },
     ];
 

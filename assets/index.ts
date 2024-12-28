@@ -16,14 +16,14 @@ import Down from './down.svg';
 import Pencil from './pencil.svg';
 import FillXmark from './fillXmark.svg';
 import Flag from './flag.svg';
-import FillFire from './fillFire.svg';
-import FillSetting from './fillSetting.svg';
 import FillUtensil from './fillUtensil.svg';
 import FillReports from './fillReports.svg';
 import FillTrendsup from './fillTrendsup.svg';
 import FillLaughFace from './fillLaughFace.svg';
 import FillCheck from './fillCheck.svg';
 import FillStaggeredBar from './fillStaggeredBar.svg';
+import Setting from './setting.svg';
+import Fire from './fire.svg';
 
 const Icons = {
     FillHome,
@@ -44,14 +44,14 @@ const Icons = {
     Pencil,
     FillXmark,
     Flag,
-    FillFire,
-    FillSetting,
     FillUtensil,
     FillReports,
     FillTrendsup,
     FillLaughFace,
     FillCheck,
     FillStaggeredBar,
+    Setting,
+    Fire,
 };
 
 export default Icons;

@@ -9,7 +9,7 @@ phases:
             - node -v
             - npm -v
             - npm install -g aws-cdk
-            - npm install -g sst@latest
+            - npm install -g sst@3.3.3
     pre_build:
         commands:
             - echo Installing source NPM dependencies...
