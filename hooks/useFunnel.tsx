@@ -1,10 +1,13 @@
 'use client';
 
+import styles from '@styles/common/funnel.module.css';
+import mermaid from 'mermaid';
 import { Button } from '@/components/common/Button';
 import { getGraph } from '@/components/funnel/getGraph';
-import mermaid from 'mermaid';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useEffect, useRef } from 'react';
+import { FunnelStateVisualizer } from '@/components/funnel/FunnelStateView';
+import { FunnelStateEditor } from '@/components/funnel/FunnelStateEditor';
 
 export type StepData<T extends string> = {
     name: T;
@@ -22,9 +25,6 @@ export const useFunnel = <T extends string>(steps: StepData<T>[], options: UseFu
     const { initialStep, stepQueryKey = 'funnel-step', onStepChange } = options;
     const router = useRouter();
     const searchParams = useSearchParams();
-
-    console.log(steps);
-
     const [currentStep, setCurrentStep] = useState<T>(initialStep || steps[0].name);
     const mermaidRef = useRef<HTMLDivElement>(null);
 
@@ -100,83 +100,44 @@ export const useFunnel = <T extends string>(steps: StepData<T>[], options: UseFu
         if (!currentStepData) return null;
 
         const { component: StepComponent, props = {} } = currentStepData;
+
         return <StepComponent {...props} />;
     };
 
     const FunnelGraph = () => {
         const isDevMode = process.env.NODE_ENV === 'development';
-        const [isVisible, setIsVisible] = useState(false);
+        const [isGraphOpen, setIsGraphOpen] = useState(false);
+        const [isEditorOpen, setIsEditorOpen] = useState(false);
 
         if (!isDevMode) return null;
 
-        const toggleGraphVisibility = () => {
-            setIsVisible((prev) => !prev);
-        };
+        const toggleGraph = () => setIsGraphOpen((prev) => !prev);
+        const toggleEditor = () => setIsEditorOpen((prev) => !prev);
 
         return (
-            <div
-                style={{
-                    position: 'fixed',
-                    bottom: '40px',
-                    left: isVisible ? '50%' : 'auto',
-                    right: isVisible ? 'auto' : '20px',
-                    transform: isVisible ? 'translateX(-50%)' : 'none',
-                    zIndex: 1000,
-                    background: '#F3F3F3',
-                    padding: '10px',
-                    borderRadius: isVisible ? '0px' : '50%',
-                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-                    cursor: 'pointer',
-                    textAlign: 'center',
-                    transition: 'all 0.3s ease',
-                }}
-            >
-                <div
-                    ref={mermaidRef}
-                    style={{
-                        display: isVisible ? 'block' : 'none',
-                        zIndex: 1500,
-                    }}
-                />
-                <Button onClick={toggleGraphVisibility}>{isVisible ? 'close' : 'open'}</Button>
-            </div>
-        );
-    };
+            <div className={`${styles.layout} ${isGraphOpen ? styles.visible : styles.unvisible}`}>
+                <div className={styles.tool}>
+                    <div
+                        ref={mermaidRef}
+                        style={{
+                            display: isGraphOpen ? 'block' : 'none',
+                            zIndex: 1500,
+                        }}
+                    />
 
-    const TestTool = ({
-        steps,
-        onSubmit,
-    }: {
-        steps: StepData<string>[];
-        onSubmit: (data: Record<string, any>) => void;
-    }) => {
-        const [testInputs, setTestInputs] = useState<Record<string, any>>({});
-
-        const handleInputChange = (stepName: string, value: any) => {
-            setTestInputs((prev) => ({ ...prev, [stepName]: value }));
-        };
-
-        const handleSubmit = () => {
-            onSubmit(testInputs);
-        };
-
-        return (
-            <div className="test-tool">
-                {steps.map((step) => (
-                    <div key={step.name}>
-                        <h3>{step.name}</h3>
-                        <input
-                            type="text"
-                            placeholder={`Enter input for ${step.name}`}
-                            value={testInputs[step.name] || ''}
-                            onChange={(e) => handleInputChange(step.name, e.target.value)}
-                        />
+                    <div style={{ display: isEditorOpen && isGraphOpen ? 'block' : 'none' }}>
+                        <FunnelStateVisualizer />
+                        <FunnelStateEditor />
                     </div>
-                ))}
-                <button onClick={handleSubmit}>Calculate Result</button>
+                </div>
+
+                <div className={styles.editor}>
+                    <Button onClick={toggleGraph}>{isGraphOpen ? 'close' : 'open'}</Button>
+                    {isGraphOpen && <Button onClick={toggleEditor}>Editor</Button>}
+                </div>
             </div>
         );
     };
 
-    return [Funnel, setStep, FunnelGraph, TestTool] as const;
+    return [Funnel, setStep, FunnelGraph] as const;
 };

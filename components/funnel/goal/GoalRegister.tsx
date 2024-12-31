@@ -1,13 +1,13 @@
 import { LoadingAnimation } from '@/components/common';
-import { GoalRegisterType } from '@/service/@types';
 import { encodeCreateGoal } from '@/service/mappers/goalMapper';
 import { useCreateGoal } from '@/service/mutations';
+import { FunnelContext } from '@/shared/context/FunnelProvider';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 
-const GoalRegister = ({ registerData }: { registerData: GoalRegisterType }) => {
+const GoalRegister = () => {
     const router = useRouter();
-
+    const { registerData } = useContext(FunnelContext);
     const { mutate: createGoal } = useCreateGoal();
 
     const submitGoalData = () => {

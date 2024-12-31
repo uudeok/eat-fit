@@ -4,27 +4,28 @@ import styles from '@styles/component/goalSuggestion.module.css';
 import Icons from '@/assets';
 import { useRouter } from 'next/navigation';
 import { ListRow, Text } from '../../common';
-import { GoalRegisterType, GoalCaloriesInfoType } from '@/service/@types';
+import { GoalCaloriesInfoType } from '@/service/@types';
 import { Button } from '../../common/Button';
 import { useModal } from '@/hooks';
 import { ModalType } from '../../common/Modal/OverlayContainer';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { addDaysAndResetTime, calculateCaloriesToGoal, formatCurrentDate } from '@/shared/utils';
 import { useCache } from '@/hooks/useCache';
 import { SESSION_KEYS } from '@/constants';
+import { FunnelContext } from '@/shared/context/FunnelProvider';
 
 type Props = {
     onNext: (data: GoalCaloriesInfoType) => void;
-    registerData: GoalRegisterType;
 };
 
-const GoalCaloriesStep = ({ onNext, registerData }: Props) => {
+const GoalCaloriesStep = ({ onNext }: Props) => {
     const router = useRouter();
     const { onOpen: openCaloriesEdit } = useModal(ModalType.calorieEdit);
     const { onOpen: openMaintainWeight } = useModal(ModalType.maintainWeight);
 
+    const { registerData } = useContext(FunnelContext);
+
     const sessionCache = useCache('session');
-    // const basicData: GoalRegisterType | null = sessionCache.getItem(SESSION_KEYS.GOAL);
     const initalData = sessionCache.getRawItem(SESSION_KEYS.GOAL_KACL);
 
     useEffect(() => {
@@ -39,13 +40,6 @@ const GoalCaloriesStep = ({ onNext, registerData }: Props) => {
         }
     }, [initalData]);
 
-    // if (!basicData) {
-    //     alert('목표 데이터가 없습니다. 첫 번째 단계로 돌아가 입력해 주세요.');
-    //     router.push('/goals');
-    //     return null;
-    // }
-
-    /* 입력받은 데이터 기반 권장 칼로리 및 목표 기간 계산식 */
     const { dailyCalories, daysToGoal } = calculateCaloriesToGoal({ ...registerData });
 
     const isWeightDifference = registerData.targetWeight - registerData.weight !== 0;
@@ -60,17 +54,11 @@ const GoalCaloriesStep = ({ onNext, registerData }: Props) => {
     const openCaloriesEditSheet = () => {
         openCaloriesEdit();
 
+        sessionCache.setItem(SESSION_KEYS.GOAL, registerData);
         sessionCache.setItem(SESSION_KEYS.GOAL_KACL, { ...goalData, standard: dailyCalories });
     };
 
     const submitGoalData = () => {
-        const data = {
-            ...registerData,
-            ...goalData,
-        };
-
-        sessionCache.setItem(SESSION_KEYS.GOAL, data);
-
         onNext(goalData);
     };
 
