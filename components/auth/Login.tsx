@@ -36,7 +36,6 @@ const Login = () => {
     };
 
     const handleLoginClick = (provider: Provider) => {
-        // 클라이언트에서만 localStorage 접근
         localStorage.setItem(LOCAL_KEYS.LOGIN_PROVIDER, provider);
         setLoginProvider(provider);
     };
