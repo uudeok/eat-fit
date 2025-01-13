@@ -19,8 +19,6 @@ const Login = () => {
     const lastLoginProvider = local.getItem(LOCAL_KEYS.LOGIN_PROVIDER) || null;
     const [loginProvider, setLoginProvider] = useState<Provider | null>(null);
 
-    console.log('has', lastLoginProvider);
-
     const loginRedirector = async (provider: Provider) => {
         const { error } = await supabase.auth.signInWithOAuth({
             provider: provider,
