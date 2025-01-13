@@ -7,7 +7,7 @@ import { GoalCompletionModal } from '@/components/modal';
 const HomePage = async () => {
     return (
         <>
-            <GoalCompletionModal />
+            {/* <GoalCompletionModal /> */}
             <MainHeader />
 
             <TodaySummary />
