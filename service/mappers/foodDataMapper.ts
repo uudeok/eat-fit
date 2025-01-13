@@ -1,11 +1,5 @@
 import { FoodApiResponse, FoodItemType } from '../@types';
 
-export type DecodeFoodMetaDataType = {
-    pageNum: number;
-    pageSize: number;
-    totalCount: number;
-};
-
 export type DecodeFoodDataType = {
     id: number;
     foodName: string;
@@ -21,12 +15,6 @@ export type DecodeFoodDataType = {
     content: string;
 };
 
-export type DecodeFoodDataListType = {
-    foodList: DecodeFoodDataType[];
-    isEmpty: boolean;
-    meta: DecodeFoodMetaDataType;
-};
-
 export const decodeFoodData = (init: FoodItemType): DecodeFoodDataType => ({
     id: Number(init.NUM),
     foodName: init.FOOD_NM_KR,
@@ -38,20 +26,22 @@ export const decodeFoodData = (init: FoodItemType): DecodeFoodDataType => ({
     sodium: Number(init.AMT_NUM14) || 0,
     cholesterol: Number(init.AMT_NUM24) || 0,
     transFat: Number(init.AMT_NUM26) || 0,
-    servingSize: Number(init.SERVING_SIZE.replace('g', '').trim()) || 0,
+    servingSize: init.SERVING_SIZE ? Number(String(init.SERVING_SIZE).replace('g', '').trim()) || 0 : 0,
     content: '',
 });
 
-export const decodeFoodMetaData = (init: FoodApiResponse): DecodeFoodMetaDataType => ({
-    pageNum: Number(init.body.pageNo),
-    pageSize: Number(init.body.numOfRows),
-    totalCount: Number(init.body.totalCount),
-});
+export type DecodeFoodDataListType = {
+    foodList: DecodeFoodDataType[];
+    pageNum: number;
+    pageSize: number;
+    totalCount: number;
+};
 
 export const decodeFoodDataList = (init: FoodApiResponse): DecodeFoodDataListType => ({
     foodList: init.body.items.map(decodeFoodData),
-    isEmpty: init.body.items.length === 0,
-    meta: decodeFoodMetaData(init),
+    pageNum: Number(init.body.pageNo),
+    pageSize: Number(init.body.numOfRows),
+    totalCount: Number(init.body.totalCount),
 });
 
 /** 응답 결과표

@@ -24,6 +24,7 @@ import FillCheck from './fillCheck.svg';
 import FillStaggeredBar from './fillStaggeredBar.svg';
 import Setting from './setting.svg';
 import Fire from './fire.svg';
+import TopArrow from './topArrow.svg';
 
 const Icons = {
     FillHome,
@@ -52,6 +53,7 @@ const Icons = {
     FillStaggeredBar,
     Setting,
     Fire,
+    TopArrow,
 };
 
 export default Icons;

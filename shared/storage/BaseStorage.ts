@@ -35,7 +35,12 @@ export abstract class BaseStorage<KeyType extends CacheKeys = CacheKeys, ValueTy
             return rawValue as T;
         }
 
-        return JSON.parse(rawValue) as T;
+        try {
+            return JSON.parse(rawValue) as T;
+        } catch {
+            // JSON 형식이 아닌 경우 rawValue를 반환 (T가 string 타입일 가능성이 있는 경우)
+            return rawValue as T;
+        }
     }
 
     removeItem(key: KeyType) {

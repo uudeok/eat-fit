@@ -2,7 +2,9 @@ export const COOKIE_KEYS = {
     ANALYSIS: 'ANALYSIS',
 } as const;
 
-export const LOCAL_KEYS = {};
+export const LOCAL_KEYS = {
+    LOGIN_PROVIDER: 'LOGIN_PROVIDER',
+};
 
 export const SESSION_KEYS = {
     GOAL: 'GOAL',
