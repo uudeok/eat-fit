@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    generateBuildId: 'eat-fit-build-id',
     reactStrictMode: false,
     poweredByHeader: false,
     webpack: (config) => {
