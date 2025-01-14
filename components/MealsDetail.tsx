@@ -30,8 +30,6 @@ const MealsDetail = ({ mealsId }: { mealsId: string }) => {
 
     const nutrientsTotals = calculateTotalNutrients(mealDetail.mealItem);
 
-    console.log(mealDetail.servingTime);
-
     const NUTRIENTS = [
         { label: '탄수화물', value: nutrientsTotals.carbohydrate },
         { label: '단백질', value: nutrientsTotals.protein },
