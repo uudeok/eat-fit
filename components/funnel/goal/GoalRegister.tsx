@@ -1,3 +1,5 @@
+'use client';
+
 import { LoadingAnimation } from '@/components/common';
 import { encodeCreateGoal } from '@/service/mappers/goalMapper';
 import { useCreateGoal } from '@/service/mutations';
@@ -13,6 +15,7 @@ const GoalRegister = () => {
     const submitGoalData = () => {
         try {
             const createData = encodeCreateGoal({ ...registerData });
+            console.log('createData', createData);
             createGoal({ ...createData });
             router.push('/home');
         } catch (err) {
