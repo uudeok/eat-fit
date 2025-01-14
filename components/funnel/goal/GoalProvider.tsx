@@ -1,5 +1,3 @@
-'use client';
-
 import FunnelProvider from '@/shared/context/FunnelProvider';
 import GoalStep from './GoalStep';
 

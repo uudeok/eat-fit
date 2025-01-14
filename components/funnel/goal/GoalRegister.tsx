@@ -15,7 +15,6 @@ const GoalRegister = () => {
     const submitGoalData = () => {
         try {
             const createData = encodeCreateGoal({ ...registerData });
-            console.log('createData', createData);
             createGoal({ ...createData });
             router.push('/home');
         } catch (err) {
