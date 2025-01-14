@@ -1,3 +1,5 @@
+'use client';
+
 import GoalStep from '@/components/funnel/goal/GoalStep';
 import FunnelProvider from '@/shared/context/FunnelProvider';
 

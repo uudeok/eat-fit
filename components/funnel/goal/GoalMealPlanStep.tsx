@@ -7,10 +7,8 @@ import { ListRow, Text } from '../../common';
 import { Button } from '../../common/Button';
 import { useRouter } from 'next/navigation';
 import { useContext, useState } from 'react';
-import { GoalRegisterType, MealPlanInfoType, MealPlanType } from '@/service/@types';
+import { MealPlanInfoType, MealPlanType } from '@/service/@types';
 import { calculateNutrientRatio } from '@/shared/utils';
-import { useCache } from '@/hooks/useCache';
-import { SESSION_KEYS } from '@/constants';
 import { FunnelContext } from '@/shared/context/FunnelProvider';
 
 type Props = {
