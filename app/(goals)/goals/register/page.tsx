@@ -1,14 +1,7 @@
-'use client';
-
-import GoalStep from '@/components/funnel/goal/GoalStep';
-import FunnelProvider from '@/shared/context/FunnelProvider';
+import GoalProvider from '@/components/funnel/goal/GoalProvider';
 
 const GoalRegisterPage = () => {
-    return (
-        <FunnelProvider>
-            <GoalStep />
-        </FunnelProvider>
-    );
+    return <GoalProvider />;
 };
 
 export default GoalRegisterPage;
