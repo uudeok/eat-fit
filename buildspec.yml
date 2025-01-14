@@ -22,6 +22,8 @@ phases:
     post_build:
         commands:
             - echo Build completed on `date`
+            - echo "Manually copying BUILD_ID file"
+            - cp .next/BUILD_ID .open-next/assets/BUILD_ID || echo "BUILD_ID not found"
 artifacts:
     files:
         - '**/*'
