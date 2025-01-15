@@ -12,6 +12,8 @@ const GoalRegister = () => {
     const { registerData } = useContext(FunnelContext);
     const { mutate: createGoal } = useCreateGoal();
 
+    console.log('register : ', registerData);
+
     const submitGoalData = () => {
         try {
             const createData = encodeCreateGoal({ ...registerData });

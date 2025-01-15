@@ -23,7 +23,7 @@ phases:
         commands:
             - echo Build completed on `date`
             - echo "Manually copying BUILD_ID file"
-            - cp .next/BUILD_ID .open-next/assets/BUILD_ID || echo "BUILD_ID not found"
+            - if [ -f ".next/BUILD_ID" ]; then cp .next/BUILD_ID .open-next/assets/BUILD_ID; else echo "BUILD_ID not found"; fi
 artifacts:
     files:
         - '**/*'
