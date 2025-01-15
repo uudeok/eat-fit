@@ -18,6 +18,7 @@ const GoalRegister = () => {
             createGoal({ ...createData });
             router.push('/home');
         } catch (err) {
+            console.error('Error creating goal:', err);
             throw err;
         }
     };
