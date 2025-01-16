@@ -5,6 +5,7 @@ import DynamicLayout from '@/components/layout/DynamicLayout';
 import AuthProvider from '@/shared/context/AuthProvider';
 import QueryProvider from '@/shared/context/QueryProvider';
 import { getMetadata } from '@/shared/utils/metadata';
+import FunnelProvider from '@/shared/context/FunnelProvider';
 
 export const generateMetadata = () => {
     return getMetadata();
@@ -20,7 +21,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <body>
                 <QueryProvider>
                     <AuthProvider>
-                        <DynamicLayout>{children}</DynamicLayout>
+                        <FunnelProvider>
+                            <DynamicLayout>{children}</DynamicLayout>
+                        </FunnelProvider>
                     </AuthProvider>
                     <OverlayContainer />
                     <Toast />
