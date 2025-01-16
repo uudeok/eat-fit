@@ -13,6 +13,7 @@ phases:
     pre_build:
         commands:
             - echo Installing source NPM dependencies...
+            - rm -rf .next
             - npm install
             - echo "Dependencies installed"
     build:
