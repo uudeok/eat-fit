@@ -1,15 +1,7 @@
-import GoalStep from '@/components/funnel/goal/GoalStep';
+import GoalProvider from '@/components/funnel/goal/GoalProvider';
 
 const GoalRegisterPage = () => {
-    return <GoalStep />;
+    return <GoalProvider />;
 };
 
 export default GoalRegisterPage;
-
-// import GoalProvider from '@/components/funnel/goal/GoalProvider';
-
-// const GoalRegisterPage = () => {
-//     return <GoalProvider />;
-// };
-
-// export default GoalRegisterPage;
