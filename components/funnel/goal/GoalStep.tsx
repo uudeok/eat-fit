@@ -25,8 +25,6 @@ const GoalStep = () => {
     const { setRegisterData, registerData } = useContext(FunnelContext);
     const [currentStep, setCurrnetStep] = useState<number>(0);
 
-    console.log('registerData : ', registerData);
-
     const steps: StepData<FunnelStep>[] = [
         {
             name: 'goalIntro',
