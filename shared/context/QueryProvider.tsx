@@ -10,7 +10,7 @@ const QueryProvider = ({ children }: { children: React.ReactNode }) => {
             new QueryClient({
                 defaultOptions: {
                     queries: {
-                        retry: 1,
+                        retry: 0,
 
                         // SSR을 위해서는 staleTime을 설정해야 한다.
                         /* 
