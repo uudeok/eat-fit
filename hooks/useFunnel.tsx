@@ -4,7 +4,7 @@ import styles from '@styles/common/funnel.module.css';
 import mermaid from 'mermaid';
 import { Button } from '@/components/common/Button';
 import { getGraph } from '@/components/funnel/getGraph';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useEffect, useRef } from 'react';
 import { FunnelStateVisualizer } from '@/components/funnel/FunnelStateView';
 import { FunnelStateEditor } from '@/components/funnel/FunnelStateEditor';
@@ -23,7 +23,7 @@ type UseFunnelOptions<T extends string> = {
 
 export const useFunnel = <T extends string>(steps: StepData<T>[], options: UseFunnelOptions<T> = {}) => {
     const { initialStep, stepQueryKey = 'funnel-step', onStepChange } = options;
-    // const router = useRouter();
+    const router = useRouter();
     const searchParams = useSearchParams();
     const [currentStep, setCurrentStep] = useState<T>(initialStep || steps[0].name);
     const mermaidRef = useRef<HTMLDivElement>(null);
@@ -36,7 +36,7 @@ export const useFunnel = <T extends string>(steps: StepData<T>[], options: UseFu
             setCurrentStep(queryStep as T);
             onStepChange?.(queryStep as T);
         }
-    }, [searchParams, stepQueryKey]); // currentStep를 의존성에서 제외
+    }, [searchParams]); // currentStep를 의존성에서 제외
 
     const setStep = (step: T) => {
         if (!steps.some((s) => s.name === step)) {
@@ -51,8 +51,7 @@ export const useFunnel = <T extends string>(steps: StepData<T>[], options: UseFu
 
             const newSearchParams = new URLSearchParams(window.location.search);
             newSearchParams.set(stepQueryKey, step);
-            window.location.href = `?${newSearchParams.toString()}`;
-            // router.push(`?${newSearchParams.toString()}`);
+            router.push(`?${newSearchParams.toString()}`);
         }
     };
 
@@ -100,7 +99,7 @@ export const useFunnel = <T extends string>(steps: StepData<T>[], options: UseFu
         const currentStepData = steps.find((s) => s.name === currentStep);
         if (!currentStepData) return null;
 
-        const { component: StepComponent, props = {} } = currentStepData;
+        const { component: StepComponent, props } = currentStepData;
 
         return <StepComponent {...props} />;
     };
