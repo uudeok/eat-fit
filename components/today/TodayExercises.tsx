@@ -28,7 +28,7 @@ const TodayExercises = () => {
 
     const [exerciseTotals, setExerciseTotals] = useState<BurnedCaloriesType>({ durationMin: 0, caloriesBurned: 0 });
 
-    const { data: exercisesData, isLoading, refetch } = useFetchExercises(formattedDate);
+    const { data: exercisesData, isLoading } = useFetchExercises(formattedDate);
     const { mutateAsync: deleteExercises } = useDeleteExercises(formattedDate);
     const { mutate: updateExercises } = useUpdateExercises(formattedDate);
 

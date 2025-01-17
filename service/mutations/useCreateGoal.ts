@@ -11,7 +11,7 @@ export function useCreateGoal() {
     return useMutation({
         mutationFn: (goalData: CreateGoalArgs) => createNewGoals(goalData),
         onSuccess: (data) => {
-            queryClient.invalidateQueries({ queryKey: goalsKeys.base });
+            // queryClient.invalidateQueries({ queryKey: goalsKeys.base });
         },
         onError: (error) => {
             console.error('Error creating goal:', error);

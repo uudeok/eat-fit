@@ -22,7 +22,7 @@ const GoalStep = () => {
     const funnelStep = ['goalIntro', 'basicInfo', 'weightInfo', 'caloriesInfo', 'mealPlan', 'goalRegister'] as const;
     type FunnelStep = (typeof funnelStep)[number];
 
-    const { setRegisterData, registerData } = useContext(FunnelContext);
+    const { setRegisterData } = useContext(FunnelContext);
     const [currentStep, setCurrnetStep] = useState<number>(0);
 
     const steps: StepData<FunnelStep>[] = [

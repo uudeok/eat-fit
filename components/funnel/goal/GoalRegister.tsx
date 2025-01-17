@@ -13,6 +13,8 @@ const GoalRegister = () => {
     const { mutate: createGoal } = useCreateGoal();
 
     const submitGoalData = () => {
+        if (!registerData) return;
+
         try {
             const createData = encodeCreateGoal({ ...registerData });
             createGoal({ ...createData });
