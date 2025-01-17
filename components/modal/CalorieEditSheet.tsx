@@ -9,11 +9,12 @@ import { useForm } from 'react-hook-form';
 import { Input } from '../common/Form';
 import { Button } from '../common/Button';
 import { recalculateCaloriesToGoal } from '@/shared/utils';
-import { GoalCaloriesInfoWithStandardType, GoalRegisterType } from '@/service/@types';
+import { GoalCaloriesInfoWithStandardType } from '@/service/@types';
 import { caloriesValidation } from '@/shared/utils/validation';
 import { useCache } from '@/hooks/useCache';
 import { SESSION_KEYS } from '@/constants';
 import { useRouter } from 'next/navigation';
+import { useGoalStore } from '../funnel/goal/GoalStep';
 
 type FormValue = {
     dailyCalories: number;
@@ -21,9 +22,11 @@ type FormValue = {
 
 const CalorieEditSheet = () => {
     const router = useRouter();
+    const { data: storedData } = useGoalStore();
+
     const sessionCache = useCache('session');
     const initialData: GoalCaloriesInfoWithStandardType | null = sessionCache.getItem(SESSION_KEYS.GOAL_KACL);
-    const registerData: GoalRegisterType | null = sessionCache.getItem(SESSION_KEYS.GOAL);
+    // const registerData: GoalRegisterType | null = sessionCache.getItem(SESSION_KEYS.GOAL);
 
     const { isOpen, onClose } = useModal(ModalType.calorieEdit);
 
@@ -37,7 +40,7 @@ const CalorieEditSheet = () => {
         },
     });
 
-    if (!initialData || !registerData) {
+    if (!initialData || !storedData) {
         alert('목표 데이터가 없습니다. 첫 번째 단계로 돌아가 입력해 주세요.');
         router.push('/goals');
         return;
@@ -47,8 +50,8 @@ const CalorieEditSheet = () => {
         initialData.goalPeriod = recalculateCaloriesToGoal({
             currentCalories: initialData.standard,
             newCalories: data.dailyCalories,
-            currentWeight: registerData.weight,
-            targetWeight: registerData.targetWeight,
+            currentWeight: storedData.weight,
+            targetWeight: storedData.targetWeight,
         });
 
         initialData.dailyCalories = data.dailyCalories;

@@ -7,8 +7,8 @@ export const LOCAL_KEYS = {
 };
 
 export const SESSION_KEYS = {
-    GOAL: 'GOAL',
-    GOAL_KACL: 'GOAL_KACL',
+    GOAL: 'goal-step',
+    GOAL_KACL: 'goal-kcal',
 } as const;
 
 export type CookieKeys = keyof typeof COOKIE_KEYS;

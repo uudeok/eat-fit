@@ -11,20 +11,21 @@ import { calculateWeightRange } from '@/shared/utils';
 import { WeightInfoType } from '@/service/@types/req.type';
 import { createGoalWeightSchema, weightValidation } from '@/shared/utils/validation';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { FunnelContext } from '@/shared/context/FunnelProvider';
-import { useContext } from 'react';
+import { useGoalStore } from './GoalStep';
 
 type Props = {
     onNext: (data: WeightInfoType) => void;
 };
 
 const GoalWeightInfoStep = ({ onNext }: Props) => {
+    const { data } = useGoalStore();
     const router = useRouter();
 
-    const { registerData } = useContext(FunnelContext);
+    // const session = useCache('session');
+    // const initialData: GoalRegisterType | null = session.getItem(SESSION_KEYS.GOAL);
 
     /* 정상 체중 범위를 구하기 위한 계산식 */
-    const { minWeight, maxWeight } = calculateWeightRange(registerData?.height!);
+    const { minWeight, maxWeight } = calculateWeightRange(data?.height!);
 
     const seihgtSchema = createGoalWeightSchema(minWeight, maxWeight);
 
@@ -35,12 +36,13 @@ const GoalWeightInfoStep = ({ onNext }: Props) => {
     } = useForm<WeightInfoType>({
         resolver: zodResolver(seihgtSchema),
         defaultValues: {
-            weight: registerData?.weight,
-            targetWeight: registerData?.targetWeight,
+            weight: data?.weight,
+            targetWeight: data?.targetWeight,
         },
     });
 
     const onSubmit = handleSubmit((data) => {
+        // session.setItem(SESSION_KEYS.GOAL, { ...initialData, ...data });
         onNext(data);
     });
 

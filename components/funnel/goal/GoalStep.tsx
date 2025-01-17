@@ -1,6 +1,6 @@
 'use client';
 
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import GoalIntro from './GoalIntro';
 import GoalBasicInfoStep from './GoalBasicInfoStep';
 import GoalWeightInfoStep from './GoalWeightInfoStep';
@@ -8,6 +8,7 @@ import GoalCaloriesStep from './GoalCaloriesStep';
 import GoalMealPlanStep from './GoalMealPlanStep';
 import { StepData, useFunnel } from '@/hooks/useFunnel';
 import StepProgress from '@/components/common/StepProgressBar';
+import GoalRegister from './GoalRegister';
 import {
     BasicInfoType,
     GoalCaloriesInfoType,
@@ -15,15 +16,17 @@ import {
     MealPlanInfoType,
     WeightInfoType,
 } from '@/service/@types';
-import GoalRegister from './GoalRegister';
-import { FunnelContext } from '@/shared/context/FunnelProvider';
+import { createStore } from '@/shared/store/useDataStore';
+
+export const useGoalStore = createStore<GoalRegisterType>({} as GoalRegisterType);
 
 const GoalStep = () => {
     const funnelStep = ['goalIntro', 'basicInfo', 'weightInfo', 'caloriesInfo', 'mealPlan', 'goalRegister'] as const;
     type FunnelStep = (typeof funnelStep)[number];
 
-    const { setRegisterData } = useContext(FunnelContext);
     const [currentStep, setCurrnetStep] = useState<number>(0);
+
+    const { setData: setRegisterData } = useGoalStore();
 
     const steps: StepData<FunnelStep>[] = [
         {
@@ -38,7 +41,7 @@ const GoalStep = () => {
             component: GoalBasicInfoStep,
             props: {
                 onNext: (data: BasicInfoType) => {
-                    setRegisterData((prev: GoalRegisterType) => ({ ...prev, ...data }));
+                    setRegisterData(data);
                     setStep('weightInfo');
                 },
             },
@@ -46,10 +49,9 @@ const GoalStep = () => {
         {
             name: 'weightInfo',
             component: GoalWeightInfoStep,
-
             props: {
                 onNext: (data: WeightInfoType) => {
-                    setRegisterData((prev: GoalRegisterType) => ({ ...prev, ...data }));
+                    setRegisterData(data);
                     setStep('caloriesInfo');
                 },
             },
@@ -59,7 +61,7 @@ const GoalStep = () => {
             component: GoalCaloriesStep,
             props: {
                 onNext: (data: GoalCaloriesInfoType) => {
-                    setRegisterData((prev: GoalRegisterType) => ({ ...prev, ...data }));
+                    setRegisterData(data);
                     setStep('mealPlan');
                 },
             },
@@ -69,7 +71,7 @@ const GoalStep = () => {
             component: GoalMealPlanStep,
             props: {
                 onNext: (data: MealPlanInfoType) => {
-                    setRegisterData((prev: GoalRegisterType) => ({ ...prev, ...data }));
+                    setRegisterData(data);
                     setStep('goalRegister');
                 },
             },

@@ -1,20 +1,21 @@
 'use client';
 
 import styles from '@styles/common/funnelEditor.module.css';
-import React, { useState, useContext } from 'react';
-import { FunnelContext } from '@/shared/context/FunnelProvider';
+import React, { useState } from 'react';
 import { Text } from '../common';
 import { Button } from '../common/Button';
 import { Input, Label } from '../common/Form';
 import { useForm } from 'react-hook-form';
+import { useGoalStore } from './goal/GoalStep';
 
 export const FunnelStateEditor = () => {
-    const { registerData, setRegisterData } = useContext(FunnelContext);
-    const [state, setState] = useState(registerData);
+    const { data, setData } = useGoalStore();
+    // const { registerData, setRegisterData } = useContext(FunnelContext);
+    const [state, setState] = useState(data);
 
     const { register, handleSubmit } = useForm({
         defaultValues: {
-            ...registerData,
+            ...data,
         },
     });
 
@@ -23,7 +24,7 @@ export const FunnelStateEditor = () => {
     };
 
     const applyChanges = () => {
-        setRegisterData(state);
+        setData(state);
     };
 
     return (

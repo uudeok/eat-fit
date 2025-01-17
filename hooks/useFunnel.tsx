@@ -106,6 +106,7 @@ export const useFunnel = <T extends string>(steps: StepData<T>[], options: UseFu
 
     const FunnelGraph = () => {
         const isDevMode = process.env.NODE_ENV === 'development';
+
         const [isGraphOpen, setIsGraphOpen] = useState(false);
         const [isEditorOpen, setIsEditorOpen] = useState(false);
 

@@ -1,12 +1,12 @@
 'use client';
 
 import styles from '@styles/common/funnelVisualizer.module.css';
-import { FunnelContext } from '@/shared/context/FunnelProvider';
-import { useContext } from 'react';
 import { Text } from '../common';
+import { useGoalStore } from './goal/GoalStep';
 
 export const FunnelStateVisualizer = () => {
-    const { registerData } = useContext(FunnelContext);
+    const { data } = useGoalStore();
+    // const { registerData } = useContext(FunnelContext);
 
     return (
         <div className={styles.container}>
@@ -21,7 +21,7 @@ export const FunnelStateVisualizer = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {Object.entries(registerData).map(([key, value]) => (
+                    {Object.entries(data).map(([key, value]) => (
                         <tr key={key} className={styles.tr}>
                             <td className={styles.td}>{key}</td>
                             <td className={styles.td}>{JSON.stringify(value)}</td>

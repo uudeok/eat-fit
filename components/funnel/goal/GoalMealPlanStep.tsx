@@ -6,10 +6,10 @@ import Image from 'next/image';
 import { ListRow, Text } from '../../common';
 import { Button } from '../../common/Button';
 import { useRouter } from 'next/navigation';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { MealPlanInfoType, MealPlanType } from '@/service/@types';
 import { calculateNutrientRatio } from '@/shared/utils';
-import { FunnelContext } from '@/shared/context/FunnelProvider';
+import { useGoalStore } from './GoalStep';
 
 type Props = {
     onNext: (data: MealPlanInfoType) => void;
@@ -42,26 +42,30 @@ const MEAL_PLAN_OPTIONS: MealPlan[] = [
 ];
 
 const GoalMealPlanStep = ({ onNext }: Props) => {
+    const { data } = useGoalStore();
     const router = useRouter();
     const [selectedPlan, setSelectedPlan] = useState<MealPlanType>();
 
-    const { registerData } = useContext(FunnelContext);
+    // const session = useCache('session');
+    // const initialData: GoalRegisterType | null = session.getItem(SESSION_KEYS.GOAL);
 
     const handleCheckboxChange = (key: MealPlanType) => {
         setSelectedPlan(key);
     };
 
     const submitMealPlan = () => {
-        if (selectedPlan && registerData) {
+        if (selectedPlan && data) {
             /* 식단 정보 기반 권장 탄, 단, 지 비율 계산식 */
-            const nutrientRatio = calculateNutrientRatio(registerData.dailyCalories, selectedPlan);
-
-            onNext({
+            const nutrientRatio = calculateNutrientRatio(data.dailyCalories, selectedPlan);
+            const dailyPlanData = {
                 mealPlan: selectedPlan,
                 dailyCarb: nutrientRatio.daily_carb,
                 dailyProtein: nutrientRatio.daily_protein,
                 dailyFat: nutrientRatio.daily_fat,
-            });
+            };
+
+            // session.setItem(SESSION_KEYS.GOAL, { ...initialData, ...dailyPlanData });
+            onNext(dailyPlanData);
         }
     };
 

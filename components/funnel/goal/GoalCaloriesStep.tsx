@@ -8,29 +8,29 @@ import { GoalCaloriesInfoType } from '@/service/@types';
 import { Button } from '../../common/Button';
 import { useModal } from '@/hooks';
 import { ModalType } from '../../common/Modal/OverlayContainer';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { addDaysAndResetTime, calculateCaloriesToGoal, formatCurrentDate } from '@/shared/utils';
 import { useCache } from '@/hooks/useCache';
 import { SESSION_KEYS } from '@/constants';
-import { FunnelContext } from '@/shared/context/FunnelProvider';
+import { useGoalStore } from './GoalStep';
 
 type Props = {
     onNext: (data: GoalCaloriesInfoType) => void;
 };
 
 const GoalCaloriesStep = ({ onNext }: Props) => {
+    const { data, setData } = useGoalStore();
     const router = useRouter();
     const { onOpen: openCaloriesEdit } = useModal(ModalType.calorieEdit);
     const { onOpen: openMaintainWeight } = useModal(ModalType.maintainWeight);
 
-    const { registerData } = useContext(FunnelContext);
-
-    const sessionCache = useCache('session');
-    const initalData = sessionCache.getRawItem(SESSION_KEYS.GOAL_KACL);
+    const session = useCache('session');
+    // const initialData: GoalRegisterType | null = session.getItem(SESSION_KEYS.GOAL);
+    const initalKcalData = session.getRawItem(SESSION_KEYS.GOAL_KACL);
 
     useEffect(() => {
-        if (initalData) {
-            const parseData = JSON.parse(initalData);
+        if (initalKcalData) {
+            const parseData = JSON.parse(initalKcalData);
             setGoalData({
                 dailyCalories: parseData.dailyCalories,
                 startDate: formatCurrentDate(),
@@ -38,11 +38,11 @@ const GoalCaloriesStep = ({ onNext }: Props) => {
                 goalPeriod: parseData.goalPeriod,
             });
         }
-    }, [initalData]);
+    }, [initalKcalData]);
 
-    const { dailyCalories, daysToGoal } = calculateCaloriesToGoal({ ...registerData });
+    const { dailyCalories, daysToGoal } = calculateCaloriesToGoal({ ...data });
 
-    const isWeightDifference = registerData.targetWeight - registerData.weight !== 0;
+    const isWeightDifference = data.targetWeight - data.weight !== 0;
 
     const [goalData, setGoalData] = useState<GoalCaloriesInfoType>({
         dailyCalories: dailyCalories,
@@ -54,16 +54,16 @@ const GoalCaloriesStep = ({ onNext }: Props) => {
     const openCaloriesEditSheet = () => {
         openCaloriesEdit();
 
-        sessionCache.setItem(SESSION_KEYS.GOAL, registerData);
-        sessionCache.setItem(SESSION_KEYS.GOAL_KACL, { ...goalData, standard: dailyCalories });
+        session.setItem(SESSION_KEYS.GOAL_KACL, { ...goalData, standard: dailyCalories });
     };
 
     const submitGoalData = () => {
+        // session.setItem(SESSION_KEYS.GOAL, { ...initialData, ...goalData });
         onNext(goalData);
     };
 
     const handleBack = () => {
-        sessionCache.removeItem(SESSION_KEYS.GOAL_KACL);
+        session.removeItem(SESSION_KEYS.GOAL_KACL);
         router.back();
     };
 

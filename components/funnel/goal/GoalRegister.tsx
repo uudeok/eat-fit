@@ -3,20 +3,23 @@
 import { LoadingAnimation } from '@/components/common';
 import { encodeCreateGoal } from '@/service/mappers/goalMapper';
 import { useCreateGoal } from '@/service/mutations';
-import { FunnelContext } from '@/shared/context/FunnelProvider';
 import { useRouter } from 'next/navigation';
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
+import { useGoalStore } from './GoalStep';
 
 const GoalRegister = () => {
     const router = useRouter();
-    const { registerData } = useContext(FunnelContext);
+    const { data } = useGoalStore();
+    // const session = useCache('session');
+    // const initialData: GoalRegisterType | null = session.getItem(SESSION_KEYS.GOAL);
+
     const { mutate: createGoal } = useCreateGoal();
 
     const submitGoalData = () => {
-        if (!registerData) return;
+        if (!data) return;
 
         try {
-            const createData = encodeCreateGoal({ ...registerData });
+            const createData = encodeCreateGoal({ ...data });
             createGoal({ ...createData });
             router.push('/home');
         } catch (err) {
