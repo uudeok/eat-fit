@@ -31,7 +31,7 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
                 <h2 className="text-3xl font-semibold text-point-purple">Something went wrong!</h2>
                 <p className="mt-4 font-semibold text-gray-500">해당 페이지를 가져오던 중 문제가 생겼습니다.</p>
                 <p className="mx-auto mt-8 mb-8 max-w-lg text-xs text-input-border-color">
-                    Error Message: {error?.message || '없음'}
+                    Error Message: {error?.message || ''}
                 </p>
                 <Image src="/images/oops.png" alt="error" width={100} height={100} />
                 <div className="mt-8 p-4 flex flex-col gap-5">
