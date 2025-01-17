@@ -19,6 +19,7 @@ import {
 import { createStore } from '@/shared/store/useDataStore';
 
 export const useGoalStore = createStore<GoalRegisterType>({} as GoalRegisterType);
+const startPage = 1;
 
 const GoalStep = () => {
     const funnelStep = ['goalIntro', 'basicInfo', 'weightInfo', 'caloriesInfo', 'mealPlan', 'goalRegister'] as const;
@@ -93,10 +94,12 @@ const GoalStep = () => {
     return (
         <>
             <div className="p-2">
-                {currentStep > 0 && <StepProgress totalSteps={funnelStep.length - 2} currentStep={currentStep} />}
+                {currentStep >= startPage && (
+                    <StepProgress totalSteps={funnelStep.length - 2} currentStep={currentStep} />
+                )}
             </div>
             <Funnel />
-            {currentStep > 0 && <FunnelGraph />}
+            {currentStep >= startPage && <FunnelGraph />}
         </>
     );
 };
