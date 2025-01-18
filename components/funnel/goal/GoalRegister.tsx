@@ -11,9 +11,6 @@ const GoalRegister = () => {
     const router = useRouter();
     const { data } = useGoalStore();
 
-    // const session = useCache('session');
-    // const initialData: GoalRegisterType | null = session.getItem(SESSION_KEYS.GOAL);
-
     const { mutate: createGoal } = useCreateGoal();
 
     const submitGoalData = () => {

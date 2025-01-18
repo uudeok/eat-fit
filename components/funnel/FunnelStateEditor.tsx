@@ -10,7 +10,6 @@ import { useGoalStore } from './goal/GoalStep';
 
 export const FunnelStateEditor = () => {
     const { data, setData } = useGoalStore();
-    // const { registerData, setRegisterData } = useContext(FunnelContext);
     const [state, setState] = useState(data);
 
     const { register, handleSubmit } = useForm({

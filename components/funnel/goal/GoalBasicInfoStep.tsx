@@ -19,9 +19,6 @@ type Props = {
 const GoalBasicInfoStep = ({ onNext }: Props) => {
     const { data } = useGoalStore();
 
-    // const session = useCache('session');
-    // const initialData: BasicInfoType | null = session.getItem(SESSION_KEYS.GOAL);
-
     const [selectedGender, setSelectedGender] = useState<GenderType | null>(data?.gender || null);
     const [selectedActivityLevel, setSelectedActivityLevel] = useState<ActivityLevelType | null>(
         data?.activityLevel || null
@@ -45,7 +42,7 @@ const GoalBasicInfoStep = ({ onNext }: Props) => {
         if (!selectedGender || !selectedActivityLevel) {
             return;
         }
-        // session.setItem(SESSION_KEYS.GOAL, data);
+
         onNext(data);
     });
 

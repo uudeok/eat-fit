@@ -26,7 +26,6 @@ const CalorieEditSheet = () => {
 
     const sessionCache = useCache('session');
     const initialData: GoalCaloriesInfoWithStandardType | null = sessionCache.getItem(SESSION_KEYS.GOAL_KACL);
-    // const registerData: GoalRegisterType | null = sessionCache.getItem(SESSION_KEYS.GOAL);
 
     const { isOpen, onClose } = useModal(ModalType.calorieEdit);
 

@@ -47,9 +47,6 @@ const GoalMealPlanStep = ({ onNext }: Props) => {
     const router = useRouter();
     const [selectedPlan, setSelectedPlan] = useState<MealPlanType>();
 
-    // const session = useCache('session');
-    // const initialData: GoalRegisterType | null = session.getItem(SESSION_KEYS.GOAL);
-
     const handleCheckboxChange = (key: MealPlanType) => {
         setSelectedPlan(key);
     };
@@ -65,7 +62,6 @@ const GoalMealPlanStep = ({ onNext }: Props) => {
                 dailyFat: nutrientRatio.daily_fat,
             };
 
-            // session.setItem(SESSION_KEYS.GOAL, { ...initialData, ...dailyPlanData });
             onNext(dailyPlanData);
         }
     };

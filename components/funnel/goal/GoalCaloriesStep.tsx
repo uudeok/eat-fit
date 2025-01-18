@@ -26,7 +26,6 @@ const GoalCaloriesStep = ({ onNext }: Props) => {
     const { onOpen: openMaintainWeight } = useModal(ModalType.maintainWeight);
 
     const session = useCache('session');
-    // const initialData: GoalRegisterType | null = session.getItem(SESSION_KEYS.GOAL);
     const initalKcalData = session.getRawItem(SESSION_KEYS.GOAL_KACL);
 
     useEffect(() => {
@@ -59,7 +58,6 @@ const GoalCaloriesStep = ({ onNext }: Props) => {
     };
 
     const submitGoalData = () => {
-        // session.setItem(SESSION_KEYS.GOAL, { ...initialData, ...goalData });
         onNext(goalData);
     };
 

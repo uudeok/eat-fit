@@ -21,9 +21,6 @@ const GoalWeightInfoStep = ({ onNext }: Props) => {
     const { data } = useGoalStore();
     const router = useRouter();
 
-    // const session = useCache('session');
-    // const initialData: GoalRegisterType | null = session.getItem(SESSION_KEYS.GOAL);
-
     /* 정상 체중 범위를 구하기 위한 계산식 */
     const { minWeight, maxWeight } = calculateWeightRange(data?.height!);
 
@@ -42,7 +39,6 @@ const GoalWeightInfoStep = ({ onNext }: Props) => {
     });
 
     const onSubmit = handleSubmit((data) => {
-        // session.setItem(SESSION_KEYS.GOAL, { ...initialData, ...data });
         onNext(data);
     });
 
