@@ -19,7 +19,8 @@ type Props = {
 };
 
 const GoalCaloriesStep = ({ onNext }: Props) => {
-    const { data, setData } = useGoalStore();
+    const { data } = useGoalStore();
+
     const router = useRouter();
     const { onOpen: openCaloriesEdit } = useModal(ModalType.calorieEdit);
     const { onOpen: openMaintainWeight } = useModal(ModalType.maintainWeight);

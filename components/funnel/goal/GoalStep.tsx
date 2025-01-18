@@ -18,7 +18,7 @@ import {
 } from '@/service/@types';
 import { createStore } from '@/shared/store/useDataStore';
 
-export const useGoalStore = createStore<GoalRegisterType>({} as GoalRegisterType);
+export const useGoalStore = createStore<GoalRegisterType>({} as GoalRegisterType, 'goal-storage');
 const startPage = 1;
 
 const GoalStep = () => {
@@ -27,7 +27,8 @@ const GoalStep = () => {
 
     const [currentStep, setCurrnetStep] = useState<number>(0);
 
-    const { setData: setRegisterData } = useGoalStore();
+    const { data: registerData, setData: setRegisterData } = useGoalStore();
+    console.log('goal-Step : ', registerData);
 
     const steps: StepData<FunnelStep>[] = [
         {

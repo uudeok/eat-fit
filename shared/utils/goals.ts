@@ -99,6 +99,10 @@ export function recalculateCaloriesToGoal({
 }
 
 export function calculateWeightRange(height: number): { minWeight: number; maxWeight: number } {
+    if (!height || height <= 0) {
+        return { minWeight: 30, maxWeight: 150 };
+    }
+
     const heightInMeters = height / 100; // 키를 미터로 변환
     const minBmi = 16;
     const maxBmi = 30;

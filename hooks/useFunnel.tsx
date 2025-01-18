@@ -36,7 +36,7 @@ export const useFunnel = <T extends string>(steps: StepData<T>[], options: UseFu
             setCurrentStep(queryStep as T);
             onStepChange?.(queryStep as T);
         }
-    }, [searchParams, stepQueryKey]); // currentStep를 의존성에서 제외
+    }, [searchParams.get(stepQueryKey)]); // currentStep를 의존성에서 제외
 
     const setStep = (step: T) => {
         if (!steps.some((s) => s.name === step)) {

@@ -43,6 +43,9 @@ const MEAL_PLAN_OPTIONS: MealPlan[] = [
 
 const GoalMealPlanStep = ({ onNext }: Props) => {
     const { data } = useGoalStore();
+
+    console.log('mealPlan-Step : ', data);
+
     const router = useRouter();
     const [selectedPlan, setSelectedPlan] = useState<MealPlanType>();
 
