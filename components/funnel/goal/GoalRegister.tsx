@@ -10,7 +10,6 @@ import { useGoalStore } from './GoalStep';
 const GoalRegister = () => {
     const router = useRouter();
     const { data } = useGoalStore();
-    console.log('register-Step : ', data);
 
     // const session = useCache('session');
     // const initialData: GoalRegisterType | null = session.getItem(SESSION_KEYS.GOAL);

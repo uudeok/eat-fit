@@ -57,9 +57,7 @@ const GoalBasicInfoStep = ({ onNext }: Props) => {
         if (!selectedGender || !selectedActivityLevel) {
             return;
         }
-
         // session.setItem(SESSION_KEYS.GOAL, data);
-
         onNext(data);
     });
 
