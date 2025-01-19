@@ -6,18 +6,20 @@ import { Button } from '../../common/Button';
 import { ListCol, Text } from '../../common';
 import { Input } from '../../common/Form';
 import { useForm } from 'react-hook-form';
-import { ActivityLevelType, BasicInfoType, GenderType } from '@/service/@types/req.type';
+import { ActivityLevelType, BasicInfoType, GenderType, GoalRegisterType } from '@/service/@types/req.type';
 import { useState } from 'react';
 import { ageValidation, heightValidation } from '@/shared/utils/validation';
-import { useGoalStore } from './GoalStep';
+// import { useGoalStore } from './GoalStep';
 import { ACTIVITY_LIST, GENDER } from '@/constants';
+import { useFunnelContext } from '@/shared/context/FunnelProvider';
 
 type Props = {
     onNext: (data: BasicInfoType) => void;
 };
 
 const GoalBasicInfoStep = ({ onNext }: Props) => {
-    const { data } = useGoalStore();
+    // const { data } = useGoalStore();
+    const { registerData: data } = useFunnelContext<GoalRegisterType>();
 
     const [selectedGender, setSelectedGender] = useState<GenderType | null>(data?.gender || null);
     const [selectedActivityLevel, setSelectedActivityLevel] = useState<ActivityLevelType | null>(

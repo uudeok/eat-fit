@@ -2,11 +2,13 @@
 
 import styles from '@styles/common/funnelVisualizer.module.css';
 import { Text } from '../common';
-import { useGoalStore } from './goal/GoalStep';
+// import { useGoalStore } from './goal/GoalStep';
+import { useFunnelContext } from '@/shared/context/FunnelProvider';
+import { GoalRegisterType } from '@/service/@types';
 
 export const FunnelStateVisualizer = () => {
-    const { data } = useGoalStore();
-    // const { registerData } = useContext(FunnelContext);
+    // const { data } = useGoalStore();
+    const { registerData: data } = useFunnelContext<GoalRegisterType>();
 
     return (
         <div className={styles.container}>

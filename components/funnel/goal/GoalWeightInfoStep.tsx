@@ -8,18 +8,20 @@ import { useForm } from 'react-hook-form';
 import { Input } from '../../common/Form';
 import { useRouter } from 'next/navigation';
 import { calculateWeightRange } from '@/shared/utils';
-import { WeightInfoType } from '@/service/@types/req.type';
+import { GoalRegisterType, WeightInfoType } from '@/service/@types/req.type';
 import { createGoalWeightSchema, weightValidation } from '@/shared/utils/validation';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useGoalStore } from './GoalStep';
+// import { useGoalStore } from './GoalStep';
+import { useFunnelContext } from '@/shared/context/FunnelProvider';
 
 type Props = {
     onNext: (data: WeightInfoType) => void;
 };
 
 const GoalWeightInfoStep = ({ onNext }: Props) => {
-    const { data } = useGoalStore();
+    // const { data } = useGoalStore();
     const router = useRouter();
+    const { registerData: data } = useFunnelContext<GoalRegisterType>();
 
     /* 정상 체중 범위를 구하기 위한 계산식 */
     const { minWeight, maxWeight } = calculateWeightRange(data?.height!);

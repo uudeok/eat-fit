@@ -7,9 +7,10 @@ import { ListRow, Text } from '../../common';
 import { Button } from '../../common/Button';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { MealPlanInfoType, MealPlanType } from '@/service/@types';
+import { GoalRegisterType, MealPlanInfoType, MealPlanType } from '@/service/@types';
 import { calculateNutrientRatio } from '@/shared/utils';
-import { useGoalStore } from './GoalStep';
+// import { useGoalStore } from './GoalStep';
+import { useFunnelContext } from '@/shared/context/FunnelProvider';
 
 type Props = {
     onNext: (data: MealPlanInfoType) => void;
@@ -42,7 +43,9 @@ const MEAL_PLAN_OPTIONS: MealPlan[] = [
 ];
 
 const GoalMealPlanStep = ({ onNext }: Props) => {
-    const { data } = useGoalStore();
+    // const { data } = useGoalStore();
+
+    const { registerData: data } = useFunnelContext<GoalRegisterType>();
 
     const router = useRouter();
     const [selectedPlan, setSelectedPlan] = useState<MealPlanType>();

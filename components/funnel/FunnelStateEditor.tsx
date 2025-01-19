@@ -6,10 +6,13 @@ import { Text } from '../common';
 import { Button } from '../common/Button';
 import { Input, Label } from '../common/Form';
 import { useForm } from 'react-hook-form';
-import { useGoalStore } from './goal/GoalStep';
+// import { useGoalStore } from './goal/GoalStep';
+import { useFunnelContext } from '@/shared/context/FunnelProvider';
+import { GoalRegisterType } from '@/service/@types';
 
 export const FunnelStateEditor = () => {
-    const { data, setData } = useGoalStore();
+    // const { data, setData } = useGoalStore();
+    const { registerData: data, setRegisterData: setData } = useFunnelContext<GoalRegisterType>();
     const [state, setState] = useState(data);
 
     const { register, handleSubmit } = useForm({

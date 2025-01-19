@@ -9,12 +9,13 @@ import { useForm } from 'react-hook-form';
 import { Input } from '../common/Form';
 import { Button } from '../common/Button';
 import { recalculateCaloriesToGoal } from '@/shared/utils';
-import { GoalCaloriesInfoWithStandardType } from '@/service/@types';
+import { GoalCaloriesInfoWithStandardType, GoalRegisterType } from '@/service/@types';
 import { caloriesValidation } from '@/shared/utils/validation';
 import { useCache } from '@/hooks/useCache';
 import { SESSION_KEYS } from '@/constants';
 import { useRouter } from 'next/navigation';
-import { useGoalStore } from '../funnel/goal/GoalStep';
+// import { useGoalStore } from '../funnel/goal/GoalStep';
+import { useFunnelContext } from '@/shared/context/FunnelProvider';
 
 type FormValue = {
     dailyCalories: number;
@@ -22,7 +23,8 @@ type FormValue = {
 
 const CalorieEditSheet = () => {
     const router = useRouter();
-    const { data: storedData } = useGoalStore();
+    // const { data: storedData } = useGoalStore();
+    const { registerData: storedData } = useFunnelContext<GoalRegisterType>();
 
     const sessionCache = useCache('session');
     const initialData: GoalCaloriesInfoWithStandardType | null = sessionCache.getItem(SESSION_KEYS.GOAL_KACL);

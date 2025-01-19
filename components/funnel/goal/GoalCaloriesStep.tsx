@@ -4,7 +4,7 @@ import styles from '@styles/component/goalSuggestion.module.css';
 import Icons from '@/assets';
 import { useRouter } from 'next/navigation';
 import { ListRow, Text } from '../../common';
-import { GoalCaloriesInfoType } from '@/service/@types';
+import { GoalCaloriesInfoType, GoalRegisterType } from '@/service/@types';
 import { Button } from '../../common/Button';
 import { useModal } from '@/hooks';
 import { ModalType } from '../../common/Modal/OverlayContainer';
@@ -12,14 +12,16 @@ import { useEffect, useState } from 'react';
 import { addDaysAndResetTime, calculateCaloriesToGoal, formatCurrentDate } from '@/shared/utils';
 import { useCache } from '@/hooks/useCache';
 import { SESSION_KEYS } from '@/constants';
-import { useGoalStore } from './GoalStep';
+// import { useGoalStore } from './GoalStep';
+import { useFunnelContext } from '@/shared/context/FunnelProvider';
 
 type Props = {
     onNext: (data: GoalCaloriesInfoType) => void;
 };
 
 const GoalCaloriesStep = ({ onNext }: Props) => {
-    const { data } = useGoalStore();
+    // const { data } = useGoalStore();
+    const { registerData: data } = useFunnelContext<GoalRegisterType>();
 
     const router = useRouter();
     const { onOpen: openCaloriesEdit } = useModal(ModalType.calorieEdit);
@@ -40,9 +42,10 @@ const GoalCaloriesStep = ({ onNext }: Props) => {
         }
     }, [initalKcalData]);
 
-    const { dailyCalories, daysToGoal } = calculateCaloriesToGoal({ ...data });
+    const { dailyCalories, daysToGoal } = calculateCaloriesToGoal({ ...data } as GoalRegisterType);
 
-    const isWeightDifference = data.targetWeight - data.weight !== 0;
+    const isWeightDifference = data.targetWeight! - data.weight! !== 0;
+    // const isWeightDifference = data.targetWeight - data.weight !== 0;
 
     const [goalData, setGoalData] = useState<GoalCaloriesInfoType>({
         dailyCalories: dailyCalories,

@@ -5,11 +5,14 @@ import { encodeCreateGoal } from '@/service/mappers/goalMapper';
 import { useCreateGoal } from '@/service/mutations';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import { useGoalStore } from './GoalStep';
+// import { useGoalStore } from './GoalStep';
+import { useFunnelContext } from '@/shared/context/FunnelProvider';
+import { GoalRegisterType } from '@/service/@types';
 
 const GoalRegister = () => {
     const router = useRouter();
-    const { data } = useGoalStore();
+    // const { data } = useGoalStore();
+    const { registerData: data } = useFunnelContext<GoalRegisterType>();
 
     const { mutate: createGoal } = useCreateGoal();
 
