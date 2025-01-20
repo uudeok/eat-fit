@@ -9,13 +9,12 @@ import { useForm } from 'react-hook-form';
 import { Input } from '../common/Form';
 import { Button } from '../common/Button';
 import { recalculateCaloriesToGoal } from '@/shared/utils';
-import { GoalCaloriesInfoWithStandardType, GoalRegisterType } from '@/service/@types';
+import { GoalCaloriesInfoWithStandardType } from '@/service/@types';
 import { caloriesValidation } from '@/shared/utils/validation';
 import { useCache } from '@/hooks/useCache';
 import { SESSION_KEYS } from '@/constants';
 import { useRouter } from 'next/navigation';
-// import { useGoalStore } from '../funnel/goal/GoalStep';
-import { useFunnelContext } from '@/shared/context/FunnelProvider';
+import { goalStore } from '../funnel/goal/GoalStep';
 
 type FormValue = {
     dailyCalories: number;
@@ -23,8 +22,7 @@ type FormValue = {
 
 const CalorieEditSheet = () => {
     const router = useRouter();
-    // const { data: storedData } = useGoalStore();
-    const { registerData: storedData } = useFunnelContext<GoalRegisterType>();
+    const { data: registerData } = goalStore();
 
     const sessionCache = useCache('session');
     const initialData: GoalCaloriesInfoWithStandardType | null = sessionCache.getItem(SESSION_KEYS.GOAL_KACL);
@@ -41,18 +39,27 @@ const CalorieEditSheet = () => {
         },
     });
 
-    if (!initialData || !storedData) {
+    if (!initialData || !registerData) {
         alert('목표 데이터가 없습니다. 첫 번째 단계로 돌아가 입력해 주세요.');
         router.push('/goals');
         return;
     }
 
     const onSubmit = handleSubmit((data) => {
+        console.log(
+            recalculateCaloriesToGoal({
+                currentCalories: initialData.standard,
+                newCalories: data.dailyCalories,
+                currentWeight: registerData.weight,
+                targetWeight: registerData.targetWeight,
+            })
+        );
+
         initialData.goalPeriod = recalculateCaloriesToGoal({
             currentCalories: initialData.standard,
             newCalories: data.dailyCalories,
-            currentWeight: storedData.weight,
-            targetWeight: storedData.targetWeight,
+            currentWeight: registerData.weight,
+            targetWeight: registerData.targetWeight,
         });
 
         initialData.dailyCalories = data.dailyCalories;

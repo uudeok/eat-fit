@@ -1,3 +1,5 @@
+import { MealPlanOptionsType } from '@/components/funnel/goal/GoalMealPlanStep';
+
 export const ACTIVITY_LEVEL = {
     very_low: 1.2,
     low: 1.375,
@@ -26,4 +28,22 @@ export const ACTIVITY_LIST = [
     { key: 'moderate', value: '보통', emj: 'moderate.png', content: '난 주 1~2회 가볍게 운동해' },
     { key: 'high', value: '많음', emj: 'high.png', content: '꾸준히 하는 운동이 있어' },
     { key: 'very_high', value: '매우 많음', emj: 'very_high.png', content: '육체노동 혹은 매일 땀흘리면서 운동해' },
+];
+
+export const MEAL_PLAN_OPTIONS: MealPlanOptionsType[] = [
+    { key: 'normal', label: '일반', icon: 'carbohydrate.png', content: '탄단지 균형잡힌 식단', selected: false },
+    {
+        key: 'proteinFocused',
+        label: '근육',
+        icon: 'protein.png',
+        content: '근육 생성을 위한 단백질 위주 식단',
+        selected: false,
+    },
+    {
+        key: 'lowCarbHighFat',
+        label: '저탄고지',
+        icon: 'fat.png',
+        content: '탄수화물 제한, 저탄고지 위주 식단',
+        selected: false,
+    },
 ];

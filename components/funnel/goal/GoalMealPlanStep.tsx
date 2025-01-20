@@ -7,16 +7,16 @@ import { ListRow, Text } from '../../common';
 import { Button } from '../../common/Button';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { GoalRegisterType, MealPlanInfoType, MealPlanType } from '@/service/@types';
+import { MealPlanInfoType, MealPlanType } from '@/service/@types';
 import { calculateNutrientRatio } from '@/shared/utils';
-// import { useGoalStore } from './GoalStep';
-import { useFunnelContext } from '@/shared/context/FunnelProvider';
+import { MEAL_PLAN_OPTIONS } from '@/constants';
+import { goalStore } from './GoalStep';
 
 type Props = {
     onNext: (data: MealPlanInfoType) => void;
 };
 
-type MealPlan = {
+export type MealPlanOptionsType = {
     key: MealPlanType;
     label: string;
     icon: string;
@@ -24,28 +24,8 @@ type MealPlan = {
     selected: boolean;
 };
 
-const MEAL_PLAN_OPTIONS: MealPlan[] = [
-    { key: 'normal', label: '일반', icon: 'carbohydrate.png', content: '탄단지 균형잡힌 식단', selected: false },
-    {
-        key: 'proteinFocused',
-        label: '근육',
-        icon: 'protein.png',
-        content: '근육 생성을 위한 단백질 위주 식단',
-        selected: false,
-    },
-    {
-        key: 'lowCarbHighFat',
-        label: '저탄고지',
-        icon: 'fat.png',
-        content: '탄수화물 제한, 저탄고지 위주 식단',
-        selected: false,
-    },
-];
-
 const GoalMealPlanStep = ({ onNext }: Props) => {
-    // const { data } = useGoalStore();
-
-    const { registerData: data } = useFunnelContext<GoalRegisterType>();
+    const { data: registerData } = goalStore();
 
     const router = useRouter();
     const [selectedPlan, setSelectedPlan] = useState<MealPlanType>();
@@ -55,9 +35,9 @@ const GoalMealPlanStep = ({ onNext }: Props) => {
     };
 
     const submitMealPlan = () => {
-        if (selectedPlan && data) {
+        if (selectedPlan && registerData) {
             /* 식단 정보 기반 권장 탄, 단, 지 비율 계산식 */
-            const nutrientRatio = calculateNutrientRatio(data.dailyCalories, selectedPlan);
+            const nutrientRatio = calculateNutrientRatio(registerData.dailyCalories, selectedPlan);
             const dailyPlanData = {
                 mealPlan: selectedPlan,
                 dailyCarb: nutrientRatio.daily_carb,

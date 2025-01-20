@@ -2,13 +2,10 @@
 
 import styles from '@styles/common/funnelVisualizer.module.css';
 import { Text } from '../common';
-// import { useGoalStore } from './goal/GoalStep';
-import { useFunnelContext } from '@/shared/context/FunnelProvider';
-import { GoalRegisterType } from '@/service/@types';
+import { goalStore } from './goal/GoalStep';
 
 export const FunnelStateVisualizer = () => {
-    // const { data } = useGoalStore();
-    const { registerData: data } = useFunnelContext<GoalRegisterType>();
+    const { data: registerData } = goalStore();
 
     return (
         <div className={styles.container}>
@@ -23,7 +20,7 @@ export const FunnelStateVisualizer = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {Object.entries(data).map(([key, value]) => (
+                    {Object.entries(registerData).map(([key, value]) => (
                         <tr key={key} className={styles.tr}>
                             <td className={styles.td}>{key}</td>
                             <td className={styles.td}>{JSON.stringify(value)}</td>

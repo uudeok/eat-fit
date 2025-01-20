@@ -12,16 +12,14 @@ import { useEffect, useState } from 'react';
 import { addDaysAndResetTime, calculateCaloriesToGoal, formatCurrentDate } from '@/shared/utils';
 import { useCache } from '@/hooks/useCache';
 import { SESSION_KEYS } from '@/constants';
-// import { useGoalStore } from './GoalStep';
-import { useFunnelContext } from '@/shared/context/FunnelProvider';
+import { goalStore } from './GoalStep';
 
 type Props = {
     onNext: (data: GoalCaloriesInfoType) => void;
 };
 
 const GoalCaloriesStep = ({ onNext }: Props) => {
-    // const { data } = useGoalStore();
-    const { registerData: data } = useFunnelContext<GoalRegisterType>();
+    const { data: registerData } = goalStore();
 
     const router = useRouter();
     const { onOpen: openCaloriesEdit } = useModal(ModalType.calorieEdit);
@@ -42,10 +40,9 @@ const GoalCaloriesStep = ({ onNext }: Props) => {
         }
     }, [initalKcalData]);
 
-    const { dailyCalories, daysToGoal } = calculateCaloriesToGoal({ ...data } as GoalRegisterType);
+    const { dailyCalories, daysToGoal } = calculateCaloriesToGoal({ ...registerData } as GoalRegisterType);
 
-    const isWeightDifference = data.targetWeight! - data.weight! !== 0;
-    // const isWeightDifference = data.targetWeight - data.weight !== 0;
+    const isWeightDifference = registerData.targetWeight - registerData.weight !== 0;
 
     const [goalData, setGoalData] = useState<GoalCaloriesInfoType>({
         dailyCalories: dailyCalories,
