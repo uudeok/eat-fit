@@ -20,20 +20,17 @@ type UseFunnelOptions<T extends string> = {
     onStepChange?: (step: T) => void;
 };
 
+export type FunnelStore<T> = {
+    data: T;
+    setData: (newData: Partial<T>) => void;
+};
+
 export const useFunnel = <T extends string>(steps: StepData<T>[], options: UseFunnelOptions<T> = {}) => {
     const { initialStep, stepQueryKey = 'funnel-step', onStepChange } = options;
     const [currentStep, setCurrentStep] = useState<T>(initialStep || steps[0].name);
     const mermaidRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        // const urlParams = new URLSearchParams(window.location.search);
-        // const queryStep = urlParams.get(stepQueryKey);
-
-        // if (queryStep && queryStep !== currentStep) {
-        //     setCurrentStep(queryStep as T);
-        //     onStepChange?.(queryStep as T);
-        // }
-
         const handlePopState = () => {
             const updatedParams = new URLSearchParams(window.location.search);
             const updatedStep = updatedParams.get(stepQueryKey);
@@ -116,37 +113,44 @@ export const useFunnel = <T extends string>(steps: StepData<T>[], options: UseFu
         const isDevMode = process.env.NODE_ENV === 'development';
 
         const [isGraphOpen, setIsGraphOpen] = useState(false);
-        const [isEditorOpen, setIsEditorOpen] = useState(false);
 
         if (!isDevMode) return null;
 
         const toggleGraph = () => setIsGraphOpen((prev) => !prev);
-        const toggleEditor = () => setIsEditorOpen((prev) => !prev);
 
         return (
-            <div className={`${styles.layout} ${isGraphOpen ? styles.visible : styles.unvisible}`}>
-                <div className={styles.tool}>
-                    <div
-                        ref={mermaidRef}
-                        style={{
-                            display: isGraphOpen ? 'block' : 'none',
-                            zIndex: 1500,
-                        }}
-                    />
-
-                    <div style={{ display: isEditorOpen && isGraphOpen ? 'block' : 'none' }}>
-                        <FunnelStateVisualizer />
-                        <FunnelStateEditor />
-                    </div>
-                </div>
-
-                <div className={styles.editor}>
-                    <Button onClick={toggleGraph}>{isGraphOpen ? 'close' : 'open'}</Button>
-                    {isGraphOpen && <Button onClick={toggleEditor}>Editor</Button>}
-                </div>
+            <div className={`${styles.graphLayout} ${isGraphOpen ? styles.visible : styles.invisible}`}>
+                <div
+                    ref={mermaidRef}
+                    style={{
+                        display: isGraphOpen ? 'block' : 'none',
+                        zIndex: 1500,
+                    }}
+                />
+                <Button onClick={toggleGraph}>{isGraphOpen ? 'close' : 'open'}</Button>
             </div>
         );
     };
 
-    return [Funnel, setStep, FunnelGraph] as const;
+    const FunnelEditor = <T,>({ data, setData }: FunnelStore<T>) => {
+        const isDevMode = process.env.NODE_ENV === 'development';
+
+        const [isEditorOpen, setIsEditorOpen] = useState(false);
+
+        if (!isDevMode) return null;
+
+        const toggleGraph = () => setIsEditorOpen((prev) => !prev);
+
+        return (
+            <div className={`${styles.editorLayout} ${isEditorOpen ? styles.visible : styles.invisible}`}>
+                <div style={{ display: isEditorOpen ? 'block' : 'none' }}>
+                    <FunnelStateVisualizer data={data} setData={setData} />
+                    <FunnelStateEditor data={data} setData={setData} />
+                </div>
+                <Button onClick={toggleGraph}>{isEditorOpen ? 'ed close' : 'ed open'}</Button>
+            </div>
+        );
+    };
+
+    return [Funnel, setStep, FunnelGraph, FunnelEditor] as const;
 };

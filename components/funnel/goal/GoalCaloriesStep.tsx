@@ -12,14 +12,14 @@ import { useEffect, useState } from 'react';
 import { addDaysAndResetTime, calculateCaloriesToGoal, formatCurrentDate } from '@/shared/utils';
 import { useCache } from '@/hooks/useCache';
 import { SESSION_KEYS } from '@/constants';
-import { goalStore } from './GoalStep';
+import { useGoalSotre } from '@/shared/store/useGoalStore';
 
 type Props = {
     onNext: (data: GoalCaloriesInfoType) => void;
 };
 
 const GoalCaloriesStep = ({ onNext }: Props) => {
-    const { data: registerData } = goalStore();
+    const { data: registerData } = useGoalSotre();
 
     const router = useRouter();
     const { onOpen: openCaloriesEdit } = useModal(ModalType.calorieEdit);

@@ -11,7 +11,7 @@ import { calculateWeightRange } from '@/shared/utils';
 import { WeightInfoType } from '@/service/@types/req.type';
 import { createGoalWeightSchema, weightValidation } from '@/shared/utils/validation';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { goalStore } from './GoalStep';
+import { useGoalSotre } from '@/shared/store/useGoalStore';
 
 type Props = {
     onNext: (data: WeightInfoType) => void;
@@ -19,7 +19,7 @@ type Props = {
 
 const GoalWeightInfoStep = ({ onNext }: Props) => {
     const router = useRouter();
-    const { data: registerData } = goalStore();
+    const { data: registerData } = useGoalSotre();
 
     /* 정상 체중 범위를 구하기 위한 계산식 */
     const { minWeight, maxWeight } = calculateWeightRange(registerData?.height!);

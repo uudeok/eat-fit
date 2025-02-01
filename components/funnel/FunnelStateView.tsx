@@ -2,10 +2,12 @@
 
 import styles from '@styles/common/funnelVisualizer.module.css';
 import { Text } from '../common';
-import { goalStore } from './goal/GoalStep';
+import { FunnelStore } from '@/hooks/useFunnel';
 
-export const FunnelStateVisualizer = () => {
-    const { data: registerData } = goalStore();
+export const FunnelStateVisualizer = <T,>({ data }: FunnelStore<T>) => {
+    if (typeof data !== 'object' || data === null) {
+        return <div>Invalid data</div>;
+    }
 
     return (
         <div className={styles.container}>
@@ -20,7 +22,7 @@ export const FunnelStateVisualizer = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {Object.entries(registerData).map(([key, value]) => (
+                    {Object.entries(data).map(([key, value]) => (
                         <tr key={key} className={styles.tr}>
                             <td className={styles.td}>{key}</td>
                             <td className={styles.td}>{JSON.stringify(value)}</td>

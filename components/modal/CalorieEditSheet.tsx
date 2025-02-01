@@ -14,7 +14,7 @@ import { caloriesValidation } from '@/shared/utils/validation';
 import { useCache } from '@/hooks/useCache';
 import { SESSION_KEYS } from '@/constants';
 import { useRouter } from 'next/navigation';
-import { goalStore } from '../funnel/goal/GoalStep';
+import { useGoalSotre } from '@/shared/store/useGoalStore';
 
 type FormValue = {
     dailyCalories: number;
@@ -22,7 +22,7 @@ type FormValue = {
 
 const CalorieEditSheet = () => {
     const router = useRouter();
-    const { data: registerData } = goalStore();
+    const { data: registerData } = useGoalSotre();
 
     const sessionCache = useCache('session');
     const initialData: GoalCaloriesInfoWithStandardType | null = sessionCache.getItem(SESSION_KEYS.GOAL_KACL);

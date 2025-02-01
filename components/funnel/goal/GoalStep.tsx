@@ -9,23 +9,16 @@ import GoalMealPlanStep from './GoalMealPlanStep';
 import { StepData, useFunnel } from '@/hooks/useFunnel';
 import StepProgress from '@/components/common/StepProgressBar';
 import GoalRegister from './GoalRegister';
-import {
-    BasicInfoType,
-    GoalCaloriesInfoType,
-    GoalRegisterType,
-    MealPlanInfoType,
-    WeightInfoType,
-} from '@/service/@types';
-import { createStore } from '@/shared/store/useDataStore';
+import { BasicInfoType, GoalCaloriesInfoType, MealPlanInfoType, WeightInfoType } from '@/service/@types';
+import { useGoalSotre } from '@/shared/store/useGoalStore';
 
 const startPage = 1;
-export const goalStore = createStore({} as GoalRegisterType);
 
 const GoalStep = () => {
     const funnelStep = ['goalIntro', 'basicInfo', 'weightInfo', 'caloriesInfo', 'mealPlan', 'goalRegister'] as const;
     type FunnelStep = (typeof funnelStep)[number];
 
-    const { setData } = goalStore();
+    const { data, setData } = useGoalSotre();
 
     const [currentStep, setCurrnetStep] = useState<number>(0);
 
@@ -83,7 +76,7 @@ const GoalStep = () => {
         },
     ];
 
-    const [Funnel, setStep, FunnelGraph] = useFunnel(steps, {
+    const [Funnel, setStep, FunnelGraph, FunnelEditor] = useFunnel(steps, {
         initialStep: 'goalIntro',
         stepQueryKey: 'goal-step',
         onStepChange: (step) => {
@@ -100,6 +93,7 @@ const GoalStep = () => {
             </div>
             <Funnel />
             {currentStep >= startPage && <FunnelGraph />}
+            {currentStep >= startPage && <FunnelEditor data={data} setData={setData} />}
         </>
     );
 };

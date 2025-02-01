@@ -6,16 +6,14 @@ import { Text } from '../common';
 import { Button } from '../common/Button';
 import { Input, Label } from '../common/Form';
 import { useForm } from 'react-hook-form';
-import { goalStore } from './goal/GoalStep';
+import { FunnelStore } from '@/hooks/useFunnel';
 
-export const FunnelStateEditor = () => {
-    const { data: registerData, setData: setRegisterData } = goalStore();
+export const FunnelStateEditor = <T,>({ data, setData }: FunnelStore<T>) => {
+    const [state, setState] = useState(data);
 
-    const [state, setState] = useState(registerData);
-
-    const { register, handleSubmit } = useForm({
+    const { register, handleSubmit } = useForm<any>({
         defaultValues: {
-            ...registerData,
+            ...data,
         },
     });
 
@@ -24,7 +22,7 @@ export const FunnelStateEditor = () => {
     };
 
     const applyChanges = () => {
-        setRegisterData(state);
+        setData(state);
     };
 
     return (
@@ -32,17 +30,21 @@ export const FunnelStateEditor = () => {
             <Text bold size="lg">
                 Editor
             </Text>
-            {Object.entries(state).map(([key, value]: any) => (
-                <Label label={key} key={key} className={styles.editor}>
-                    <Input
-                        type="text"
-                        register={register}
-                        name={key}
-                        onChange={(e) => handleInputChange(key, e.target.value)}
-                        className={styles.editorInput}
-                    />
-                </Label>
-            ))}
+            {typeof state === 'object' && state !== null ? (
+                Object.entries(state).map(([key, value]) => (
+                    <Label label={key} key={key} className={styles.editor}>
+                        <Input
+                            type="text"
+                            register={register}
+                            name={key}
+                            onChange={(e) => handleInputChange(key, e.target.value)}
+                            className={styles.editorInput}
+                        />
+                    </Label>
+                ))
+            ) : (
+                <Text>Invalid state</Text>
+            )}
             <Button onClick={applyChanges}>변경하기</Button>
         </form>
     );

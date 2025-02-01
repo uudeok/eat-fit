@@ -11,10 +11,10 @@ import { useEffect } from 'react';
 import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
 
 const MyDiray = () => {
-    const { curYear, curMonth } = useCalendar();
+    const { currentYear, currentMonth } = useCalendar();
     const { setSelectedDate } = useSelectedDateStore();
 
-    const { firstDay, lastDay } = getMonthRange(curYear, curMonth);
+    const { firstDay, lastDay } = getMonthRange(currentYear, currentMonth);
     const { data: dailySteps } = useFetchDailyStepsInRange(firstDay, lastDay);
 
     useEffect(() => {

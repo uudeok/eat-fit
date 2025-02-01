@@ -25,6 +25,7 @@ phases:
             - echo Build completed on `date`
             - echo "Manually copying BUILD_ID file"
             - if [ -f ".next/BUILD_ID" ]; then cp .next/BUILD_ID .open-next/assets/BUILD_ID; else echo "BUILD_ID not found"; fi
+            - npm run cache-purge
 artifacts:
     files:
         - '**/*'

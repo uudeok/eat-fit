@@ -1,4 +1,4 @@
-.layout {
+.graphLayout {
     position: fixed;
     bottom: 40px;
     background-color: #f3f3f3;
@@ -17,7 +17,7 @@
     border-radius: 0px;
 }
 
-.unvisible {
+.invisible {
     left: auto;
     right: 20px;
     transform: none;
@@ -31,4 +31,16 @@
 .editor {
     display: flex;
     flex-direction: row;
+}
+
+.editorLayout {
+    position: fixed;
+    bottom: 120px;
+    background-color: var(--mainColorLg);
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s ease;
+    z-index: 1000;
 }

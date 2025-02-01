@@ -10,7 +10,7 @@ import { ActivityLevelType, BasicInfoType, GenderType } from '@/service/@types/r
 import { useState } from 'react';
 import { ageValidation, heightValidation } from '@/shared/utils/validation';
 import { ACTIVITY_LIST, GENDER } from '@/constants';
-import { goalStore } from './GoalStep';
+import { useGoalSotre } from '@/shared/store/useGoalStore';
 
 type Props = {
     onNext: (data: BasicInfoType) => void;
@@ -18,7 +18,7 @@ type Props = {
 
 const GoalBasicInfoStep = ({ onNext }: Props) => {
     // const { registerData: data } = useFunnelContext<GoalRegisterType>();
-    const { data: registerData } = goalStore();
+    const { data: registerData } = useGoalSotre();
 
     const [selectedGender, setSelectedGender] = useState<GenderType | null>(registerData?.gender || null);
     const [selectedActivityLevel, setSelectedActivityLevel] = useState<ActivityLevelType | null>(

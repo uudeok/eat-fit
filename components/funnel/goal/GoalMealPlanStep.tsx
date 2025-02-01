@@ -10,7 +10,7 @@ import { useState } from 'react';
 import { MealPlanInfoType, MealPlanType } from '@/service/@types';
 import { calculateNutrientRatio } from '@/shared/utils';
 import { MEAL_PLAN_OPTIONS } from '@/constants';
-import { goalStore } from './GoalStep';
+import { useGoalSotre } from '@/shared/store/useGoalStore';
 
 type Props = {
     onNext: (data: MealPlanInfoType) => void;
@@ -25,7 +25,7 @@ export type MealPlanOptionsType = {
 };
 
 const GoalMealPlanStep = ({ onNext }: Props) => {
-    const { data: registerData } = goalStore();
+    const { data: registerData } = useGoalSotre();
 
     const router = useRouter();
     const [selectedPlan, setSelectedPlan] = useState<MealPlanType>();

@@ -15,7 +15,7 @@ const CalendarModal = () => {
     const { isOpen, onClose } = useModal(ModalType.mainCalendar);
 
     const { selectedDate, setSelectedDate } = useSelectedDateStore();
-    const { weeks, dateCells, prevMonthController, nextMonthController, curYear, curMonth } = useCalendar();
+    const { weekLabels, dateCells, handlePreviousMonth, handleNextMonth, currentYear, currentMonth } = useCalendar();
 
     const [clickedDate, setClickedDate] = useState<Date>(selectedDate);
 
@@ -34,19 +34,19 @@ const CalendarModal = () => {
         <Modal isOpen={isOpen} onClose={onClose}>
             <div className={styles.layout}>
                 <ListRow
-                    left={<Icons.ArrowLeft width={13} onClick={prevMonthController} />}
+                    left={<Icons.ArrowLeft width={13} onClick={handlePreviousMonth} />}
                     middle={
                         <Text size="xlg" bold>
-                            {curYear}. {curMonth + 1}
+                            {currentYear}. {currentMonth + 1}
                         </Text>
                     }
-                    right={<Icons.ArrowRight width={13} onClick={nextMonthController} />}
+                    right={<Icons.ArrowRight width={13} onClick={handleNextMonth} />}
                 />
 
                 <table className={styles.table}>
                     <thead>
                         <tr>
-                            {weeks.ko.map((week, index) => (
+                            {weekLabels.ko.map((week, index) => (
                                 <th key={index}>{week}</th>
                             ))}
                         </tr>

@@ -23,7 +23,7 @@ type CaloriesType = 'low' | 'over';
 
 const DiaryCalendar = ({ dailySteps }: { dailySteps: DecodeDailyStepInRangeType }) => {
     const { onOpen } = useModal(ModalType.monthController);
-    const { curMonth, weeks, dateCells } = useCalendar();
+    const { currentMonth, weekLabels, dateCells } = useCalendar();
 
     const { setSelectedDate, selectedDate } = useSelectedDateStore();
 
@@ -85,7 +85,7 @@ const DiaryCalendar = ({ dailySteps }: { dailySteps: DecodeDailyStepInRangeType 
             <div className={styles.layout}>
                 <div className={styles.monthController} onClick={onOpen}>
                     <Text bold size="xlg" color="var(--grey800)">
-                        {curMonth + 1}월의 기록
+                        {currentMonth + 1}월의 기록
                     </Text>
                     <Icons.Down width={10} />
                 </div>
@@ -106,7 +106,7 @@ const DiaryCalendar = ({ dailySteps }: { dailySteps: DecodeDailyStepInRangeType 
                 <table className={styles.table}>
                     <thead>
                         <tr>
-                            {weeks.ko.map((week, index) => (
+                            {weekLabels.ko.map((week, index) => (
                                 <th key={index}>{week}</th>
                             ))}
                         </tr>

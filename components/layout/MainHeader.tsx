@@ -16,7 +16,7 @@ const MainHeader = () => {
     const { onOpen } = useModal(ModalType.mainCalendar);
     const { selectedDate } = useSelectedDateStore();
 
-    const { nextDateController, prevDateController } = useCalendar();
+    const { handleNextDay, handlePreviousDay } = useCalendar();
 
     const dateLabel = dayjs(selectedDate).format(DATE_FORMAT['M.D']);
     const dayOfWeek = dayjs(selectedDate).format(DATE_FORMAT.ddd);
@@ -32,7 +32,7 @@ const MainHeader = () => {
                 <List className={styles.calendar}>
                     <ListRow
                         left={
-                            <div onClick={prevDateController}>
+                            <div onClick={handlePreviousDay}>
                                 <Icons.ArrowLeft width={15} />
                             </div>
                         }
@@ -44,7 +44,7 @@ const MainHeader = () => {
                             </div>
                         }
                         right={
-                            <div onClick={nextDateController}>
+                            <div onClick={handleNextDay}>
                                 <Icons.ArrowRight width={15} />
                             </div>
                         }

@@ -15,14 +15,14 @@ import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
 const MonthControllerSheet = () => {
     const { onClose, isOpen } = useModal(ModalType.monthController);
 
-    const { prevYearController, nextYearController, curYear, curMonth } = useCalendar();
+    const { handlePreviousYear, handleNextYear, currentYear, currentMonth } = useCalendar();
 
-    const [selectedMonth, setSelectedMonth] = useState<number>(curMonth + 1);
+    const [selectedMonth, setSelectedMonth] = useState<number>(currentMonth + 1);
 
     const { setSelectedDate } = useSelectedDateStore();
 
     const redirectDate = () => {
-        const newDate = new Date(curYear, selectedMonth - 1);
+        const newDate = new Date(currentYear, selectedMonth - 1);
 
         setSelectedDate(newDate);
 
@@ -35,13 +35,13 @@ const MonthControllerSheet = () => {
 
             <div className={styles.monthController}>
                 <ListRow
-                    left={<Icons.ArrowLeft width={17} onClick={prevYearController} />}
+                    left={<Icons.ArrowLeft width={17} onClick={handlePreviousYear} />}
                     middle={
                         <Text bold size="xlg">
-                            {curYear}년
+                            {currentYear}년
                         </Text>
                     }
-                    right={<Icons.ArrowRight width={17} onClick={nextYearController} />}
+                    right={<Icons.ArrowRight width={17} onClick={handleNextYear} />}
                 />
             </div>
 
