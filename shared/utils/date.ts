@@ -1,4 +1,4 @@
-import { DATE_FORMAT } from '@/constants';
+import { DATE_FORMAT, DATE_FORMAT_KEY_TYPE } from '@/constants';
 import dayjs from 'dayjs';
 
 export function resetHoursDate() {
@@ -57,17 +57,15 @@ export const getWeekDates = (): WeekDaysType => {
 };
 
 /* '오늘'을 기준으로 일주일 이전 날짜를 가져온다 */
-export const getPastWeekDates = () => {
+export const getPastWeekDates = (format: DATE_FORMAT_KEY_TYPE) => {
     const today = dayjs();
-    const pastFullWeekDates = [];
     const pastWeekDates = [];
 
     for (let i = 6; i >= 0; i--) {
-        pastFullWeekDates.push(today.subtract(i, 'day').format(DATE_FORMAT['YYYY-MM-DD']));
-        pastWeekDates.push(today.subtract(i, 'day').format(DATE_FORMAT['M.D']));
+        pastWeekDates.push(today.subtract(i, 'day').format(DATE_FORMAT[format]));
     }
 
-    return { pastFullWeekDates, pastWeekDates };
+    return pastWeekDates;
 };
 
 export type PastWeeklyDatesType = {

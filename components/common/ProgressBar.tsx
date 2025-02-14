@@ -16,7 +16,8 @@ const ProgressBar = ({ total, current, size = 'md' }: Props) => {
                 <div
                     className={`${styles.progressFill} ${styles[size]}`}
                     style={{
-                        width: `${percentage}%`,
+                        transform: `scaleX(${percentage / 100})`,
+                        transformOrigin: 'left center',
                         background: getProgressBarColor(percentage),
                     }}
                 ></div>

@@ -1,6 +1,7 @@
 'use client';
 
 import styles from '@styles/component/goalDdayProgress.module.css';
+import Card from '@/components/common/Card';
 import { useFetchGoalsByStatus } from '@/service/queries';
 import { ListRow, ProgressBar, Text } from '../../common';
 import dayjs from 'dayjs';
@@ -8,7 +9,7 @@ import { getDdayProgressMessage } from '@/shared/utils';
 import { useEffect, useMemo } from 'react';
 import { useReportStore } from '@/shared/store/useReportStore';
 
-const GoalDdayChart = () => {
+const ProcessCard = () => {
     const { data: goalData } = useFetchGoalsByStatus('progress');
     const { setProgressionRate } = useReportStore();
 
@@ -31,30 +32,32 @@ const GoalDdayChart = () => {
     }, [progressPercentage]);
 
     return (
-        <div className={styles.layout}>
-            <div className={styles.title}>
-                <Text color="white" bold size="xlg">
-                    D-Day 까지 <strong>{progressPercentage || 0}%</strong> 진행했어요!
-                </Text>
-                <Text bold color="#4593fc">
-                    {getDdayProgressMessage(progressPercentage)}
-                </Text>
+        <Card>
+            <div className={styles.layout}>
+                <div className={styles.title}>
+                    <Text color="white" bold size="xlg">
+                        D-Day 까지 <strong>{progressPercentage || 0}%</strong> 진행했어요!
+                    </Text>
+                    <Text bold color="#4593fc">
+                        {getDdayProgressMessage(progressPercentage)}
+                    </Text>
+                </div>
+                <ProgressBar current={progressPercentage || 0} total={100} size="sm" />
+                <ListRow
+                    left={
+                        <Text color="white" bold size="sm">
+                            🚀 {goalData?.startDate}
+                        </Text>
+                    }
+                    right={
+                        <Text color="white" bold size="sm">
+                            ⛳️ {goalData?.endDate}
+                        </Text>
+                    }
+                />
             </div>
-            <ProgressBar current={progressPercentage || 0} total={100} size="sm" />
-            <ListRow
-                left={
-                    <Text color="white" bold size="sm">
-                        🚀 {goalData?.startDate}
-                    </Text>
-                }
-                right={
-                    <Text color="white" bold size="sm">
-                        ⛳️ {goalData?.endDate}
-                    </Text>
-                }
-            />
-        </div>
+        </Card>
     );
 };
 
-export default GoalDdayChart;
+export default ProcessCard;

@@ -1,7 +1,7 @@
-import MyReports from '@/components/mypage/reports/MyReports';
+import ReportPage from '@/components/mypage/reports';
 
 const MyReportsPage = () => {
-    return <MyReports />;
+    return <ReportPage />;
 };
 
 export default MyReportsPage;
