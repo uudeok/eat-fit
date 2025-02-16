@@ -1,4 +1,4 @@
-import MyDiray from '@/components/mypage/overview/MyDiray';
+import MyDiray from '@/components/mypage/overview';
 
 const OverViewPage = () => {
     return <MyDiray />;

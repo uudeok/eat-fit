@@ -1,4 +1,4 @@
-import MyPageEdit from '@/components/mypage/MyPageEdit';
+import MyPageEdit from '@/components/mypage/edit';
 import { decodeUser } from '@/service/mappers/userMapper';
 import { API_ENDPOINTS } from '@/service/api/config';
 import { headers } from 'next/headers';
