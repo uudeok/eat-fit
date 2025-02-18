@@ -2,6 +2,8 @@
 const nextConfig = {
     reactStrictMode: false,
     poweredByHeader: false,
+    output: 'standalone',
+    assetPrefix: 'https://d2jhyrb50h8ykh.cloudfront.net',
     webpack: (config) => {
         config.module.rules.push({
             test: /\.svg$/,

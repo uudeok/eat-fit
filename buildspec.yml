@@ -8,23 +8,24 @@ phases:
             - echo node version check
             - node -v
             - npm -v
-            - npm install -g aws-cdk
-            - npm install -g sst@3.3.3
+            - npm install
     pre_build:
         commands:
-            - echo Installing source NPM dependencies...
-            - rm -rf .next
-            - npm install
-            - echo "Dependencies installed"
+            - echo building app...
+            - npm run build
+            - cd .next/standalone && - zip -r app.zip .
     build:
         commands:
-            - echo Build started on `date`
-            - npx sst deploy --stage production
+            - echo S3 upload started on `date`
+            - npm run upload
+            - echo Lambda upload started on `date`
+            - aws lambda update-function-code \
+              --function-name eat-fit-serverless \
+              --zip-file fileb://app.zip
+
     post_build:
         commands:
             - echo Build completed on `date`
-            - echo "Manually copying BUILD_ID file"
-            - if [ -f ".next/BUILD_ID" ]; then cp .next/BUILD_ID .open-next/assets/BUILD_ID; else echo "BUILD_ID not found"; fi
             - npm run cache-purge
 artifacts:
     files:
