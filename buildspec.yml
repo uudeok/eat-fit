@@ -20,10 +20,7 @@ phases:
             - echo S3 upload started on `date`
             - npm run upload
             - echo Lambda upload started on `date`
-            - aws lambda update-function-code \
-              --function-name eat-fit-serverless \
-              --zip-file fileb://app.zip
-
+            - aws lambda update-function-code --function-name eat-fit-serverless --zip-file fileb://app.zip
     post_build:
         commands:
             - echo Build completed on `date`
