@@ -13,7 +13,8 @@ phases:
         commands:
             - echo building app...
             - npm run build
-            - cd .next/standalone && - zip -r app.zip .
+            - cd .next/standalone
+            - zip -r app.zip .
     build:
         commands:
             - echo S3 upload started on `date`
