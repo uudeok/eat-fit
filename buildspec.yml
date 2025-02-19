@@ -25,6 +25,7 @@ phases:
         commands:
             - echo Build completed on `date`
             - npm run cache-purge
+            - echo Build Finished....
 artifacts:
     files:
         - '**/*'

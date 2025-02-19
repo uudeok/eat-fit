@@ -10,7 +10,7 @@ const MyPageOverview = () => {
 
     const OVERVIEW = [
         { label: '리포트', icon: <Icons.FillReports width={13} />, path: '/mypage/reports' },
-        { label: '다이어리', path: '/mypage/diary' },
+        { label: '다이어리', icon: <Icons.FillMoon width={11} />, path: '/mypage/diary' },
         { label: 'Lv. 1', path: '/mypage' },
     ];
 
