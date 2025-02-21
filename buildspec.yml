@@ -8,21 +8,22 @@ phases:
             - echo node version check
             - node -v
             - npm -v
-            - npm install
     pre_build:
+        commands:
+            - echo Installing source NPM dependencies...
+            - npm install
+    build:
         commands:
             - echo building app...
             - npm run build
             - cd .next/standalone
             - zip -r app.zip .
-    build:
+    post_build:
         commands:
             - echo S3 upload started on `date`
             - npm run upload
             - echo Lambda upload started on `date`
             - aws lambda update-function-code --function-name eat-fit-serverless --zip-file fileb://app.zip
-    post_build:
-        commands:
             - echo Build completed on `date`
             - npm run cache-purge
             - echo Build Finished....
