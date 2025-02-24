@@ -11,11 +11,10 @@ async function getMovies() {
 
 const HomePage = async () => {
     const data = await getMovies();
-    console.log('movie', data);
 
     return (
         <>
-            <MainHeader />
+            <MainHeader data={data} />
 
             <TodaySummary />
 

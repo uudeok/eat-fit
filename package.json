@@ -8,7 +8,7 @@
         "gen-types": "supabase gen types typescript --linked > @types/supabase.type.ts",
         "lint": "next lint",
         "start": "next start",
-        "upload": "aws s3 sync .next/static s3://eat-fit-assets/_next/static",
+        "upload": "aws s3 cp .next/static s3://eat-fit-assets/_next/static --recursive",
         "cache-purge": "aws cloudfront create-invalidation --distribution-id E2SBWGJVGTLZXE --paths \"/*\""
     },
     "dependencies": {
