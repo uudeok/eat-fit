@@ -3,18 +3,10 @@ import TodaySummary from '@/components/today/TodaySummary';
 import TodayMeals from '@/components/today/TodayMeals';
 import TodayExercises from '@/components/today/TodayExercises';
 
-async function getMovies() {
-    const response = await fetch('https://nomad-movies.nomadcoders.workers.dev/movies');
-    const result = await response.json();
-    return result;
-}
-
 const HomePage = async () => {
-    const data = await getMovies();
-
     return (
         <>
-            <MainHeader data={data} />
+            <MainHeader />
 
             <TodaySummary />
 

@@ -12,7 +12,7 @@ import { DATE_FORMAT } from '@/constants';
 dayjs.locale('ko');
 import 'dayjs/locale/ko';
 
-const MainHeader = ({ data }: any) => {
+const MainHeader = () => {
     const { onOpen } = useModal(ModalType.mainCalendar);
     const { selectedDate } = useSelectedDateStore();
 
@@ -21,8 +21,6 @@ const MainHeader = ({ data }: any) => {
     const dateLabel = dayjs(selectedDate).format(DATE_FORMAT['M.D']);
     const dayOfWeek = dayjs(selectedDate).format(DATE_FORMAT.ddd);
     const isToday = dayjs(selectedDate).isSame(dayjs(), 'day');
-
-    console.log('server-side', data);
 
     return (
         <div className={styles.layout}>
