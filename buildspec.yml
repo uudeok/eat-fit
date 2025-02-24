@@ -24,6 +24,8 @@ phases:
             - npm run upload
             - echo Lambda upload started on `date`
             - aws lambda update-function-code --function-name eat-fit-serverless --zip-file fileb://app.zip
+            - aws lambda wait function-updated --function-name eat-fit-serverless
+            - aws lambda publish-version --function-name eat-fit-serverless
             - echo Build completed on `date`
             - npm run cache-purge
             - echo Build Finished....

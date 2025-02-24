@@ -46,15 +46,6 @@ const CalorieEditSheet = () => {
     }
 
     const onSubmit = handleSubmit((data) => {
-        console.log(
-            recalculateCaloriesToGoal({
-                currentCalories: initialData.standard,
-                newCalories: data.dailyCalories,
-                currentWeight: registerData.weight,
-                targetWeight: registerData.targetWeight,
-            })
-        );
-
         initialData.goalPeriod = recalculateCaloriesToGoal({
             currentCalories: initialData.standard,
             newCalories: data.dailyCalories,
