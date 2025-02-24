@@ -30,12 +30,11 @@ const GoalCaloriesStep = ({ onNext }: Props) => {
 
     useEffect(() => {
         if (initalKcalData) {
-            const parseData = JSON.parse(initalKcalData);
             setGoalData({
-                dailyCalories: parseData.dailyCalories,
+                dailyCalories: initalKcalData.dailyCalories,
                 startDate: formatCurrentDate(),
-                endDate: addDaysAndResetTime(parseData.goalPeriod),
-                goalPeriod: parseData.goalPeriod,
+                endDate: addDaysAndResetTime(initalKcalData.goalPeriod),
+                goalPeriod: initalKcalData.goalPeriod,
             });
         }
     }, [initalKcalData]);

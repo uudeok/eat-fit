@@ -30,7 +30,6 @@ export class CookieStorage extends BaseStorage<CookieKeys> {
     }
 
     setRawItem(key: CookieKeys, value: string, options: CookieOptions = {}) {
-        // console.log('setRawItem 에서의 value', value);
         const { expires, path = '/', secure = true, sameSite = 'lax' } = options;
         const expireDate = dayjs(expires).toDate();
         this.setCookie(key, value, { expires: expireDate, path, secure, sameSite });

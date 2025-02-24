@@ -8,7 +8,6 @@ export interface CacheInterface<KeyType extends CacheKeys = CacheKeys, ValueType
     clear(): void;
 }
 
-// 추상 클래스: 공통 로직 처리
 export abstract class BaseStorage<KeyType extends CacheKeys = CacheKeys, ValueType = unknown>
     implements CacheInterface<KeyType, ValueType>
 {
@@ -18,29 +17,11 @@ export abstract class BaseStorage<KeyType extends CacheKeys = CacheKeys, ValueTy
     abstract clearAll(): void;
 
     setItem(key: KeyType, value: ValueType, options?: CookieOptions) {
-        // 객체나 배열만 JSON.stringify로 직렬화
-        const serializedValue = typeof value === 'object' ? JSON.stringify(value) : value;
-        // const serializedValue = typeof value === 'object' && value !== null ? JSON.stringify(value) : value;
-
-        this.setRawItem(key, serializedValue as string, options);
+        this.setRawItem(key, value as string, options);
     }
 
     getItem<T>(key: KeyType): T | null {
-        const rawValue = this.getRawItem(key);
-
-        if (!rawValue) return null;
-
-        // 이미 객체인 경우 그대로 반환
-        if (typeof rawValue === 'object') {
-            return rawValue as T;
-        }
-
-        try {
-            return JSON.parse(rawValue) as T;
-        } catch {
-            // JSON 형식이 아닌 경우 rawValue를 반환 (T가 string 타입일 가능성이 있는 경우)
-            return rawValue as T;
-        }
+        return this.getRawItem(key) as unknown as T;
     }
 
     removeItem(key: KeyType) {
