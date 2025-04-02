@@ -3,12 +3,12 @@
 import styles from '@styles/component/nutrientSummary.module.css';
 import { List, Text, ProgressBar, CircleText, ListCol } from '../common';
 import { NutrientsType, calculateTotalNutrients } from '@/shared/utils';
-import { GoalType } from '@/service/@types/res.type';
 import { useEffect, useState } from 'react';
 import { useSelectedDateStore } from '@/shared/store/useSelectedDateStore';
 import { useFetchMeals } from '@/service/queries';
+import { DecodeGoalType } from '@/service/mappers/goalMapper';
 
-const NutrientSummary = ({ goalData }: { goalData: GoalType }) => {
+const NutrientSummary = ({ goalData }: { goalData: DecodeGoalType }) => {
     const [nutrients, setNutrients] = useState<NutrientsType>({ calories: 0, carbohydrate: 0, protein: 0, fat: 0 });
 
     const { getFormattedDate } = useSelectedDateStore();
@@ -30,19 +30,19 @@ const NutrientSummary = ({ goalData }: { goalData: GoalType }) => {
             label: '탄',
             value: nutrients?.carbohydrate,
             bgColor: 'var(--mainColorDk)',
-            standard: goalData.daily_carb,
+            standard: goalData.dailyCarb,
         },
         {
             label: '단',
             value: nutrients?.protein,
             bgColor: 'var(--orange300)',
-            standard: goalData.daily_protein,
+            standard: goalData.dailyProtein,
         },
         {
             label: '지',
             value: nutrients?.fat,
             bgColor: 'var(--red300)',
-            standard: goalData.daily_fat,
+            standard: goalData.dailyFat,
         },
     ] as const;
 
@@ -52,10 +52,10 @@ const NutrientSummary = ({ goalData }: { goalData: GoalType }) => {
                 <ListCol
                     top={
                         <Text size="xxlg" bold color="white">
-                            {nutrients.calories} / {goalData.daily_calories} kcal
+                            {nutrients.calories} / {goalData.dailyCalories} kcal
                         </Text>
                     }
-                    bottom={<ProgressBar current={nutrients.calories} total={goalData.daily_calories} />}
+                    bottom={<ProgressBar current={nutrients.calories} total={goalData.dailyCalories} />}
                 />
             </List>
 

@@ -3,14 +3,14 @@
 import styles from '@styles/component/goalMealPlan.module.css';
 import Icons from '@/assets';
 import Image from 'next/image';
-import { ListRow, Text } from '../../common';
-import { Button } from '../../common/Button';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { MealPlanInfoType, MealPlanType } from '@/service/@types';
 import { calculateNutrientRatio } from '@/shared/utils';
 import { MEAL_PLAN_OPTIONS } from '@/constants';
 import { useGoalSotre } from '@/shared/store/useGoalStore';
+import { ListRow, Text } from '../common';
+import { Button } from '../common/Button';
 
 type Props = {
     onNext: (data: MealPlanInfoType) => void;

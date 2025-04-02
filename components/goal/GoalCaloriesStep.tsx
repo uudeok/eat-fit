@@ -3,16 +3,16 @@
 import styles from '@styles/component/goalSuggestion.module.css';
 import Icons from '@/assets';
 import { useRouter } from 'next/navigation';
-import { ListRow, Text } from '../../common';
 import { GoalCaloriesInfoType, GoalRegisterType } from '@/service/@types';
-import { Button } from '../../common/Button';
 import { useModal } from '@/hooks';
-import { ModalType } from '../../common/Modal/OverlayContainer';
 import { useEffect, useState } from 'react';
 import { addDaysAndResetTime, calculateCaloriesToGoal, formatCurrentDate } from '@/shared/utils';
 import { useCache } from '@/hooks/useCache';
 import { SESSION_KEYS } from '@/constants';
 import { useGoalSotre } from '@/shared/store/useGoalStore';
+import { ModalType } from '../common/Modal/OverlayContainer';
+import { ListRow, Text } from '../common';
+import { Button } from '../common/Button';
 
 type Props = {
     onNext: (data: GoalCaloriesInfoType) => void;

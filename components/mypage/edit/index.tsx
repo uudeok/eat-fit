@@ -10,18 +10,20 @@ import { Button } from '../../common/Button';
 import Image from 'next/image';
 import { useImageUpload } from '@/hooks';
 import { useUpdateUser } from '@/service/mutations';
-import { DecodeUser, encodeUser, UpdateUserType } from '@/service/mappers/userMapper';
+import { encodeUser, UpdateUserType } from '@/service/mappers/userMapper';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { contentValidation, mypageEditFormSchema } from '@/shared/utils/validation/mypageEditValidation';
+import { useFetchUsers } from '@/service/queries';
 
-const MyPageEdit = ({ userData }: { userData: DecodeUser }) => {
+const MyPageEdit = () => {
     const router = useRouter();
+    const { data: userData } = useFetchUsers();
+
+    const { mutateAsync: updateUser, isPending } = useUpdateUser();
 
     const { imageUrl, triggerFileInput, handleFileInputChange, fileRef, uploadImageToS3 } = useImageUpload({
         initialImageUrl: userData?.avatarUrl || '/images/user.svg',
     });
-
-    const { mutateAsync: updateUser, isPending } = useUpdateUser();
 
     const {
         register,
@@ -30,7 +32,7 @@ const MyPageEdit = ({ userData }: { userData: DecodeUser }) => {
     } = useForm<UpdateUserType>({
         resolver: zodResolver(mypageEditFormSchema),
         defaultValues: {
-            id: userData.id,
+            id: userData?.id,
             avatarUrl: userData?.avatarUrl,
             nickname: userData?.nickname,
             content: userData?.content,
@@ -41,7 +43,7 @@ const MyPageEdit = ({ userData }: { userData: DecodeUser }) => {
         const uploadedImageUrl = await uploadImageToS3();
 
         const updateData = {
-            id: userData.id,
+            id: userData!.id,
             avatarUrl: uploadedImageUrl || data.avatarUrl,
             content: data.content,
             nickname: data.nickname,

@@ -22,6 +22,10 @@ const Login = () => {
             provider: provider,
             options: {
                 redirectTo: `${baseUrl}/auth/callback`,
+                queryParams: {
+                    access_type: 'offline',
+                    prompt: 'consent',
+                },
             },
         });
 

@@ -1,24 +1,11 @@
-import { GoalStatusType } from '@/service/@types';
+'use client';
+
 import NutrientSummary from './NutrientSummary';
 import TodayStatus from './TodayStatus';
-import { API_ENDPOINTS } from '@/service/api/config';
-import { headers } from 'next/headers';
-import { defaultFetch } from '@/service/utils/defaultFetch';
+import { useFetchGoalsByStatus } from '@/service/queries';
 
-// export const revalidate = 0;
-
-const getGoalsData = async (status: GoalStatusType) => {
-    const data = await defaultFetch(`${API_ENDPOINTS.GOALS}?status=${status}`, {
-        headers: headers(),
-        cache: 'no-store',
-    });
-
-    const result = await data.json();
-    return result;
-};
-
-const TodaySummary = async () => {
-    const goalData = await getGoalsData('progress');
+const TodaySummary = () => {
+    const { data: goalData } = useFetchGoalsByStatus('progress');
 
     if (!goalData) {
         throw new Error('목표 설정이 되지 않았습니다');
@@ -27,7 +14,6 @@ const TodaySummary = async () => {
     return (
         <div className='p-5 flex flex-col gap-4 bg-mainColor shadow-md"'>
             <NutrientSummary goalData={goalData} />
-
             <TodayStatus />
         </div>
     );

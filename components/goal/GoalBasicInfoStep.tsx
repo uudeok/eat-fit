@@ -2,15 +2,15 @@
 
 import styles from '@styles/component/goalBasicInfo.module.css';
 import Image from 'next/image';
-import { Button } from '../../common/Button';
-import { ListCol, Text } from '../../common';
-import { Input } from '../../common/Form';
 import { useForm } from 'react-hook-form';
 import { ActivityLevelType, BasicInfoType, GenderType } from '@/service/@types/req.type';
 import { useState } from 'react';
 import { ageValidation, heightValidation } from '@/shared/utils/validation';
 import { ACTIVITY_LIST, GENDER } from '@/constants';
 import { useGoalSotre } from '@/shared/store/useGoalStore';
+import { ListCol, Text } from '../common';
+import { Input } from '../common/Form';
+import { Button } from '../common/Button';
 
 type Props = {
     onNext: (data: BasicInfoType) => void;
