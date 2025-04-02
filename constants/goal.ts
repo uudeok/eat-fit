@@ -1,4 +1,4 @@
-import { MealPlanOptionsType } from '@/components/funnel/goal/GoalMealPlanStep';
+import { MealPlanOptionsType } from '@/components/goal/GoalMealPlanStep';
 
 export const ACTIVITY_LEVEL = {
     very_low: 1.2,
