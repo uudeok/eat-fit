@@ -6,7 +6,7 @@ import { ModalType } from '../common/Modal/OverlayContainer';
 import { BottomSheet } from '../common/Modal';
 import { useMealsStore } from '@/shared/store/useMealsStore';
 import SheetHeader from '../layout/SheetHeader';
-import { ListCol, Text } from '../common';
+import { Badge, ListCol, Text } from '../common';
 import { Input, Textarea } from '../common/Form';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
