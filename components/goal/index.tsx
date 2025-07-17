@@ -2,20 +2,23 @@
 
 import { useFetchGoalsByStatus } from '@/service/queries';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 const GoalRedirect = () => {
     const router = useRouter();
+    const { data: goalData, isLoading } = useFetchGoalsByStatus('progress');
 
-    const { data: goalData } = useFetchGoalsByStatus('progress');
-    // const goalData = await getGoalsData('progress');
+    useEffect(() => {
+        if (isLoading) return;
 
-    if (goalData) {
-        router.push('/home');
-    } else {
-        router.push('/goals/register');
-    }
+        if (goalData) {
+            router.push('/home');
+        } else {
+            router.push('/goals/register');
+        }
+    }, [isLoading, goalData]);
 
-    return <></>;
+    return null;
 };
 
 export default GoalRedirect;
